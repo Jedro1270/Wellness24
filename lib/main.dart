@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'components/frontPage.dart';
+import 'components/front_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,4 +14,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
