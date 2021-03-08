@@ -15,15 +15,16 @@ class _LoginState extends State<Login> {
       home: Scaffold(
         backgroundColor: Colors.white,
         body: Container(
-          padding: EdgeInsets.symmetric(vertical: 125.0, horizontal: 35.0),
+          padding: EdgeInsets.symmetric(horizontal: 35.0),
           child: Form(
             key: _formKey,
             child: ListView(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 120.0),
+                  padding: EdgeInsets.only(top: 100),
                   child: Text(
                     "Login",
+                    textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.black, fontSize: 35),
                   ),
                 ),
