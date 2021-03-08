@@ -29,9 +29,11 @@ class _LoginState extends State<Registration> {
                   ),
                 ),
                 SizedBox(height: 50.0),
-                TextInput(hint: 'Email'),
+                TextInput(hint: 'Email', keyboardType: TextInputType.emailAddress),
                 SizedBox(height: 30.0),
-                TextInput(hint: 'Password'),
+                TextInput(hint: 'Contact Number', keyboardType: TextInputType.number),
+                SizedBox(height: 30.0),
+                TextInput(hint: 'Password', keyboardType: TextInputType.visiblePassword),
                 SizedBox(height: 20.0),
                 MaterialButton(
                     shape: RoundedRectangleBorder(
