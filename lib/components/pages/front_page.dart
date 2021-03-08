@@ -17,8 +17,8 @@ class _FrontPageState extends State<FrontPage> {
           child: ListView(children: <Widget>[
             SizedBox(height: 50),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 100.0),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
                     "Login ",
@@ -36,8 +36,8 @@ class _FrontPageState extends State<FrontPage> {
             ),
             SizedBox(height: 50.0),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 70.0),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   CircleAvatar(
                     radius: 25.0,
@@ -60,8 +60,8 @@ class _FrontPageState extends State<FrontPage> {
             ),
             SizedBox(height: 20.0),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 70.0),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   CircleAvatar(radius: 25.0, child: Icon(Icons.person)),
                   InkWell(
