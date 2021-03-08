@@ -13,24 +13,22 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Container(
-        padding: EdgeInsets.symmetric(vertical: 100.0, horizontal: 35.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: <Widget>[
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      "Login",
-                      style: TextStyle(color: Colors.black, fontSize: 35),
-                    ),
-                  ],
+        backgroundColor: Colors.white,
+        body: Container(
+          padding: EdgeInsets.symmetric(horizontal: 35.0),
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(top: 100),
+                  child: Text(
+                    "Login",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.black, fontSize: 35),
+                  ),
                 ),
-              ),
+              
               SizedBox(height: 50.0),
               SizedBox(height: 60.0, child: TextInput(hint: 'Email', keyboardType: TextInputType.emailAddress) ),
               SizedBox(height: 30.0),
