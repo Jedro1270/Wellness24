@@ -44,9 +44,10 @@ class _FrontPageState extends State<FrontPage> {
                     radius: 25.0,
                     child: Icon(Icons.person),
                   ),
+                  SizedBox(width: 10),
                   InkWell(
                     child: Text(
-                      " Doctor",
+                      "Doctor",
                       style: TextStyle(color: Colors.black87, fontSize: 30),
                     ),
                     onTap: () {
@@ -65,9 +66,10 @@ class _FrontPageState extends State<FrontPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   CircleAvatar(radius: 25.0, child: Icon(Icons.person)),
+                  SizedBox(width: 10),
                   InkWell(
                     child: (Text(
-                      " Patient",
+                      "Patient",
                       style: TextStyle(color: Colors.black87, fontSize: 30),
                     )),
                     onTap: () {
