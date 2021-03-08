@@ -28,9 +28,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 SizedBox(height: 50.0),
-                TextInput(
-                  hint: 'Email',
-                ),
+                TextInput(hint: 'Email'),
                 SizedBox(height: 30.0),
                 TextInput(hint: 'Password'),
                 SizedBox(height: 20.0),
