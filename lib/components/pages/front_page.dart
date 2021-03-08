@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/pages/login.dart';
+import 'package:wellness24/components/pages/registration.dart';
 
 class FrontPage extends StatefulWidget {
   @override
@@ -91,7 +92,12 @@ class _FrontPageState extends State<FrontPage> {
                   ),
                   SizedBox(width: 5),
                   InkWell(
-                    onTap: null,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Registration()),
+                      );
+                    },
                     child: Text(
                       "Sign up.",
                       style: TextStyle(color: Colors.blueAccent),
