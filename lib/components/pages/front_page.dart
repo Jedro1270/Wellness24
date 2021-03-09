@@ -23,14 +23,18 @@ class _FrontPageState extends State<FrontPage> {
                 children: <Widget>[
                   Text(
                     "Login ",
-                    style: TextStyle(color: Colors.black, fontSize: 35),
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 35,
+                        fontFamily: "ShipporiMincho"),
                   ),
                   Text(
                     "as",
                     style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 25,
-                    ),
+                        color: Colors.black,
+                        fontSize: 25,
+                        fontFamily: "ShipporiMincho",
+                        fontWeight: FontWeight.bold),
                   )
                 ],
               ),
@@ -46,10 +50,12 @@ class _FrontPageState extends State<FrontPage> {
                   ),
                   SizedBox(width: 10),
                   InkWell(
-                    child: Text(
-                      "Doctor",
-                      style: TextStyle(color: Colors.black87, fontSize: 30),
-                    ),
+                    child: Text("Doctor",
+                        style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 30,
+                            fontFamily: "ShipporiMincho",
+                            fontWeight: FontWeight.normal)),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -70,7 +76,11 @@ class _FrontPageState extends State<FrontPage> {
                   InkWell(
                     child: (Text(
                       "Patient",
-                      style: TextStyle(color: Colors.black87, fontSize: 30),
+                      style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: 30,
+                          fontFamily: "ShipporiMincho",
+                          fontWeight: FontWeight.normal),
                     )),
                     onTap: () {
                       Navigator.push(
@@ -90,7 +100,10 @@ class _FrontPageState extends State<FrontPage> {
                 children: <Widget>[
                   Text(
                     "Don't have an account?",
-                    style: TextStyle(color: Colors.black87),
+                    style: TextStyle(
+                        color: Colors.black87,
+                        fontFamily: "ShipporiMincho",
+                        fontWeight: FontWeight.normal),
                   ),
                   SizedBox(width: 5),
                   InkWell(
@@ -102,7 +115,10 @@ class _FrontPageState extends State<FrontPage> {
                     },
                     child: Text(
                       "Sign up.",
-                      style: TextStyle(color: Colors.blueAccent),
+                      style: TextStyle(
+                          color: Colors.blueAccent,
+                          fontFamily: "ShipporiMincho",
+                          fontWeight: FontWeight.normal),
                     ),
                   )
                 ],
