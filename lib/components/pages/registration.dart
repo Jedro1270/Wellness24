@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/text_input.dart';
+import 'package:wellness24/components/pages/personal_info.dart';
 
 class Registration extends StatefulWidget {
   @override
@@ -25,15 +26,24 @@ class _LoginState extends State<Registration> {
                   child: Text(
                     "Sign Up",
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.black, fontSize: 35),
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 35,
+                        fontFamily: "ShipporiMincho",
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
                 SizedBox(height: 50.0),
-                TextInput(hint: 'Email', keyboardType: TextInputType.emailAddress),
+                TextInput(
+                    hint: 'Email', keyboardType: TextInputType.emailAddress,obscureText: false,),
                 SizedBox(height: 30.0),
-                TextInput(hint: 'Contact Number', keyboardType: TextInputType.number),
+                TextInput(
+                    hint: 'Contact Number', keyboardType: TextInputType.number,obscureText: false),
                 SizedBox(height: 30.0),
-                TextInput(hint: 'Password', keyboardType: TextInputType.visiblePassword),
+                TextInput(
+                    hint: 'Password',
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: true),
                 SizedBox(height: 20.0),
                 MaterialButton(
                     shape: RoundedRectangleBorder(
@@ -42,12 +52,18 @@ class _LoginState extends State<Registration> {
                     color: Colors.grey.withOpacity(0.5),
                     minWidth: MediaQuery.of(context).size.width,
                     padding: EdgeInsets.fromLTRB(18.0, 15.0, 18.0, 15.0),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PersonalInfo()));
+                    },
                     child: Text("Login",
                         style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 25,
-                        ))),
+                            color: Colors.black54,
+                            fontSize: 25,
+                            fontFamily: "ShipporiMincho",
+                            fontWeight: FontWeight.normal))),
                 SizedBox(height: 20.0),
                 Container(
                   child: Row(
@@ -56,14 +72,20 @@ class _LoginState extends State<Registration> {
                     children: <Widget>[
                       Text(
                         "Don't have an account?",
-                        style: TextStyle(color: Colors.black87),
+                        style: TextStyle(
+                            color: Colors.black87,
+                            fontFamily: "ShipporiMincho",
+                            fontWeight: FontWeight.normal),
                       ),
                       SizedBox(width: 5),
                       InkWell(
                         onTap: null,
                         child: Text(
                           "Sign up.",
-                          style: TextStyle(color: Colors.blueAccent),
+                          style: TextStyle(
+                              color: Colors.blueAccent,
+                              fontFamily: "ShipporiMincho",
+                              fontWeight: FontWeight.normal),
                         ),
                       )
                     ],
