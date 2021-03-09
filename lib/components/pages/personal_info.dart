@@ -27,7 +27,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 70.0, horizontal: 25.0),
+        padding: EdgeInsets.symmetric(vertical: 60.0, horizontal: 25.0),
         child: ListView(
           children: <Widget>[
             Container(
@@ -36,27 +36,63 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 children: <Widget>[
                   Text(
                     "Personal Information Form",
-                    style: TextStyle(color: Colors.black, fontSize: 20),
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontFamily: "ShipporiMincho",
+                        fontWeight: FontWeight.bold),
                   )
                 ],
               ),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 20),
             Container(
               child: Row(children: <Widget>[
                 Text(
-                  "Name (Last, First, Middle)",
-                  style: TextStyle(fontSize: 20),
+                  "Last Name",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: "ShipporiMincho",
+                      fontWeight: FontWeight.normal),
                 ),
               ]),
             ),
             SizedBox(height: 10),
-            SizedBox(height: 50,
-            child: TextInput()),
+            SizedBox(height: 50, child: TextInput(obscureText: false)),
             SizedBox(height: 15),
+            Container(
+              child: Row(children: <Widget>[
+                Text(
+                  "First Name",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: "ShipporiMincho",
+                      fontWeight: FontWeight.normal),
+                ),
+              ]),
+            ),
+            SizedBox(height: 10),
+            SizedBox(height: 50, child: TextInput(obscureText: false)),
+            SizedBox(height: 15),
+            Container(
+              child: Row(children: <Widget>[
+                Text(
+                  "Middile Name",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: "ShipporiMincho",
+                      fontWeight: FontWeight.normal),
+                ),
+              ]),
+            ),
+            SizedBox(height: 10),
+            SizedBox(height: 50, child: TextInput(obscureText: false)),
             Text(
               "Gender",
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: "ShipporiMincho",
+                  fontWeight: FontWeight.normal),
             ),
             Container(
               child: Row(children: <Widget>[
@@ -71,7 +107,10 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 ),
                 Text(
                   "Male",
-                  style: TextStyle(fontSize: 15),
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontFamily: "ShipporiMincho",
+                      fontWeight: FontWeight.normal),
                 ),
                 Radio(
                   value: 2,
@@ -84,27 +123,37 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 ),
                 Text(
                   "Female",
-                  style: TextStyle(fontSize: 15),
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontFamily: "ShipporiMincho",
+                      fontWeight: FontWeight.normal),
                 )
               ]),
             ),
             SizedBox(height: 15),
             Container(
               child: Row(children: <Widget>[
-                Text("Birth Date", style: TextStyle(fontSize: 20)),
+                Text("Birth Date",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: "ShipporiMincho",
+                        fontWeight: FontWeight.normal)),
               ]),
             ),
             SizedBox(height: 5),
-            SizedBox(height: 50,
-            child: TextInput(hint: "mm-dd-yy")),
+            SizedBox(height: 50, child: TextInput(hint: "mm-dd-yy",obscureText: false)),
             SizedBox(height: 15),
             Container(
               child: Row(children: <Widget>[
-                Text("Address", style: TextStyle(fontSize: 20)),
+                Text("Address",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: "ShipporiMincho",
+                        fontWeight: FontWeight.normal)),
               ]),
             ),
             SizedBox(height: 5),
-            SizedBox(height: 50, child: TextInput()),
+            SizedBox(height: 50, child: TextInput(obscureText: false)),
             SizedBox(height: 50),
             Container(
               child: Row(

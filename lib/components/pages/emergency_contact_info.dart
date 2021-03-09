@@ -21,46 +21,92 @@ class _EmergencyContantInfoState extends State<EmergencyContantInfo> {
                 children: <Widget>[
                   Text(
                     "Emergency Contact Information",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: "ShipporiMincho",
+                        fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 20),
             Container(
               child: Row(children: <Widget>[
                 Text(
-                  "Name (Last, First, Middle)",
-                  style: TextStyle(fontSize: 20),
+                  "Last Name",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: "ShipporiMincho",
+                      fontWeight: FontWeight.normal),
                 ),
               ]),
             ),
             SizedBox(height: 5),
-            TextInput(),
+            TextInput(obscureText: false),
             SizedBox(height: 15),
             Container(
               child: Row(children: <Widget>[
-                Text("Address", style: TextStyle(fontSize: 20)),
+                Text(
+                  "First Name",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: "ShipporiMincho",
+                      fontWeight: FontWeight.normal),
+                ),
               ]),
             ),
             SizedBox(height: 5),
-            TextInput(),
+            TextInput(obscureText: false),
             SizedBox(height: 15),
             Container(
               child: Row(children: <Widget>[
-                Text("Contact Number", style: TextStyle(fontSize: 20)),
+                Text(
+                  "Middle Name",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: "ShipporiMincho",
+                      fontWeight: FontWeight.normal),
+                ),
               ]),
             ),
             SizedBox(height: 5),
-            TextInput(),
+            TextInput(obscureText: false),
             SizedBox(height: 15),
             Container(
               child: Row(children: <Widget>[
-                Text("Relationship", style: TextStyle(fontSize: 20)),
+                Text("Address",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: "ShipporiMincho",
+                        fontWeight: FontWeight.normal)),
               ]),
             ),
             SizedBox(height: 5),
-            TextInput(),
+            TextInput(obscureText: false),
+            SizedBox(height: 15),
+            Container(
+              child: Row(children: <Widget>[
+                Text("Contact Number",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: "ShipporiMincho",
+                        fontWeight: FontWeight.normal)),
+              ]),
+            ),
+            SizedBox(height: 5),
+            TextInput(obscureText: false),
+            SizedBox(height: 15),
+            Container(
+              child: Row(children: <Widget>[
+                Text("Relationship",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: "ShipporiMincho",
+                        fontWeight: FontWeight.normal)),
+              ]),
+            ),
+            SizedBox(height: 5),
+            TextInput(obscureText: false),
             SizedBox(height: 20),
             Container(
               padding: EdgeInsets.only(right: 10.0),
