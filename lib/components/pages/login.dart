@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/text_input.dart';
 import 'package:wellness24/components/pages/personal_info.dart';
+import 'package:wellness24/components/pages/registration.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -13,26 +14,41 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 35.0),
-          child: Form(
-            key: _formKey,
-            child: ListView(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.only(top: 100),
-                  child: Text(
-                    "Login",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.black, fontSize: 35),
-                  ),
+      backgroundColor: Colors.white,
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 35.0),
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(top: 100),
+                child: Text(
+                  "Login",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 35,
+                      fontFamily: "ShipporiMincho",
+                      fontWeight: FontWeight.bold),
                 ),
-              
+              ),
               SizedBox(height: 50.0),
-              SizedBox(height: 60.0, child: TextInput(hint: 'Email', keyboardType: TextInputType.emailAddress) ),
+              SizedBox(
+                  height: 60.0,
+                  child: TextInput(
+                    hint: 'Email',
+                    keyboardType: TextInputType.emailAddress,
+                    obscureText: false,
+                  )),
               SizedBox(height: 30.0),
-              SizedBox(height: 60.0, child: TextInput(hint: 'Password', keyboardType: TextInputType.visiblePassword)),
+              SizedBox(
+                  height: 60.0,
+                  child: TextInput(
+                    hint: 'Password',
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: true,
+                  )),
               SizedBox(height: 20.0),
               MaterialButton(
                   shape: RoundedRectangleBorder(
@@ -49,9 +65,10 @@ class _LoginState extends State<Login> {
                   },
                   child: Text("Login",
                       style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: 25,
-                      ))),
+                          color: Colors.black54,
+                          fontSize: 25,
+                          fontFamily: "ShipporiMincho",
+                          fontWeight: FontWeight.normal))),
               SizedBox(height: 20.0),
               Container(
                 child: Row(
@@ -60,14 +77,25 @@ class _LoginState extends State<Login> {
                   children: <Widget>[
                     Text(
                       "Don't have an account?",
-                      style: TextStyle(color: Colors.black87),
+                      style: TextStyle(
+                          color: Colors.black87,
+                          fontFamily: "ShipporiMincho",
+                          fontWeight: FontWeight.normal),
                     ),
                     SizedBox(width: 5),
                     InkWell(
-                      onTap: null,
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Registration()));
+                      },
                       child: Text(
                         "Sign up.",
-                        style: TextStyle(color: Colors.blueAccent),
+                        style: TextStyle(
+                            color: Colors.blueAccent,
+                            fontFamily: "ShipporiMincho",
+                            fontWeight: FontWeight.normal),
                       ),
                     )
                   ],
