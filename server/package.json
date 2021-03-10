@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@graphile-contrib/pg-simplify-inflector": "^6.1.0",
     "knex": "^0.95.1",
-    "pg": "^8.5.1"
+    "pg": "^8.5.1",
+    "postgraphile": "^4.11.0"
   }
 }
