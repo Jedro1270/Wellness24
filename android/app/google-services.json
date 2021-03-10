@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "181863516895",
+    "project_id": "wellness24-95ff9",
+    "storage_bucket": "wellness24-95ff9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:181863516895:android:1436218e1ffce633f2f76a",
+        "android_client_info": {
+          "package_name": "com.samsantech.wellness24"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "181863516895-s59t4gi9umfuer5u4trpdma6noenie9n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAm7hahPSjEe2OEZ07xGkdQ8avOwtelW8w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "181863516895-s59t4gi9umfuer5u4trpdma6noenie9n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
