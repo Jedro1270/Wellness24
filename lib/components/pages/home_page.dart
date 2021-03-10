@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wellness24/components/common/app_bar.dart';
 
 import 'doctor_search_page.dart';
 
@@ -11,13 +12,13 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        toolbarHeight: 75,
-        title: Text('Wellness24',
-            style: TextStyle(
-                fontFamily: "ShipporiMincho", fontWeight: FontWeight.normal)),
-        leading: Icon(Icons.menu),
+      appBar: CustomAppBar(
+        title: 'Home Page',
+        leading: IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () {
+              print('menu button pressed');
+            }),
         actions: [
           IconButton(
               icon: Icon(Icons.notifications),
