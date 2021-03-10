@@ -66,73 +66,92 @@ class _HomeState extends State<Home> {
             ],
           ),
           Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "EMERGENCY",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: "ShipporiMincho",
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                ElevatedButton(
+                  child: Text("EMERGENCY",
+                      style: TextStyle(
+                          fontSize: 25,
+                          fontFamily: "ShipporiMincho",
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white)),
+                  onPressed: () {
+                    print("EMERGENCY");
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 100, vertical: 20),
+                    primary: Colors.redAccent[700],
                   ),
-                ],
-              ),
-              color: Colors.redAccent[700],
-              height: 75,
-              width: 350),
-          Divider(height: 50),
+                )
+              ],
+            ),
+          ),
+          Divider(height: 50, color: Colors.transparent),
           Container(
-            height: 75,
-            padding: EdgeInsets.all(25),
-            color: Colors.lightBlueAccent[100],
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(
-                  "Doctor's Info",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: "ShipporiMincho",
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
-                ),
+                ElevatedButton(
+                  child: Text("Doctor's Info",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: "ShipporiMincho",
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black)),
+                  onPressed: () {
+                    print("Doctor's info");
+                  },
+                  style: ElevatedButton.styleFrom(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 150, vertical: 20),
+                      primary: Colors.lightBlueAccent[100]),
+                )
               ],
             ),
           ),
           Divider(height: 1, thickness: 2, color: Colors.lightBlueAccent[200]),
           Container(
-            height: 75,
-            padding: EdgeInsets.all(25),
-            color: Colors.lightBlueAccent[100],
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(
-                  "Schedule Appointment",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: "ShipporiMincho",
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
-                ),
+                ElevatedButton(
+                  child: Text("Schedule Appointment",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: "ShipporiMincho",
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black)),
+                  onPressed: () {
+                    print("Schedule Appointment");
+                  },
+                  style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 102, vertical: 20),
+                      primary: Colors.lightBlueAccent[100]),
+                )
               ],
             ),
           ),
           Divider(height: 1, thickness: 2, color: Colors.lightBlueAccent[200]),
-          Container(
-            height: 75,
-            padding: EdgeInsets.all(25),
-            color: Colors.lightBlueAccent[100],
+           Container(
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(
-                  "My Medical Records",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: "ShipporiMincho",
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
-                ),
+                ElevatedButton(
+                  child: Text("My Medical Records",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: "ShipporiMincho",
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black)),
+                  onPressed: () {
+                    print("My Medical Records");
+                  },
+                  style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 115, vertical: 20),
+                      primary: Colors.lightBlueAccent[100]),
+                )
               ],
             ),
           ),
