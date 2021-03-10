@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wellness24/components/common/app_bar.dart';
 
 class DoctorSearchPage extends StatefulWidget {
   @override
@@ -10,8 +11,8 @@ class _DoctorSearchPageState extends State<DoctorSearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.blueAccent,
+      appBar: CustomAppBar(
+        title: 'Registered Doctors',
         actions: [
           IconButton(
             onPressed: () {},
