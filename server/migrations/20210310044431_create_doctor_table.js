@@ -9,7 +9,7 @@ exports.up = function (knex) {
       password text NOT NULL,
       license_number integer,
       specialization text,
-      contact_number integer
+      contact_number text
     );
   `);
 };
