@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:wellness24/components/common/app_bar.dart';
+import 'package:wellness24/components/pages/home_page.dart';
 
 class EmergencyPage extends StatefulWidget {
   @override
@@ -9,7 +11,16 @@ class _EmergencyPageState extends State<EmergencyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      appBar: CustomAppBar(
+        title: 'Home Page',
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Home()));
+
+            }),
+      ),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 60.0, horizontal: 25.0),
         child: ListView(
@@ -110,8 +121,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
                   CircleAvatar(
                       radius: 25,
                       child: Image(
-                        image: AssetImage(
-                            "assets/body-temp.png"),
+                        image: AssetImage("assets/body-temp.png"),
                       )),
                   Text(
                     "Body\nTemperature: 36.3",
