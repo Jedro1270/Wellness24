@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
+import 'package:wellness24/components/pages/emergency_page.dart';
 
 import 'doctor_search_page.dart';
 
@@ -78,6 +79,7 @@ class _HomeState extends State<Home> {
                           color: Colors.white)),
                   onPressed: () {
                     print("EMERGENCY");
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => EmergencyPage()));
                   },
                   style: ElevatedButton.styleFrom(
                     padding:
@@ -105,13 +107,13 @@ class _HomeState extends State<Home> {
                   },
                   style: ElevatedButton.styleFrom(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 150, vertical: 20),
+                          EdgeInsets.symmetric(horizontal: 117, vertical: 20),
                       primary: Colors.lightBlueAccent[100]),
                 )
               ],
             ),
           ),
-          Divider(height: 1, thickness: 2, color: Colors.lightBlueAccent[200]),
+          Divider(height: 20, color: Colors.transparent),
           Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -127,13 +129,13 @@ class _HomeState extends State<Home> {
                     print("Schedule Appointment");
                   },
                   style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 102, vertical: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 68, vertical: 20),
                       primary: Colors.lightBlueAccent[100]),
                 )
               ],
             ),
           ),
-          Divider(height: 1, thickness: 2, color: Colors.lightBlueAccent[200]),
+          Divider(height: 20, color: Colors.transparent),
            Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -149,7 +151,7 @@ class _HomeState extends State<Home> {
                     print("My Medical Records");
                   },
                   style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 115, vertical: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 80, vertical: 20),
                       primary: Colors.lightBlueAccent[100]),
                 )
               ],
