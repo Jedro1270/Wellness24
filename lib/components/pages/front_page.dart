@@ -22,20 +22,12 @@ class _FrontPageState extends State<FrontPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "Login ",
+                    "Login as",
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 35,
                         fontFamily: "ShipporiMincho"),
                   ),
-                  Text(
-                    "as",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 25,
-                        fontFamily: "ShipporiMincho",
-                        fontWeight: FontWeight.bold),
-                  )
                 ],
               ),
             ),
@@ -46,7 +38,7 @@ class _FrontPageState extends State<FrontPage> {
                 children: <Widget>[
                   CircleAvatar(
                     radius: 25.0,
-                    child: Icon(Icons.person),
+                    child: Image(image: AssetImage("assets/doctor.png"),),
                   ),
                   SizedBox(width: 10),
                   InkWell(
@@ -71,7 +63,7 @@ class _FrontPageState extends State<FrontPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  CircleAvatar(radius: 25.0, child: Icon(Icons.person)),
+                  CircleAvatar(radius: 20.0, child: Image(image: AssetImage("assets/patient.png"))),
                   SizedBox(width: 10),
                   InkWell(
                     child: (Text(
