@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/pages/doctor_info_page.dart';
 
-class DoctorSearchPage extends StatefulWidget {
+class PatientSearchPage extends StatefulWidget {
   @override
-  _DoctorSearchPageState createState() => _DoctorSearchPageState();
+  _PatientSearchPageState createState() => _PatientSearchPageState();
 }
 
-class _DoctorSearchPageState extends State<DoctorSearchPage> {
+class _PatientSearchPageState extends State<PatientSearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CustomAppBar(
-        title: 'Registered Doctors',
+        title: 'Patients',
         actions: [
           IconButton(
             onPressed: () {},
@@ -49,31 +49,11 @@ class _DoctorSearchPageState extends State<DoctorSearchPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            InkWell(
-                              child: Text("Doctor Abagat",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontFamily: "ShipporiMincho",
-                                  fontWeight: FontWeight.normal),
-                                  textAlign: TextAlign.center),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => DoctorDetail())
-                                );
-                              },
-                            ),
-                            Text("Profession",
+                            Text("Darla Abagat",
                                 style: TextStyle(
                                     fontSize: 20,
                                     fontFamily: "ShipporiMincho",
-                                    fontWeight: FontWeight.normal),
-                                textAlign: TextAlign.center),
-                            Text("Clinic Hours",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: "ShipporiMincho",
-                                    fontWeight: FontWeight.normal),
+                                    fontWeight: FontWeight.bold),
                                 textAlign: TextAlign.center),
                             Text("Contact Number",
                                 style: TextStyle(
@@ -81,12 +61,23 @@ class _DoctorSearchPageState extends State<DoctorSearchPage> {
                                     fontFamily: "ShipporiMincho",
                                     fontWeight: FontWeight.normal),
                                 textAlign: TextAlign.center),
-                            Text("Location",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: "ShipporiMincho",
-                                    fontWeight: FontWeight.normal),
-                                textAlign: TextAlign.center),
+                            Container(
+                              child: Row(
+                                //  mainAxisAlignment: MainAxisAlignment.center,
+                                //  crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.medical_services_outlined),
+                                  SizedBox(
+                                    width: 10.0,
+                                  ),
+                                  Icon(Icons.receipt_rounded),
+                                  SizedBox(
+                                    width: 10.0,
+                                  ),
+                                  Icon(Icons.message)
+                                ],
+                              ),
+                            )
                           ],
                         ),
                       )
@@ -119,23 +110,11 @@ class _DoctorSearchPageState extends State<DoctorSearchPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Doctor Capacio",
+                            Text("Veto Rhyss",
                                 style: TextStyle(
                                     fontSize: 20,
                                     fontFamily: "ShipporiMincho",
-                                    fontWeight: FontWeight.normal),
-                                textAlign: TextAlign.center),
-                            Text("Profession",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: "ShipporiMincho",
-                                    fontWeight: FontWeight.normal),
-                                textAlign: TextAlign.center),
-                            Text("Clinic Hours",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: "ShipporiMincho",
-                                    fontWeight: FontWeight.normal),
+                                    fontWeight: FontWeight.bold),
                                 textAlign: TextAlign.center),
                             Text("Contact Number",
                                 style: TextStyle(
@@ -143,12 +122,23 @@ class _DoctorSearchPageState extends State<DoctorSearchPage> {
                                     fontFamily: "ShipporiMincho",
                                     fontWeight: FontWeight.normal),
                                 textAlign: TextAlign.center),
-                            Text("Location",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: "ShipporiMincho",
-                                    fontWeight: FontWeight.normal),
-                                textAlign: TextAlign.center),
+                            Container(
+                              child: Row(
+                                //  mainAxisAlignment: MainAxisAlignment.center,
+                                //  crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.medical_services_outlined),
+                                  SizedBox(
+                                    width: 10.0,
+                                  ),
+                                  Icon(Icons.receipt_rounded),
+                                  SizedBox(
+                                    width: 10.0,
+                                  ),
+                                  Icon(Icons.message)
+                                ],
+                              ),
+                            )
                           ],
                         ),
                       )
@@ -181,23 +171,11 @@ class _DoctorSearchPageState extends State<DoctorSearchPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Doctor Pagayonan",
+                            Text("Vienne Capacio",
                                 style: TextStyle(
                                     fontSize: 20,
                                     fontFamily: "ShipporiMincho",
-                                    fontWeight: FontWeight.normal),
-                                textAlign: TextAlign.center),
-                            Text("Profession",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: "ShipporiMincho",
-                                    fontWeight: FontWeight.normal),
-                                textAlign: TextAlign.center),
-                            Text("Clinic Hours",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: "ShipporiMincho",
-                                    fontWeight: FontWeight.normal),
+                                    fontWeight: FontWeight.bold),
                                 textAlign: TextAlign.center),
                             Text("Contact Number",
                                 style: TextStyle(
@@ -205,12 +183,23 @@ class _DoctorSearchPageState extends State<DoctorSearchPage> {
                                     fontFamily: "ShipporiMincho",
                                     fontWeight: FontWeight.normal),
                                 textAlign: TextAlign.center),
-                            Text("Location",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: "ShipporiMincho",
-                                    fontWeight: FontWeight.normal),
-                                textAlign: TextAlign.center),
+                            Container(
+                              child: Row(
+                                //  mainAxisAlignment: MainAxisAlignment.center,
+                                //  crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.medical_services_outlined),
+                                  SizedBox(
+                                    width: 10.0,
+                                  ),
+                                  Icon(Icons.receipt_rounded),
+                                  SizedBox(
+                                    width: 10.0,
+                                  ),
+                                  Icon(Icons.message)
+                                ],
+                              ),
+                            )
                           ],
                         ),
                       )

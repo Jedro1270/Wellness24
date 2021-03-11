@@ -27,7 +27,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
           children: <Widget>[
             Container(
               width: 100,
-              height: 50,
+              height: 70,
               color: Colors.redAccent[700],
               child:
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -40,7 +40,8 @@ class _EmergencyPageState extends State<EmergencyPage> {
                     color: Colors.white,
                   ),
                 ),
-              ]),
+              ],),
+             
             ),
             SizedBox(height: 20),
             Container(
@@ -60,6 +61,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
             Divider(
               color: Colors.black,
             ),
+            SizedBox(height: 20),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -74,7 +76,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -86,7 +88,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
                         fontFamily: "ShipporiMincho",
                         color: Colors.black),
                   ),
-                  SizedBox(width: 50),
+                  SizedBox(width: 100),
                   Text(
                     "Gender: Male",
                     style: TextStyle(
@@ -126,13 +128,13 @@ class _EmergencyPageState extends State<EmergencyPage> {
                   Text(
                     "Body\nTemperature: 36.3",
                     style:
-                        TextStyle(fontSize: 15, fontFamily: "ShipporiMincho"),
+                        TextStyle(fontSize: 13, fontFamily: "ShipporiMincho"),
                   ),
-                  SizedBox(width: 20),
+                  SizedBox(width: 50),
                   Text(
                     "Respiration Rate:",
                     style:
-                        TextStyle(fontSize: 15, fontFamily: "ShipporiMincho"),
+                        TextStyle(fontSize: 12, fontFamily: "ShipporiMincho"),
                   ),
                 ],
               ),
@@ -149,13 +151,13 @@ class _EmergencyPageState extends State<EmergencyPage> {
                   Text(
                     "Body\nPressure: 120/80",
                     style:
-                        TextStyle(fontSize: 15, fontFamily: "ShipporiMincho"),
+                        TextStyle(fontSize: 13, fontFamily: "ShipporiMincho"),
                   ),
-                  SizedBox(width: 20),
+                  SizedBox(width: 50),
                   Text(
                     "Pulse Rate:",
                     style:
-                        TextStyle(fontSize: 15, fontFamily: "ShipporiMincho"),
+                        TextStyle(fontSize: 13, fontFamily: "ShipporiMincho"),
                   ),
                 ],
               ),
@@ -177,16 +179,12 @@ class _EmergencyPageState extends State<EmergencyPage> {
             ),
             SizedBox(
               height: 100,
-              child: TextFormField(
+              child: TextField(
                 // keyboardType: TextInputType.emailAddress,
-                keyboardType: TextInputType.text,
+                // keyboardType: TextInputType.multiline,
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.blue[200],
-                  hintStyle: TextStyle(
-                    color: Colors.black54,
-                    fontSize: 25,
-                  ),
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black12)),
                 ),
