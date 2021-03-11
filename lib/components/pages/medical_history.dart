@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/text_input.dart';
-
 import 'home_page.dart';
 
 class MedicalHistory extends StatefulWidget {
@@ -35,13 +34,17 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                   children: <Widget>[
                     Text(
                       "Medical History",
-                      style: TextStyle(fontSize: 20,  fontFamily: "ShipporiMincho",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: "ShipporiMincho",
                           fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
               ),
             ),
+            Divider(color: Colors.black),
+            SizedBox(height: 20),
             ...medicalList
                 .map((item) => Container(
                       child: ListTile(
@@ -59,13 +62,20 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                             });
                           },
                         ),
-                        title: Text(item.title, style: TextStyle(fontSize: 20,  fontFamily: "ShipporiMincho",
-                          fontWeight: FontWeight.normal)),
+                        title: Text(item.title,
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: "ShipporiMincho",
+                                fontWeight: FontWeight.normal)),
                         minVerticalPadding: 2,
                       ),
                     ))
                 .toList(),
-            SizedBox(height: 50.0, width: 30.0, child: TextInput(obscureText: false)),
+            SizedBox(height: 15.0),
+            SizedBox(
+                height: 50.0,
+                width: 30.0,
+                child: TextInput(obscureText: false)),
             SizedBox(height: 10.0),
             SizedBox(
               height: 55.0,
@@ -78,15 +88,17 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                   // minWidth: 100,
                   // padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Home()));
                   },
                   child: Text("Submit",
                       style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: 25,
-                         fontFamily: "ShipporiMincho",
-                          fontWeight: FontWeight.normal
-                      ))),
+                          color: Colors.black54,
+                          fontSize: 25,
+                          fontFamily: "ShipporiMincho",
+                          fontWeight: FontWeight.normal))),
             ),
           ],
         ),

@@ -25,8 +25,9 @@ class _FrontPageState extends State<FrontPage> {
                     "Login as",
                     style: TextStyle(
                         color: Colors.black,
-                        fontSize: 35,
-                        fontFamily: "ShipporiMincho"),
+                        fontSize: 40,
+                        fontFamily: "ShipporiMincho",
+                        fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -47,7 +48,7 @@ class _FrontPageState extends State<FrontPage> {
                             color: Colors.black87,
                             fontSize: 30,
                             fontFamily: "ShipporiMincho",
-                            fontWeight: FontWeight.normal)),
+                            fontWeight: FontWeight.bold)),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -72,7 +73,7 @@ class _FrontPageState extends State<FrontPage> {
                           color: Colors.black87,
                           fontSize: 30,
                           fontFamily: "ShipporiMincho",
-                          fontWeight: FontWeight.normal),
+                          fontWeight: FontWeight.bold),
                     )),
                     onTap: () {
                       Navigator.push(

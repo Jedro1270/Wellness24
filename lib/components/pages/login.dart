@@ -22,13 +22,13 @@ class _LoginState extends State<Login> {
           child: ListView(
             children: <Widget>[
               Container(
-                padding: EdgeInsets.only(top: 100),
+                padding: EdgeInsets.only(top: 120),
                 child: Text(
                   "Login",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: 35,
+                      fontSize: 40,
                       fontFamily: "ShipporiMincho",
                       fontWeight: FontWeight.bold),
                 ),
