@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/pages/emergency_page.dart';
 
-import 'doctor_search_page.dart';
+import 'doctor_search_page/doctor_search_page.dart';
 
 class Home extends StatefulWidget {
   @override
