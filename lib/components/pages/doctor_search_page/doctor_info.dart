@@ -36,7 +36,7 @@ class DoctorInfo extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 20,
                             fontFamily: "ShipporiMincho",
-                            fontWeight: FontWeight.normal),
+                            fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center),
                     Text("Profession",
                         style: TextStyle(
