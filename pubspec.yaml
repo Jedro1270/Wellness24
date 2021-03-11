@@ -53,6 +53,9 @@ flutter:
   - assets/doctor.png
   - assets/istockphoto-1133507993-612x612.jpg
   - assets/body-temp.png
+  - assets/mypatient.png
+  - assets/medical-record.png
+  - assets/schedule.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
