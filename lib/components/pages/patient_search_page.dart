@@ -68,7 +68,14 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                                 //  mainAxisAlignment: MainAxisAlignment.center,
                                 //  crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.medical_services_outlined),
+                                  SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: Image(
+                                      image: AssetImage(
+                                          "assets/physical-record.png"),
+                                    ),
+                                  ),
                                   SizedBox(
                                     width: 10.0,
                                   ),
@@ -139,7 +146,14 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                                 //  mainAxisAlignment: MainAxisAlignment.center,
                                 //  crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.medical_services_outlined),
+                                  SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: Image(
+                                      image: AssetImage(
+                                          "assets/physical-record.png"),
+                                    ),
+                                  ),
                                   SizedBox(
                                     width: 10.0,
                                   ),
@@ -209,7 +223,14 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                                 //  mainAxisAlignment: MainAxisAlignment.center,
                                 //  crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.medical_services_outlined),
+                                  SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: Image(
+                                      image: AssetImage(
+                                          "assets/physical-record.png"),
+                                    ),
+                                  ),
                                   SizedBox(
                                     width: 10.0,
                                   ),
