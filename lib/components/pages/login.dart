@@ -3,6 +3,7 @@ import 'package:wellness24/components/common/text_input.dart';
 import 'package:wellness24/components/pages/personal_info.dart';
 import 'package:wellness24/components/pages/registration.dart';
 
+
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -50,25 +51,36 @@ class _LoginState extends State<Login> {
                     obscureText: true,
                   )),
               SizedBox(height: 20.0),
-              MaterialButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      side: BorderSide(color: Colors.black12)),
-                  color: Colors.grey.withOpacity(0.5),
-                  minWidth: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.fromLTRB(18.0, 15.0, 18.0, 15.0),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => PersonalInfo()));
-                  },
-                  child: Text("Login",
-                      style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 25,
-                          fontFamily: "ShipporiMincho",
-                          fontWeight: FontWeight.normal))),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      width: 150.0,
+                      child: MaterialButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                              side: BorderSide(color: Colors.black12)),
+                          color: Colors.grey.withOpacity(0.5),
+                          minWidth: MediaQuery.of(context).size.width,
+                          padding: EdgeInsets.fromLTRB(18.0, 15.0, 18.0, 15.0),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        PersonalInfo()));
+                          },
+                          child: Text("Login",
+                              style: TextStyle(
+                                  color: Colors.black54,
+                                  fontSize: 25,
+                                  fontFamily: "ShipporiMincho",
+                                  fontWeight: FontWeight.normal))),
+                    )
+                  ],
+                ),
+              ),
               SizedBox(height: 20.0),
               Container(
                 child: Row(

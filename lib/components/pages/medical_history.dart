@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/text_input.dart';
+import 'package:wellness24/components/pages/doctor_home_page.dart';
 import 'home_page.dart';
 
 class MedicalHistory extends StatefulWidget {
@@ -77,28 +78,33 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                 width: 30.0,
                 child: TextInput(obscureText: false)),
             SizedBox(height: 10.0),
-            SizedBox(
-              height: 55.0,
-              width: 30.0,
-              child: MaterialButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      side: BorderSide(color: Colors.black12)),
-                  color: Colors.grey.withOpacity(0.5),
-                  // minWidth: 100,
-                  // padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Home()));
-                  },
-                  child: Text("Submit",
-                      style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 25,
-                          fontFamily: "ShipporiMincho",
-                          fontWeight: FontWeight.normal))),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    height: 55.0,
+                    width: 150.0,
+                    child: MaterialButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                            side: BorderSide(color: Colors.black12)),
+                        color: Colors.grey.withOpacity(0.5),
+                        // minWidth: 100,
+                        // padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => Home()));
+                        },
+                        child: Text("Submit",
+                            style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 25,
+                                fontFamily: "ShipporiMincho",
+                                fontWeight: FontWeight.normal))),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
