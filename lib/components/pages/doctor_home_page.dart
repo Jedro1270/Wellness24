@@ -49,7 +49,10 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
                         suffixIcon: IconButton(
                           icon: Icon(Icons.search),
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => PatientSearchPage()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PatientSearchPage()));
                           },
                         ),
                         enabledBorder: OutlineInputBorder(
@@ -70,7 +73,11 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(radius: 35, child: Icon(Icons.person)),
+                  SizedBox(
+                    height: 60,
+                    width: 60,
+                    child: Image(image: AssetImage("assets/mypatient.png")),
+                  ),
                   InkWell(
                     onTap: () {},
                     child: Text(
@@ -84,14 +91,18 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
                 ],
               ),
             ),
-             SizedBox(height: 10.0),
+            SizedBox(height: 10.0),
             Container(
               padding: EdgeInsets.only(left: 40.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(radius: 35, child: Icon(Icons.alarm_outlined)),
+                  SizedBox(
+                    height: 60,
+                    width: 60,
+                    child: Image(image: AssetImage("assets/schedule.png")),
+                  ),
                   InkWell(
                     onTap: () {},
                     child: Text(

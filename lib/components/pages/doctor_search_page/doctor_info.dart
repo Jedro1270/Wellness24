@@ -24,7 +24,9 @@ class DoctorInfo extends StatelessWidget {
               SizedBox(width: 15),
               CircleAvatar(
                 radius: 25.0,
-                child: Icon(Icons.person),
+                child: Image(
+                  image: AssetImage("assets/doctor.png"),
+                ),
               ),
               SizedBox(width: 15),
               Container(

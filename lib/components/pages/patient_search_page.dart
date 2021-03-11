@@ -39,8 +39,10 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                     children: <Widget>[
                       SizedBox(width: 15),
                       CircleAvatar(
-                        radius: 25.0,
-                        child: Icon(Icons.person),
+                        radius: 35.0,
+                        child: Image(
+                          image: AssetImage("assets/patient.png"),
+                        ),
                       ),
                       SizedBox(width: 15),
                       Container(
@@ -69,7 +71,15 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                                   SizedBox(
                                     width: 10.0,
                                   ),
-                                  Icon(Icons.receipt_rounded),
+                                  SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: Image(
+                                      image: AssetImage(
+                                          "assets/medical-record.png"),
+                                    ),
+                                  ),
+                                  // Icon(Icons.receipt_rounded),
                                   SizedBox(
                                     width: 10.0,
                                   ),
@@ -100,8 +110,10 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                     children: <Widget>[
                       SizedBox(width: 15),
                       CircleAvatar(
-                        radius: 25.0,
-                        child: Icon(Icons.person),
+                        radius: 35.0,
+                        child: Image(
+                          image: AssetImage("assets/patient.png"),
+                        ),
                       ),
                       SizedBox(width: 15),
                       Container(
@@ -130,7 +142,14 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                                   SizedBox(
                                     width: 10.0,
                                   ),
-                                  Icon(Icons.receipt_rounded),
+                                  SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: Image(
+                                      image: AssetImage(
+                                          "assets/medical-record.png"),
+                                    ),
+                                  ),
                                   SizedBox(
                                     width: 10.0,
                                   ),
@@ -161,8 +180,10 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                     children: <Widget>[
                       SizedBox(width: 15),
                       CircleAvatar(
-                        radius: 25.0,
-                        child: Icon(Icons.person),
+                        radius: 35.0,
+                        child: Image(
+                          image: AssetImage("assets/patient.png"),
+                        ),
                       ),
                       SizedBox(width: 15),
                       Container(
@@ -191,7 +212,14 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                                   SizedBox(
                                     width: 10.0,
                                   ),
-                                  Icon(Icons.receipt_rounded),
+                                  SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: Image(
+                                      image: AssetImage(
+                                          "assets/medical-record.png"),
+                                    ),
+                                  ),
                                   SizedBox(
                                     width: 10.0,
                                   ),
