@@ -23,13 +23,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  firebase_core: ^1.0.0
-  firebase_analytics: ^1.0.0
-  firebase_auth: ^1.0.0
-  cloud_firestore: ^1.0.0
+  firebase_core: ^0.4.0+9
+  firebase_analytics: ^5.0.2
+  firebase_auth: ^0.14.0+5
+  cloud_firestore: ^0.12.9+5
   mockito: ^4.1.1
-  cloud_firestore_mocks: ^0.7.0
   provider: ^5.0.0
   intl: ^0.15.7
 
