@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/pages/patient_search_page.dart';
+import 'package:wellness24/components/common/navigation_bar.dart';
 
 class DoctorHomePage extends StatefulWidget {
   @override
@@ -11,13 +12,9 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavBar(),
       appBar: CustomAppBar(
         title: 'Home Page',
-        leading: IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {
-              print('menu button pressed');
-            }),
         actions: [
           IconButton(
               icon: Icon(Icons.notifications),
