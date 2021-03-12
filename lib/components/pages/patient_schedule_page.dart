@@ -11,6 +11,7 @@ class PatientAppointmentPage extends StatefulWidget {
 class _PatientAppointmentState extends State<PatientAppointmentPage> {
   DateTime _date = DateTime.now();
   DateFormat format = DateFormat('MM-dd-yyyy');
+  TimeOfDay _time; 
 
   Future<Null> _selectDate(BuildContext context) async {
     DateTime _datePicker = await showDatePicker(
@@ -25,6 +26,24 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
     if (_datePicker != null && _datePicker != _date) {
       setState(() {
         _date = _datePicker;
+      });
+    }
+  }
+
+  @override 
+  void initState(){
+    super.initState();
+    _time = TimeOfDay.now();
+  }
+  _pickTime() async {
+    TimeOfDay time = await showTimePicker(context: context, initialTime: _time,
+    builder: (BuildContext context, Widget child){
+      return Theme(data: ThemeData(), child: child,);
+    });
+
+    if (time != null){
+      setState(() {
+        _time = time;
       });
     }
   }
@@ -124,7 +143,7 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("Time:  ",
+                  Text("Time:  ${_time.hour}:${_time.minute}",
                       style: TextStyle(
                           fontSize: 20,
                           fontFamily: "ShipporiMincho",
@@ -133,6 +152,7 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                     icon: Icon(Icons.access_time),
                     onPressed: () {
                       print('time');
+                      _pickTime();
                     },
                   ),
                   Divider(height: 10, color: Colors.transparent),
