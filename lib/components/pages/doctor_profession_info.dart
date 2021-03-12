@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:wellness24/components/common/text_input.dart';
 import 'package:wellness24/components/pages/doctor_home_page.dart';
 import 'package:wellness24/models/new_account.dart';
+import 'package:wellness24/models/user.dart';
+import 'package:wellness24/services/database.dart';
 
 class DoctorProfessionInfo extends StatefulWidget {
   final NewAccount account;
@@ -190,14 +191,18 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                           color: Colors.grey.withOpacity(0.5),
                           minWidth: MediaQuery.of(context).size.width,
                           padding: EdgeInsets.fromLTRB(18.0, 15.0, 18.0, 15.0),
-                          onPressed: () {
+                          onPressed: () async {
                             if (_formKey.currentState.validate()) {
-                              dynamic doctor = account.registerDoctor(
+                              User doctor = await account.registerDoctor(
                                   licenseNo: licenseNo,
                                   clinicLocation: clinicLoc,
                                   clinicStart: clinicStart,
                                   clinicEnd: clinicEnd,
                                   specialization: specialization);
+
+                              final database = DatabaseService(uid: doctor.uid);
+
+                              database.insertDoctor(account);
 
                               if (doctor != null) {
                                 Navigator.push(
