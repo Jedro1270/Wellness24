@@ -13,7 +13,7 @@ class NewAccount {
   String address;
   String gender;
 
-  NewAccount(this.email, this.contactNo, this.password, this.role);
+  NewAccount(String this.email, String this.contactNo, String this.password, String this.role);
 
   List<String> createKeywords(String name) {
     List<String> output = [];
@@ -42,7 +42,7 @@ class NewAccount {
   }
 
   void supplyPersonalInfo(
-      {lastName, firstName, middleInitial, gender, birthDate, address}) {
+      {String lastName, String firstName, String middleInitial, String gender, String birthDate, String address}) {
     this.lastName = lastName;
     this.firstName = firstName;
     this.middleInitial = middleInitial;
