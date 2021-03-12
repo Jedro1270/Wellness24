@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wellness24/components/common/text_input.dart';
 import 'package:wellness24/components/pages/doctor_login.dart';
 import 'package:wellness24/components/pages/doctor_personal_info.dart';
+import 'package:wellness24/models/new_account.dart';
 
 class DoctorRegistration extends StatefulWidget {
   @override
@@ -10,6 +12,8 @@ class DoctorRegistration extends StatefulWidget {
 
 class _DoctorRegistrationState extends State<DoctorRegistration> {
   final _formKey = GlobalKey<FormState>();
+
+  String email, password, contactNo;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +45,7 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
                       val.isEmpty ? 'This field is required' : null,
                   keyboardType: TextInputType.emailAddress,
                   obscureText: false,
+                  onChanged: (val) => setState(() => email = val),
                 ),
                 SizedBox(height: 30.0),
                 TextFormField(
@@ -48,6 +53,7 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
                     validator: (val) =>
                         val.isEmpty ? 'This field is required' : null,
                     keyboardType: TextInputType.number,
+                    onChanged: (val) => setState(() => contactNo = val),
                     obscureText: false),
                 SizedBox(height: 30.0),
                 TextFormField(
@@ -58,6 +64,7 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
                             ? 'Enter a password 6+ characters long'
                             : null,
                     keyboardType: TextInputType.visiblePassword,
+                    onChanged: (val) => setState(() => password = val),
                     obscureText: true),
                 SizedBox(height: 20.0),
                 Container(
@@ -76,11 +83,14 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
                                 EdgeInsets.fromLTRB(18.0, 15.0, 18.0, 15.0),
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
+                                NewAccount account = NewAccount(
+                                    email, contactNo, password, 'Doctor');
+
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            DoctorPersonalInfo()));
+                                            DoctorPersonalInfo(account)));
                               }
                             },
                             child: Text("Create Account",
