@@ -35,19 +35,28 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
                   ),
                 ),
                 SizedBox(height: 50.0),
-                TextInput(
-                  hint: 'Email',
+                TextFormField(
+                  decoration: InputDecoration(hintText: 'Email'),
+                  validator: (val) =>
+                      val.isEmpty ? 'This field is required' : null,
                   keyboardType: TextInputType.emailAddress,
                   obscureText: false,
                 ),
                 SizedBox(height: 30.0),
-                TextInput(
-                    hint: 'Contact Number',
+                TextFormField(
+                    decoration: InputDecoration(hintText: 'Contact Number'),
+                    validator: (val) =>
+                        val.isEmpty ? 'This field is required' : null,
                     keyboardType: TextInputType.number,
                     obscureText: false),
                 SizedBox(height: 30.0),
-                TextInput(
-                    hint: 'Password',
+                TextFormField(
+                    decoration: InputDecoration(hintText: 'Password'),
+                    validator: (val) => val.isEmpty
+                        ? 'This field is required'
+                        : val.length < 6
+                            ? 'Enter a password 6+ characters long'
+                            : null,
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true),
                 SizedBox(height: 20.0),
@@ -65,11 +74,14 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
                             minWidth: MediaQuery.of(context).size.width,
                             padding:
                                 EdgeInsets.fromLTRB(18.0, 15.0, 18.0, 15.0),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => DoctorPersonalInfo()));
+                            onPressed: () async {
+                              if (_formKey.currentState.validate()) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            DoctorPersonalInfo()));
+                              }
                             },
                             child: Text("Create Account",
                                 style: TextStyle(
@@ -97,8 +109,10 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
                       SizedBox(width: 5),
                       InkWell(
                         onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => DoctorLogin()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DoctorLogin()));
                         },
                         child: Text(
                           "Login.",
