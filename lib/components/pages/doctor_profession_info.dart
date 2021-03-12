@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/text_input.dart';
 import 'package:wellness24/components/pages/doctor_home_page.dart';
+import 'package:wellness24/models/new_account.dart';
 
 class DoctorProfessionInfo extends StatefulWidget {
+  final NewAccount account;
+  DoctorProfessionInfo(this.account);
+
   @override
-  _DoctorProfessionInfoState createState() => _DoctorProfessionInfoState();
+  _DoctorProfessionInfoState createState() =>
+      _DoctorProfessionInfoState(account);
 }
 
 class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
   int selectedValue = 1;
+  NewAccount account;
+  String licenseNo, clinicLoc, clinicStart, clinicEnd;
+
+  _DoctorProfessionInfoState(this.account);
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +38,16 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
             SizedBox(height: 20),
             Container(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                Text(
-                  "Profession",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: "ShipporiMincho",
-                      fontWeight: FontWeight.normal),
-                ),
-              ]),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "Profession",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: "ShipporiMincho",
+                          fontWeight: FontWeight.normal),
+                    ),
+                  ]),
             ),
             Container(
               child: Row(
@@ -163,10 +172,11 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                       minWidth: MediaQuery.of(context).size.width,
                       padding: EdgeInsets.fromLTRB(18.0, 15.0, 18.0, 15.0),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => DoctorHomePage()));
+                        print(account);
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => DoctorHomePage()));
                       },
                       child: Text(
                         "Login",
