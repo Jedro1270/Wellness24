@@ -109,6 +109,7 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                     height: 50,
                     child: TextFormField(
                         obscureText: false,
+                        onChanged: (val) => setState(() => licenseNo = val),
                         validator: (val) =>
                             val.isEmpty ? 'This field is required' : null)),
                 SizedBox(height: 20),
@@ -129,6 +130,7 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                   height: 50,
                   child: TextFormField(
                       obscureText: false,
+                      onChanged: (val) => setState(() => clinicLoc = val),
                       validator: (val) =>
                           val.isEmpty ? 'This field is required' : null),
                 ),
@@ -151,6 +153,8 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                         width: 150,
                         child: TextFormField(
                             obscureText: false,
+                            onChanged: (val) =>
+                                setState(() => clinicStart = val),
                             validator: (val) =>
                                 val.isEmpty ? 'This field is required' : null),
                       ),
@@ -165,6 +169,7 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                         width: 150,
                         child: TextFormField(
                             obscureText: false,
+                            onChanged: (val) => setState(() => clinicEnd = val),
                             validator: (val) =>
                                 val.isEmpty ? 'This field is required' : null),
                       ),
@@ -187,11 +192,20 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                           padding: EdgeInsets.fromLTRB(18.0, 15.0, 18.0, 15.0),
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
-                              print(account);
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => DoctorHomePage()));
+                              dynamic doctor = account.registerDoctor(
+                                  licenseNo: licenseNo,
+                                  clinicLocation: clinicLoc,
+                                  clinicStart: clinicStart,
+                                  clinicEnd: clinicEnd,
+                                  specialization: specialization);
+
+                              if (doctor != null) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            DoctorHomePage()));
+                              }
                             }
                           },
                           child: Text(
