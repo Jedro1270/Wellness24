@@ -13,7 +13,7 @@ class DoctorProfessionInfo extends StatefulWidget {
 }
 
 class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
-  int selectedValue = 1;
+  String specialization = 'General Medicine';
   NewAccount account;
   String licenseNo, clinicLoc, clinicStart, clinicEnd;
 
@@ -41,7 +41,7 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      "Profession",
+                      "Specialization",
                       style: TextStyle(
                           fontSize: 20,
                           fontFamily: "ShipporiMincho",
@@ -56,34 +56,30 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                   SizedBox(
                     height: 50,
                     child: DropdownButton(
-                      value: selectedValue,
+                      value: specialization,
                       items: [
                         DropdownMenuItem(
-                          child: Text("Profession 1",
+                          child: Text("General Medicine",
                               style: TextStyle(fontFamily: "ShipporiMincho")),
-                          value: 1,
+                          value: "General Medicine",
                         ),
                         DropdownMenuItem(
-                          child: Text("Profession 2",
+                          child: Text("Neurologist",
                               style: TextStyle(fontFamily: "ShipporiMincho")),
-                          value: 2,
+                          value: "Neurologist",
                         ),
                         DropdownMenuItem(
-                          child: Text("Profession 3",
+                          child: Text("Psychiatrist",
                               style: TextStyle(fontFamily: "ShipporiMincho")),
-                          value: 3,
+                          value: "Psychiatrist",
                         ),
                         DropdownMenuItem(
-                          child: Text("Profession 4",
+                          child: Text("Pediatrician",
                               style: TextStyle(fontFamily: "ShipporiMincho")),
-                          value: 4,
+                          value: "Pediatrician",
                         )
                       ],
-                      onChanged: (value) {
-                        setState(() {
-                          selectedValue = value;
-                        });
-                      },
+                      onChanged: (val) => setState(() => specialization = val),
                     ),
                   ),
                 ],

@@ -24,7 +24,7 @@ class NewAccount {
     this.address = address;
   }
 
-  void registerDoctor({licenseNo, clinicLocation, clinicStart, clinicEnd}) {
+  void registerDoctor({licenseNo, clinicLocation, clinicStart, clinicEnd, specialization}) {
     final auth = AuthService();
     auth.registerWithEmailAndPassword(this.email, this.password);
   }
