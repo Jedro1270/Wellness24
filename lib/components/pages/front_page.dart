@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/pages/doctor_login.dart';
+import 'package:wellness24/components/pages/login_page.dart';
 import 'package:wellness24/components/pages/patient_login.dart';
 
 class FrontPage extends StatefulWidget {
@@ -52,7 +53,7 @@ class _FrontPageState extends State<FrontPage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => DoctorLogin()),
+                        MaterialPageRoute(builder: (context) => Login()),
                       );
                     },
                   ),
@@ -78,7 +79,7 @@ class _FrontPageState extends State<FrontPage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => PatientLogin()),
+                        MaterialPageRoute(builder: (context) => Login()),
                       );
                     },
                   ),
