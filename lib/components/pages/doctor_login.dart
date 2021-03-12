@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/text_input.dart';
-import 'package:wellness24/components/pages/personal_info.dart';
-import 'package:wellness24/components/pages/registration.dart';
+import 'package:wellness24/components/pages/doctor_home_page.dart';
+import 'package:wellness24/components/pages/doctor_registration.dart';
 
-
-class Login extends StatefulWidget {
+class DoctorLogin extends StatefulWidget {
   @override
-  _LoginState createState() => _LoginState();
+  _DoctorLoginState createState() => _DoctorLoginState();
 }
 
-class _LoginState extends State<Login> {
+class _DoctorLoginState extends State<DoctorLogin> {
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -25,7 +24,7 @@ class _LoginState extends State<Login> {
               Container(
                 padding: EdgeInsets.only(top: 120),
                 child: Text(
-                  "Login",
+                  "Doctor",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Colors.black,
@@ -69,7 +68,7 @@ class _LoginState extends State<Login> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        PersonalInfo()));
+                                        DoctorHomePage()));
                           },
                           child: Text("Login",
                               style: TextStyle(
@@ -100,7 +99,7 @@ class _LoginState extends State<Login> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Registration()));
+                                builder: (context) => DoctorRegistration()));
                       },
                       child: Text(
                         "Sign up.",

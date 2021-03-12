@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/text_input.dart';
-import 'package:wellness24/components/pages/doctor_home_page.dart';
-import 'home_page.dart';
+import 'package:wellness24/components/pages/patient_home_page.dart';
 
 class MedicalHistory extends StatefulWidget {
   @override

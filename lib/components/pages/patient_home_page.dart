@@ -49,7 +49,7 @@ class _HomeState extends State<Home> {
                         child: TextField(
                           decoration: InputDecoration(
                             // labelText: 'Search Doctor',
-                            hintText: 'Search Patient',
+                            hintText: 'Search Doctor',
                             suffixIcon: IconButton(
                               icon: Icon(Icons.search),
                               onPressed: () {

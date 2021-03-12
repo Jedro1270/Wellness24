@@ -10,7 +10,6 @@ import 'package:cloud_firestore_mocks/cloud_firestore_mocks.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:wellness24/components/pages/registration.dart';
 
 void main() {
   test('Firebase mock is working.', () async {

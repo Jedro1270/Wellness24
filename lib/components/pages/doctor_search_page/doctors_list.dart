@@ -5,7 +5,6 @@ import 'package:wellness24/components/pages/doctor_search_page/doctor_info.dart'
 class DoctorsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    CollectionReference doctors = Firestore.instance.collection('doctors');
 
     return ListView(
       children: <Widget>[
