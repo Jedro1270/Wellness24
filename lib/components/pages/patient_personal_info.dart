@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/text_input.dart';
-import 'package:wellness24/components/pages/emergency_contact_info.dart';
+import 'package:wellness24/components/pages/patient_emergency_contact_info.dart';
 
 class PersonalInfo extends StatefulWidget {
   @override

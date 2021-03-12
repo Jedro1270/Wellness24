@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:wellness24/components/pages/doctor_info_page.dart';
+
 
 class DoctorInfo extends StatelessWidget {
   final String firstName;
@@ -34,12 +36,21 @@ class DoctorInfo extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Doctor $firstName $middleInitial. $lastName",
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                         MaterialPageRoute(builder: (context) => DoctorDetail()),
+                        );
+                      },
+                      child: Text("Doctor $firstName $middleInitial. $lastName",
                         style: TextStyle(
                             fontSize: 20,
                             fontFamily: "ShipporiMincho",
                             fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center),
+                            textAlign: TextAlign.center
+                        ),
+                    ),
                     Text("Profession",
                         style: TextStyle(
                             fontSize: 20,
