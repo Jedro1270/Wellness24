@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:wellness24/services/auth_service.dart';
 
 class NewAccount {
@@ -24,8 +25,15 @@ class NewAccount {
     this.address = address;
   }
 
-  void registerDoctor({licenseNo, clinicLocation, clinicStart, clinicEnd, specialization}) {
+  dynamic registerDoctor(
+      {licenseNo,
+      clinicLocation,
+      clinicStart,
+      clinicEnd,
+      specialization}) async {
     final auth = AuthService();
-    auth.registerWithEmailAndPassword(this.email, this.password);
+    dynamic result =
+        await auth.registerWithEmailAndPassword(this.email, this.password);
+    return result;
   }
 }
