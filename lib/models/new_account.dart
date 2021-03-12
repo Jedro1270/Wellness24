@@ -12,7 +12,7 @@ class NewAccount {
   String address;
   String gender;
 
-  NewAccount({this.role, this.email, this.contactNo, this.password});
+  NewAccount(this.email, this.contactNo, this.password, this.role);
 
   void supplyPersonalInfo(
       {lastName, firstName, middleInitial, gender, birthDate, address}) {
