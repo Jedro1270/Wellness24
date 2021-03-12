@@ -11,7 +11,7 @@ class PatientAppointmentPage extends StatefulWidget {
 class _PatientAppointmentState extends State<PatientAppointmentPage> {
   DateTime _date = DateTime.now();
   DateFormat format = DateFormat('MM-dd-yyyy');
-  TimeOfDay _time; 
+  TimeOfDay _time;
 
   Future<Null> _selectDate(BuildContext context) async {
     DateTime _datePicker = await showDatePicker(
@@ -30,18 +30,24 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
     }
   }
 
-  @override 
-  void initState(){
+  @override
+  void initState() {
     super.initState();
     _time = TimeOfDay.now();
   }
-  _pickTime() async {
-    TimeOfDay time = await showTimePicker(context: context, initialTime: _time,
-    builder: (BuildContext context, Widget child){
-      return Theme(data: ThemeData(), child: child,);
-    });
 
-    if (time != null){
+  _pickTime() async {
+    TimeOfDay time = await showTimePicker(
+        context: context,
+        initialTime: _time,
+        builder: (BuildContext context, Widget child) {
+          return Theme(
+            data: ThemeData(),
+            child: child,
+          );
+        });
+
+    if (time != null) {
       setState(() {
         _time = time;
       });
@@ -119,43 +125,89 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                 ),
               ),
               Divider(height: 20, thickness: 2, color: Colors.black),
+              Container(
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text("Clinic Hours: 12:00 pm - 4:00 pm",
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: "ShipporiMincho",
+                              color: Colors.black)),
+                    ],
+                  )),
+              Divider(height: 30, thickness: 2, color: Colors.black),
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("Date:  ${format.format(_date)}",
+                  Text("Date:   ",
                       style: TextStyle(
                           fontSize: 20,
                           fontFamily: "ShipporiMincho",
                           color: Colors.black)),
-                  IconButton(
-                    icon: Icon(Icons.calendar_today),
-                    onPressed: () {
-                      setState(() {
-                        _selectDate(context);
-                        print(format.format(_date));
-                      });
-                    },
-                  ),
-                  Divider(height: 10, color: Colors.transparent),
+                  Container(
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.blue[700], width: 2),
+                          borderRadius: BorderRadius.circular(20.0)),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text("${format.format(_date)}",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontFamily: "ShipporiMincho",
+                                  color: Colors.black)),
+                          IconButton(
+                            icon:
+                                Icon(Icons.calendar_today, color: Colors.blue),
+                            onPressed: () {
+                              setState(() {
+                                _selectDate(context);
+                                print(format.format(_date));
+                              });
+                            },
+                          ),
+                        ],
+                      ))
                 ],
               ),
-              Divider(height: 10, color: Colors.transparent),
+              Divider(height: 20, thickness: 2, color: Colors.transparent),
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("Time:  ${_time.hour}:${_time.minute}",
+                  Text("Time:  ",
                       style: TextStyle(
                           fontSize: 20,
                           fontFamily: "ShipporiMincho",
                           color: Colors.black)),
-                  IconButton(
-                    icon: Icon(Icons.access_time),
-                    onPressed: () {
-                      print('time');
-                      _pickTime();
-                    },
-                  ),
-                  Divider(height: 10, color: Colors.transparent),
+                  Container(
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.blue[700], width: 2),
+                          borderRadius: BorderRadius.circular(20.0)),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text("${_time.hour}:${_time.minute}",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontFamily: "ShipporiMincho",
+                                  color: Colors.black)),
+                          IconButton(
+                            icon: Icon(Icons.access_time, color: Colors.blue),
+                            onPressed: () {
+                              setState(() {
+                                _pickTime();
+                              });
+                            },
+                          ),
+                        ],
+                      ))
                 ],
               ),
               Divider(height: 10, color: Colors.transparent),
@@ -165,10 +217,8 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
                       side: BorderSide(color: Colors.black12)),
-                  color: Colors.grey.withOpacity(0.5),
-                  onPressed: () {
-                    print("submit");
-                  },
+                  color: Colors.blue[400],
+                  onPressed: () {},
                   child: Text("Submit",
                       style: TextStyle(
                           color: Colors.black54,
