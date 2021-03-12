@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/text_input.dart';
 import 'package:wellness24/components/pages/doctor_home_page.dart';
 import 'package:wellness24/components/pages/doctor_registration.dart';
+import 'package:wellness24/services/auth_service.dart';
 
 class DoctorLogin extends StatefulWidget {
   @override
@@ -10,6 +11,8 @@ class DoctorLogin extends StatefulWidget {
 
 class _DoctorLoginState extends State<DoctorLogin> {
   final _formKey = GlobalKey<FormState>();
+  final AuthService _auth = AuthService();
+  String email, password;
 
   @override
   Widget build(BuildContext context) {
@@ -36,18 +39,24 @@ class _DoctorLoginState extends State<DoctorLogin> {
               SizedBox(height: 50.0),
               SizedBox(
                   height: 60.0,
-                  child: TextInput(
-                    hint: 'Email',
+                  child: TextFormField(
+                    decoration: InputDecoration(hintText: 'Email'),
                     keyboardType: TextInputType.emailAddress,
                     obscureText: false,
+                    validator: (val) =>
+                        val.isEmpty ? 'This field is required' : null,
+                    onChanged: (val) => setState(() => email = val),
                   )),
               SizedBox(height: 30.0),
               SizedBox(
                   height: 60.0,
-                  child: TextInput(
-                    hint: 'Password',
+                  child: TextFormField(
+                    decoration: InputDecoration(hintText: 'Password'),
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
+                    validator: (val) =>
+                        val.isEmpty ? 'This field is required' : null,
+                    onChanged: (val) => setState(() => password = val),
                   )),
               SizedBox(height: 20.0),
               Container(
@@ -64,11 +73,18 @@ class _DoctorLoginState extends State<DoctorLogin> {
                           minWidth: MediaQuery.of(context).size.width,
                           padding: EdgeInsets.fromLTRB(18.0, 15.0, 18.0, 15.0),
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        DoctorHomePage()));
+                            if (_formKey.currentState.validate()) {
+                              dynamic result = _auth.signInWithEmailAndPassword(
+                                  email, password);
+
+                              if (result != null) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            DoctorHomePage()));
+                              }
+                            }
                           },
                           child: Text("Login",
                               style: TextStyle(
