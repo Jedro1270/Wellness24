@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/text_input.dart';
-import 'package:wellness24/components/pages/emergency_contact_info.dart';
+import 'package:wellness24/components/pages/doctor_profession_info.dart';
 
 class DoctorPersonalInfo extends StatefulWidget {
   @override
@@ -8,6 +8,20 @@ class DoctorPersonalInfo extends StatefulWidget {
 }
 
 class _DoctorPersonalInfoState extends State<DoctorPersonalInfo> {
+  dynamic selectedRadio;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedRadio = 0;
+  }
+
+  setSelectedRadio(int val) {
+    setState(() {
+      selectedRadio = val;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,128 +30,148 @@ class _DoctorPersonalInfoState extends State<DoctorPersonalInfo> {
         padding: EdgeInsets.symmetric(vertical: 60.0, horizontal: 25.0),
         child: ListView(
           children: <Widget>[
-            Text(
-              "Doctor Information Form",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontFamily: "ShipporiMincho",
-                  fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 20),
             Container(
-              child: Row(children: <Widget>[
-                Text(
-                  "Profession",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: "ShipporiMincho",
-                      fontWeight: FontWeight.normal),
-                ),
-              ]),
-            ),
-            SizedBox(height: 50, child: TextInput(obscureText: false)),
-            SizedBox(height: 20),
-            Container(
-              child: Row(children: <Widget>[
-                Text(
-                  "License No.",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: "ShipporiMincho",
-                      fontWeight: FontWeight.normal),
-                ),
-              ]),
-            ),
-            SizedBox(height: 50, child: TextInput(obscureText: false)),
-            SizedBox(height: 20),
-            Container(
+              // padding: EdgeInsets.symmetric(horizontal: 80.0),
               child: Row(
                 children: <Widget>[
                   Text(
-                    "Clinic Location",
+                    "Personal Information Form",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontFamily: "ShipporiMincho",
+                        fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
+            Container(
+              child: Row(children: <Widget>[
+                Text(
+                  "Last Name",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: "ShipporiMincho",
+                      fontWeight: FontWeight.normal),
+                ),
+              ]),
+            ),
+            SizedBox(height: 10),
+            SizedBox(height: 50, child: TextInput(obscureText: false)),
+            SizedBox(height: 15),
+            Container(
+              child: Row(children: <Widget>[
+                Text(
+                  "First Name",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: "ShipporiMincho",
+                      fontWeight: FontWeight.normal),
+                ),
+              ]),
+            ),
+            SizedBox(height: 10),
+            SizedBox(height: 50, child: TextInput(obscureText: false)),
+            SizedBox(height: 15),
+            Container(
+              child: Row(children: <Widget>[
+                Text(
+                  "Middile Name",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: "ShipporiMincho",
+                      fontWeight: FontWeight.normal),
+                ),
+              ]),
+            ),
+            SizedBox(height: 10),
+            SizedBox(height: 50, child: TextInput(obscureText: false)),
+            Text(
+              "Gender",
+              style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: "ShipporiMincho",
+                  fontWeight: FontWeight.normal),
+            ),
+            Container(
+              child: Row(children: <Widget>[
+                Radio(
+                  value: 1,
+                  groupValue: selectedRadio,
+                  activeColor: Colors.blueAccent,
+                  onChanged: (val) {
+                    print("Radio $val");
+                    setSelectedRadio(val);
+                  },
+                ),
+                Text(
+                  "Male",
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontFamily: "ShipporiMincho",
+                      fontWeight: FontWeight.normal),
+                ),
+                Radio(
+                  value: 2,
+                  groupValue: selectedRadio,
+                  activeColor: Colors.blueAccent,
+                  onChanged: (val) {
+                    print("Radio $val");
+                    setSelectedRadio(val);
+                  },
+                ),
+                Text(
+                  "Female",
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontFamily: "ShipporiMincho",
+                      fontWeight: FontWeight.normal),
+                )
+              ]),
+            ),
+            SizedBox(height: 15),
+            Container(
+              child: Row(children: <Widget>[
+                Text("Birth Date",
                     style: TextStyle(
                         fontSize: 20,
                         fontFamily: "ShipporiMincho",
-                        fontWeight: FontWeight.normal),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 50,
-              child: TextInput(obscureText: false),
-            ),
-            SizedBox(height: 20),
-            Container(
-              child: Row(children: <Widget>[
-                Text(
-                  "Clinic Hours.",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: "ShipporiMincho",
-                      fontWeight: FontWeight.normal),
-                ),
+                        fontWeight: FontWeight.normal)),
               ]),
             ),
+            SizedBox(height: 5),
+            SizedBox(height: 50, child: TextInput(hint: "mm-dd-yy",obscureText: false)),
+            SizedBox(height: 15),
+            Container(
+              child: Row(children: <Widget>[
+                Text("Address",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: "ShipporiMincho",
+                        fontWeight: FontWeight.normal)),
+              ]),
+            ),
+            SizedBox(height: 5),
+            SizedBox(height: 50, child: TextInput(obscureText: false)),
+            SizedBox(height: 50),
             Container(
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  SizedBox(
-                    width: 150,
-                    child: TextInput(
-                      obscureText: false,
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    "to",
-                    style:
-                        TextStyle(fontSize: 20, fontFamily: "ShipporiMincho"),
-                  ),
-                  SizedBox(width: 10),
-                  SizedBox(
-                    width: 150,
-                    child: TextInput(
-                      obscureText: false,
-                    ),
+                  IconButton(
+                    icon: Icon(Icons.arrow_forward_sharp, size: 45),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DoctorProfessionInfo()),
+                      );
+                    },
                   ),
                 ],
               ),
-            ),
-            SizedBox(height: 50.0),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    width: 150.0,
-                    child: MaterialButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          side: BorderSide(color: Colors.black12)),
-                      color: Colors.grey.withOpacity(0.5),
-                      minWidth: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.fromLTRB(18.0, 15.0, 18.0, 15.0),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => EmergencyContantInfo()));
-                      },
-                      child: Text(
-                        "Login",
-                        style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: 25,
-                            fontFamily: "ShipporiMincho",
-                            fontWeight: FontWeight.normal),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            )
           ],
         ),
       ),
