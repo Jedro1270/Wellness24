@@ -61,6 +61,11 @@ flutter:
   - assets/schedule.png
   - assets/physical-record.png
   - assets/logo.jpg
+  - assets/sample-patient.jpg
+  - assets/double-person.png
+  - assets/droplet.png
+  - assets/weight.png
+  - assets/dots.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

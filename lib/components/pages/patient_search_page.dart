@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
+import 'package:wellness24/components/pages/patien_profile.dart';
 //import 'package:wellness24/components/pages/doctor_info_page.dart';
 
 class PatientSearchPage extends StatefulWidget {
@@ -51,12 +52,21 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Darla Abagat",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: "ShipporiMincho",
-                                    fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.center),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            PatientProfile()));
+                              },
+                              child: Text("Darla Abagat",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontFamily: "ShipporiMincho",
+                                      fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.center),
+                            ),
                             Text("Contact Number",
                                 style: TextStyle(
                                     fontSize: 20,
