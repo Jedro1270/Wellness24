@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:wellness24/services/auth_service.dart';
+import 'package:wellness24/services/database.dart';
 
 class NewAccount {
+  String uid;
   String role;
   String email;
   String password;
@@ -12,8 +14,9 @@ class NewAccount {
   String birthDate;
   String address;
   String gender;
+  List<String> keywords;
 
-  NewAccount(String this.email, String this.contactNo, String this.password, String this.role);
+  NewAccount(this.uid, this.email, this.contactNo, this.password, this.role);
 
   List<String> createKeywords(String name) {
     List<String> output = [];
@@ -38,11 +41,16 @@ class NewAccount {
     List<String> allKeywords =
         keywordNameWithoutMiddleName + keywordFullName + keywordLastNameFirst;
 
-    print(allKeywords);
+    this.keywords = allKeywords;
   }
 
   void supplyPersonalInfo(
-      {String lastName, String firstName, String middleInitial, String gender, String birthDate, String address}) {
+      {String lastName,
+      String firstName,
+      String middleInitial,
+      String gender,
+      String birthDate,
+      String address}) {
     this.lastName = lastName;
     this.firstName = firstName;
     this.middleInitial = middleInitial;
@@ -57,6 +65,9 @@ class NewAccount {
       clinicStart,
       clinicEnd,
       specialization}) async {
+    generateAllKeywords();
+
+    final database = DatabaseService(uid: this.uid);
     final auth = AuthService();
 
     dynamic result =
