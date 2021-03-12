@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/text_input.dart';
-import 'package:wellness24/components/pages/login.dart';
-import 'package:wellness24/components/pages/personal_info.dart';
+import 'package:wellness24/components/pages/patient_login.dart';
+import 'package:wellness24/components/pages/patient_personal_info.dart';
 
-class Registration extends StatefulWidget {
+class PatientRegistration extends StatefulWidget {
   @override
-  _LoginState createState() => _LoginState();
+  _PatientRegistrationState createState() => _PatientRegistrationState();
 }
 
-class _LoginState extends State<Registration> {
+class _PatientRegistrationState extends State<PatientRegistration> {
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -98,7 +98,7 @@ class _LoginState extends State<Registration> {
                       InkWell(
                         onTap: () {
                           Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => Login()));
+                              MaterialPageRoute(builder: (context) => PatientLogin()));
                         },
                         child: Text(
                           "Login.",

@@ -5,12 +5,12 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore_mocks/cloud_firestore_mocks.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
-import 'package:wellness24/components/pages/registration.dart';
+import 'package:flutter/material.dart';
+import 'package:wellness24/components/common/text_input.dart';
+import 'package:wellness24/components/pages/doctor_registration.dart';
 
 void main() {
   test('Firebase mock is working.', () async {
@@ -25,40 +25,38 @@ void main() {
     expect(snapshot.docs.first.data()['name'], 'Dr. Heinz Doofenshmirtz');
   });
 
-  // testWidgets('Doctors must be registered after signing up.',
-  //     (WidgetTester tester) async {
-  //   // Insert into doctors
-  //   when(instance.collection('doctors')).thenReturn(mockCollectionReference);
-  //   when(mockCollectionReference.document(any))
-  //       .thenReturn(mockDocumentReference);
-  //   when(mockDocumentReference.setData(any))
-  //       .thenAnswer((_) async => mockDocumentSnapshot);
+  testWidgets('Doctors must be registered after signing up.',
+      (WidgetTester tester) async {
+    final String testEmail = 'jedro1270@gmail.com';
+    final String testContactNumber = '09954845486';
+    final String testPassword = 'Jedro0987';
 
-  //   // Check for inserted doctor
-  //   when(instance.collection('doctors')).thenReturn(mockCollectionReference);
-  //   when(mockCollectionReference.document(any))
-  //       .thenReturn(mockDocumentReference);
-  //   when(mockDocumentReference.get())
-  //       .thenAnswer((_) async => mockDocumentSnapshot);
+    final Widget emailInput = TextInput(
+      hint: 'Email',
+      keyboardType: TextInputType.emailAddress,
+      obscureText: false,
+    );
+    final Widget contactNumberInput = TextInput(
+        hint: 'Contact Number',
+        keyboardType: TextInputType.number,
+        obscureText: false);
+    final Widget passwordInput = TextInput(
+        hint: 'Password',
+        keyboardType: TextInputType.visiblePassword,
+        obscureText: true);
 
-  //   final String testName = 'Dr. Heinz Doofenshmirtz'; // Replace
-  //   // Add other values
+    await tester.pumpWidget(DoctorRegistration());
 
-  //   final Widget nameInput = Container(); // Replace
-  //   // Add other widgets for fields
-  //   final Widget submitButton = Container(); // Replace
+    var email = find.byWidget(emailInput);
+    var contactNumber = find.byWidget(contactNumberInput);
+    var password = find.byWidget(passwordInput);
 
-  //   await tester.pumpWidget(Registration());
+    await tester.enterText(email, testEmail);
+    await tester.enterText(contactNumber, testContactNumber);
+    await tester.enterText(password, testPassword);
 
-  //   var name = find.byWidget(nameInput);
-  //   await tester.enterText(name, testName);
+    await tester.tap(find.byType(InkWell)); // Submit data to firestore, must take firestore as optional parameter for testing
 
-  //   // Insert all other fields like email, etc.
-
-  //   await tester.tap(find.byWidget(submitButton));
-
-  //   await tester.pump();
-
-  //   final result = await
-  // });
+    await tester.pump(); // Update the page
+  });
 }
