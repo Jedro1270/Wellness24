@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/pages/emergency_page.dart';
+import 'package:wellness24/components/pages/doctor_info_page.dart';
+import 'package:wellness24/components/pages/schedule_Appointment_page.dart';
 
 import 'doctor_search_page/doctor_search_page.dart';
 
@@ -114,6 +116,10 @@ class _HomeState extends State<Home> {
                             color: Colors.black)),
                     onPressed: () {
                       print("Doctor's info");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DoctorDetail()));
                     },
                     style: ElevatedButton.styleFrom(
                         padding:
@@ -137,6 +143,10 @@ class _HomeState extends State<Home> {
                             color: Colors.black)),
                     onPressed: () {
                       print("Schedule Appointment");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PatientAppointmentPage()));
                     },
                     style: ElevatedButton.styleFrom(
                         padding:
