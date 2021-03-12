@@ -117,7 +117,7 @@ class DoctorDetail extends StatelessWidget {
                       )),
                       SizedBox(width: 20.0),
                       SizedBox(
-                        width: 70.0,
+                        width: 90.0,
                         height: 35.0,
                         child: RaisedButton(
                           onPressed: () {},
