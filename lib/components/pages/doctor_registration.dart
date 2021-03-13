@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:wellness24/components/common/text_input.dart';
 import 'package:wellness24/components/pages/doctor_login.dart';
 import 'package:wellness24/components/pages/doctor_personal_info.dart';
 import 'package:wellness24/models/new_account.dart';
