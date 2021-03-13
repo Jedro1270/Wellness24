@@ -1,10 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/pages/doctor_search_page/doctor_info.dart';
+import 'package:wellness24/services/database.dart';
 
 class DoctorsList extends StatelessWidget {
+  String searchValue;
+
+  DoctorsList({this.searchValue});
+
   @override
   Widget build(BuildContext context) {
+    void getDoctors() async {
+      DatabaseService database = DatabaseService();
+
+      var snapshots = await database.doctors
+          .where('keywords', arrayContains: searchValue.toLowerCase())
+          .orderBy('lastName')
+          .getDocuments();
+
+      snapshots.documents.forEach((document) {
+        print(document.data);
+      });
+    }
+
+    getDoctors();
 
     return ListView(
       children: <Widget>[
