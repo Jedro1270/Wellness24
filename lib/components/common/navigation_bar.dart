@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/services/auth_service.dart';
+import 'package:wellness24/components/pages/login_page.dart';
 
 class NavBar extends StatelessWidget {
+  final AuthService auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -48,11 +51,11 @@ class NavBar extends StatelessWidget {
         ListTile(
           leading: Icon(Icons.logout, color: Colors.blueAccent),
           title: Text('Log out'),
-          onTap: () {
+          onTap: () async {
             print("Log out");
-            AuthService auth = AuthService();
-
-            auth.signOut();
+            await auth.signOut();
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Login()));
           },
         ),
       ],
