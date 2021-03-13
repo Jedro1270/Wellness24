@@ -17,7 +17,6 @@ class DatabaseService {
     doctors.document(uid).setData({
       'keywords': doctorAccount.keywords,
       'email': doctorAccount.email,
-      'password': doctorAccount.password,
       'contactNumber': doctorAccount.contactNo,
       'lastName': doctorAccount.lastName,
       'firstName': doctorAccount.firstName,
