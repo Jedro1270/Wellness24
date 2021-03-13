@@ -6,12 +6,15 @@ import 'package:wellness24/components/pages/patient_schedule_page.dart';
 
 import 'doctor_search_page/doctor_search_page.dart';
 
-class Home extends StatefulWidget {
+class PatientHomePage extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  _PatientHomePageState createState() => _PatientHomePageState();
 }
 
-class _HomeState extends State<Home> {
+class _PatientHomePageState extends State<PatientHomePage> {
+
+  String searchValue = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,6 +52,7 @@ class _HomeState extends State<Home> {
                       SizedBox(
                         width: 320,
                         child: TextField(
+                          onChanged: (val) => setState(() => searchValue = val),
                           decoration: InputDecoration(
                             // labelText: 'Search Doctor',
                             hintText: 'Search Doctor',
@@ -59,7 +63,7 @@ class _HomeState extends State<Home> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            DoctorSearchPage()));
+                                            DoctorSearchPage(searchValue: searchValue)));
                               },
                             ),
                             enabledBorder: OutlineInputBorder(

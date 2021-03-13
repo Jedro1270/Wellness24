@@ -17,7 +17,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
             icon: Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Home()));
+                  MaterialPageRoute(builder: (context) => PatientHomePage()));
 
             }),
       ),

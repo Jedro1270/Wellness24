@@ -69,7 +69,7 @@ class _PatientLoginState extends State<PatientLogin> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        Home()));
+                                        PatientHomePage()));
                           },
                           child: Text("Login",
                               style: TextStyle(

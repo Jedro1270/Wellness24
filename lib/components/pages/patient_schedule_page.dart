@@ -63,7 +63,7 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
             icon: Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Home()));
+                  context, MaterialPageRoute(builder: (context) => PatientHomePage()));
             }),
       ),
       body: Container(

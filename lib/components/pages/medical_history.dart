@@ -93,7 +93,7 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                         // padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                         onPressed: () {
                           Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => Home()));
+                              MaterialPageRoute(builder: (context) => PatientHomePage()));
                         },
                         child: Text("Submit",
                             style: TextStyle(
