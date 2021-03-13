@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wellness24/components/pages/doctor_login.dart';
 import 'package:wellness24/components/pages/login_page.dart';
-import 'package:wellness24/components/pages/patient_login.dart';
 
 class FrontPage extends StatefulWidget {
   @override
