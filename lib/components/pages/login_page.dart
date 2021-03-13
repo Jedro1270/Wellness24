@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:wellness24/components/common/text_input.dart';
 import 'package:wellness24/components/pages/doctor_home_page.dart';
 import 'package:wellness24/components/pages/doctor_registration.dart';
+import 'package:wellness24/services/auth_service.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -10,6 +10,9 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
+  final AuthService _auth = AuthService();
+  String email, password;
+  String error = '';
 
   @override
   Widget build(BuildContext context) {
@@ -36,18 +39,24 @@ class _LoginState extends State<Login> {
               SizedBox(height: 50.0),
               SizedBox(
                   height: 60.0,
-                  child: TextInput(
-                    hint: 'Email',
+                  child: TextFormField(
+                    decoration: InputDecoration(hintText: 'Email'),
                     keyboardType: TextInputType.emailAddress,
                     obscureText: false,
+                    validator: (val) =>
+                        val.isEmpty ? 'This field is required' : null,
+                    onChanged: (val) => setState(() => email = val),
                   )),
               SizedBox(height: 30.0),
               SizedBox(
                   height: 60.0,
-                  child: TextInput(
-                    hint: 'Password',
+                  child: TextFormField(
+                    decoration: InputDecoration(hintText: 'Password'),
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
+                    validator: (val) =>
+                        val.isEmpty ? 'This field is required' : null,
+                    onChanged: (val) => setState(() => password = val),
                   )),
               SizedBox(height: 20.0),
               Container(
@@ -63,12 +72,21 @@ class _LoginState extends State<Login> {
                           color: Colors.grey.withOpacity(0.5),
                           minWidth: MediaQuery.of(context).size.width,
                           padding: EdgeInsets.fromLTRB(18.0, 15.0, 18.0, 15.0),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        DoctorHomePage()));
+                          onPressed: () async {
+                            if (_formKey.currentState.validate()) {
+                              dynamic result = await _auth
+                                  .signInWithEmailAndPassword(email, password);
+
+                              if (result == null) {
+                                setState(() => error = 'Invalid credentials');
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            DoctorHomePage()));
+                              }
+                            }
                           },
                           child: Text("Login",
                               style: TextStyle(
@@ -80,7 +98,12 @@ class _LoginState extends State<Login> {
                   ],
                 ),
               ),
-              SizedBox(height: 20.0),
+              SizedBox(height: 5.0),
+              Text(
+                error,
+                style: TextStyle(color: Colors.red, fontSize: 14.0),
+              ),
+              SizedBox(height: 5.0),
               Container(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -108,7 +131,7 @@ class _LoginState extends State<Login> {
                             fontFamily: "ShipporiMincho",
                             fontWeight: FontWeight.normal),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
