@@ -3,6 +3,10 @@ import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/pages/doctor_search_page/doctors_list.dart';
 
 class DoctorSearchPage extends StatefulWidget {
+  String searchValue;
+
+  DoctorSearchPage({this.searchValue});
+
   @override
   _DoctorSearchPageState createState() => _DoctorSearchPageState();
 }
@@ -10,7 +14,6 @@ class DoctorSearchPage extends StatefulWidget {
 class _DoctorSearchPageState extends State<DoctorSearchPage> {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CustomAppBar(
@@ -23,7 +26,7 @@ class _DoctorSearchPageState extends State<DoctorSearchPage> {
           )
         ],
       ),
-      body: Container(child: DoctorsList()),
+      body: Container(child: DoctorsList(searchValue: widget.searchValue)),
     );
   }
 }
