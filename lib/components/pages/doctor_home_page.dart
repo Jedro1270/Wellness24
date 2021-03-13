@@ -13,8 +13,6 @@ class DoctorHomePage extends StatefulWidget {
 class _DoctorHomePageState extends State<DoctorHomePage> {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
-    print(user.uid);
     
     return Scaffold(
       drawer: NavBar(),
