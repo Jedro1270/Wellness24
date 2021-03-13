@@ -3,64 +3,41 @@ import 'package:flutter/material.dart';
 import 'package:wellness24/components/pages/doctor_search_page/doctor_info.dart';
 import 'package:wellness24/services/database.dart';
 
-class DoctorsList extends StatelessWidget {
+class DoctorsList extends StatefulWidget {
   String searchValue;
+  List<Widget> doctors = [];
 
   DoctorsList({this.searchValue});
 
+  @override
+  DoctorsListState createState() => DoctorsListState();
+}
+
+class DoctorsListState extends State<DoctorsList> {
   @override
   Widget build(BuildContext context) {
     void getDoctors() async {
       DatabaseService database = DatabaseService();
 
       var snapshots = await database.doctors
-          .where('keywords', arrayContains: searchValue.toLowerCase())
+          .where('keywords', arrayContains: widget.searchValue.toLowerCase())
           .orderBy('lastName')
           .getDocuments();
 
-      snapshots.documents.forEach((document) {
-        print(document.data);
+      setState(() {
+        widget.doctors = snapshots.documents.map((document) {
+          print(document.data['firstName']);
+          return DoctorInfo(
+            firstName: document.data['firstName'],
+            middleInitial: document.data['middleInitial'],
+            lastName: document.data['lastName'],
+          );
+        }).toList();
       });
     }
 
     getDoctors();
 
-    return ListView(
-      children: <Widget>[
-        SizedBox(height: 30),
-        DoctorInfo(
-            firstName: 'Elimjoyce', middleInitial: 'A', lastName: 'Abagat'),
-        SizedBox(height: 20),
-        DoctorInfo(firstName: 'Casey', middleInitial: 'C', lastName: 'Capacio'),
-        SizedBox(height: 20),
-        DoctorInfo(
-            firstName: 'Jedro', middleInitial: 'E', lastName: 'Pagayonan')
-      ],
-    );
+    return ListView(children: widget.doctors);
   }
 }
-
-// return StreamBuilder<QuerySnapshot>(
-//       stream: doctors.snapshots(),
-//       builder: (context, snapshot) {
-//         if (snapshot.hasError) {
-//           return Text('Something went wrong');
-//         }
-
-//         if (snapshot.connectionState == ConnectionState.waiting) {
-//           return Text('Loading');
-//         }
-
-//         return ListView(
-//           children: snapshot.data.documents.map((DocumentSnapshot document) {
-//             return DoctorInfo(
-//               firstName: document.data['firstName'],
-//               middleInitial: document.data['middleInitial'],
-//               lastName: document.data['lastName']
-//             );
-//           }).toList()
-//         );
-
-//         );
-//       },
-//     );
