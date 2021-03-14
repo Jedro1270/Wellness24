@@ -98,12 +98,13 @@ class _LoginState extends State<Login> {
                   ],
                 ),
               ),
-              SizedBox(height: 5.0),
+              SizedBox(height: 10.0),
               Text(
                 error,
+                textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.red, fontSize: 14.0),
               ),
-              SizedBox(height: 5.0),
+              SizedBox(height: 10.0),
               Container(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
