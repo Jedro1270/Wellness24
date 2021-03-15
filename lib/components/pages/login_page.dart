@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wellness24/components/pages/doctor_home_page.dart';
+import 'package:wellness24/components/pages/doctor_screen/doctor_home_page.dart';
 // import 'package:wellness24/components/pages/doctor_registration.dart';
 import 'package:wellness24/components/pages/sign_up_option.dart';
 import 'package:wellness24/services/auth_service.dart';

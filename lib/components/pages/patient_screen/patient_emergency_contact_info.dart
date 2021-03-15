@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/text_input.dart';
-import 'package:wellness24/components/pages/medical_history.dart';
+import 'package:wellness24/components/pages/patient_screen/medical_history.dart';
 import 'package:wellness24/models/new_account.dart';
 
 class EmergencyContactInfo extends StatefulWidget {

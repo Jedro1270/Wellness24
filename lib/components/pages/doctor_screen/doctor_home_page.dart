@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
-import 'package:wellness24/components/pages/patient_search_page.dart';
+import 'package:wellness24/components/pages/patient_screen/patient_search_page.dart';
 import 'package:wellness24/components/common/navigation_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness24/models/user.dart';

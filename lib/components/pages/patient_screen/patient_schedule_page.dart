@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:wellness24/components/common/app_bar.dart';
-import 'package:wellness24/components/pages/patient_home_page.dart';
+import 'package:wellness24/components/pages/patient_screen/patient_home_page.dart';
 
 class PatientAppointmentPage extends StatefulWidget {
   @override

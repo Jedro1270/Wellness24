@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:wellness24/components/pages/doctor_profession_info.dart';
-import 'package:wellness24/components/pages/medical_history.dart';
-import 'package:wellness24/components/pages/patient_emergency_contact_info.dart';
+import 'package:wellness24/components/pages/doctor_screen/doctor_profession_info.dart';
+import 'package:wellness24/components/pages/patient_screen/medical_history.dart';
+import 'package:wellness24/components/pages/patient_screen/patient_emergency_contact_info.dart';
 import 'package:wellness24/models/new_account.dart';
 
 class RegisterPersonalInfo extends StatefulWidget {
