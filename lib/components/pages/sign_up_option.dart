@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wellness24/components/pages/doctor_registration.dart';
-import 'package:wellness24/components/pages/login_page.dart';
+import 'package:wellness24/components/pages/register_credentials.dart';
 
 class SignupOption extends StatefulWidget {
   @override
@@ -8,6 +7,13 @@ class SignupOption extends StatefulWidget {
 }
 
 class _SignupOptionState extends State<SignupOption> {
+  void goToRegisterPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => RegisterCredentials()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,7 +45,9 @@ class _SignupOptionState extends State<SignupOption> {
                 children: <Widget>[
                   CircleAvatar(
                     radius: 25.0,
-                    child: Image(image: AssetImage("assets/doctor.png"),),
+                    child: Image(
+                      image: AssetImage("assets/doctor.png"),
+                    ),
                   ),
                   SizedBox(width: 10),
                   InkWell(
@@ -49,12 +57,7 @@ class _SignupOptionState extends State<SignupOption> {
                             fontSize: 30,
                             fontFamily: "ShipporiMincho",
                             fontWeight: FontWeight.bold)),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => DoctorRegistration()),
-                      );
-                    },
+                    onTap: goToRegisterPage,
                   ),
                 ],
               ),
@@ -64,7 +67,9 @@ class _SignupOptionState extends State<SignupOption> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  CircleAvatar(radius: 20.0, child: Image(image: AssetImage("assets/patient.png"))),
+                  CircleAvatar(
+                      radius: 20.0,
+                      child: Image(image: AssetImage("assets/patient.png"))),
                   SizedBox(width: 10),
                   InkWell(
                     child: (Text(
@@ -75,12 +80,7 @@ class _SignupOptionState extends State<SignupOption> {
                           fontFamily: "ShipporiMincho",
                           fontWeight: FontWeight.bold),
                     )),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Login()),
-                      );
-                    },
+                    onTap: goToRegisterPage,
                   ),
                 ],
               ),
