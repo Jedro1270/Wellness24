@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/pages/register_credentials.dart';
+import 'package:wellness24/models/new_account.dart';
 
 class SignupOption extends StatefulWidget {
   @override
@@ -7,10 +8,11 @@ class SignupOption extends StatefulWidget {
 }
 
 class _SignupOptionState extends State<SignupOption> {
-  void goToRegisterPage() {
+  goToRegisterPage(String role) {
+    NewAccount account = NewAccount(role);
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => RegisterCredentials()),
+      MaterialPageRoute(builder: (context) => RegisterCredentials(account)),
     );
   }
 
@@ -57,7 +59,7 @@ class _SignupOptionState extends State<SignupOption> {
                             fontSize: 30,
                             fontFamily: "ShipporiMincho",
                             fontWeight: FontWeight.bold)),
-                    onTap: goToRegisterPage,
+                    onTap: goToRegisterPage('Doctor'),
                   ),
                 ],
               ),
@@ -80,7 +82,7 @@ class _SignupOptionState extends State<SignupOption> {
                           fontFamily: "ShipporiMincho",
                           fontWeight: FontWeight.bold),
                     )),
-                    onTap: goToRegisterPage,
+                    onTap: goToRegisterPage('Patient'),
                   ),
                 ],
               ),

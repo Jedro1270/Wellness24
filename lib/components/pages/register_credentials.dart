@@ -4,14 +4,18 @@ import 'package:wellness24/components/pages/login_page.dart';
 import 'package:wellness24/models/new_account.dart';
 
 class RegisterCredentials extends StatefulWidget {
+  final NewAccount account;
+  RegisterCredentials(this.account);
   @override
-  _RegisterCredentialsState createState() => _RegisterCredentialsState();
+  _RegisterCredentialsState createState() =>
+      _RegisterCredentialsState(this.account);
 }
 
 class _RegisterCredentialsState extends State<RegisterCredentials> {
   final _formKey = GlobalKey<FormState>();
-
   String email, password, contactNo;
+  NewAccount account;
+  _RegisterCredentialsState(this.account);
 
   @override
   Widget build(BuildContext context) {
@@ -81,8 +85,10 @@ class _RegisterCredentialsState extends State<RegisterCredentials> {
                                 EdgeInsets.fromLTRB(18.0, 15.0, 18.0, 15.0),
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
-                                NewAccount account = NewAccount(
-                                    email, contactNo, password, 'Doctor');
+                                account.supplyCredentials(
+                                    email: email,
+                                    contactNo: contactNo,
+                                    password: password);
 
                                 Navigator.push(
                                     context,
@@ -117,10 +123,8 @@ class _RegisterCredentialsState extends State<RegisterCredentials> {
                       SizedBox(width: 5),
                       InkWell(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Login()));
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => Login()));
                         },
                         child: Text(
                           "Login.",
