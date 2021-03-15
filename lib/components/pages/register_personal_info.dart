@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/pages/doctor_profession_info.dart';
+import 'package:wellness24/components/pages/medical_history.dart';
+import 'package:wellness24/components/pages/patient_emergency_contact_info.dart';
 import 'package:wellness24/models/new_account.dart';
 
 class RegisterPersonalInfo extends StatefulWidget {
@@ -15,6 +17,19 @@ class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
   final _formKey = GlobalKey<FormState>();
   String selectedRadio, lastName, firstName, middleInitial, birthDate, address;
   NewAccount account;
+  goToNextPage() {
+    if (account.role == 'Doctor') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => DoctorProfessionInfo(account)),
+      );
+    } else {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => EmergencyContactInfo(account)));
+    }
+  }
 
   _RegisterPersonalInfoState(this.account);
 
@@ -208,12 +223,6 @@ class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
                                 gender: selectedRadio,
                                 birthDate: birthDate,
                                 address: address);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      DoctorProfessionInfo(account)),
-                            );
                           }
                         },
                       ),
