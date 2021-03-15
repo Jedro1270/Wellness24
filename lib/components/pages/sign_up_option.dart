@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:wellness24/components/pages/doctor_registration.dart';
 import 'package:wellness24/components/pages/login_page.dart';
 
-class FrontPage extends StatefulWidget {
+class SignupOption extends StatefulWidget {
   @override
-  _FrontPageState createState() => _FrontPageState();
+  _SignupOptionState createState() => _SignupOptionState();
 }
 
-class _FrontPageState extends State<FrontPage> {
+class _SignupOptionState extends State<SignupOption> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,7 +22,7 @@ class _FrontPageState extends State<FrontPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "Login as",
+                    "Sign up as",
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 40,
@@ -51,7 +52,7 @@ class _FrontPageState extends State<FrontPage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Login()),
+                        MaterialPageRoute(builder: (context) => DoctorRegistration()),
                       );
                     },
                   ),
