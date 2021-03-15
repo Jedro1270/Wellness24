@@ -13,6 +13,11 @@ class NewAccount {
   String birthDate;
   String address;
   String gender;
+  String specialization;
+  String licenseNo;
+  String clinicLocation;
+  String clinicStart;
+  String clinicEnd;
   List<String> keywords;
 
   NewAccount(this.role);
@@ -70,6 +75,12 @@ class NewAccount {
       clinicStart,
       clinicEnd,
       specialization}) async {
+    this.licenseNo = licenseNo;
+    this.clinicLocation = clinicLocation;
+    this.clinicStart = clinicStart;
+    this.clinicEnd = clinicEnd;
+    this.specialization = specialization;
+
     generateAllKeywords();
 
     final auth = AuthService();

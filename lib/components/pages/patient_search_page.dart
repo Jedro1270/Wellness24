@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
-import 'package:wellness24/components/pages/patien_profile.dart';
+import 'package:wellness24/components/pages/patient_profile.dart';
 //import 'package:wellness24/components/pages/doctor_info_page.dart';
 
 class PatientSearchPage extends StatefulWidget {

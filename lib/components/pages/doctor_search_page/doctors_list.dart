@@ -3,40 +3,64 @@ import 'package:wellness24/components/pages/doctor_search_page/doctor_info.dart'
 import 'package:wellness24/services/database.dart';
 
 class DoctorsList extends StatefulWidget {
-  String searchValue;
-  List<Widget> doctors = [];
+  final String searchValue;
+  final String filterValue;
 
-  DoctorsList({this.searchValue});
+  DoctorsList({this.searchValue, this.filterValue});
 
   @override
   DoctorsListState createState() => DoctorsListState();
 }
 
 class DoctorsListState extends State<DoctorsList> {
-  @override
-  Widget build(BuildContext context) {
-    void getDoctors() async {
-      DatabaseService database = DatabaseService();
+  List<DoctorInfo> doctors = [];
 
-      var snapshots = await database.doctors
+  void getDoctors() async {
+    DatabaseService database = DatabaseService();
+    var snapshots;
+
+    if (widget.searchValue.trim() == '') {
+      snapshots = await database.doctors.getDocuments();
+    } else {
+      snapshots = await database.doctors
           .where('keywords', arrayContains: widget.searchValue.toLowerCase())
           .orderBy('lastName')
           .getDocuments();
+    }
 
-      setState(() {
-        widget.doctors = snapshots.documents.map((document) {
-          print(document.data['firstName']);
-          return DoctorInfo(
+    final filteredDoctors = snapshots.documents.where((document) {
+      if (widget.filterValue == null) {
+        return true;
+      }
+
+      return document.data['specialization'].toLowerCase() ==
+              widget.filterValue.toLowerCase() ||
+          widget.filterValue.toLowerCase() == 'any';
+    }).toList();
+
+    setState(() {
+      doctors = filteredDoctors.map<DoctorInfo>((document) {
+        print(document.data['firstName']);
+        return DoctorInfo(
             firstName: document.data['firstName'],
             middleInitial: document.data['middleInitial'],
             lastName: document.data['lastName'],
-          );
-        }).toList();
-      });
-    }
+            specialization: document.data['specialization'],
+            clinicHours:
+                "${document.data['clinicStart']} to ${document.data['clinicEnd']}");
+      }).toList();
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
 
     getDoctors();
+  }
 
-    return ListView(children: widget.doctors);
+  @override
+  Widget build(BuildContext context) {
+    return ListView(children: doctors);
   }
 }

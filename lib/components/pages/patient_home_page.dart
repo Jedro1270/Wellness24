@@ -12,8 +12,8 @@ class PatientHomePage extends StatefulWidget {
 }
 
 class _PatientHomePageState extends State<PatientHomePage> {
-
   String searchValue = '';
+  String filterValue = 'Any';
 
   @override
   Widget build(BuildContext context) {
@@ -42,42 +42,60 @@ class _PatientHomePageState extends State<PatientHomePage> {
       body: Container(
         child: ListView(
           children: [
-            Row(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 320,
-                        child: TextField(
-                          onChanged: (val) => setState(() => searchValue = val),
-                          decoration: InputDecoration(
-                            // labelText: 'Search Doctor',
-                            hintText: 'Search Doctor',
-                            suffixIcon: IconButton(
-                              icon: Icon(Icons.search),
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            DoctorSearchPage(searchValue: searchValue)));
-                              },
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20.0),
-                              borderSide: BorderSide(color: Colors.black),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(child: Icon(Icons.filter_list)),
-                    ],
+            Center(
+              child: SizedBox(
+                child: DropdownButton<String>(
+                  value: filterValue,
+                  icon: const Icon(Icons.filter_alt_sharp),
+                  iconSize: 24,
+                  elevation: 16,
+                  onChanged: (String newValue) {
+                    setState(() {
+                      filterValue = newValue;
+                    });
+                  },
+                  items: <String>[
+                    'Any',
+                    'General Medicine',
+                    'Neurologist',
+                    'Psychiatrist',
+                    'Pediatrician'
+                  ].map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 5, right: 5, bottom: 20),
+              child: SizedBox(
+                width: 250,
+                child: TextField(
+                  onChanged: (val) => setState(() => searchValue = val),
+                  decoration: InputDecoration(
+                    // labelText: 'Search Doctor',
+                    hintText: 'Search Doctor',
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.search),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DoctorSearchPage(
+                                    searchValue: searchValue,
+                                    filterValue: filterValue)));
+                      },
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
                   ),
                 ),
-              ],
+              ),
             ),
             Container(
               child: Row(

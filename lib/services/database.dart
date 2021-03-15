@@ -23,7 +23,12 @@ class DatabaseService {
       'middleInitial': doctorAccount.middleInitial,
       'birthDate': doctorAccount.birthDate,
       'address': doctorAccount.address,
-      'gender': doctorAccount.gender
+      'gender': doctorAccount.gender,
+      'licenseNo': doctorAccount.licenseNo,
+      'clinicLocation': doctorAccount.clinicLocation,
+      'clinicStart': doctorAccount.clinicStart,
+      'clinicEnd': doctorAccount.clinicEnd,
+      'specialization': doctorAccount.specialization
     });
   }
 }

@@ -3,9 +3,10 @@ import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/pages/doctor_search_page/doctors_list.dart';
 
 class DoctorSearchPage extends StatefulWidget {
-  String searchValue;
+  final String searchValue;
+  final String filterValue;
 
-  DoctorSearchPage({this.searchValue});
+  DoctorSearchPage({this.searchValue, this.filterValue});
 
   @override
   _DoctorSearchPageState createState() => _DoctorSearchPageState();
@@ -26,7 +27,7 @@ class _DoctorSearchPageState extends State<DoctorSearchPage> {
           )
         ],
       ),
-      body: Container(child: DoctorsList(searchValue: widget.searchValue)),
+      body: Container(child: DoctorsList(searchValue: widget.searchValue, filterValue: widget.filterValue)),
     );
   }
 }
