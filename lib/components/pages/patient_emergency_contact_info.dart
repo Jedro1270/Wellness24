@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/text_input.dart';
 import 'package:wellness24/components/pages/medical_history.dart';
+import 'package:wellness24/models/new_account.dart';
 
-class EmergencyContantInfo extends StatefulWidget {
+class EmergencyContactInfo extends StatefulWidget {
+  final NewAccount account;
+  EmergencyContactInfo(this.account);
   @override
-  _EmergencyContantInfoState createState() => _EmergencyContantInfoState();
+  _EmergencyContactInfoState createState() =>
+      _EmergencyContactInfoState(account);
 }
 
-class _EmergencyContantInfoState extends State<EmergencyContantInfo> {
+class _EmergencyContactInfoState extends State<EmergencyContactInfo> {
+  final NewAccount account;
+
+  _EmergencyContactInfoState(this.account);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,7 +126,7 @@ class _EmergencyContantInfoState extends State<EmergencyContantInfo> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => MedicalHistory()),
+                            builder: (context) => MedicalHistory(account)),
                       );
                     },
                   ),

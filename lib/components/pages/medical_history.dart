@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/text_input.dart';
 import 'package:wellness24/components/pages/patient_home_page.dart';
+import 'package:wellness24/models/new_account.dart';
 
 class MedicalHistory extends StatefulWidget {
+  final NewAccount account;
+  MedicalHistory(this.account);
   @override
-  _MedicalHistoryState createState() => _MedicalHistoryState();
+  _MedicalHistoryState createState() => _MedicalHistoryState(this.account);
 }
 
 class _MedicalHistoryState extends State<MedicalHistory> {
@@ -18,6 +21,9 @@ class _MedicalHistoryState extends State<MedicalHistory> {
     MedicalHistoryList(title: "Obesity"),
     MedicalHistoryList(title: "Others"),
   ];
+  final NewAccount account;
+
+  _MedicalHistoryState(this.account);
 
   @override
   Widget build(BuildContext context) {
@@ -92,8 +98,10 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                         // minWidth: 100,
                         // padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                         onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => PatientHomePage()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PatientHomePage()));
                         },
                         child: Text("Submit",
                             style: TextStyle(
