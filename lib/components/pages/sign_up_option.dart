@@ -86,37 +86,6 @@ class _SignupOptionState extends State<SignupOption> {
               ),
             ),
             SizedBox(height: 20.0),
-            // Container(
-            //   child: Row(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: <Widget>[
-            //       Text(
-            //         "Don't have an account?",
-            //         style: TextStyle(
-            //             color: Colors.black87,
-            //             fontFamily: "ShipporiMincho",
-            //             fontWeight: FontWeight.normal),
-            //       ),
-            //       SizedBox(width: 5),
-            //       InkWell(
-            //         onTap: () {
-            //           Navigator.push(
-            //             context,
-            //             MaterialPageRoute(builder: (context) => Registration()),
-            //           );
-            //         },
-            //         child: Text(
-            //           "Sign up.",
-            //           style: TextStyle(
-            //               color: Colors.blueAccent,
-            //               fontFamily: "ShipporiMincho",
-            //               fontWeight: FontWeight.normal),
-            //         ),
-            //       )
-            //     ],
-            //   ),
-            // ),
           ]),
         ),
       ),
