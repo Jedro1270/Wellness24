@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:wellness24/components/pages/doctor_profession_info.dart';
 import 'package:wellness24/models/new_account.dart';
 
-class DoctorPersonalInfo extends StatefulWidget {
+class RegisterPersonalInfo extends StatefulWidget {
   final NewAccount account;
-  DoctorPersonalInfo(this.account);
+  RegisterPersonalInfo(this.account);
 
   @override
-  _DoctorPersonalInfoState createState() =>
-      _DoctorPersonalInfoState(this.account);
+  _RegisterPersonalInfoState createState() =>
+      _RegisterPersonalInfoState(this.account);
 }
 
-class _DoctorPersonalInfoState extends State<DoctorPersonalInfo> {
+class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
   final _formKey = GlobalKey<FormState>();
   String selectedRadio, lastName, firstName, middleInitial, birthDate, address;
   NewAccount account;
 
-  _DoctorPersonalInfoState(this.account);
+  _RegisterPersonalInfoState(this.account);
 
   @override
   void initState() {
@@ -211,7 +211,8 @@ class _DoctorPersonalInfoState extends State<DoctorPersonalInfo> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => DoctorProfessionInfo(account)),
+                                  builder: (context) =>
+                                      DoctorProfessionInfo(account)),
                             );
                           }
                         },
