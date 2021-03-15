@@ -13,6 +13,11 @@ class NewAccount {
   String birthDate;
   String address;
   String gender;
+  String specialization;
+  String licenseNo;
+  String clinicLocation;
+  String clinicStart;
+  String clinicEnd;
   List<String> keywords;
 
   NewAccount(this.email, this.contactNo, this.password, this.role);
@@ -59,11 +64,16 @@ class NewAccount {
   }
 
   Future<User> registerDoctor(
-      {licenseNo,
-      clinicLocation,
-      clinicStart,
-      clinicEnd,
-      specialization}) async {
+      {String licenseNo,
+      String clinicLocation,
+      String clinicStart,
+      String clinicEnd,
+      String specialization}) async {
+    this.licenseNo = licenseNo;
+    this.clinicLocation = clinicLocation;
+    this.clinicStart = clinicStart;
+    this.clinicEnd = clinicEnd;
+    this.specialization = specialization;
 
     generateAllKeywords();
 
