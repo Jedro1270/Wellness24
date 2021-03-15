@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/text_input.dart';
-import 'package:wellness24/components/pages/patient_login.dart';
+import 'package:wellness24/components/pages/login_page.dart';
 import 'package:wellness24/components/pages/patient_personal_info.dart';
 
 class PatientRegistration extends StatefulWidget {
@@ -98,7 +98,7 @@ class _PatientRegistrationState extends State<PatientRegistration> {
                       InkWell(
                         onTap: () {
                           Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => PatientLogin()));
+                              MaterialPageRoute(builder: (context) => Login()));
                         },
                         child: Text(
                           "Login.",

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wellness24/components/pages/doctor_login.dart';
 import 'package:wellness24/components/pages/doctor_personal_info.dart';
+import 'package:wellness24/components/pages/login_page.dart';
 import 'package:wellness24/models/new_account.dart';
 
 class DoctorRegistration extends StatefulWidget {
@@ -120,7 +120,7 @@ class _DoctorRegistrationState extends State<DoctorRegistration> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => DoctorLogin()));
+                                  builder: (context) => Login()));
                         },
                         child: Text(
                           "Login.",
