@@ -3,12 +3,12 @@ import 'package:wellness24/components/pages/doctor_personal_info.dart';
 import 'package:wellness24/components/pages/login_page.dart';
 import 'package:wellness24/models/new_account.dart';
 
-class DoctorRegistration extends StatefulWidget {
+class RegisterCredentials extends StatefulWidget {
   @override
-  _DoctorRegistrationState createState() => _DoctorRegistrationState();
+  _RegisterCredentialsState createState() => _RegisterCredentialsState();
 }
 
-class _DoctorRegistrationState extends State<DoctorRegistration> {
+class _RegisterCredentialsState extends State<RegisterCredentials> {
   final _formKey = GlobalKey<FormState>();
 
   String email, password, contactNo;
