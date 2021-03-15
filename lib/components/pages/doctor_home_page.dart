@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/pages/patient_search_page.dart';
 import 'package:wellness24/components/common/navigation_bar.dart';
+import 'package:provider/provider.dart';
+import 'package:wellness24/models/user.dart';
+import 'package:wellness24/components/pages/login_page.dart';
 
 class DoctorHomePage extends StatefulWidget {
   @override
@@ -11,7 +14,12 @@ class DoctorHomePage extends StatefulWidget {
 class _DoctorHomePageState extends State<DoctorHomePage> {
   @override
   Widget build(BuildContext context) {
-    
+    final user = Provider.of<User>(context);
+
+    if (user == null) {
+      return Login();
+    }
+
     return Scaffold(
       drawer: NavBar(),
       appBar: CustomAppBar(
