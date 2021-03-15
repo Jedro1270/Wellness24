@@ -15,7 +15,7 @@ class NewAccount {
   String gender;
   List<String> keywords;
 
-  NewAccount(this.email, this.contactNo, this.password, this.role);
+  NewAccount(this.role);
 
   List<String> createKeywords(String name) {
     List<String> output = [];
@@ -43,6 +43,12 @@ class NewAccount {
     this.keywords = allKeywords;
   }
 
+  void supplyCredentials({String email, String password, String contactNo}) {
+    this.email = email;
+    this.password = password;
+    this.contactNo = contactNo;
+  }
+
   void supplyPersonalInfo(
       {String lastName,
       String firstName,
@@ -64,7 +70,6 @@ class NewAccount {
       clinicStart,
       clinicEnd,
       specialization}) async {
-
     generateAllKeywords();
 
     final auth = AuthService();
