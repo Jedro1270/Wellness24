@@ -41,7 +41,7 @@ class DoctorInfo extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Doctor ${doctor.firstName} ${doctor.middleInitial}. ${doctor.lastName}",
+                      Text("Doctor ${doctor.fullName}",
                           style: TextStyle(
                               fontSize: 20,
                               fontFamily: "ShipporiMincho",
