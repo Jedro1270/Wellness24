@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/pages/doctor_search_page/doctors_list.dart';
@@ -5,8 +6,9 @@ import 'package:wellness24/components/pages/doctor_search_page/doctors_list.dart
 class DoctorSearchPage extends StatefulWidget {
   final String searchValue;
   final String filterValue;
+  final CollectionReference doctorDatabaseRef;
 
-  DoctorSearchPage({this.searchValue, this.filterValue});
+  DoctorSearchPage({this.searchValue, this.filterValue, this.doctorDatabaseRef});
 
   @override
   _DoctorSearchPageState createState() => _DoctorSearchPageState();
@@ -27,7 +29,11 @@ class _DoctorSearchPageState extends State<DoctorSearchPage> {
           )
         ],
       ),
-      body: Container(child: DoctorsList(searchValue: widget.searchValue, filterValue: widget.filterValue)),
+      body: Container(
+          child: DoctorsList(
+              searchValue: widget.searchValue,
+              filterValue: widget.filterValue,
+              doctorDatabaseRef: widget.doctorDatabaseRef)),
     );
   }
 }
