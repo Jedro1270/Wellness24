@@ -12,7 +12,6 @@ class MedicalHistory extends StatefulWidget {
 
 class _MedicalHistoryState extends State<MedicalHistory> {
   final medicalList = [
-    MedicalHistoryList(title: "None"),
     MedicalHistoryList(title: "Anemia"),
     MedicalHistoryList(title: "Asthma"),
     MedicalHistoryList(title: "Diabetes"),
@@ -98,10 +97,15 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                         // minWidth: 100,
                         // padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => PatientHomePage()));
+                          // List selected = medicalList
+                          //     .where((c) => c.value == true)
+                          //     .map((e) => e.title)
+                          //     .toList();
+                          // print(selected);
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => PatientHomePage()));
                         },
                         child: Text("Submit",
                             style: TextStyle(
