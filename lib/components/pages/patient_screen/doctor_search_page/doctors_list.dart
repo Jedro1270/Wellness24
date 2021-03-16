@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:wellness24/components/pages/doctor_search_page/doctor_info.dart';
+import 'package:wellness24/components/pages/patient_screen/doctor_search_page/doctor_info.dart';
 
 class DoctorsList extends StatefulWidget {
   final String searchValue;
