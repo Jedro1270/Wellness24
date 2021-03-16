@@ -1,3 +1,4 @@
+import 'package:wellness24/models/emergency_contact.dart';
 import 'package:wellness24/services/auth_service.dart';
 import 'package:wellness24/models/user.dart';
 
@@ -19,6 +20,7 @@ class NewAccount {
   String clinicStart;
   String clinicEnd;
   List<String> keywords;
+  EmergencyContact emergencyContact;
 
   NewAccount(this.role);
 
@@ -67,6 +69,10 @@ class NewAccount {
     this.gender = gender;
     this.birthDate = birthDate;
     this.address = address;
+  }
+
+  void addEmergencyContact(EmergencyContact emergencyContact) {
+    this.emergencyContact = emergencyContact;
   }
 
   Future<User> registerDoctor(
