@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/pages/patient_screen/emergency_page.dart';
-import 'package:wellness24/components/pages/patient_screen/doctor_info_page.dart';
+import 'package:wellness24/components/pages/patient_screen/doctor_details.dart';
 import 'package:wellness24/components/pages/patient_screen/patient_schedule_page.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness24/models/user.dart';
@@ -149,7 +149,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => DoctorDetail()));
+                              builder: (context) => DoctorDetails()));
                     },
                     style: ElevatedButton.styleFrom(
                         padding:
