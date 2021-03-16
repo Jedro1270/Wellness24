@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/pages/patient_screen/medical_history.dart';
+import 'package:wellness24/models/emergency_contact.dart';
 import 'package:wellness24/models/new_account.dart';
 
 class EmergencyContactInfo extends StatefulWidget {
@@ -162,19 +163,21 @@ class _EmergencyContactInfoState extends State<EmergencyContactInfo> {
                         icon: Icon(Icons.arrow_forward_sharp, size: 45),
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
-                            print(firstName);
-                            print(lastName);
-                            print(middleInitial);
-                            print(address);
-                            print(contactNo);
-                            print(relationship);
-                          }
+                            account.addEmergencyContact(EmergencyContact(
+                                lastName: lastName,
+                                firstName: firstName,
+                                middleInitial: middleInitial,
+                                address: address,
+                                contactNo: contactNo,
+                                relationship: relationship));
 
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //       builder: (context) => MedicalHistory(account)),
-                          // );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      MedicalHistory(account)),
+                            );
+                          }
                         },
                       ),
                     ],
