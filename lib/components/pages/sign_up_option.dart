@@ -8,13 +8,7 @@ class SignupOption extends StatefulWidget {
 }
 
 class _SignupOptionState extends State<SignupOption> {
-  goToRegisterPage(String role) {
-    NewAccount account = NewAccount(role);
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => RegisterCredentials(account)),
-    );
-  }
+  NewAccount account;
 
   @override
   Widget build(BuildContext context) {
@@ -53,14 +47,20 @@ class _SignupOptionState extends State<SignupOption> {
                   ),
                   SizedBox(width: 10),
                   InkWell(
-                    child: Text("Doctor",
-                        style: TextStyle(
-                            color: Colors.black87,
-                            fontSize: 30,
-                            fontFamily: "ShipporiMincho",
-                            fontWeight: FontWeight.bold)),
-                    onTap: goToRegisterPage('Doctor'),
-                  ),
+                      child: Text("Doctor",
+                          style: TextStyle(
+                              color: Colors.black87,
+                              fontSize: 30,
+                              fontFamily: "ShipporiMincho",
+                              fontWeight: FontWeight.bold)),
+                      onTap: () {
+                        this.account = NewAccount('Doctor');
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    RegisterCredentials(account)));
+                      }),
                 ],
               ),
             ),
@@ -82,7 +82,14 @@ class _SignupOptionState extends State<SignupOption> {
                           fontFamily: "ShipporiMincho",
                           fontWeight: FontWeight.bold),
                     )),
-                    onTap: goToRegisterPage('Patient'),
+                    onTap: () {
+                      this.account = NewAccount('Patient');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  RegisterCredentials(account)));
+                    },
                   ),
                 ],
               ),
