@@ -24,12 +24,6 @@ class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
     selectedRadio = '';
   }
 
-  changeState(String variable) => (String val) => {
-        setState(() {
-          variable = val;
-        })
-      };
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
