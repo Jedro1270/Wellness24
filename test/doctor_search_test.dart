@@ -1,12 +1,12 @@
 import 'package:cloud_firestore_mocks/cloud_firestore_mocks.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:wellness24/components/pages/doctor_search_page/doctor_info.dart';
 import 'package:wellness24/components/pages/doctor_search_page/doctor_search_page.dart';
 import 'package:wellness24/components/pages/doctor_search_page/doctors_list.dart';
 
 void main() {
-  testWidgets('search widget', (WidgetTester tester) async {
-
+  testWidgets('DoctorSearchPage should render a DoctorInfo widget if there is a doctor in the firestore based on the search and filter parameters', (WidgetTester tester) async {
     final instance = MockFirestoreInstance();
     await instance.collection('doctors').add({
       'email': 'elim@yahoo.com',
@@ -24,11 +24,25 @@ void main() {
       'specialization': 'Neurologist'
     });
 
-  //   print(instance.dump());
+    final doctorReference = instance.collection('doctors');
 
-    await tester.pumpWidget(DoctorSearchPage(searchValue: '', filterValue: 'neurologist'));
+    Widget createWidgetForTesting({Widget child}) {
+      return MaterialApp(home: child);
+    }
 
-    final doctorFinder = find.text('elim');
-    expect(doctorFinder, findsOneWidget);
+    await tester.pumpWidget(createWidgetForTesting(
+        child: DoctorSearchPage(
+            searchValue: '',
+            filterValue: 'neurologist',
+            doctorDatabaseRef: doctorReference)));
+
+    final doctorsListFinder = find.byType(DoctorsList);
+    final doctorInfoFinder = find.byType(DoctorInfo);
+
+    expect(doctorsListFinder, findsOneWidget);
+
+    await tester.pump(Duration(seconds: 10));
+
+    expect(doctorInfoFinder, findsOneWidget);
   });
 }
