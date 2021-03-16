@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/pages/patient_screen/doctor_search_page/doctor_info.dart';
+import 'package:wellness24/models/doctor.dart';
 
 class DoctorsList extends StatefulWidget {
   final String searchValue;
@@ -40,14 +41,18 @@ class DoctorsListState extends State<DoctorsList> {
 
     setState(() {
       doctors = filteredDoctors.map<DoctorInfo>((document) {
-        print(document.data['firstName']);
-        return DoctorInfo(
+        Doctor currentDoctor = Doctor(
             firstName: document.data['firstName'],
             middleInitial: document.data['middleInitial'],
             lastName: document.data['lastName'],
             specialization: document.data['specialization'],
-            clinicHours:
-                "${document.data['clinicStart']} to ${document.data['clinicEnd']}");
+            about:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempor tellus sed sollicitudin egestas. Integer dignissim aliquet arcu ac venenatis. Suspendisse posuere dui sed ex finibus pharetra. Suspendisse eu orci lacus. Suspendisse a felis tempus, feugiat nibh vitae, tincidunt lorem. Vestibulum consectetur est dolor, a vestibulum urna lobortis ut. Morbi et orci eget ante feugiat posuere. Morbi finibus dolor metus, congue semper urna dapibus ut. Vivamus sit amet sollicitudin massa. Sed et risus eu turpis consequat aliquam. Donec sed quam nec arcu mattis porta sit amet et leo. Suspendisse fringilla tortor non mauris facilisis fringilla. Pellentesque eu arcu interdum, sagittis leo nec, egestas augue. Donec sit amet erat diam. Fusce ultricies, nunc ut mollis mattis, sapien est posuere mi, luctus facilisis velit nibh eget nisi. Ut ullamcorper turpis quis blandit pretium.', // TO DO: replace
+            workingDays: 'Monday - Friday', // TO DO: replace
+            clinicStartHour: document.data['clinicStart'],
+            clinicEndHour: document.data['clinicEnd']);
+
+        return DoctorInfo(doctor: currentDoctor);
       }).toList();
     });
   }
