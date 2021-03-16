@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wellness24/components/pages/doctor_screen/doctor_profession_info.dart';
-import 'package:wellness24/components/pages/patient_screen/medical_history.dart';
-import 'package:wellness24/components/pages/patient_screen/patient_emergency_contact_info.dart';
+import 'package:wellness24/components/pages/register_next_step.dart';
 import 'package:wellness24/models/new_account.dart';
 
 class RegisterPersonalInfo extends StatefulWidget {
@@ -17,19 +15,6 @@ class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
   final _formKey = GlobalKey<FormState>();
   String selectedRadio, lastName, firstName, middleInitial, birthDate, address;
   NewAccount account;
-  goToNextPage() {
-    if (account.role == 'Doctor') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => DoctorProfessionInfo(account)),
-      );
-    } else {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => EmergencyContactInfo(account)));
-    }
-  }
 
   _RegisterPersonalInfoState(this.account);
 
@@ -38,12 +23,6 @@ class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
     super.initState();
     selectedRadio = '';
   }
-
-  changeState(String variable) => (String val) => {
-        setState(() {
-          variable = val;
-        })
-      };
 
   @override
   Widget build(BuildContext context) {
@@ -223,6 +202,12 @@ class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
                                 gender: selectedRadio,
                                 birthDate: birthDate,
                                 address: address);
+
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        RegisterNextStep(account)));
                           }
                         },
                       ),
