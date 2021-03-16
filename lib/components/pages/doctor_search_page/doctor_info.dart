@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wellness24/components/pages/doctor_screen/doctor_info_page.dart';
+import 'package:wellness24/components/pages/patient_screen/doctor_info_page.dart';
 
 class DoctorInfo extends StatelessWidget {
   final String firstName;

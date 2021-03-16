@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/pages/patient_screen/emergency_page.dart';
-import 'package:wellness24/components/pages/doctor_screen/doctor_info_page.dart';
+import 'package:wellness24/components/pages/patient_screen/doctor_info_page.dart';
 import 'package:wellness24/components/pages/patient_screen/patient_schedule_page.dart';
+import 'package:wellness24/services/database.dart';
 
 import '../doctor_search_page/doctor_search_page.dart';
 
@@ -85,8 +86,11 @@ class _PatientHomePageState extends State<PatientHomePage> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => DoctorSearchPage(
-                                    searchValue: searchValue,
-                                    filterValue: filterValue)));
+                                      searchValue: searchValue,
+                                      filterValue: filterValue,
+                                      doctorDatabaseRef:
+                                          DatabaseService().doctors,
+                                    )));
                       },
                     ),
                     enabledBorder: OutlineInputBorder(
