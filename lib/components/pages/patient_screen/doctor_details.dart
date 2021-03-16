@@ -61,7 +61,7 @@ class DoctorDetails extends StatelessWidget {
                           TextSpan(
                             children: [
                               TextSpan(
-                                text: '${doctor.fullname}\n',
+                                text: '${doctor.fullName}\n',
                                 style: TextStyle(
                                     fontSize: 20.0,
                                     fontFamily: "ShipporiMincho",

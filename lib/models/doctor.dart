@@ -18,7 +18,7 @@ class Doctor {
       this.clinicStartHour,
       this.clinicEndHour});
 
-  String get fullname {
+  String get fullName {
     return '$firstName $middleInitial. $lastName';
   }
 }
