@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/text_input.dart';
 import 'package:wellness24/components/pages/patient_screen/patient_home_page.dart';
 import 'package:wellness24/models/new_account.dart';
+import 'package:wellness24/models/user.dart';
 
 class MedicalHistory extends StatefulWidget {
   final NewAccount account;
@@ -12,7 +13,6 @@ class MedicalHistory extends StatefulWidget {
 
 class _MedicalHistoryState extends State<MedicalHistory> {
   final medicalList = [
-    MedicalHistoryList(title: "None"),
     MedicalHistoryList(title: "Anemia"),
     MedicalHistoryList(title: "Asthma"),
     MedicalHistoryList(title: "Diabetes"),
@@ -97,11 +97,21 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                         color: Colors.grey.withOpacity(0.5),
                         // minWidth: 100,
                         // padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => PatientHomePage()));
+                        onPressed: () async {
+                          List patientMedHistory = medicalList
+                              .where((c) => c.value == true)
+                              .map((e) => e.title)
+                              .toList();
+
+                          User patient =
+                              await account.registerPatient(patientMedHistory);
+
+                          if (patient != null) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PatientHomePage()));
+                          }
                         },
                         child: Text("Submit",
                             style: TextStyle(

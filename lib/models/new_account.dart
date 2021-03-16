@@ -1,7 +1,9 @@
+import 'package:wellness24/models/emergency_contact.dart';
 import 'package:wellness24/services/auth_service.dart';
 import 'package:wellness24/models/user.dart';
 
 class NewAccount {
+  final auth = AuthService();
   String uid;
   String role;
   String email;
@@ -19,6 +21,8 @@ class NewAccount {
   String clinicStart;
   String clinicEnd;
   List<String> keywords;
+  List<String> medicalHistory;
+  EmergencyContact emergencyContact;
 
   NewAccount(this.role);
 
@@ -69,6 +73,10 @@ class NewAccount {
     this.address = address;
   }
 
+  void addEmergencyContact(EmergencyContact emergencyContact) {
+    this.emergencyContact = emergencyContact;
+  }
+
   Future<User> registerDoctor(
       {licenseNo,
       clinicLocation,
@@ -83,13 +91,19 @@ class NewAccount {
 
     generateAllKeywords();
 
-    final auth = AuthService();
-
     User result =
         await auth.registerWithEmailAndPassword(this.email, this.password);
 
     this.uid = result.uid;
 
+    return result;
+  }
+
+  Future<User> registerPatient(List<String> medicalHistory) async {
+    this.medicalHistory = medicalHistory;
+    User result =
+        await auth.registerWithEmailAndPassword(this.email, this.password);
+    this.uid = result.uid;
     return result;
   }
 }
