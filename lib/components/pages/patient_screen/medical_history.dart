@@ -20,8 +20,7 @@ class _MedicalHistoryState extends State<MedicalHistory> {
     MedicalHistoryList(title: "Diabetes"),
     MedicalHistoryList(title: "Hypertension"),
     MedicalHistoryList(title: "Alergic Rhintis"),
-    MedicalHistoryList(title: "Obesity"),
-    MedicalHistoryList(title: "Others"),
+    MedicalHistoryList(title: "Obesity")
   ];
   final NewAccount account;
   bool loading = false;
@@ -83,6 +82,21 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                           ))
                       .toList(),
                   SizedBox(height: 15.0),
+                  Container(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Row(children: <Widget>[
+                        Text('Add Medical History',
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: "ShipporiMincho",
+                                fontWeight: FontWeight.normal)),
+                        IconButton(icon: Icon(Icons.add_box), onPressed: (){})
+                      ])
+                    ],
+                  )),
+                  Divider(height: 10),
                   SizedBox(
                       height: 50.0,
                       width: 30.0,
