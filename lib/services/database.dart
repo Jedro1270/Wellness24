@@ -13,9 +13,16 @@ class DatabaseService {
   final CollectionReference emergencyContacts =
       Firestore.instance.collection('emergencyContacts');
 
-  //gets user role "doctor/patient"
-  Future getRole() async {
-    return await roles.document(uid).get();
+  Future<String> getRole() async {
+    String snapshot = await roles
+        .document(this.uid)
+        .get()
+        .then((snapshots) => snapshots.data['role']);
+    return snapshot;
+  }
+
+  Future insertRole(String role) async {
+    roles.document(uid).setData({'role': role});
   }
 
   void insertDoctor(NewAccount doctorAccount) {

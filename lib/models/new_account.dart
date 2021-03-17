@@ -2,6 +2,7 @@ import 'package:wellness24/models/doctor.dart';
 import 'package:wellness24/models/emergency_contact.dart';
 import 'package:wellness24/services/auth_service.dart';
 import 'package:wellness24/models/user.dart';
+import 'package:wellness24/services/database.dart';
 
 class NewAccount {
   final auth = AuthService();
@@ -98,6 +99,9 @@ class NewAccount {
     User result =
         await auth.registerWithEmailAndPassword(this.email, this.password);
 
+    this.uid = result.uid;
+    await DatabaseService(uid: this.uid).insertRole(this.role);
+
     if (result != null) {
       this.uid = result.uid;
     }
@@ -112,6 +116,9 @@ class NewAccount {
 
     User result =
         await auth.registerWithEmailAndPassword(this.email, this.password);
+
+    this.uid = result.uid;
+    await DatabaseService(uid: this.uid).insertRole(this.role);
 
     if (result != null) {
       this.uid = result.uid;

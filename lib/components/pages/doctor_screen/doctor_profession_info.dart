@@ -18,9 +18,17 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
   final _formKey = GlobalKey<FormState>();
   String specialization = 'General Medicine';
   NewAccount account;
-  String licenseNo, clinicLoc, clinicStart, clinicEnd, description;
+  String licenseNo, clinicLoc, clinicStart, clinicEnd, description, clinicDayStart, clinicDayEnd, education;
   bool loading = false;
-
+  List _days = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday'
+  ];
   _DoctorProfessionInfoState(this.account);
 
   @override
@@ -145,7 +153,7 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                       Container(
                         child: Row(children: <Widget>[
                           Text(
-                            "Clinic Hours.",
+                            "Clinic Days.",
                             style: TextStyle(
                                 fontSize: 20,
                                 fontFamily: "ShipporiMincho",
@@ -158,13 +166,31 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                           children: <Widget>[
                             SizedBox(
                               width: 150,
-                              child: TextFormField(
-                                  obscureText: false,
-                                  onChanged: (val) =>
-                                      setState(() => clinicStart = val),
-                                  validator: (val) => val.isEmpty
-                                      ? 'This field is required'
-                                      : null),
+                              // child: TextFormField(
+                              //     obscureText: false,
+                              //     onChanged: (val) =>
+                              //         setState(() => clinicStart = val),
+                              //     validator: (val) => val.isEmpty
+                              //         ? 'This field is required'
+                              //         : null),
+
+                              child: DropdownButton(
+                                hint: Text("Select Day"),
+                                value: clinicDayStart,
+                                icon: Icon(Icons.arrow_drop_down),
+                                onChanged: (value) {
+                                  setState(() {
+                                    clinicDayStart = value;
+                                  });
+                                },
+                                items: _days.map((value) {
+                                  return DropdownMenuItem(
+                                      value: value,
+                                      child: Text(value,
+                                          style: TextStyle(
+                                              fontFamily: "ShipporiMincho")));
+                                }).toList(),
+                              ),
                             ),
                             SizedBox(width: 10),
                             Text(
@@ -175,18 +201,91 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                             SizedBox(width: 10),
                             SizedBox(
                               width: 150,
-                              child: TextFormField(
-                                  obscureText: false,
-                                  onChanged: (val) =>
-                                      setState(() => clinicEnd = val),
-                                  validator: (val) => val.isEmpty
-                                      ? 'This field is required'
-                                      : null),
-                            ),
+                              child: DropdownButton(
+                                hint: Text("Select Day"),
+                                value: clinicDayEnd,
+                                icon: Icon(Icons.arrow_drop_down),
+                                onChanged: (value) {
+                                  setState(() {
+                                    clinicDayEnd = value;
+                                  });
+                                },
+                                items: _days.map((value) {
+                                  return DropdownMenuItem(
+                                      value: value,
+                                      child: Text(value,
+                                          style: TextStyle(
+                                              fontFamily: "ShipporiMincho")));
+                                }).toList(),
+                              ),
+                            )
                           ],
                         ),
                       ),
                       SizedBox(height: 20),
+                      Text(
+                        "Clinic Hours.",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: "ShipporiMincho",
+                            fontWeight: FontWeight.normal),
+                      ),
+                      Container(
+                        child: Row(children: <Widget>[
+                          SizedBox(
+                            width: 150,
+                            child: TextFormField(
+                                obscureText: false,
+                                onChanged: (val) =>
+                                    setState(() => clinicEnd = val),
+                                validator: (val) => val.isEmpty
+                                    ? 'This field is required'
+                                    : null),
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            "to",
+                            style: TextStyle(
+                                fontSize: 20, fontFamily: "ShipporiMincho"),
+                          ),
+                          SizedBox(width: 10),
+                          SizedBox(
+                            width: 150,
+                            child: TextFormField(
+                                obscureText: false,
+                                onChanged: (val) =>
+                                    setState(() => clinicEnd = val),
+                                validator: (val) => val.isEmpty
+                                    ? 'This field is required'
+                                    : null),
+                          ),
+                        ]),
+                      ),
+                      SizedBox(height: 20),
+                      Container(
+                        child: Row(children: <Widget>[
+                          Text(
+                            "Educational Attainment",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: "ShipporiMincho",
+                                fontWeight: FontWeight.normal),
+                          ),
+                        ]),
+                      ),
+                      SizedBox(
+                          height: 60,
+                          child: TextFormField(
+                              keyboardType: TextInputType.multiline,
+                              minLines: 1,
+                              maxLines: 50,
+                              obscureText: false,
+                              onChanged: (val) =>
+                                  setState(() => education = val),
+                              validator: (val) => val.isEmpty
+                                  ? 'This field is required'
+                                  : null)),
+                      SizedBox(height: 20.0),
                       Container(
                         child: Row(children: <Widget>[
                           Text(
@@ -237,7 +336,10 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                                         clinicStart: clinicStart,
                                         clinicEnd: clinicEnd,
                                         specialization: specialization,
-                                        description: description);
+                                        description: description,
+                                        clinicDayEnd: clinicDayEnd,
+                                        clinicDayStart: clinicDayStart,
+                                        education: education);
 
                                     final database =
                                         DatabaseService(uid: doctor.uid);
