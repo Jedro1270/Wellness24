@@ -61,10 +61,24 @@ class _PatientHomePageState extends State<PatientHomePage> {
                   },
                   items: <String>[
                     'Any',
+                    'Family Physician',
+                    'Internal Medicine Physician',
+                    'Pediatrician',
+                    'Obstetrician/Gynecologist (OB/GYN)',
+                    'Surgeon',
+                    'Psychiatrist',
+                    'Cardiologist',
+                    'Dermatologist',
+                    'Endocrinologist',
+                    'Gastroenterologist',
+                    'Infectious Disease Physician',
+                    'Ophthalmologist',
+                    'Otolaryngologist',
+                    'Pulmonologist',
+                    'Nephrologist',
+                    'Oncologist',
                     'General Medicine',
                     'Neurologist',
-                    'Psychiatrist',
-                    'Pediatrician'
                   ].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,

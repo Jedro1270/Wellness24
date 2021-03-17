@@ -31,6 +31,28 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
     'Saturday',
     'Sunday'
   ];
+
+  List specializations = [
+    'Family Physician',
+    'Internal Medicine Physician',
+    'Pediatrician',
+    'Obstetrician/Gynecologist (OB/GYN)',
+    'Surgeon',
+    'Psychiatrist',
+    'Cardiologist',
+    'Dermatologist',
+    'Endocrinologist',
+    'Gastroenterologist',
+    'Infectious Disease Physician',
+    'Ophthalmologist',
+    'Otolaryngologist',
+    'Pulmonologist',
+    'Nephrologist',
+    'Oncologist',
+    'General Medicine',
+    'Neurologist',
+  ];
+
   _DoctorProfessionInfoState(this.account);
 
   @override
@@ -75,34 +97,15 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                               height: 50,
                               child: DropdownButton(
                                 value: specialization,
-                                items: [
-                                  DropdownMenuItem(
-                                    child: Text("General Medicine",
-                                        style: TextStyle(
-                                            fontFamily: "ShipporiMincho")),
-                                    value: "General Medicine",
-                                  ),
-                                  DropdownMenuItem(
-                                    child: Text("Neurologist",
-                                        style: TextStyle(
-                                            fontFamily: "ShipporiMincho")),
-                                    value: "Neurologist",
-                                  ),
-                                  DropdownMenuItem(
-                                    child: Text("Psychiatrist",
-                                        style: TextStyle(
-                                            fontFamily: "ShipporiMincho")),
-                                    value: "Psychiatrist",
-                                  ),
-                                  DropdownMenuItem(
-                                    child: Text("Pediatrician",
-                                        style: TextStyle(
-                                            fontFamily: "ShipporiMincho")),
-                                    value: "Pediatrician",
-                                  )
-                                ],
-                                onChanged: (val) =>
-                                    setState(() => specialization = val),
+                                items: specializations.map((value) {
+                                  return DropdownMenuItem(
+                                      value: value,
+                                      child: Text(value,
+                                          style: TextStyle(
+                                              fontFamily: "ShipporiMincho")));
+                                }).toList(),
+                                onChanged: (value) =>
+                                    setState(() => specialization = value),
                               ),
                             ),
                           ],
