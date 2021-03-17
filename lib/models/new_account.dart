@@ -22,6 +22,9 @@ class NewAccount {
   String clinicLocation;
   String clinicStart;
   String clinicEnd;
+  String clinicDayEnd;
+  String clinicDayStart;
+  String education;
   String description;
   List<String> keywords;
   List<String> medicalHistory;
@@ -86,13 +89,19 @@ class NewAccount {
       clinicStart,
       clinicEnd,
       specialization,
-      description}) async {
+      clinicDayStart,
+      clinicDayEnd,
+      description,
+      education}) async {
     this.licenseNo = licenseNo;
     this.clinicLocation = clinicLocation;
     this.clinicStart = clinicStart;
     this.clinicEnd = clinicEnd;
     this.specialization = specialization;
     this.description = description;
+    this.clinicDayStart = clinicDayStart;
+    this.clinicDayEnd = clinicDayEnd;
+    this.education = education;
 
     generateAllKeywords();
 

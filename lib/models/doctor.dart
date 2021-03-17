@@ -8,6 +8,9 @@ class Doctor {
   String clinicStartHour;
   String clinicEndHour;
   String description;
+  String clinicDayStart;
+  String clinicDayEnd;
+  String education;
 
   Doctor(
       {this.firstName,
@@ -18,7 +21,10 @@ class Doctor {
       this.workingDays,
       this.clinicStartHour,
       this.clinicEndHour,
-      this.description});
+      this.clinicDayEnd,
+      this.clinicDayStart,
+      this.description,
+      this.education});
 
   String get fullName {
     return '$firstName $middleInitial. $lastName';
