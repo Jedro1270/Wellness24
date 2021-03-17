@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wellness24/components/pages/doctor_screen/doctor_home_page.dart';
+import 'package:wellness24/components/pages/home_page.dart';
 import 'package:wellness24/components/pages/login_page.dart';
 import 'package:wellness24/models/user.dart';
 
@@ -10,6 +10,6 @@ class AuthWrapper extends StatelessWidget {
     final user = Provider.of<User>(context);
 
     //return login or front page
-    return user == null ? Login() : DoctorHomePage();
+    return user == null ? Login() : HomePage();
   }
 }
