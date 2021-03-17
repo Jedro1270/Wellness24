@@ -3,6 +3,7 @@ import 'package:wellness24/components/pages/doctor_screen/doctor_home_page.dart'
 // import 'package:wellness24/components/pages/doctor_registration.dart';
 import 'package:wellness24/components/pages/sign_up_option.dart';
 import 'package:wellness24/services/auth_service.dart';
+import 'package:wellness24/components/common/loading_animation.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -14,10 +15,12 @@ class _LoginState extends State<Login> {
   final AuthService _auth = AuthService();
   String email, password;
   String error = '';
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() :
+    Scaffold(
       backgroundColor: Colors.white,
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 35.0),
@@ -75,9 +78,10 @@ class _LoginState extends State<Login> {
                           padding: EdgeInsets.fromLTRB(18.0, 15.0, 18.0, 15.0),
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
+                              setState(() => loading = true);
                               dynamic result = await _auth
                                   .signInWithEmailAndPassword(email, password);
-
+                                  
                               if (result == null) {
                                 setState(() => error = 'Invalid credentials');
                               } else {
