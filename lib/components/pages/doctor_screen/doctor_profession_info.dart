@@ -20,7 +20,17 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
   NewAccount account;
   String licenseNo, clinicLoc, clinicStart, clinicEnd;
   bool loading = false;
-
+  String clinicDayStart;
+  String clinicDayEnd;
+  List _days = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday'
+  ];
   _DoctorProfessionInfoState(this.account);
 
   @override
@@ -158,13 +168,28 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                           children: <Widget>[
                             SizedBox(
                               width: 150,
-                              child: TextFormField(
-                                  obscureText: false,
-                                  onChanged: (val) =>
-                                      setState(() => clinicStart = val),
-                                  validator: (val) => val.isEmpty
-                                      ? 'This field is required'
-                                      : null),
+                              // child: TextFormField(
+                              //     obscureText: false,
+                              //     onChanged: (val) =>
+                              //         setState(() => clinicStart = val),
+                              //     validator: (val) => val.isEmpty
+                              //         ? 'This field is required'
+                              //         : null),
+
+                              child: DropdownButton(
+                                hint: Text("Select Day"),
+                                value: clinicDayStart,
+                                icon: Icon(Icons.arrow_drop_down),
+                                onChanged: (value) {
+                                  setState(() {
+                                    clinicDayStart = value;
+                                  });
+                                },
+                                items: _days.map((value) {
+                                  return DropdownMenuItem(
+                                      value: value, child: Text(value));
+                                }).toList(),
+                              ),
                             ),
                             SizedBox(width: 10),
                             Text(
@@ -175,14 +200,21 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                             SizedBox(width: 10),
                             SizedBox(
                               width: 150,
-                              child: TextFormField(
-                                  obscureText: false,
-                                  onChanged: (val) =>
-                                      setState(() => clinicEnd = val),
-                                  validator: (val) => val.isEmpty
-                                      ? 'This field is required'
-                                      : null),
-                            ),
+                              child: DropdownButton(
+                                hint: Text("Select Day"),
+                                value: clinicDayEnd,
+                                icon: Icon(Icons.arrow_drop_down),
+                                onChanged: (value) {
+                                  setState(() {
+                                    clinicDayEnd = value;
+                                  });
+                                },
+                                items: _days.map((value) {
+                                  return DropdownMenuItem(
+                                      value: value, child: Text(value));
+                                }).toList(),
+                              ),
+                            )
                           ],
                         ),
                       ),
