@@ -152,10 +152,11 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                                 val.isEmpty ? 'This field is required' : null),
                       ),
                       SizedBox(height: 20),
+                      SizedBox(height: 20),
                       Container(
                         child: Row(children: <Widget>[
                           Text(
-                            "Clinic Hours.",
+                            "Clinic Days.",
                             style: TextStyle(
                                 fontSize: 20,
                                 fontFamily: "ShipporiMincho",
@@ -187,7 +188,10 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                                 },
                                 items: _days.map((value) {
                                   return DropdownMenuItem(
-                                      value: value, child: Text(value));
+                                      value: value,
+                                      child: Text(value,
+                                          style: TextStyle(
+                                              fontFamily: "ShipporiMincho")));
                                 }).toList(),
                               ),
                             ),
@@ -211,12 +215,54 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                                 },
                                 items: _days.map((value) {
                                   return DropdownMenuItem(
-                                      value: value, child: Text(value));
+                                      value: value,
+                                      child: Text(value,
+                                          style: TextStyle(
+                                              fontFamily: "ShipporiMincho")));
                                 }).toList(),
                               ),
                             )
                           ],
                         ),
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        "Clinic Hours.",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: "ShipporiMincho",
+                            fontWeight: FontWeight.normal),
+                      ),
+                      Container(
+                        child: Row(children: <Widget>[
+                          SizedBox(
+                            width: 150,
+                            child: TextFormField(
+                                obscureText: false,
+                                onChanged: (val) =>
+                                    setState(() => clinicEnd = val),
+                                validator: (val) => val.isEmpty
+                                    ? 'This field is required'
+                                    : null),
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            "to",
+                            style: TextStyle(
+                                fontSize: 20, fontFamily: "ShipporiMincho"),
+                          ),
+                          SizedBox(width: 10),
+                          SizedBox(
+                            width: 150,
+                            child: TextFormField(
+                                obscureText: false,
+                                onChanged: (val) =>
+                                    setState(() => clinicEnd = val),
+                                validator: (val) => val.isEmpty
+                                    ? 'This field is required'
+                                    : null),
+                          ),
+                        ]),
                       ),
                       SizedBox(height: 50.0),
                       Container(
