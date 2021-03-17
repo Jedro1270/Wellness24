@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:wellness24/models/emergency_contact.dart';
 import 'package:wellness24/models/new_account.dart';
 
 class DatabaseService {
@@ -7,6 +8,10 @@ class DatabaseService {
 
   final CollectionReference roles = Firestore.instance.collection('roles');
   final CollectionReference doctors = Firestore.instance.collection('doctors');
+  final CollectionReference patients =
+      Firestore.instance.collection('patients');
+  final CollectionReference emergencyContacts =
+      Firestore.instance.collection('emergencyContacts');
 
   //gets user role "doctor/patient"
   Future getRole() async {
@@ -29,6 +34,33 @@ class DatabaseService {
       'clinicStart': doctorAccount.clinicStart,
       'clinicEnd': doctorAccount.clinicEnd,
       'specialization': doctorAccount.specialization
+    });
+  }
+
+  void insertPatient(NewAccount patientAccount) {
+    patients.document(uid).setData({
+      'keywords': patientAccount.keywords,
+      'email': patientAccount.email,
+      'contactNumber': patientAccount.contactNo,
+      'lastName': patientAccount.lastName,
+      'firstName': patientAccount.firstName,
+      'middleInitial': patientAccount.middleInitial,
+      'birthDate': patientAccount.birthDate,
+      'address': patientAccount.address,
+      'gender': patientAccount.gender,
+      'medicalHistory': patientAccount.medicalHistory
+    });
+
+    EmergencyContact emergencyContact = patientAccount.emergencyContact;
+
+    emergencyContacts.add({
+      'patientId': uid,
+      'lastName': emergencyContact.lastName,
+      'firstName': emergencyContact.firstName,
+      'middleInitial': emergencyContact.middleInitial,
+      'address': emergencyContact.address,
+      'contactNumber': emergencyContact.contactNo,
+      'relationship': emergencyContact.relationship
     });
   }
 }
