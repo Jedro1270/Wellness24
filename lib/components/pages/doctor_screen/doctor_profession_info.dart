@@ -18,10 +18,8 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
   final _formKey = GlobalKey<FormState>();
   String specialization = 'General Medicine';
   NewAccount account;
-  String licenseNo, clinicLoc, clinicStart, clinicEnd;
+  String licenseNo, clinicLoc, clinicStart, clinicEnd, description, clinicDayStart, clinicDayEnd, education;
   bool loading = false;
-  String clinicDayStart;
-  String clinicDayEnd;
   List _days = [
     'Monday',
     'Tuesday',
@@ -155,7 +153,6 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                                 val.isEmpty ? 'This field is required' : null),
                       ),
                       SizedBox(height: 20),
-                      SizedBox(height: 20),
                       Container(
                         child: Row(children: <Widget>[
                           Text(
@@ -267,6 +264,54 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                           ),
                         ]),
                       ),
+                      SizedBox(height: 20),
+                      Container(
+                        child: Row(children: <Widget>[
+                          Text(
+                            "Educational Attainment",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: "ShipporiMincho",
+                                fontWeight: FontWeight.normal),
+                          ),
+                        ]),
+                      ),
+                      SizedBox(
+                          height: 60,
+                          child: TextFormField(
+                              keyboardType: TextInputType.multiline,
+                              minLines: 1,
+                              maxLines: 50,
+                              obscureText: false,
+                              onChanged: (val) =>
+                                  setState(() => education = val),
+                              validator: (val) => val.isEmpty
+                                  ? 'This field is required'
+                                  : null)),
+                      SizedBox(height: 20.0),
+                      Container(
+                        child: Row(children: <Widget>[
+                          Text(
+                            "Description",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: "ShipporiMincho",
+                                fontWeight: FontWeight.normal),
+                          ),
+                        ]),
+                      ),
+                      SizedBox(
+                          height: 100,
+                          child: TextFormField(
+                              keyboardType: TextInputType.multiline,
+                              minLines: 1,
+                              maxLines: 50,
+                              obscureText: false,
+                              onChanged: (val) =>
+                                  setState(() => description = val),
+                              validator: (val) => val.isEmpty
+                                  ? 'This field is required'
+                                  : null)),
                       SizedBox(height: 50.0),
                       Container(
                         child: Row(
@@ -293,7 +338,11 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                                         clinicLocation: clinicLoc,
                                         clinicStart: clinicStart,
                                         clinicEnd: clinicEnd,
-                                        specialization: specialization);
+                                        specialization: specialization,
+                                        description: description,
+                                        clinicDayEnd: clinicDayEnd,
+                                        clinicDayStart: clinicDayStart,
+                                        education: education);
 
                                     final database =
                                         DatabaseService(uid: doctor.uid);

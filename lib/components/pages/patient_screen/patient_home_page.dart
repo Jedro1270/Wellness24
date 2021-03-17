@@ -6,6 +6,7 @@ import 'package:wellness24/components/pages/patient_screen/patient_schedule_page
 import 'package:provider/provider.dart';
 import 'package:wellness24/models/user.dart';
 import 'package:wellness24/services/database.dart';
+import 'package:wellness24/components/common/navigation_bar.dart';
 
 import './doctor_search_page/doctor_search_page.dart';
 
@@ -23,6 +24,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
     final user = Provider.of<User>(context);
     print(user.uid);
     return Scaffold(
+      drawer: NavBar(),
       appBar: CustomAppBar(
         title: 'Home Page',
         leading: IconButton(
