@@ -1,19 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:wellness24/components/pages/patient_screen/doctor_info_page.dart';
+import 'package:wellness24/components/pages/patient_screen/doctor_details.dart';
+import 'package:wellness24/models/doctor.dart';
 
 class DoctorInfo extends StatelessWidget {
-  final String firstName;
-  final String middleInitial;
-  final String lastName;
-  final String specialization;
-  final String clinicHours;
+  final Doctor doctor;
 
-  DoctorInfo(
-      {this.firstName,
-      this.middleInitial,
-      this.lastName,
-      this.specialization,
-      this.clinicHours});
+  DoctorInfo({this.doctor});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +17,7 @@ class DoctorInfo extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => DoctorDetail()),
+            MaterialPageRoute(builder: (context) => DoctorDetails(doctor: doctor)),
           );
         },
         child: Card(
@@ -44,29 +36,23 @@ class DoctorInfo extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 15),
-                Container(
+                Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Doctor $firstName $middleInitial. $lastName",
+                      Text("Doctor ${doctor.fullName}",
                           style: TextStyle(
                               fontSize: 20,
                               fontFamily: "ShipporiMincho",
                               fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center),
-                      Text("Specialization: $specialization",
+                          textAlign: TextAlign.start),
+                      Text("${doctor.specialization}",
                           style: TextStyle(
                               fontSize: 20,
                               fontFamily: "ShipporiMincho",
                               fontWeight: FontWeight.normal),
-                          textAlign: TextAlign.center),
-                      Text("Clinic Hours: $clinicHours",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontFamily: "ShipporiMincho",
-                              fontWeight: FontWeight.normal),
-                          textAlign: TextAlign.center),
+                          textAlign: TextAlign.start)
                     ],
                   ),
                 ),

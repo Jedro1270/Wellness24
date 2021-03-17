@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
+import 'package:wellness24/models/doctor.dart';
 
-class DoctorDetail extends StatelessWidget {
+class DoctorDetails extends StatelessWidget {
+  final Doctor doctor;
+
+  DoctorDetails({this.doctor});
 
   @override
   Widget build(BuildContext context) {
@@ -52,71 +56,72 @@ class DoctorDetail extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Text.rich(
-                        TextSpan(
-                          children: [
-                            TextSpan(
-                              text: 'Elimjoyce Abagat\n',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontFamily: "ShipporiMincho",
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black
+                      Expanded(
+                        child: Text.rich(
+                          TextSpan(
+                            children: [
+                              TextSpan(
+                                text: '${doctor.fullName}\n',
+                                style: TextStyle(
+                                    fontSize: 20.0,
+                                    fontFamily: "ShipporiMincho",
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
                               ),
-                            ),
-                            TextSpan(
-                              text: "Cardiologist",
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                fontFamily: "ShipporiMincho",
-                                color: Colors.black
-                              )
-                            ),
-                          ],
+                              TextSpan(
+                                  text: "${doctor.specialization}",
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontFamily: "ShipporiMincho",
+                                      color: Colors.black)),
+                            ],
+                          ),
                         ),
-                      ),
-                      Spacer(),
+                      )
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
                       ButtonAction(
                         color: Color(0xFFFFB755),
                         icon: Icons.mail,
                       ),
-                      SizedBox(width: 14.0),
                       ButtonAction(
                         color: Color(0xFF58c697),
                         icon: Icons.phone,
-                      ),
-                    ],
+                      )
+                    ]),
                   ),
-                  SizedBox(height: 20.0),
                   Divider(color: Color(0xFFA9A8A8)),
+                  Text("About",
+                      style: TextStyle(
+                          fontSize: 20.0,
+                          fontFamily: "ShipporiMincho",
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black)),
                   SizedBox(height: 20.0),
-                  Text("About", style: TextStyle(
-                    fontSize: 20.0,
-                    fontFamily: "ShipporiMincho",
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black
-                  )),
+                  Text("${doctor.about}",
+                      style: TextStyle(
+                          fontSize: 14.0, fontFamily: "ShipporiMincho")),
                   SizedBox(height: 20.0),
-                  Text("AAAAAAAAAASDasdasdasdsad sdfdfgfdg", style: TextStyle(
-                    fontSize: 14.0,
-                    fontFamily: "ShipporiMincho"
-                  )),
-                  SizedBox(height: 20.0),
-                  Text("Working hours", style: TextStyle(
-                    fontSize: 20.0,
-                    fontFamily: "ShipporiMincho",
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black
-                  )),
+                  Text("Working hours",
+                      style: TextStyle(
+                          fontSize: 20.0,
+                          fontFamily: "ShipporiMincho",
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black)),
                   SizedBox(height: 10.0),
-                  Row(
-                    children: [
-                      Text("Mon - Fri 8:00 - 16:00", style: TextStyle(
-                        fontSize: 14.0,
-                        fontFamily: "ShipporiMincho"
-                      )),
-                      SizedBox(width: 20.0),
-                      SizedBox(
+                  Text(
+                      "${doctor.workingDays}: ${doctor.clinicStartHour} - ${doctor.clinicEndHour}",
+                      style: TextStyle(
+                          fontSize: 14.0, fontFamily: "ShipporiMincho")),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 10),
+                    child: Center(
+                      child: SizedBox(
                         width: 90.0,
                         height: 35.0,
                         child: RaisedButton(
@@ -129,14 +134,14 @@ class DoctorDetail extends StatelessWidget {
                           child: Text(
                             "Open",
                             style: TextStyle(
-                              fontSize: 20.0,
-                              fontFamily: "ShipporiMincho",
-                              color: Colors.white
-                            ).copyWith(color: Color(0xFF58c697)),
+                                    fontSize: 20.0,
+                                    fontFamily: "ShipporiMincho",
+                                    color: Colors.white)
+                                .copyWith(color: Color(0xFF58c697)),
                           ),
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 ],
               ),
@@ -158,10 +163,9 @@ class DoctorDetail extends StatelessWidget {
                     child: Text(
                       "Make an appointment",
                       style: TextStyle(
-                        fontSize: 20.0,
-                        fontFamily: "ShipporiMincho",
-                        color: Colors.white
-                      ),
+                          fontSize: 20.0,
+                          fontFamily: "ShipporiMincho",
+                          color: Colors.white),
                     ),
                   ),
                 ),
