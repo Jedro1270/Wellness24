@@ -1,3 +1,4 @@
+import 'package:wellness24/models/doctor.dart';
 import 'package:wellness24/models/emergency_contact.dart';
 import 'package:wellness24/services/auth_service.dart';
 import 'package:wellness24/models/user.dart';
@@ -94,16 +95,25 @@ class NewAccount {
     User result =
         await auth.registerWithEmailAndPassword(this.email, this.password);
 
-    this.uid = result.uid;
+    if (result != null) {
+      this.uid = result.uid;
+    }
 
     return result;
   }
 
   Future<User> registerPatient(List<String> medicalHistory) async {
     this.medicalHistory = medicalHistory;
+
+    generateAllKeywords();
+
     User result =
         await auth.registerWithEmailAndPassword(this.email, this.password);
-    this.uid = result.uid;
+
+    if (result != null) {
+      this.uid = result.uid;
+    }
+
     return result;
   }
 }
