@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
+import 'package:wellness24/components/pages/common_pages/patient_profile/patient_profile.dart';
 import 'package:wellness24/components/pages/patient_screen/emergency_page.dart';
 import 'package:wellness24/components/pages/patient_screen/doctor_details.dart';
 import 'package:wellness24/components/pages/patient_screen/patient_schedule_page.dart';
 import 'package:provider/provider.dart';
+import 'package:wellness24/models/blood_pressure.dart';
+import 'package:wellness24/models/patient.dart';
 import 'package:wellness24/models/user.dart';
 import 'package:wellness24/services/database.dart';
 import 'package:wellness24/components/common/navigation_bar.dart';
@@ -18,6 +21,27 @@ class PatientHomePage extends StatefulWidget {
 class _PatientHomePageState extends State<PatientHomePage> {
   String searchValue = '';
   String filterValue = 'Any';
+  Patient currentPatient;
+
+  @override
+  void initState() {
+    super.initState();
+
+    currentPatient = Patient(
+        firstName: 'Darla',
+        middleInitial: 'D',
+        lastName: 'Abagat',
+        gender: 'Female',
+        birthDate: '01-01-2000',
+        address: 'San Jose',
+        contactNo: '131223423',
+        medicalHistory: [],
+        emergencyContact: null,
+        bloodPressure:
+            BloodPressure(reading: '120/80 mm', lastChecked: DateTime.now()),
+        bloodType: 'A+',
+        weight: 55); // TO DO: replace with patient from database
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -149,14 +173,14 @@ class _PatientHomePageState extends State<PatientHomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   ElevatedButton(
-                    child: Text("Doctor's Info",
+                    child: Text("My Doctors",
                         style: TextStyle(
                             fontSize: 20,
                             fontFamily: "ShipporiMincho",
                             fontWeight: FontWeight.bold,
                             color: Colors.black)),
                     onPressed: () {
-                      print("Doctor's info");
+                      print("My Doctors");
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -165,6 +189,36 @@ class _PatientHomePageState extends State<PatientHomePage> {
                     style: ElevatedButton.styleFrom(
                         padding:
                             EdgeInsets.symmetric(horizontal: 117, vertical: 20),
+                        primary: Colors.lightBlueAccent[100]),
+                  )
+                ],
+              ),
+            ),
+            Divider(height: 20, color: Colors.transparent),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  ElevatedButton(
+                    child: Text("My Current Conditions",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: "ShipporiMincho",
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black)),
+                    onPressed: () {
+                      print("My Current Conditions");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PatientProfile(
+                                    editable: true,
+                                    patient: currentPatient,
+                                  )));
+                    },
+                    style: ElevatedButton.styleFrom(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 60, vertical: 20),
                         primary: Colors.lightBlueAccent[100]),
                   )
                 ],

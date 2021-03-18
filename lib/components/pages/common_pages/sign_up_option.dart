@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wellness24/components/pages/register_credentials.dart';
+import 'package:wellness24/components/pages/common_pages/register_credentials.dart';
 import 'package:wellness24/models/new_account.dart';
 
 class SignupOption extends StatefulWidget {
