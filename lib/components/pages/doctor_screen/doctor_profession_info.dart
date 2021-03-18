@@ -240,7 +240,7 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                             child: TextFormField(
                                 obscureText: false,
                                 onChanged: (val) =>
-                                    setState(() => clinicEnd = val),
+                                    setState(() => clinicStart = val),
                                 validator: (val) => val.isEmpty
                                     ? 'This field is required'
                                     : null),
