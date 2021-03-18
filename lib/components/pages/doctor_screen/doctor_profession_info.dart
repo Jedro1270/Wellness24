@@ -290,7 +290,9 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                                         clinicLocation: clinicLoc,
                                         clinicStart: clinicStart,
                                         clinicEnd: clinicEnd,
-                                        specialization: specialization);
+                                        specialization: specialization,
+                                        workingDays: '$clinicDayStart to $clinicDayEnd'
+                                        );
 
                                     final database =
                                         DatabaseService(uid: doctor.uid);
