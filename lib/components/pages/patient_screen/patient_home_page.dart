@@ -27,11 +27,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
       drawer: NavBar(),
       appBar: CustomAppBar(
         title: 'Home Page',
-        leading: IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {
-              print('menu button pressed');
-            }),
         actions: [
           IconButton(
               icon: Icon(Icons.notifications),

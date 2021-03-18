@@ -83,17 +83,17 @@ class DoctorDetails extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                      ButtonAction(
-                        color: Color(0xFFFFB755),
-                        icon: Icons.mail,
-                      ),
-                      ButtonAction(
-                        color: Color(0xFF58c697),
-                        icon: Icons.phone,
-                      )
-                    ]),
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ButtonAction(
+                            color: Color(0xFFFFB755),
+                            icon: Icons.mail,
+                          ),
+                          ButtonAction(
+                            color: Color(0xFF58c697),
+                            icon: Icons.phone,
+                          )
+                        ]),
                   ),
                   Divider(color: Color(0xFFA9A8A8)),
                   Text("About",
@@ -152,22 +152,49 @@ class DoctorDetails extends StatelessWidget {
               child: SizedBox(
                 width: double.infinity,
                 height: 55.0,
-                child: RaisedButton(
-                  onPressed: () {},
-                  elevation: 0.0,
-                  color: Color(0xFF40BEEE),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25.0),
+                child: ElevatedButton(
+                  child: Text(
+                    'Send Request',
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        fontFamily: "ShipporiMincho",
+                        color: Colors.white),
                   ),
-                  child: Center(
-                    child: Text(
-                      "Make an appointment",
-                      style: TextStyle(
-                          fontSize: 20.0,
-                          fontFamily: "ShipporiMincho",
-                          color: Colors.white),
+                  style: ElevatedButton.styleFrom(
+                    primary: Color(0xFF40BEEE),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25.0),
                     ),
                   ),
+                  onPressed: () {
+                    print('send request');
+                  },
+                ),
+              ),
+            ),
+            SizedBox(height: 20.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18.0),
+              child: SizedBox(
+                width: double.infinity,
+                height: 55.0,
+                 child: ElevatedButton(
+                  child: Text(
+                    'Make an Appointment',
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        fontFamily: "ShipporiMincho",
+                        color: Colors.white),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    primary: Color(0xFF40BEEE),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                    ),
+                  ),
+                  onPressed: () {
+                    print('Make an Appointment');
+                  },
                 ),
               ),
             ),
