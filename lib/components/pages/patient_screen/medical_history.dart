@@ -87,12 +87,12 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Row(children: <Widget>[
-                        Text('Add Medical History',
+                        Text('Other/s ',
                             style: TextStyle(
                                 fontSize: 20,
                                 fontFamily: "ShipporiMincho",
                                 fontWeight: FontWeight.normal)),
-                        IconButton(icon: Icon(Icons.add_box), onPressed: (){})
+                        Icon(Icons.add_box),
                       ])
                     ],
                   )),
