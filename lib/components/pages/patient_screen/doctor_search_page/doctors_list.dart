@@ -48,7 +48,7 @@ class DoctorsListState extends State<DoctorsList> {
             specialization: document.data['specialization'],
             about:
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempor tellus sed sollicitudin egestas. Integer dignissim aliquet arcu ac venenatis. Suspendisse posuere dui sed ex finibus pharetra. Suspendisse eu orci lacus. Suspendisse a felis tempus, feugiat nibh vitae, tincidunt lorem. Vestibulum consectetur est dolor, a vestibulum urna lobortis ut. Morbi et orci eget ante feugiat posuere. Morbi finibus dolor metus, congue semper urna dapibus ut. Vivamus sit amet sollicitudin massa. Sed et risus eu turpis consequat aliquam. Donec sed quam nec arcu mattis porta sit amet et leo. Suspendisse fringilla tortor non mauris facilisis fringilla. Pellentesque eu arcu interdum, sagittis leo nec, egestas augue. Donec sit amet erat diam. Fusce ultricies, nunc ut mollis mattis, sapien est posuere mi, luctus facilisis velit nibh eget nisi. Ut ullamcorper turpis quis blandit pretium.', // TO DO: replace
-            workingDays: 'Monday - Friday', // TO DO: replace
+            workingDays: document.data['workingDays'],
             clinicStartHour: document.data['clinicStart'],
             clinicEndHour: document.data['clinicEnd']);
 
