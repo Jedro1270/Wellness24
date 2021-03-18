@@ -6,10 +6,6 @@ class BloodPressure {
 
   BloodPressure({this.reading, this.lastChecked});
 
-  set setLastChecked(DateTime lastCheckedDate) {
-    lastChecked = lastCheckedDate;
-  }
-
   String get sinceLastChecked {
     String output;
     DateTime present = DateTime.now();
