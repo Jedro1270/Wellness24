@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wellness24/components/pages/register_next_step.dart';
+import 'package:wellness24/components/pages/common_pages/register_next_step.dart';
 import 'package:wellness24/models/new_account.dart';
 
 class RegisterPersonalInfo extends StatefulWidget {

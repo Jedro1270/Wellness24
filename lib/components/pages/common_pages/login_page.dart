@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wellness24/components/pages/home_page.dart';
-import 'package:wellness24/components/pages/sign_up_option.dart';
+import 'package:wellness24/components/pages/common_pages/home_page.dart';
+import 'package:wellness24/components/pages/common_pages/sign_up_option.dart';
 import 'package:wellness24/services/auth_service.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
 
