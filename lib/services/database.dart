@@ -38,6 +38,7 @@ class DatabaseService {
       'gender': doctorAccount.gender,
       'licenseNo': doctorAccount.licenseNo,
       'clinicLocation': doctorAccount.clinicLocation,
+      'workingDays': doctorAccount.workingDays,
       'clinicStart': doctorAccount.clinicStart,
       'clinicEnd': doctorAccount.clinicEnd,
       'specialization': doctorAccount.specialization
