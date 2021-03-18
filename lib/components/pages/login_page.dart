@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wellness24/components/pages/doctor_screen/doctor_home_page.dart';
-// import 'package:wellness24/components/pages/doctor_registration.dart';
+import 'package:wellness24/components/pages/home_page.dart';
 import 'package:wellness24/components/pages/sign_up_option.dart';
 import 'package:wellness24/services/auth_service.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
@@ -95,7 +94,7 @@ class _LoginState extends State<Login> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  DoctorHomePage()));
+                                                  HomePage()));
                                     }
                                   }
                                 },
