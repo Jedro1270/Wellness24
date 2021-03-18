@@ -25,8 +25,8 @@ class DatabaseService {
     roles.document(uid).setData({'role': role});
   }
 
-  void insertDoctor(NewAccount doctorAccount) {
-    doctors.document(uid).setData({
+  Future insertDoctor(NewAccount doctorAccount) async {
+    await doctors.document(uid).setData({
       'keywords': doctorAccount.keywords,
       'email': doctorAccount.email,
       'contactNumber': doctorAccount.contactNo,
@@ -45,8 +45,8 @@ class DatabaseService {
     });
   }
 
-  void insertPatient(NewAccount patientAccount) {
-    patients.document(uid).setData({
+  Future insertPatient(NewAccount patientAccount) async {
+    await patients.document(uid).setData({
       'keywords': patientAccount.keywords,
       'email': patientAccount.email,
       'contactNumber': patientAccount.contactNo,
@@ -61,7 +61,7 @@ class DatabaseService {
 
     EmergencyContact emergencyContact = patientAccount.emergencyContact;
 
-    emergencyContacts.add({
+    await emergencyContacts.add({
       'patientId': uid,
       'lastName': emergencyContact.lastName,
       'firstName': emergencyContact.firstName,
