@@ -107,6 +107,19 @@ class DoctorDetails extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 14.0, fontFamily: "ShipporiMincho")),
                   SizedBox(height: 20.0),
+                  Divider(color: Color(0xFFA9A8A8)),
+                  Text("Educational Attainment",
+                      style: TextStyle(
+                          fontSize: 20.0,
+                          fontFamily: "ShipporiMincho",
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black)),
+                  SizedBox(height: 20.0),
+                  Text("${doctor.education}",
+                      style: TextStyle(
+                          fontSize: 14.0, fontFamily: "ShipporiMincho")),
+                  SizedBox(height: 20.0),
+                  Divider(color: Color(0xFFA9A8A8)),
                   Text("Working hours",
                       style: TextStyle(
                           fontSize: 20.0,
