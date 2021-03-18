@@ -18,7 +18,15 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
   final _formKey = GlobalKey<FormState>();
   String specialization = 'General Medicine';
   NewAccount account;
-  String licenseNo, clinicLoc, clinicStart, clinicEnd, about, clinicDayStart, clinicDayEnd, education;
+  String licenseNo,
+      clinicLoc,
+      clinicStart,
+      clinicEnd,
+      description,
+      clinicDayStart,
+      clinicDayEnd,
+      education,
+      about;
   bool loading = false;
   List _days = [
     'Monday',
@@ -304,7 +312,7 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                           height: 100,
                           child: TextFormField(
                               keyboardType: TextInputType.multiline,
-                              minLines: 1,
+                              minLines: 5,
                               maxLines: 50,
                               obscureText: false,
                               onChanged: (val) =>

@@ -62,7 +62,7 @@ class _RegisterCredentialsState extends State<RegisterCredentials> {
                     decoration: InputDecoration(hintText: 'Password'),
                     validator: (val) => val.isEmpty
                         ? 'This field is required'
-                        : val.length < 6
+                        : val.length < 7
                             ? 'Enter a password 6+ characters long'
                             : null,
                     keyboardType: TextInputType.visiblePassword,
