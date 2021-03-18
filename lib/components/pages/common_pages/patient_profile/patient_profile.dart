@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
+import 'package:wellness24/components/pages/common_pages/patient_profile/patient_condition.dart';
 import 'package:wellness24/models/patient.dart';
 
 class PatientProfile extends StatefulWidget {
@@ -78,166 +79,29 @@ class _PatientProfileState extends State<PatientProfile> {
               color: Colors.black,
             ),
             SizedBox(height: 10),
-            Container(
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.black)),
-              child: Row(
-                children: <Widget>[
-                  SizedBox(width: 10.0),
-                  SizedBox(
-                    height: 50,
-                    width: 50,
-                    child: Image(
-                      image: AssetImage('assets/weight.png'),
-                    ),
-                  ),
-                  SizedBox(width: 10.0),
-                  Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          widget.patient.weight.toString(),
-                          style: TextStyle(
-                              fontFamily: 'ShipporiMincho',
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          'Weight',
-                          style: TextStyle(
-                            fontFamily: 'ShipporiMincho',
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 10),
-            Container(
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.black)),
-              child: Row(
-                children: <Widget>[
-                  SizedBox(width: 10.0),
-                  SizedBox(
-                    height: 50,
-                    width: 50,
-                    child: Image(
-                      image: AssetImage('assets/droplet.png'),
-                    ),
-                  ),
-                  SizedBox(width: 10.0),
-                  Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          widget.patient.bloodType,
-                          style: TextStyle(
-                              fontFamily: 'ShipporiMincho',
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          'Blood Type',
-                          style: TextStyle(
-                            fontFamily: 'ShipporiMincho',
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 10),
-            Container(
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.black)),
-              child: Row(
-                children: <Widget>[
-                  SizedBox(width: 10.0),
-                  SizedBox(
-                    height: 50,
-                    width: 50,
-                    child: Image(
-                      image: AssetImage('assets/double-person.png'),
-                    ),
-                  ),
-                  SizedBox(width: 10.0),
-                  Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          '${widget.patient.age} y.o',
-                          style: TextStyle(
-                              fontFamily: 'ShipporiMincho',
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          'Age',
-                          style: TextStyle(
-                            fontFamily: 'ShipporiMincho',
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 10),
-            Container(
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.black)),
-              child: Row(
-                children: <Widget>[
-                  SizedBox(width: 10.0),
-                  SizedBox(
-                      height: 50,
-                      width: 50,
-                      child: Icon(
-                        Icons.cake_outlined,
-                        size: 30,
-                      )),
-                  SizedBox(width: 10.0),
-                  Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          widget.patient.birthDate,
-                          style: TextStyle(
-                              fontFamily: 'ShipporiMincho',
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          'Birth Date',
-                          style: TextStyle(
-                            fontFamily: 'ShipporiMincho',
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 10),
+            PatientCondition(
+                editable: true,
+                icon: Image(image: AssetImage('assets/weight.png')),
+                content: '${widget.patient.weight.toString()} kg',
+                title: 'Weight'),
+            PatientCondition(
+                editable: true,
+                icon: Image(image: AssetImage('assets/droplet.png')),
+                content: widget.patient.bloodType,
+                title: 'Blood Type'),
+            PatientCondition(
+                editable: true,
+                icon: Image(image: AssetImage('assets/double-person.png')),
+                content: '${widget.patient.age} y.o',
+                title: 'Age'),
+            PatientCondition(
+                editable: true,
+                icon: Icon(
+                  Icons.cake_outlined,
+                  size: 30,
+                ),
+                content: widget.patient.birthDate,
+                title: 'Birthday'),
             Divider(color: Colors.black),
             SizedBox(height: 10),
             Container(
