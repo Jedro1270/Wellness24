@@ -41,7 +41,9 @@ class DatabaseService {
       'workingDays': doctorAccount.workingDays,
       'clinicStart': doctorAccount.clinicStart,
       'clinicEnd': doctorAccount.clinicEnd,
-      'specialization': doctorAccount.specialization
+      'specialization': doctorAccount.specialization,
+      'description': doctorAccount.description,
+      'education': doctorAccount.education 
     });
   }
 
