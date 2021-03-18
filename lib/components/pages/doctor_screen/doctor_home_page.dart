@@ -4,7 +4,7 @@ import 'package:wellness24/components/pages/doctor_screen/patient_search_page/pa
 import 'package:wellness24/components/common/navigation_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness24/models/user.dart';
-import 'package:wellness24/components/pages/login_page.dart';
+import 'package:wellness24/components/pages/common_pages/login_page.dart';
 
 class DoctorHomePage extends StatefulWidget {
   @override
