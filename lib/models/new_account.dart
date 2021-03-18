@@ -22,6 +22,7 @@ class NewAccount {
   String clinicLocation;
   String clinicStart;
   String clinicEnd;
+  String workingDays;
   List<String> keywords;
   List<String> medicalHistory;
   EmergencyContact emergencyContact;
@@ -80,16 +81,18 @@ class NewAccount {
   }
 
   Future<User> registerDoctor(
-      {licenseNo,
-      clinicLocation,
-      clinicStart,
-      clinicEnd,
-      specialization}) async {
+      {String licenseNo,
+      String clinicLocation,
+      String clinicStart,
+      String clinicEnd,
+      String specialization,
+      String workingDays}) async {
     this.licenseNo = licenseNo;
     this.clinicLocation = clinicLocation;
     this.clinicStart = clinicStart;
     this.clinicEnd = clinicEnd;
     this.specialization = specialization;
+    this.workingDays = workingDays;
 
     generateAllKeywords();
 
