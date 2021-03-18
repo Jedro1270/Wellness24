@@ -132,7 +132,7 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                                 final database =
                                     DatabaseService(uid: patient.uid);
 
-                                database.insertPatient(account);
+                                await database.insertPatient(account);
 
                                 if (patient == null) {
                                   setState(() {
