@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/pages/common_pages/patient_profile/patient_condition.dart';
+import 'package:wellness24/models/blood_pressure.dart';
 import 'package:wellness24/models/patient.dart';
 
 class PatientProfile extends StatefulWidget {
@@ -14,6 +15,19 @@ class PatientProfile extends StatefulWidget {
 }
 
 class _PatientProfileState extends State<PatientProfile> {
+  TextEditingController controller;
+  bool editing = false;
+  BloodPressure newBloodPressure;
+
+  @override
+  void initState() {
+    super.initState();
+
+    newBloodPressure = widget.patient.bloodPressure;
+    controller =
+        TextEditingController(text: widget.patient.bloodPressure.reading);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,7 +104,7 @@ class _PatientProfileState extends State<PatientProfile> {
                 content: widget.patient.bloodType,
                 title: 'Blood Type'),
             PatientCondition(
-                editable: true,
+                editable: false,
                 icon: Image(image: AssetImage('assets/double-person.png')),
                 content: '${widget.patient.age} y.o',
                 title: 'Age'),
@@ -104,38 +118,62 @@ class _PatientProfileState extends State<PatientProfile> {
                 title: 'Birthday'),
             Divider(color: Colors.black),
             SizedBox(height: 10),
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Text('Blood Pressure:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          fontFamily: 'ShipporiMincho')),
-                  SizedBox(width: 20),
-                  Text(
-                    widget.patient.bloodPressure.reading,
-                    style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                        fontSize: 15,
-                        fontFamily: 'ShipporiMincho'),
-                  ),
-                  SizedBox(
-                    height: 20,
-                    width: 80,
-                    child: Container(
-                        color: Colors.redAccent[700],
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              widget.patient.bloodPressure.sinceLastChecked,
-                              style: TextStyle(fontFamily: 'ShipporiMincho'),
+            InkWell(
+              onTap: () {
+                setState(() {
+                  editing = true;
+                });
+              },
+              child: Container(
+                child: Row(
+                  children: <Widget>[
+                    Text('Blood Pressure:',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            fontFamily: 'ShipporiMincho')),
+                    SizedBox(width: 20),
+                    editing && widget.editable
+                        ? SizedBox(
+                            height: 50,
+                            width: 100,
+                            child: TextField(
+                              onSubmitted: (newValue) {
+                                setState(() {
+                                  newBloodPressure = BloodPressure(
+                                      reading: newValue,
+                                      lastChecked: DateTime.now());
+                                  editing = false;
+                                });
+                              },
+                              autofocus: true,
+                              controller: controller,
                             ),
-                          ],
-                        )),
-                  ),
-                ],
+                          )
+                        : Text(
+                            newBloodPressure.reading,
+                            style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 15,
+                                fontFamily: 'ShipporiMincho'),
+                          ),
+                    SizedBox(
+                      height: 20,
+                      width: 80,
+                      child: Container(
+                          color: Colors.redAccent[700],
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                widget.patient.bloodPressure.sinceLastChecked,
+                                style: TextStyle(fontFamily: 'ShipporiMincho'),
+                              ),
+                            ],
+                          )),
+                    ),
+                  ],
+                ),
               ),
             ),
             SizedBox(height: 10),
