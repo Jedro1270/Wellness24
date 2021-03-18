@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
+import 'package:wellness24/models/patient.dart';
 
 class PatientProfile extends StatefulWidget {
+  final bool editable;
+  final Patient patient;
+
+  PatientProfile({this.editable, this.patient});
+
   @override
   _PatientProfileState createState() => _PatientProfileState();
 }
@@ -29,7 +35,7 @@ class _PatientProfileState extends State<PatientProfile> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'Darla Abagat',
+                    widget.patient.fullName,
                     style: TextStyle(
                         fontSize: 20,
                         fontFamily: 'ShipporiMincho',
@@ -43,7 +49,7 @@ class _PatientProfileState extends State<PatientProfile> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'Female, 20 years old',
+                    widget.patient.gender,
                     style: TextStyle(
                         fontSize: 15,
                         fontFamily: 'ShipporiMincho',
@@ -91,7 +97,7 @@ class _PatientProfileState extends State<PatientProfile> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          '55 kg',
+                          widget.patient.weight.toString(),
                           style: TextStyle(
                               fontFamily: 'ShipporiMincho',
                               fontSize: 18,
@@ -131,7 +137,7 @@ class _PatientProfileState extends State<PatientProfile> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          'A+',
+                          widget.patient.bloodType,
                           style: TextStyle(
                               fontFamily: 'ShipporiMincho',
                               fontSize: 18,
@@ -171,7 +177,7 @@ class _PatientProfileState extends State<PatientProfile> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          '20 y.o',
+                          '${widget.patient.age} y.o',
                           style: TextStyle(
                               fontFamily: 'ShipporiMincho',
                               fontSize: 18,
@@ -211,7 +217,7 @@ class _PatientProfileState extends State<PatientProfile> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          '9/10/2000',
+                          widget.patient.birthDate,
                           style: TextStyle(
                               fontFamily: 'ShipporiMincho',
                               fontSize: 18,
@@ -244,7 +250,7 @@ class _PatientProfileState extends State<PatientProfile> {
                           fontFamily: 'ShipporiMincho')),
                   SizedBox(width: 20),
                   Text(
-                    '120/80 mmHg',
+                    widget.patient.bloodPressure.reading,
                     style: TextStyle(
                         fontWeight: FontWeight.normal,
                         fontSize: 15,
@@ -259,7 +265,7 @@ class _PatientProfileState extends State<PatientProfile> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(
-                              '1 Week ago',
+                              widget.patient.bloodPressure.sinceLastChecked,
                               style: TextStyle(fontFamily: 'ShipporiMincho'),
                             ),
                           ],
