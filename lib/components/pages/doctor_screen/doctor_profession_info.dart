@@ -18,10 +18,8 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
   final _formKey = GlobalKey<FormState>();
   String specialization = 'General Medicine';
   NewAccount account;
-  String licenseNo, clinicLoc, clinicStart, clinicEnd;
+  String licenseNo, clinicLoc, clinicStart, clinicEnd, description, clinicDayStart, clinicDayEnd, education;
   bool loading = false;
-  String clinicDayStart;
-  String clinicDayEnd;
   List _days = [
     'Monday',
     'Tuesday',
@@ -31,6 +29,28 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
     'Saturday',
     'Sunday'
   ];
+
+  List specializations = [
+    'Family Physician',
+    'Internal Medicine Physician',
+    'Pediatrician',
+    'Obstetrician/Gynecologist (OB/GYN)',
+    'Surgeon',
+    'Psychiatrist',
+    'Cardiologist',
+    'Dermatologist',
+    'Endocrinologist',
+    'Gastroenterologist',
+    'Infectious Disease Physician',
+    'Ophthalmologist',
+    'Otolaryngologist',
+    'Pulmonologist',
+    'Nephrologist',
+    'Oncologist',
+    'General Medicine',
+    'Neurologist',
+  ];
+
   _DoctorProfessionInfoState(this.account);
 
   @override
@@ -75,34 +95,15 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                               height: 50,
                               child: DropdownButton(
                                 value: specialization,
-                                items: [
-                                  DropdownMenuItem(
-                                    child: Text("General Medicine",
-                                        style: TextStyle(
-                                            fontFamily: "ShipporiMincho")),
-                                    value: "General Medicine",
-                                  ),
-                                  DropdownMenuItem(
-                                    child: Text("Neurologist",
-                                        style: TextStyle(
-                                            fontFamily: "ShipporiMincho")),
-                                    value: "Neurologist",
-                                  ),
-                                  DropdownMenuItem(
-                                    child: Text("Psychiatrist",
-                                        style: TextStyle(
-                                            fontFamily: "ShipporiMincho")),
-                                    value: "Psychiatrist",
-                                  ),
-                                  DropdownMenuItem(
-                                    child: Text("Pediatrician",
-                                        style: TextStyle(
-                                            fontFamily: "ShipporiMincho")),
-                                    value: "Pediatrician",
-                                  )
-                                ],
-                                onChanged: (val) =>
-                                    setState(() => specialization = val),
+                                items: specializations.map((value) {
+                                  return DropdownMenuItem(
+                                      value: value,
+                                      child: Text(value,
+                                          style: TextStyle(
+                                              fontFamily: "ShipporiMincho")));
+                                }).toList(),
+                                onChanged: (value) =>
+                                    setState(() => specialization = value),
                               ),
                             ),
                           ],
@@ -151,7 +152,6 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                             validator: (val) =>
                                 val.isEmpty ? 'This field is required' : null),
                       ),
-                      SizedBox(height: 20),
                       SizedBox(height: 20),
                       Container(
                         child: Row(children: <Widget>[
@@ -264,6 +264,54 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                           ),
                         ]),
                       ),
+                      SizedBox(height: 20),
+                      Container(
+                        child: Row(children: <Widget>[
+                          Text(
+                            "Educational Attainment",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: "ShipporiMincho",
+                                fontWeight: FontWeight.normal),
+                          ),
+                        ]),
+                      ),
+                      SizedBox(
+                          height: 60,
+                          child: TextFormField(
+                              keyboardType: TextInputType.multiline,
+                              minLines: 1,
+                              maxLines: 50,
+                              obscureText: false,
+                              onChanged: (val) =>
+                                  setState(() => education = val),
+                              validator: (val) => val.isEmpty
+                                  ? 'This field is required'
+                                  : null)),
+                      SizedBox(height: 20.0),
+                      Container(
+                        child: Row(children: <Widget>[
+                          Text(
+                            "Description",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: "ShipporiMincho",
+                                fontWeight: FontWeight.normal),
+                          ),
+                        ]),
+                      ),
+                      SizedBox(
+                          height: 100,
+                          child: TextFormField(
+                              keyboardType: TextInputType.multiline,
+                              minLines: 1,
+                              maxLines: 50,
+                              obscureText: false,
+                              onChanged: (val) =>
+                                  setState(() => description = val),
+                              validator: (val) => val.isEmpty
+                                  ? 'This field is required'
+                                  : null)),
                       SizedBox(height: 50.0),
                       Container(
                         child: Row(
@@ -291,8 +339,9 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                                         clinicStart: clinicStart,
                                         clinicEnd: clinicEnd,
                                         specialization: specialization,
-                                        workingDays: '$clinicDayStart to $clinicDayEnd'
-                                        );
+                                        workingDays: '$clinicDayStart to $clinicDayEnd',
+                                        description: description,
+                                        education: education);
 
                                     final database =
                                         DatabaseService(uid: doctor.uid);
