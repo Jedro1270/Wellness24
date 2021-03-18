@@ -7,7 +7,6 @@ class Doctor {
   String workingDays;
   String clinicStartHour;
   String clinicEndHour;
-  String description;
   String clinicDayStart;
   String clinicDayEnd;
   String education;
@@ -23,7 +22,6 @@ class Doctor {
       this.clinicEndHour,
       this.clinicDayEnd,
       this.clinicDayStart,
-      this.description,
       this.education});
 
   String get fullName {

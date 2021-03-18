@@ -18,7 +18,7 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
   final _formKey = GlobalKey<FormState>();
   String specialization = 'General Medicine';
   NewAccount account;
-  String licenseNo, clinicLoc, clinicStart, clinicEnd, description, clinicDayStart, clinicDayEnd, education;
+  String licenseNo, clinicLoc, clinicStart, clinicEnd, about, clinicDayStart, clinicDayEnd, education;
   bool loading = false;
   List _days = [
     'Monday',
@@ -292,7 +292,7 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                       Container(
                         child: Row(children: <Widget>[
                           Text(
-                            "Description",
+                            "About",
                             style: TextStyle(
                                 fontSize: 20,
                                 fontFamily: "ShipporiMincho",
@@ -308,7 +308,7 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                               maxLines: 50,
                               obscureText: false,
                               onChanged: (val) =>
-                                  setState(() => description = val),
+                                  setState(() => about = val),
                               validator: (val) => val.isEmpty
                                   ? 'This field is required'
                                   : null)),
@@ -340,8 +340,8 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                                         clinicEnd: clinicEnd,
                                         specialization: specialization,
                                         workingDays: '$clinicDayStart to $clinicDayEnd',
-                                        description: description,
-                                        education: education);
+                                        education: education,
+                                        about: about);
 
                                     final database =
                                         DatabaseService(uid: doctor.uid);

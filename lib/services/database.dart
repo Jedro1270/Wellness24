@@ -42,8 +42,8 @@ class DatabaseService {
       'clinicStart': doctorAccount.clinicStart,
       'clinicEnd': doctorAccount.clinicEnd,
       'specialization': doctorAccount.specialization,
-      'description': doctorAccount.description,
-      'education': doctorAccount.education 
+      'education': doctorAccount.education,
+      'about': doctorAccount.about
     });
   }
 

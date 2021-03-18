@@ -46,7 +46,7 @@ class DoctorsListState extends State<DoctorsList> {
             middleInitial: document.data['middleInitial'],
             lastName: document.data['lastName'],
             specialization: document.data['specialization'],
-            about: document.data['description'],
+            about: document.data['about'],
             workingDays: document.data['workingDays'],
             clinicStartHour: document.data['clinicStart'],
             clinicEndHour: document.data['clinicEnd']);
