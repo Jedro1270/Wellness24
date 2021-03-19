@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:wellness24/models/blood_pressure.dart';
 import 'package:wellness24/models/emergency_contact.dart';
 import 'package:wellness24/models/new_account.dart';
 import 'package:wellness24/models/patient.dart';
@@ -75,6 +76,28 @@ class DatabaseService {
       'contactNumber': emergencyContact.contactNo,
       'relationship': emergencyContact.relationship
     });
+  }
+
+  Future<Patient> getPatient(String uid) async {
+    DocumentSnapshot snapshotPatient = await patients.document(uid).get();
+    DocumentSnapshot snapshotBloodPressure =
+        await bloodPressure.document(uid).get();
+
+    return Patient(
+        firstName: snapshotPatient.data['firstName'],
+        middleInitial: snapshotPatient.data['middleInitial'],
+        lastName: snapshotPatient.data['lastName'],
+        gender: snapshotPatient.data['gender'],
+        birthDate: snapshotPatient.data['birthDate'],
+        address: snapshotPatient.data['address'],
+        contactNo: snapshotPatient.data['contactNo'],
+        medicalHistory: snapshotPatient.data['medicalHistory'],
+        emergencyContact: snapshotPatient.data['emergencyContact'],
+        bloodPressure: BloodPressure(
+            reading: snapshotBloodPressure.data['reading'],
+            lastChecked: snapshotBloodPressure.data['lastChecked'].toDate()),
+        bloodType: snapshotPatient.data['bloodType'],
+        weight: snapshotPatient.data['weight']);
   }
 
   Future updatePatient(Patient patient) async {
