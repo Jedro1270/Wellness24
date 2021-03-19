@@ -23,30 +23,23 @@ class _PatientHomePageState extends State<PatientHomePage> {
   String filterValue = 'Any';
   Patient currentPatient;
 
-  @override
-  void initState() {
-    super.initState();
+  initializePatient(String uid, DatabaseService database) async {
+    Patient patient = await database.getPatient(uid);
 
-    currentPatient = Patient(
-        firstName: 'Darla',
-        middleInitial: 'D',
-        lastName: 'Abagat',
-        gender: 'Female',
-        birthDate: '01-01-2000',
-        address: 'San Jose',
-        contactNo: '131223423',
-        medicalHistory: [],
-        emergencyContact: null,
-        bloodPressure:
-            BloodPressure(reading: '120/80 mm', lastChecked: DateTime.now()),
-        bloodType: 'A+',
-        weight: 55); // TO DO: replace with patient from database
+    setState(() {
+      currentPatient = patient;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
+    final DatabaseService database = DatabaseService(uid: user.uid);
+
+    initializePatient(user.uid, database);
+
     print(user.uid);
+
     return Scaffold(
       drawer: NavBar(),
       appBar: CustomAppBar(
