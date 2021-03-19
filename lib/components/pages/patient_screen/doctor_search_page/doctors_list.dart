@@ -42,6 +42,7 @@ class DoctorsListState extends State<DoctorsList> {
     setState(() {
       doctors = filteredDoctors.map<DoctorInfo>((document) {
         Doctor currentDoctor = Doctor(
+            uid: document.documentId,
             firstName: document.data['firstName'],
             middleInitial: document.data['middleInitial'],
             lastName: document.data['lastName'],
