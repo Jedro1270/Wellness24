@@ -5,8 +5,9 @@ class PatientCondition extends StatefulWidget {
   final Widget icon;
   final String content;
   final String title;
+  final Function onChanged;
 
-  PatientCondition({this.editable, this.icon, this.content, this.title});
+  PatientCondition({this.editable, this.icon, this.content, this.title, this.onChanged});
 
   @override
   _PatientConditionState createState() => _PatientConditionState();
@@ -60,6 +61,8 @@ class _PatientConditionState extends State<PatientCondition> {
                                 setState(() {
                                   newContent = newValue;
                                   editing = false;
+
+                                  widget.onChanged(newContent);
                                 });
                               },
                               autofocus: true,

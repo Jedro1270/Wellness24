@@ -22,6 +22,15 @@ class PatientHomePage extends StatefulWidget {
 class _PatientHomePageState extends State<PatientHomePage> {
   String searchValue = '';
   String filterValue = 'Any';
+  Patient currentPatient;
+
+  initializePatient(String uid, DatabaseService database) async {
+    Patient patient = await database.getPatient(uid);
+
+    setState(() {
+      currentPatient = patient;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +39,11 @@ class _PatientHomePageState extends State<PatientHomePage> {
     final cpa = Provider.of<DocumentSnapshot>(context);
     print(user.uid);
     print(cpa);
+    final DatabaseService database = DatabaseService(uid: user.uid);
+
+    initializePatient(user.uid, database);
+
+    print(user.uid);
 
     return Scaffold(
       drawer: NavBar(),
