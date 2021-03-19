@@ -26,9 +26,7 @@ class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
       context: context,
       initialDate: _date,
       firstDate: DateTime(1900),
-      lastDate: DateTime(2100),
-      selectableDayPredicate: (DateTime val) =>
-          val.weekday == 6 || val.weekday == 7 ? false : true,
+      lastDate: DateTime(2100)
     );
 
     if (_datePicker != null && _datePicker != _date) {
