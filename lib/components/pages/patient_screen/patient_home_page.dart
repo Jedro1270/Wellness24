@@ -37,13 +37,8 @@ class _PatientHomePageState extends State<PatientHomePage> {
     final user = Provider.of<User>(context);
     // final currentPatient = Provider.of<Patient>(context);
     final cpa = Provider.of<DocumentSnapshot>(context);
-    print(user.uid);
-    print(cpa);
     final DatabaseService database = DatabaseService(uid: user.uid);
-
     initializePatient(user.uid, database);
-
-    print(user.uid);
 
     return Scaffold(
       drawer: NavBar(),
