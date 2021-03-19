@@ -1,4 +1,5 @@
 class Doctor {
+  String uid;
   String firstName;
   String middleInitial;
   String lastName;
@@ -12,7 +13,8 @@ class Doctor {
   String education;
 
   Doctor(
-      {this.firstName,
+      {this.uid,
+      this.firstName,
       this.middleInitial,
       this.lastName,
       this.specialization,
