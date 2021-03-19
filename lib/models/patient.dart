@@ -3,6 +3,7 @@ import 'package:wellness24/models/blood_pressure.dart';
 import 'package:wellness24/models/emergency_contact.dart';
 
 class Patient {
+  String uid;
   String firstName;
   String middleInitial;
   String lastName;
@@ -13,7 +14,7 @@ class Patient {
   double weight;
   String bloodType;
   BloodPressure bloodPressure;
-  List<String> medicalHistory;
+  List medicalHistory;
   EmergencyContact emergencyContact;
 
   Patient(
@@ -28,7 +29,8 @@ class Patient {
       this.emergencyContact,
       this.bloodPressure,
       this.bloodType,
-      this.weight});
+      this.weight,
+      this.uid});
 
   String get fullName {
     return '$firstName $middleInitial. $lastName';
@@ -40,7 +42,7 @@ class Patient {
 
     if (birthDateTime == null) {
       birthDateTime = DateTime.parse(
-          '1974-03-20 00:00:00.000'); // For testing only, birthdate must be changed to datetime for future use
+          '2000-01-01 00:00:00.000'); // For testing only, birthdate must be changed to datetime for future use
     }
 
     return Age.dateDifference(fromDate: birthDateTime, toDate: present).years;
