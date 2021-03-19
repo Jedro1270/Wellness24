@@ -35,13 +35,6 @@ class _PatientProfileState extends State<PatientProfile> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    
-  }
-
-  @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     final DatabaseService database = DatabaseService(uid: user.uid);
@@ -112,7 +105,7 @@ class _PatientProfileState extends State<PatientProfile> {
                   ),
                   SizedBox(height: 10),
                   PatientCondition(
-                    editable: true,
+                    editable: widget.editable,
                     icon: Image(image: AssetImage('assets/weight.png')),
                     content: widget.patient.weight.toString(),
                     title: 'Weight',
@@ -122,7 +115,7 @@ class _PatientProfileState extends State<PatientProfile> {
                     },
                   ),
                   PatientCondition(
-                      editable: true,
+                      editable: widget.editable,
                       icon: Image(image: AssetImage('assets/droplet.png')),
                       content: widget.patient.bloodType,
                       title: 'Blood Type',
@@ -137,7 +130,7 @@ class _PatientProfileState extends State<PatientProfile> {
                       content: '${widget.patient.age} y.o',
                       title: 'Age'),
                   PatientCondition(
-                      editable: true,
+                      editable: widget.editable,
                       icon: Icon(
                         Icons.cake_outlined,
                         size: 30,
