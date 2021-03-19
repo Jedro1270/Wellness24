@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:wellness24/models/emergency_contact.dart';
 import 'package:wellness24/models/new_account.dart';
+import 'package:wellness24/models/patient.dart';
 
 class DatabaseService {
   final String uid;
@@ -12,6 +13,8 @@ class DatabaseService {
       Firestore.instance.collection('patients');
   final CollectionReference emergencyContacts =
       Firestore.instance.collection('emergencyContacts');
+  final CollectionReference bloodPressure =
+      Firestore.instance.collection('bloodPressure');
 
   Future<String> getRole() async {
     String snapshot = await roles
@@ -71,6 +74,19 @@ class DatabaseService {
       'address': emergencyContact.address,
       'contactNumber': emergencyContact.contactNo,
       'relationship': emergencyContact.relationship
+    });
+  }
+
+  Future updatePatient(Patient patient) async {
+    await patients.document(uid).updateData({
+      'weight': patient.weight,
+      'bloodType': patient.bloodType,
+      'birthDate': patient.birthDate
+    });
+
+    await bloodPressure.document(uid).setData({
+      'reading': patient.bloodPressure.reading,
+      'lastChecked': patient.bloodPressure.lastChecked
     });
   }
 }
