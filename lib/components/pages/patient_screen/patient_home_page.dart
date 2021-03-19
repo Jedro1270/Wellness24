@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/pages/common_pages/patient_profile/patient_profile.dart';
@@ -21,32 +22,15 @@ class PatientHomePage extends StatefulWidget {
 class _PatientHomePageState extends State<PatientHomePage> {
   String searchValue = '';
   String filterValue = 'Any';
-  Patient currentPatient;
-
-  @override
-  void initState() {
-    super.initState();
-
-    currentPatient = Patient(
-        firstName: 'Darla',
-        middleInitial: 'D',
-        lastName: 'Abagat',
-        gender: 'Female',
-        birthDate: '01-01-2000',
-        address: 'San Jose',
-        contactNo: '131223423',
-        medicalHistory: [],
-        emergencyContact: null,
-        bloodPressure:
-            BloodPressure(reading: '120/80 mm', lastChecked: DateTime.now()),
-        bloodType: 'A+',
-        weight: 55); // TO DO: replace with patient from database
-  }
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
+    // final currentPatient = Provider.of<Patient>(context);
+    final cpa = Provider.of<DocumentSnapshot>(context);
     print(user.uid);
+    print(cpa);
+
     return Scaffold(
       drawer: NavBar(),
       appBar: CustomAppBar(
@@ -55,7 +39,8 @@ class _PatientHomePageState extends State<PatientHomePage> {
           IconButton(
               icon: Icon(Icons.notifications),
               onPressed: () {
-                print("Clicked Notif icon");
+                print(cpa.documentID);
+                print(cpa.data['lastName']);
               })
         ],
       ),
@@ -213,7 +198,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                           MaterialPageRoute(
                               builder: (context) => PatientProfile(
                                     editable: true,
-                                    patient: currentPatient,
+                                    // patient: currentPatient,
                                   )));
                     },
                     style: ElevatedButton.styleFrom(
