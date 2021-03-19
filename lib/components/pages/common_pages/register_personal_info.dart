@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:wellness24/components/pages/common_pages/register_next_step.dart';
 import 'package:wellness24/models/new_account.dart';
 
@@ -14,9 +15,26 @@ class RegisterPersonalInfo extends StatefulWidget {
 class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
   final _formKey = GlobalKey<FormState>();
   String selectedRadio, lastName, firstName, middleInitial, birthDate, address;
+  DateTime _date = DateTime.now();
+  DateFormat format = DateFormat('MM-dd-yyyy');
   NewAccount account;
 
   _RegisterPersonalInfoState(this.account);
+
+  Future<Null> _selectDate(BuildContext context) async {
+    DateTime _datePicker = await showDatePicker(
+      context: context,
+      initialDate: _date,
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100)
+    );
+
+    if (_datePicker != null && _datePicker != _date) {
+      setState(() {
+        _date = _datePicker;
+      });
+    }
+  }
 
   @override
   void initState() {
@@ -157,17 +175,42 @@ class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
                             fontSize: 20,
                             fontFamily: "ShipporiMincho",
                             fontWeight: FontWeight.normal)),
+                    SizedBox(width: 10),
+                    Text("(mm-dd-yyyy)",
+                        style: TextStyle(
+                          color: Colors.black38,
+                            fontSize: 20,
+                            fontFamily: "ShipporiMincho",
+                            fontWeight: FontWeight.normal)),
                   ]),
                 ),
                 SizedBox(height: 5),
-                SizedBox(
-                    height: 50,
-                    child: TextFormField(
-                        decoration: InputDecoration(hintText: 'mm-dd-yy'),
-                        obscureText: false,
-                        onChanged: (val) => setState(() => birthDate = val),
-                        validator: (val) =>
-                            val.isEmpty ? 'This field is required' : null)),
+                MaterialButton(
+                    color: Colors.black12,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text("${format.format(_date)}",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: "ShipporiMincho",
+                                color: Colors.black)),
+                      ],
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _selectDate(context);
+                        print(format.format(_date));
+                      });
+                    }),
+                // SizedBox(
+                //     height: 50,
+                //     child: TextFormField(
+                //         decoration: InputDecoration(hintText: 'mm-dd-yy'),
+                //         obscureText: false,
+                //         onChanged: (val) => setState(() => birthDate = val),
+                //         validator: (val) =>
+                //             val.isEmpty ? 'This field is required' : null)),
                 SizedBox(height: 15),
                 Container(
                   child: Row(children: <Widget>[
