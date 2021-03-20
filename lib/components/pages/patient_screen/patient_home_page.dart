@@ -22,23 +22,12 @@ class PatientHomePage extends StatefulWidget {
 class _PatientHomePageState extends State<PatientHomePage> {
   String searchValue = '';
   String filterValue = 'Any';
-  Patient currentPatient;
-
-  initializePatient(String uid, DatabaseService database) async {
-    Patient patient = await database.getPatient(uid);
-
-    setState(() {
-      currentPatient = patient;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    // final currentPatient = Provider.of<Patient>(context);
-    final cpa = Provider.of<DocumentSnapshot>(context);
-    final DatabaseService database = DatabaseService(uid: user.uid);
-    initializePatient(user.uid, database);
+    final currentPatient = Provider.of<Patient>(context);
+    print(currentPatient.fullName);
 
     return Scaffold(
       drawer: NavBar(),
@@ -48,8 +37,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
           IconButton(
               icon: Icon(Icons.notifications),
               onPressed: () {
-                print(cpa.documentID);
-                print(cpa.data['lastName']);
+                print('Notif button clicked');
               })
         ],
       ),
