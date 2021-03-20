@@ -107,6 +107,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => DoctorSearchPage(
+                                  currentPatient: currentPatient,
                                       searchValue: searchValue,
                                       filterValue: filterValue,
                                       doctorDatabaseRef:

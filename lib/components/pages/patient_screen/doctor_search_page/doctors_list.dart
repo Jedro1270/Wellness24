@@ -2,13 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/pages/patient_screen/doctor_search_page/doctor_info.dart';
 import 'package:wellness24/models/doctor.dart';
+import 'package:wellness24/models/patient.dart';
 
 class DoctorsList extends StatefulWidget {
+  final Patient currentPatient;
   final String searchValue;
   final String filterValue;
   final CollectionReference doctorDatabaseRef;
 
-  DoctorsList({this.searchValue, this.filterValue, this.doctorDatabaseRef});
+  DoctorsList({this.searchValue, this.filterValue, this.doctorDatabaseRef, this.currentPatient});
 
   @override
   DoctorsListState createState() => DoctorsListState();
@@ -52,7 +54,7 @@ class DoctorsListState extends State<DoctorsList> {
             clinicStartHour: document.data['clinicStart'],
             clinicEndHour: document.data['clinicEnd']);
 
-        return DoctorInfo(doctor: currentDoctor);
+        return DoctorInfo(doctor: currentDoctor, currentPatient: widget.currentPatient,);
       }).toList();
     });
   }

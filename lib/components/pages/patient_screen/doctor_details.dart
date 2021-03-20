@@ -8,8 +8,9 @@ import 'package:wellness24/services/database.dart';
 
 class DoctorDetails extends StatefulWidget {
   final Doctor doctor;
+  final Patient currentPatient;
 
-  DoctorDetails({this.doctor});
+  DoctorDetails({this.doctor, this.currentPatient});
 
   @override
   _DoctorDetailsState createState() => _DoctorDetailsState(doctor: this.doctor);
@@ -17,24 +18,11 @@ class DoctorDetails extends StatefulWidget {
 
 class _DoctorDetailsState extends State<DoctorDetails> {
   final Doctor doctor;
-  Patient currentPatient;
 
   _DoctorDetailsState({this.doctor});
 
-  initializePatient(String uid, DatabaseService database) async {
-    Patient patient = await database.getPatient(uid);
-
-    setState(() {
-      currentPatient = patient;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
-    final DatabaseService database = DatabaseService(uid: user.uid);
-    initializePatient(user.uid, database);
-
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Doctor',
@@ -207,7 +195,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                   ),
                   onPressed: () {
                     print('send request');
-                    print(currentPatient.address);
+                    print(widget.currentPatient.address);
                   },
                 ),
               ),
