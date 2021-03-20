@@ -85,25 +85,23 @@ class DatabaseService {
         ? null
         : Patient(
             firstName: document.data['firstName'],
-            lastName: document.data['lastname'],
-            middleInitial: document.data['lastname'],
+            lastName: document.data['lastName'],
+            middleInitial: document.data['middleInitial'],
             gender: document.data['gender'],
             birthDate: document.data['birthDate'],
             address: document.data['address'],
-            contactNo: document.data['contactNo'],
-            emergencyContact: null,
+            contactNo: document.data['contactNumber'],
+            emergencyContact: document.data['emergencyContact'] ?? null,
             medicalHistory: document.data['medicalHistory'],
-            bloodPressure: null,
+            bloodPressure: BloodPressure(
+                reading: document.data['reading'],
+                lastChecked: document.data['lastChecked'].toDate()),
             bloodType: document.data['bloodType'],
             weight: document.data['weight']);
   }
 
   Stream<Patient> get currentPatient {
     return patients.document(uid).snapshots().map(patientFromSnapshot);
-  }
-
-  Stream<DocumentSnapshot> get cPatient {
-    return patients.document(uid).snapshots();
   }
 
   Future<Patient> getPatient(String uid) async {
