@@ -27,9 +27,9 @@ class HomePage extends StatelessWidget {
             if (snapshot.data == 'Doctor') {
               return DoctorHomePage();
             } else {
-              return StreamProvider<DocumentSnapshot>.value(
+              return StreamProvider<Patient>.value(
                   initialData: null,
-                  value: DatabaseService(uid: user.uid).cPatient,
+                  value: DatabaseService(uid: user.uid).currentPatient,
                   child: PatientHomePage());
             }
           } else {
