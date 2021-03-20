@@ -1,14 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/models/doctor.dart';
+import 'package:wellness24/models/patient.dart';
+import 'package:wellness24/models/user.dart';
+import 'package:wellness24/services/database.dart';
 
-class DoctorDetails extends StatelessWidget {
+class DoctorDetails extends StatefulWidget {
   final Doctor doctor;
 
   DoctorDetails({this.doctor});
 
   @override
+  _DoctorDetailsState createState() => _DoctorDetailsState(doctor: this.doctor);
+}
+
+class _DoctorDetailsState extends State<DoctorDetails> {
+  final Doctor doctor;
+  Patient currentPatient;
+
+  _DoctorDetailsState({this.doctor});
+
+  initializePatient(String uid, DatabaseService database) async {
+    Patient patient = await database.getPatient(uid);
+
+    setState(() {
+      currentPatient = patient;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
+    final DatabaseService database = DatabaseService(uid: user.uid);
+    initializePatient(user.uid, database);
+
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Doctor',
@@ -181,6 +207,7 @@ class DoctorDetails extends StatelessWidget {
                   ),
                   onPressed: () {
                     print('send request');
+                    print(currentPatient.address);
                   },
                 ),
               ),
@@ -191,7 +218,7 @@ class DoctorDetails extends StatelessWidget {
               child: SizedBox(
                 width: double.infinity,
                 height: 55.0,
-                 child: ElevatedButton(
+                child: ElevatedButton(
                   child: Text(
                     'Make an Appointment',
                     style: TextStyle(
