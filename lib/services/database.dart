@@ -93,9 +93,7 @@ class DatabaseService {
             contactNo: document.data['contactNumber'],
             emergencyContact: document.data['emergencyContact'] ?? null,
             medicalHistory: document.data['medicalHistory'],
-            bloodPressure: BloodPressure(
-                reading: document.data['reading'],
-                lastChecked: document.data['lastChecked'].toDate()),
+            bloodPressure: null,
             bloodType: document.data['bloodType'],
             weight: document.data['weight']);
   }
