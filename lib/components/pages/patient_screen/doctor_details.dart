@@ -195,7 +195,10 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                   ),
                   onPressed: () {
                     print('send request');
-                    print(widget.currentPatient.address);
+
+                    DatabaseService().sendRequest(
+                        doctorId: doctor.uid, patient: widget.currentPatient);
+                    // TODO: confirm request sent or toggle to cancel request
                   },
                 ),
               ),
