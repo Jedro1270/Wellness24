@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/pages/patient_screen/doctor_details.dart';
 import 'package:wellness24/models/doctor.dart';
+import 'package:wellness24/models/patient.dart';
 
 class DoctorInfo extends StatelessWidget {
   final Doctor doctor;
+  final Patient currentPatient;
 
-  DoctorInfo({this.doctor});
+  DoctorInfo({this.doctor, this.currentPatient});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,8 @@ class DoctorInfo extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => DoctorDetails(doctor: doctor)),
+            MaterialPageRoute(
+                builder: (context) => DoctorDetails(doctor: doctor, currentPatient: currentPatient)),
           );
         },
         child: Card(

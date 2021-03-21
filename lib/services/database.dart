@@ -14,6 +14,8 @@ class DatabaseService {
       Firestore.instance.collection('patients');
   final CollectionReference emergencyContacts =
       Firestore.instance.collection('emergencyContacts');
+  final CollectionReference patientRequests =
+      Firestore.instance.collection('patientRequests');
   final CollectionReference bloodPressure =
       Firestore.instance.collection('bloodPressure');
 
@@ -78,6 +80,29 @@ class DatabaseService {
     });
   }
 
+  Patient patientFromSnapshot(DocumentSnapshot document) {
+    return document == null
+        ? null
+        : Patient(
+            uid: document.documentID,
+            firstName: document.data['firstName'],
+            lastName: document.data['lastName'],
+            middleInitial: document.data['middleInitial'],
+            gender: document.data['gender'],
+            birthDate: document.data['birthDate'],
+            address: document.data['address'],
+            contactNo: document.data['contactNumber'],
+            emergencyContact: document.data['emergencyContact'] ?? null,
+            medicalHistory: document.data['medicalHistory'],
+            bloodPressure: null,
+            bloodType: document.data['bloodType'],
+            weight: document.data['weight']);
+  }
+
+  Stream<Patient> get currentPatient {
+    return patients.document(uid).snapshots().map(patientFromSnapshot);
+  }
+
   Future<Patient> getPatient(String uid) async {
     DocumentSnapshot snapshotPatient = await patients.document(uid).get();
     DocumentSnapshot snapshotBloodPressure =
@@ -110,6 +135,24 @@ class DatabaseService {
     await bloodPressure.document(uid).setData({
       'reading': patient.bloodPressure.reading,
       'lastChecked': patient.bloodPressure.lastChecked
+    });
+  }
+
+  Future sendRequest({String doctorId, Patient patient}) async {
+    await patientRequests.document(doctorId).setData({
+      'requests': FieldValue.arrayUnion([
+        {
+          'uid': patient.uid,
+          'firstName': patient.firstName,
+          'lastName': patient.lastName,
+          'birthDate': patient.birthDate,
+          'address': patient.address,
+          'contactNo': patient.contactNo,
+          'medicalHistory': patient.medicalHistory,
+          'bloodType': patient.bloodType,
+          'weight': patient.weight
+        }
+      ])
     });
   }
 }

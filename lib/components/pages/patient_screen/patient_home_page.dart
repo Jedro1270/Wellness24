@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/common/doctor_card.dart';
@@ -23,24 +24,12 @@ class PatientHomePage extends StatefulWidget {
 class _PatientHomePageState extends State<PatientHomePage> {
   String searchValue = '';
   String filterValue = 'Any';
-  Patient currentPatient;
-
-  initializePatient(String uid, DatabaseService database) async {
-    Patient patient = await database.getPatient(uid);
-
-    setState(() {
-      currentPatient = patient;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    final DatabaseService database = DatabaseService(uid: user.uid);
-
-    initializePatient(user.uid, database);
-
-    print(user.uid);
+    final currentPatient = Provider.of<Patient>(context);
+    print(currentPatient.fullName);
 
     return Scaffold(
       drawer: NavBar(),
@@ -50,7 +39,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
           IconButton(
               icon: Icon(Icons.notifications),
               onPressed: () {
-                print("Clicked Notif icon");
+                print('Notif button clicked');
               })
         ],
       ),
@@ -149,16 +138,15 @@ class _PatientHomePageState extends State<PatientHomePage> {
                     child: MaterialButton(
                       onPressed: () {
                         Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DoctorSearchPage(
-                              searchValue: searchValue,
-                              filterValue: filterValue,
-                              doctorDatabaseRef:
-                                DatabaseService().doctors,
-                            )
-                          )
-                        );
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DoctorSearchPage(
+                                  currentPatient: currentPatient,
+                                      searchValue: searchValue,
+                                      filterValue: filterValue,
+                                      doctorDatabaseRef:
+                                          DatabaseService().doctors,
+                                    )));
                       },
                       color: Colors.lightBlue,
                       padding: EdgeInsets.symmetric(
@@ -259,7 +247,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                           MaterialPageRoute(
                               builder: (context) => PatientProfile(
                                     editable: true,
-                                    patient: currentPatient,
+                                    // patient: currentPatient,
                                   )));
                     },
                     style: ElevatedButton.styleFrom(
