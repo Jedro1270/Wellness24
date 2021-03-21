@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
+import 'package:wellness24/components/common/doctor_card.dart';
+import 'package:wellness24/components/common/schedule_card.dart';
 import 'package:wellness24/components/pages/common_pages/patient_profile/patient_profile.dart';
 import 'package:wellness24/components/pages/patient_screen/emergency_page.dart';
 import 'package:wellness24/components/pages/patient_screen/doctor_details.dart';
@@ -61,6 +63,23 @@ class _PatientHomePageState extends State<PatientHomePage> {
       body: Container(
         child: ListView(
           children: [
+            SizedBox(
+              height: 20
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal:30),
+              child: Text(
+                'Find Your Desired\nDoctor',
+                style: TextStyle(
+                  fontFamily: "ShipporiMincho",
+                  fontWeight: FontWeight.bold,
+                  fontSize: 28,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10
+            ),
             Center(
               child: SizedBox(
                 child: DropdownButton<String>(
@@ -102,37 +121,61 @@ class _PatientHomePageState extends State<PatientHomePage> {
                 ),
               ),
             ),
-            Container(
-              padding: EdgeInsets.only(left: 5, right: 5, bottom: 20),
-              child: SizedBox(
-                width: 250,
-                child: TextField(
-                  onChanged: (val) => setState(() => searchValue = val),
-                  decoration: InputDecoration(
-                    // labelText: 'Search Doctor',
-                    hintText: 'Search Doctor',
-                    suffixIcon: IconButton(
-                      icon: Icon(Icons.search),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => DoctorSearchPage(
-                                      searchValue: searchValue,
-                                      filterValue: filterValue,
-                                      doctorDatabaseRef:
-                                          DatabaseService().doctors,
-                                    )));
-                      },
+            SizedBox(
+              height: 10
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30),
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.08,
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    decoration: BoxDecoration(
+                      color: Color(0xffF2F2F2),
+                      borderRadius: BorderRadius.circular(30)
                     ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                      borderSide: BorderSide(color: Colors.black),
+                    child: TextField(
+                      onChanged: (val) => setState(() => searchValue = val),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Search for doctors'
+                      ),
                     ),
                   ),
-                ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: MaterialButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DoctorSearchPage(
+                              searchValue: searchValue,
+                              filterValue: filterValue,
+                              doctorDatabaseRef:
+                                DatabaseService().doctors,
+                            )
+                          )
+                        );
+                      },
+                      color: Colors.lightBlue,
+                      padding: EdgeInsets.symmetric(
+                        vertical: 15,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30)
+                      ),
+                      child: Icon(
+                        Icons.search,
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
+            SizedBox(height: 30),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -160,32 +203,42 @@ class _PatientHomePageState extends State<PatientHomePage> {
                 ],
               ),
             ),
-            Divider(height: 50, color: Colors.transparent),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  ElevatedButton(
-                    child: Text("My Doctors",
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: "ShipporiMincho",
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black)),
-                    onPressed: () {
-                      print("My Doctors");
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => DoctorDetails()));
-                    },
-                    style: ElevatedButton.styleFrom(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 117, vertical: 20),
-                        primary: Colors.lightBlueAccent[100]),
-                  )
-                ],
+            SizedBox(height: 30),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal:30),
+              child: Text(
+                'My Doctors',
+                style: TextStyle(
+                  fontFamily: "ShipporiMincho",
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
+            ),
+            SizedBox(
+              height: 20
+            ),
+            buildDoctorList(),
+            SizedBox(
+              height: 30
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal:30),
+              child: Text(
+                'My Appointments',
+                style: TextStyle(
+                  fontFamily: "ShipporiMincho",
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 30
+            ),
+            buildAppointmentList(),
+            SizedBox(
+              height: 30
             ),
             Divider(height: 20, color: Colors.transparent),
             Container(
@@ -223,33 +276,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   ElevatedButton(
-                    child: Text("Schedule Appointment",
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: "ShipporiMincho",
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black)),
-                    onPressed: () {
-                      print("Schedule Appointment");
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PatientAppointmentPage()));
-                    },
-                    style: ElevatedButton.styleFrom(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 68, vertical: 20),
-                        primary: Colors.lightBlueAccent[100]),
-                  )
-                ],
-              ),
-            ),
-            Divider(height: 20, color: Colors.transparent),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  ElevatedButton(
                     child: Text("My Medical Records",
                         style: TextStyle(
                             fontSize: 20,
@@ -272,4 +298,60 @@ class _PatientHomePageState extends State<PatientHomePage> {
       ),
     );
   }
+}
+
+buildDoctorList() {
+  return Padding(
+    padding: EdgeInsets.symmetric(
+      horizontal: 30
+    ),
+    child: Column(
+      children: <Widget>[
+        DoctorCard(
+          'Darla',
+          'V',
+          'Abagat',
+          'Cardiologist',
+          'assets/sample-patient.jpg'
+        ),
+        SizedBox(
+          height: 20
+        ),
+        DoctorCard(
+          'Jed',
+          'C',
+          'Alejandro',
+          'Psychiatrist',
+          'assets/doctor_sample.png'
+        )
+      ],
+    ),
+  );
+}
+
+buildAppointmentList() {
+  return Padding(
+    padding: EdgeInsets.symmetric(
+      horizontal: 30
+    ),
+    child: Column(
+      children: <Widget>[
+        ScheduleCard(
+          '12',
+          'Jan',
+          'Consultation',
+          'Sunday 9am - 11am'
+        ),
+        SizedBox(
+          height: 20
+        ),
+        ScheduleCard(
+          '15',
+          'Oct',
+          'Consultation',
+          'Monday 1pm - 3pm'
+        )
+      ],
+    ),
+  );
 }
