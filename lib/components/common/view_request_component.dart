@@ -103,6 +103,8 @@ class _ViewRequestState extends State<ViewRequest> {
                             ElevatedButton(
                               onPressed: () {
                                 print('Decline');
+                                database.declinePatient(patient);
+                                // TODO: also remove patient on screen
                               },
                               child: Text(
                                 'Decline',
