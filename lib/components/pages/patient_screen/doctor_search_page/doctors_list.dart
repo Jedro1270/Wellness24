@@ -10,7 +10,11 @@ class DoctorsList extends StatefulWidget {
   final String filterValue;
   final CollectionReference doctorDatabaseRef;
 
-  DoctorsList({this.searchValue, this.filterValue, this.doctorDatabaseRef, this.currentPatient});
+  DoctorsList(
+      {this.searchValue,
+      this.filterValue,
+      this.doctorDatabaseRef,
+      this.currentPatient});
 
   @override
   DoctorsListState createState() => DoctorsListState();
@@ -36,9 +40,7 @@ class DoctorsListState extends State<DoctorsList> {
         return true;
       }
 
-      return document.data['specialization'].toLowerCase() ==
-              widget.filterValue.toLowerCase() ||
-          widget.filterValue.toLowerCase() == 'any';
+      return widget.filterValue.toLowerCase() == 'any';
     }).toList();
 
     setState(() {
@@ -54,7 +56,10 @@ class DoctorsListState extends State<DoctorsList> {
             clinicStartHour: document.data['clinicStart'],
             clinicEndHour: document.data['clinicEnd']);
 
-        return DoctorInfo(doctor: currentDoctor, currentPatient: widget.currentPatient,);
+        return DoctorInfo(
+          doctor: currentDoctor,
+          currentPatient: widget.currentPatient,
+        );
       }).toList();
     });
   }
