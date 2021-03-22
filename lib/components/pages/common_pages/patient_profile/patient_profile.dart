@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
 import 'package:wellness24/components/pages/common_pages/patient_profile/patient_condition.dart';
+import 'package:wellness24/components/pages/patient_screen/medical_records/medical_record.dart';
 import 'package:wellness24/models/blood_pressure.dart';
 import 'package:wellness24/models/patient.dart';
 import 'package:wellness24/models/user.dart';
@@ -214,28 +215,36 @@ class _PatientProfileState extends State<PatientProfile> {
                   SizedBox(height: 10),
                   Divider(color: Colors.black),
                   SizedBox(height: 10),
-                  Container( // Add inkwell
-                    child: Row(
-                      children: <Widget>[
-                        Text('History',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                fontFamily: 'ShipporiMincho')),
-                        SizedBox(width: 230),
-                        Container(
-                          child: Row(
-                            children: <Widget>[
-                              SizedBox(
-                                  height: 50,
-                                  width: 50,
-                                  child: Image(
-                                    image: AssetImage('assets/dots.png'),
-                                  ))
-                            ],
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MedicalRecords(patient: widget.patient)));
+                    },
+                    child: Container(
+                      child: Row(
+                        children: <Widget>[
+                          Text('History',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  fontFamily: 'ShipporiMincho')),
+                          SizedBox(width: 230),
+                          Container(
+                            child: Row(
+                              children: <Widget>[
+                                SizedBox(
+                                    height: 50,
+                                    width: 50,
+                                    child: Image(
+                                      image: AssetImage('assets/dots.png'),
+                                    ))
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ],

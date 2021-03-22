@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
-import 'package:wellness24/components/pages/common_pages/patient_profile/patient_profile.dart';
 import 'package:wellness24/components/pages/doctor_screen/patients_list/patient_info.dart';
 import 'package:wellness24/models/blood_pressure.dart';
 import 'package:wellness24/models/patient.dart';
 import 'package:wellness24/services/database.dart';
-//import 'package:wellness24/components/pages/doctor_info_page.dart';
 
 class PatientsList extends StatefulWidget {
   final CollectionReference patientDatabaseRef;

@@ -1,15 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/common/doctor_card.dart';
 import 'package:wellness24/components/common/schedule_card.dart';
 import 'package:wellness24/components/pages/common_pages/patient_profile/patient_profile.dart';
 import 'package:wellness24/components/pages/patient_screen/emergency_page.dart';
-import 'package:wellness24/components/pages/patient_screen/doctor_details.dart';
-import 'package:wellness24/components/pages/patient_screen/medical_record.dart';
-import 'package:wellness24/components/pages/patient_screen/patient_schedule_page.dart';
+import 'package:wellness24/components/pages/patient_screen/medical_records/medical_record.dart';
 import 'package:provider/provider.dart';
-import 'package:wellness24/models/blood_pressure.dart';
 import 'package:wellness24/models/patient.dart';
 import 'package:wellness24/models/user.dart';
 import 'package:wellness24/services/database.dart';
@@ -265,6 +261,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => MedicalRecords()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => MedicalRecords(patient: currentPatient,)));
                       print("My Medical Records");
                     },
                     style: ElevatedButton.styleFrom(
