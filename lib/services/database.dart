@@ -102,8 +102,8 @@ class DatabaseService {
 
   BloodPressure bloodPressureFromSnapshot(DocumentSnapshot document) {
     return BloodPressure(
-            reading: document.data['reading'],
-            lastChecked: document.data['lastChecked']);
+        reading: document.data['reading'],
+        lastChecked: document.data['lastChecked']);
   }
 
   Stream<Patient> get currentPatient {
@@ -185,5 +185,10 @@ class DatabaseService {
         }
       ])
     });
+  }
+
+  Future<List> getPatientRequest() async {
+    DocumentSnapshot document = await patientRequests.document(uid).get();
+    return document == null ? [] : document.data['requests'];
   }
 }
