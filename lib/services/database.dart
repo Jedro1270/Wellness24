@@ -191,4 +191,14 @@ class DatabaseService {
     DocumentSnapshot document = await patientRequests.document(uid).get();
     return document == null ? [] : document.data['requests'];
   }
+
+  Future acceptPatient(dynamic patientInfo) async {
+    await doctors.document(uid).setData({
+      'patients': FieldValue.arrayUnion([patientInfo])
+    }, merge: true);
+
+    await patientRequests.document(uid).updateData({
+      'requests': FieldValue.arrayRemove([patientInfo])
+    });
+  }
 }
