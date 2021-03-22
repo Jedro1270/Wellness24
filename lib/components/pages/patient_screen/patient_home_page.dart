@@ -27,9 +27,10 @@ class _PatientHomePageState extends State<PatientHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
-    final currentPatient = Provider.of<Patient>(context);
-    print(currentPatient.fullName);
+    final Patient currentPatient = Provider.of<Patient>(context);
+    final BloodPressure currentBloodPressure = Provider.of<BloodPressure>(context);
+    print(currentPatient.uid);
+    print(currentBloodPressure);
 
     return Scaffold(
       drawer: NavBar(),
@@ -52,11 +53,9 @@ class _PatientHomePageState extends State<PatientHomePage> {
       body: Container(
         child: ListView(
           children: [
-            SizedBox(
-              height: 20
-            ),
+            SizedBox(height: 20),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal:30),
+              padding: EdgeInsets.symmetric(horizontal: 30),
               child: Text(
                 'Find Your Desired\nDoctor',
                 style: TextStyle(
@@ -66,9 +65,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 10
-            ),
+            SizedBox(height: 10),
             Center(
               child: SizedBox(
                 child: DropdownButton<String>(
@@ -110,9 +107,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 10
-            ),
+            SizedBox(height: 10),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 30),
               child: Stack(
@@ -122,15 +117,13 @@ class _PatientHomePageState extends State<PatientHomePage> {
                     width: MediaQuery.of(context).size.width * 0.8,
                     padding: EdgeInsets.symmetric(horizontal: 30),
                     decoration: BoxDecoration(
-                      color: Color(0xffF2F2F2),
-                      borderRadius: BorderRadius.circular(30)
-                    ),
+                        color: Color(0xffF2F2F2),
+                        borderRadius: BorderRadius.circular(30)),
                     child: TextField(
                       onChanged: (val) => setState(() => searchValue = val),
                       decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Search for doctors'
-                      ),
+                          border: InputBorder.none,
+                          hintText: 'Search for doctors'),
                     ),
                   ),
                   Align(
@@ -141,7 +134,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => DoctorSearchPage(
-                                  currentPatient: currentPatient,
+                                      currentPatient: currentPatient,
                                       searchValue: searchValue,
                                       filterValue: filterValue,
                                       doctorDatabaseRef:
@@ -153,8 +146,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                         vertical: 15,
                       ),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30)
-                      ),
+                          borderRadius: BorderRadius.circular(30)),
                       child: Icon(
                         Icons.search,
                       ),
@@ -193,7 +185,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
             ),
             SizedBox(height: 30),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal:30),
+              padding: EdgeInsets.symmetric(horizontal: 30),
               child: Text(
                 'My Doctors',
                 style: TextStyle(
@@ -203,15 +195,11 @@ class _PatientHomePageState extends State<PatientHomePage> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 20
-            ),
+            SizedBox(height: 20),
             buildDoctorList(),
-            SizedBox(
-              height: 30
-            ),
+            SizedBox(height: 30),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal:30),
+              padding: EdgeInsets.symmetric(horizontal: 30),
               child: Text(
                 'My Appointments',
                 style: TextStyle(
@@ -221,13 +209,9 @@ class _PatientHomePageState extends State<PatientHomePage> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 30
-            ),
+            SizedBox(height: 30),
             buildAppointmentList(),
-            SizedBox(
-              height: 30
-            ),
+            SizedBox(height: 30),
             Divider(height: 20, color: Colors.transparent),
             Container(
               child: Row(
@@ -247,7 +231,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                           MaterialPageRoute(
                               builder: (context) => PatientProfile(
                                     editable: true,
-                                    // patient: currentPatient,
+                                    patient: currentPatient,
                                   )));
                     },
                     style: ElevatedButton.styleFrom(
@@ -290,28 +274,14 @@ class _PatientHomePageState extends State<PatientHomePage> {
 
 buildDoctorList() {
   return Padding(
-    padding: EdgeInsets.symmetric(
-      horizontal: 30
-    ),
+    padding: EdgeInsets.symmetric(horizontal: 30),
     child: Column(
       children: <Widget>[
+        DoctorCard('Darla', 'V', 'Abagat', 'Cardiologist',
+            'assets/sample-patient.jpg'),
+        SizedBox(height: 20),
         DoctorCard(
-          'Darla',
-          'V',
-          'Abagat',
-          'Cardiologist',
-          'assets/sample-patient.jpg'
-        ),
-        SizedBox(
-          height: 20
-        ),
-        DoctorCard(
-          'Jed',
-          'C',
-          'Alejandro',
-          'Psychiatrist',
-          'assets/doctor_sample.png'
-        )
+            'Jed', 'C', 'Alejandro', 'Psychiatrist', 'assets/doctor_sample.png')
       ],
     ),
   );
@@ -319,26 +289,12 @@ buildDoctorList() {
 
 buildAppointmentList() {
   return Padding(
-    padding: EdgeInsets.symmetric(
-      horizontal: 30
-    ),
+    padding: EdgeInsets.symmetric(horizontal: 30),
     child: Column(
       children: <Widget>[
-        ScheduleCard(
-          '12',
-          'Jan',
-          'Consultation',
-          'Sunday 9am - 11am'
-        ),
-        SizedBox(
-          height: 20
-        ),
-        ScheduleCard(
-          '15',
-          'Oct',
-          'Consultation',
-          'Monday 1pm - 3pm'
-        )
+        ScheduleCard('12', 'Jan', 'Consultation', 'Sunday 9am - 11am'),
+        SizedBox(height: 20),
+        ScheduleCard('15', 'Oct', 'Consultation', 'Monday 1pm - 3pm')
       ],
     ),
   );
