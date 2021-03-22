@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wellness24/models/user.dart';
+import 'package:wellness24/services/database.dart';
 
 class ViewRequest extends StatefulWidget {
   @override
@@ -14,8 +17,30 @@ class _ViewRequestState extends State<ViewRequest> {
     DummyUsers(name: 'Alejandro Jonela'),
   ];
 
+  List patientRequests = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    final user = Provider.of<User>(context, listen: false);
+    print(user.uid);
+
+    void fetchRequests() async {
+      List requestsData =
+          await DatabaseService(uid: user.uid).getPatientRequest();
+      setState(() {
+        patientRequests = requestsData;
+      });
+    }
+
+    fetchRequests();
+  }
+
   @override
   Widget build(BuildContext context) {
+    print(patientRequests);
+
     return Container(
       child: ListView(
         children: <Widget>[
