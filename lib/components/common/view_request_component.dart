@@ -9,43 +9,35 @@ class ViewRequest extends StatefulWidget {
 }
 
 class _ViewRequestState extends State<ViewRequest> {
-  final dummyUserLists = [
-    DummyUsers(name: 'Elim Abagat'),
-    DummyUsers(name: 'Jedro Pagayonan'),
-    DummyUsers(name: 'Casey Capacio'),
-    DummyUsers(name: 'Veto Bastiero'),
-    DummyUsers(name: 'Alejandro Jonela'),
-  ];
-
   List patientRequests = [];
+
+  void fetchRequests() async {
+    final user = Provider.of<User>(context, listen: false);
+    List requestsData =
+        await DatabaseService(uid: user.uid).getPatientRequest();
+
+    setState(() {
+      patientRequests = requestsData;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-
-    final user = Provider.of<User>(context, listen: false);
-    print(user.uid);
-
-    void fetchRequests() async {
-      List requestsData =
-          await DatabaseService(uid: user.uid).getPatientRequest();
-      setState(() {
-        patientRequests = requestsData;
-      });
-    }
-
     fetchRequests();
   }
 
   @override
   Widget build(BuildContext context) {
     print(patientRequests);
+    final user = Provider.of<User>(context);
+    final database = DatabaseService(uid: user.uid);
 
     return Container(
       child: ListView(
         children: <Widget>[
-          ...dummyUserLists.map(
-            (user) => Container(
+          ...patientRequests.map(
+            (patient) => Container(
               height: 105,
               child: Card(
                 // shape: RoundedRectangleBorder(
@@ -73,7 +65,7 @@ class _ViewRequestState extends State<ViewRequest> {
                               children: <Widget>[
                                 InkWell(
                                   child: Text(
-                                    user.name,
+                                    "${patient['firstName']} ${patient['lastName']}",
                                     style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
@@ -103,6 +95,8 @@ class _ViewRequestState extends State<ViewRequest> {
                             ElevatedButton(
                               onPressed: () {
                                 print('Confirm');
+                                database.acceptPatient(patient);
+                                // TODO: removes patient on the screen on accept
                               },
                               child: Text('Confirm'),
                             ),
