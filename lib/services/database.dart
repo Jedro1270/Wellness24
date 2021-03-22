@@ -118,7 +118,6 @@ class DatabaseService {
   }
 
   Future<Patient> getPatient(String uid) async {
-    // For static displays only
     DocumentSnapshot snapshotPatient = await patients.document(uid).get();
     DocumentSnapshot snapshotBloodPressure =
         await bloodPressure.document(uid).get();
@@ -141,7 +140,6 @@ class DatabaseService {
   }
 
   Future<Doctor> getDoctor(String uid) async {
-    // For static displays only
     DocumentSnapshot snapshotDoctor = await doctors.document(uid).get();
 
     return Doctor(
