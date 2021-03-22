@@ -4,6 +4,7 @@ import 'package:wellness24/components/common/navigation_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness24/components/pages/doctor_screen/notification_page.dart';
 import 'package:wellness24/components/pages/doctor_screen/patients_list/patients_list.dart';
+import 'package:wellness24/models/doctor.dart';
 import 'package:wellness24/models/user.dart';
 import 'package:wellness24/components/pages/common_pages/login_page.dart';
 import 'package:wellness24/services/database.dart';
@@ -14,9 +15,18 @@ class DoctorHomePage extends StatefulWidget {
 }
 
 class _DoctorHomePageState extends State<DoctorHomePage> {
+  Doctor currentDoctor;
+
+  initializeDoctor(String uid) async {
+    DatabaseService database = DatabaseService(uid: uid);
+    currentDoctor = await database.getDoctor(uid);
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
+
+    initializeDoctor(user.uid);
 
     if (user == null) {
       return Login();
@@ -30,7 +40,10 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
           IconButton(
               icon: Icon(Icons.notifications),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationPage()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => NotificationPage()));
                 print("Clicked Notif icon");
               })
         ],
