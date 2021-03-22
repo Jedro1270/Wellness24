@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:wellness24/components/pages/doctor_screen/patients_list/patients_list.dart';
 import 'package:wellness24/models/user.dart';
 import 'package:wellness24/components/pages/common_pages/login_page.dart';
+import 'package:wellness24/services/database.dart';
 
 class DoctorHomePage extends StatefulWidget {
   @override
@@ -54,7 +55,16 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
                     child: Image(image: AssetImage("assets/mypatient.png")),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PatientsList(
+                                    patientDatabaseRef:
+                                        DatabaseService(uid: user.uid).patients,
+                                    doctorId: user.uid,
+                                  )));
+                    },
                     child: Text(
                       "My patients",
                       style: TextStyle(
