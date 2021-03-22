@@ -29,7 +29,6 @@ class _ViewRequestState extends State<ViewRequest> {
 
   @override
   Widget build(BuildContext context) {
-    print(patientRequests);
     final user = Provider.of<User>(context);
     final database = DatabaseService(uid: user.uid);
 
