@@ -4,10 +4,10 @@ import 'package:provider/provider.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
 import 'package:wellness24/components/pages/doctor_screen/doctor_home_page.dart';
 import 'package:wellness24/components/pages/patient_screen/patient_home_page.dart';
+import 'package:wellness24/models/blood_pressure.dart';
 import 'package:wellness24/models/patient.dart';
 import 'package:wellness24/models/user.dart';
 import 'package:wellness24/services/database.dart';
-import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -27,10 +27,16 @@ class HomePage extends StatelessWidget {
             if (snapshot.data == 'Doctor') {
               return DoctorHomePage();
             } else {
-              return StreamProvider<Patient>.value(
+              return MultiProvider(providers: [
+                StreamProvider<Patient>.value(
                   initialData: null,
                   value: DatabaseService(uid: user.uid).currentPatient,
-                  child: PatientHomePage());
+                ),
+                StreamProvider<BloodPressure>.value(
+                  initialData: null,
+                  value: DatabaseService(uid: user.uid).currentBloodPressure,
+                )
+              ], child: PatientHomePage());
             }
           } else {
             return Loading();
