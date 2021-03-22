@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:wellness24/models/blood_pressure.dart';
+import 'package:wellness24/models/doctor.dart';
 import 'package:wellness24/models/emergency_contact.dart';
 import 'package:wellness24/models/new_account.dart';
 import 'package:wellness24/models/patient.dart';
@@ -99,11 +100,25 @@ class DatabaseService {
             weight: document.data['weight']);
   }
 
+  BloodPressure bloodPressureFromSnapshot(DocumentSnapshot document) {
+    return BloodPressure(
+            reading: document.data['reading'],
+            lastChecked: document.data['lastChecked']);
+  }
+
   Stream<Patient> get currentPatient {
     return patients.document(uid).snapshots().map(patientFromSnapshot);
   }
 
+  Stream<BloodPressure> get currentBloodPressure {
+    return bloodPressure
+        .document(uid)
+        .snapshots()
+        .map(bloodPressureFromSnapshot);
+  }
+
   Future<Patient> getPatient(String uid) async {
+    // For static displays only
     DocumentSnapshot snapshotPatient = await patients.document(uid).get();
     DocumentSnapshot snapshotBloodPressure =
         await bloodPressure.document(uid).get();
@@ -123,6 +138,24 @@ class DatabaseService {
             lastChecked: snapshotBloodPressure.data['lastChecked'].toDate()),
         bloodType: snapshotPatient.data['bloodType'],
         weight: snapshotPatient.data['weight']);
+  }
+
+  Future<Doctor> getDoctor(String uid) async {
+    // For static displays only
+    DocumentSnapshot snapshotDoctor = await doctors.document(uid).get();
+
+    return Doctor(
+        uid: uid,
+        firstName: snapshotDoctor['firstName'],
+        middleInitial: snapshotDoctor['middleInitial'],
+        lastName: snapshotDoctor['lastName'],
+        specialization: snapshotDoctor['specialization'],
+        about: snapshotDoctor['about'],
+        workingDays: snapshotDoctor['workingDays'],
+        clinicStartHour: snapshotDoctor['clinicStartHour'],
+        clinicEndHour: snapshotDoctor['clinicEndHour'],
+        clinicDayStart: snapshotDoctor['clinicDayStart'],
+        clinicDayEnd: snapshotDoctor['clinicDayEnd']);
   }
 
   Future updatePatient(Patient patient) async {
