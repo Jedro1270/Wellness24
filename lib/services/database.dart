@@ -201,4 +201,10 @@ class DatabaseService {
       'requests': FieldValue.arrayRemove([patientInfo])
     });
   }
+
+  Future declinePatient(dynamic patientInfo) async {
+    await patientRequests.document(uid).updateData({
+      'requests': FieldValue.arrayRemove([patientInfo])
+    });
+  }
 }
