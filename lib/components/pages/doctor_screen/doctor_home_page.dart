@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/common/navigation_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:wellness24/components/pages/doctor_screen/notification_page.dart';
 import 'package:wellness24/components/pages/doctor_screen/patients_list/patients_list.dart';
 import 'package:wellness24/models/user.dart';
 import 'package:wellness24/components/pages/common_pages/login_page.dart';
@@ -29,6 +30,7 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
           IconButton(
               icon: Icon(Icons.notifications),
               onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationPage()));
                 print("Clicked Notif icon");
               })
         ],
