@@ -6,6 +6,7 @@ import 'package:wellness24/components/common/schedule_card.dart';
 import 'package:wellness24/components/pages/common_pages/patient_profile/patient_profile.dart';
 import 'package:wellness24/components/pages/patient_screen/emergency_page.dart';
 import 'package:wellness24/components/pages/patient_screen/doctor_details.dart';
+import 'package:wellness24/components/pages/patient_screen/medical_record.dart';
 import 'package:wellness24/components/pages/patient_screen/patient_schedule_page.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness24/models/blood_pressure.dart';
@@ -260,6 +261,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                             fontWeight: FontWeight.bold,
                             color: Colors.black)),
                     onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => MedicalRecords()));
                       print("My Medical Records");
                     },
                     style: ElevatedButton.styleFrom(
@@ -270,6 +272,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                 ],
               ),
             ),
+            Divider(height: 20, color: Colors.transparent),
           ],
         ),
       ),
