@@ -25,18 +25,18 @@ class PatientHomePage extends StatefulWidget {
 class _PatientHomePageState extends State<PatientHomePage> {
   String searchValue = '';
   String filterValue = 'Any';
-  Patient currentPatient;
 
-  initializePatient(String uid) async {
-    DatabaseService database = DatabaseService();
-    currentPatient = await database.getPatient(uid);
-  }
+  // initializePatient(String uid) async {
+  //   DatabaseService database = DatabaseService();
+  //   currentPatient = await database.getPatient(uid);
+  // }
 
   @override
   Widget build(BuildContext context) {
-    User currentUser = Provider.of<User>(context);
+    // User currentUser = Provider.of<User>(context);
+    Patient currentPatient = Provider.of<Patient>(context);
 
-    initializePatient(currentUser.uid);
+    // initializePatient(currentUser.uid);
 
     return Scaffold(
       drawer: NavBar(),
@@ -261,7 +261,10 @@ class _PatientHomePageState extends State<PatientHomePage> {
                             fontWeight: FontWeight.bold,
                             color: Colors.black)),
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => MedicalRecords()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MedicalRecords()));
                       print("My Medical Records");
                     },
                     style: ElevatedButton.styleFrom(
