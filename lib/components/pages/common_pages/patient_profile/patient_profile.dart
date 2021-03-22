@@ -24,6 +24,11 @@ class _PatientProfileState extends State<PatientProfile> {
   BloodPressure newBloodPressure;
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
+  @override
   void initState() {
     super.initState();
 
@@ -209,7 +214,7 @@ class _PatientProfileState extends State<PatientProfile> {
                   SizedBox(height: 10),
                   Divider(color: Colors.black),
                   SizedBox(height: 10),
-                  Container(
+                  Container( // Add inkwell
                     child: Row(
                       children: <Widget>[
                         Text('History',
