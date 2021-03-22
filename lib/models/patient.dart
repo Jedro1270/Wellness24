@@ -47,4 +47,20 @@ class Patient {
 
     return Age.dateDifference(fromDate: birthDateTime, toDate: present).years;
   }
+
+  Map get object {
+    return {
+      uid: this.uid,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      middleInitial: this.middleInitial,
+      birthDate: this.birthDate,
+      contactNo: this.contactNo,
+      address: this.address,
+      bloodType: this.bloodType,
+      weight: this.weight,
+      gender: this.gender,
+      medicalHistory: this.medicalHistory
+    };
+  }
 }
