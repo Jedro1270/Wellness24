@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
 import 'package:wellness24/components/pages/common_pages/patient_profile/patient_condition.dart';
-import 'package:wellness24/components/pages/patient_screen/medical_history.dart';
 import 'package:wellness24/components/pages/patient_screen/medical_records/medical_record.dart';
 import 'package:wellness24/models/blood_pressure.dart';
 import 'package:wellness24/models/patient.dart';

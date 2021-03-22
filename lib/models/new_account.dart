@@ -1,4 +1,3 @@
-import 'package:wellness24/models/doctor.dart';
 import 'package:wellness24/models/emergency_contact.dart';
 import 'package:wellness24/services/auth_service.dart';
 import 'package:wellness24/models/user.dart';
