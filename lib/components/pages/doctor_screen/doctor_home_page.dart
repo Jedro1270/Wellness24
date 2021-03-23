@@ -5,7 +5,7 @@ import 'package:wellness24/components/common/navigation_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness24/components/common/schedule_card.dart';
 import 'package:wellness24/components/pages/doctor_screen/notification_page.dart';
-import 'package:wellness24/components/pages/doctor_screen/patients_list/patients_list.dart';
+import 'package:wellness24/components/pages/doctor_screen/patients_list/my_patients_list.dart';
 import 'package:wellness24/models/doctor.dart';
 import 'package:wellness24/models/user.dart';
 import 'package:wellness24/components/pages/common_pages/login_page.dart';
@@ -78,7 +78,7 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
                   ),
                   Container(
                       height: 200,
-                      child: PatientsList(
+                      child: MyPatientsList(
                         doctorDatabaseRef:
                             DatabaseService(uid: user.uid).doctors,
                         doctorId: user.uid,
