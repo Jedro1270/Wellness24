@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wellness24/components/pages/patient_screen/doctor_search_page/doctor_info.dart';
 import 'package:wellness24/components/pages/patient_screen/doctor_search_page/doctor_search_page.dart';
-import 'package:wellness24/components/pages/patient_screen/doctor_search_page/doctors_list.dart';
+import 'package:wellness24/components/pages/patient_screen/doctor_search_page/searched_doctors_list.dart';
 
 void main() {
   testWidgets('DoctorSearchPage should render a DoctorInfo widget if there is a doctor in the firestore based on the search and filter parameters', (WidgetTester tester) async {
@@ -36,7 +36,7 @@ void main() {
             filterValue: 'neurologist',
             doctorDatabaseRef: doctorReference)));
 
-    final doctorsListFinder = find.byType(DoctorsList);
+    final doctorsListFinder = find.byType(SearchedDoctorsList);
     final doctorInfoFinder = find.byType(DoctorInfo);
 
     expect(doctorsListFinder, findsOneWidget);
