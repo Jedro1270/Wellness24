@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:wellness24/components/pages/common_pages/register_next_step.dart';
 import 'package:wellness24/models/new_account.dart';
@@ -82,6 +83,7 @@ class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
                 SizedBox(
                     height: 50,
                     child: TextFormField(
+                        inputFormatters: [FilteringTextInputFormatter.deny(RegExp("[0-9]"))],
                         obscureText: false,
                         onChanged: (val) => setState(() => lastName = val),
                         validator: (val) =>
@@ -102,6 +104,7 @@ class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
                 SizedBox(
                     height: 50,
                     child: TextFormField(
+                        inputFormatters: [FilteringTextInputFormatter.deny(RegExp("[0-9]"))],
                         obscureText: false,
                         onChanged: (val) => setState(() => firstName = val),
                         validator: (val) =>
@@ -122,6 +125,7 @@ class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
                 SizedBox(
                     height: 50,
                     child: TextFormField(
+                        inputFormatters: [FilteringTextInputFormatter.deny(RegExp("[0-9]"))],
                         obscureText: false,
                         onChanged: (val) => setState(() => middleInitial = val),
                         validator: (val) => val.isEmpty
