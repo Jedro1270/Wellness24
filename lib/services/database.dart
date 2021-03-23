@@ -129,6 +129,7 @@ class DatabaseService {
     });
 
     return Patient(
+        uid: snapshotPatient.data['uid'],
         firstName: snapshotPatient.data['firstName'],
         middleInitial: snapshotPatient.data['middleInitial'],
         lastName: snapshotPatient.data['lastName'],
