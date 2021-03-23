@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wellness24/models/patient.dart';
 import 'package:wellness24/models/user.dart';
 import 'package:wellness24/services/database.dart';
 
@@ -9,15 +10,19 @@ class ViewRequest extends StatefulWidget {
 }
 
 class _ViewRequestState extends State<ViewRequest> {
-  List patientRequests = [];
+  List<Patient> patientRequests = [];
 
   void fetchRequests() async {
     final user = Provider.of<User>(context, listen: false);
     List requestsData =
         await DatabaseService(uid: user.uid).getPatientRequest();
 
+    List<Patient> requestsInfo = await Future.wait(requestsData.map((e) async {
+      return await DatabaseService().getPatient(e['uid']);
+    }));
+
     setState(() {
-      patientRequests = requestsData;
+      patientRequests = requestsInfo;
     });
   }
 
@@ -64,7 +69,7 @@ class _ViewRequestState extends State<ViewRequest> {
                               children: <Widget>[
                                 InkWell(
                                   child: Text(
-                                    "${patient['firstName']} ${patient['lastName']}",
+                                    patient.fullName,
                                     style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
@@ -94,7 +99,7 @@ class _ViewRequestState extends State<ViewRequest> {
                             ElevatedButton(
                               onPressed: () {
                                 print('Confirm');
-                                database.acceptPatient(patient);
+                                database.acceptPatient(patient.uid);
                                 // TODO: removes patient on the screen on accept
                               },
                               child: Text('Confirm'),
@@ -102,7 +107,7 @@ class _ViewRequestState extends State<ViewRequest> {
                             ElevatedButton(
                               onPressed: () {
                                 print('Decline');
-                                database.declinePatient(patient);
+                                database.declinePatient(patient.uid);
                                 // TODO: also remove patient on screen
                               },
                               child: Text(
