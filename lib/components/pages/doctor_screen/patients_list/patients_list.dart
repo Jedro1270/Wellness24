@@ -30,8 +30,6 @@ class _PatientsListState extends State<PatientsList> {
     await Future.forEach(snapshot.data['patients'], (patient) async {
       Patient currentPatient = await database.getPatient(patient['uid']);
 
-      print(currentPatient.contactNo);
-
       mappedPatients.add(PatientInfo(patient: currentPatient));
     });
 
