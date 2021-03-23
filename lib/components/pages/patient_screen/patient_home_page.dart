@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
-import 'package:wellness24/components/common/doctor_card.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
 import 'package:wellness24/components/common/schedule_card.dart';
 import 'package:wellness24/components/pages/common_pages/medical_records/medical_record.dart';
 import 'package:wellness24/components/pages/common_pages/patient_profile/patient_profile.dart';
 import 'package:wellness24/components/pages/patient_screen/emergency_page.dart';
 import 'package:provider/provider.dart';
+import 'package:wellness24/components/pages/patient_screen/my_doctors_list.dart';
 import 'package:wellness24/models/patient.dart';
 import 'package:wellness24/models/user.dart';
 import 'package:wellness24/services/database.dart';
@@ -166,7 +166,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 30),
                   Container(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -194,7 +193,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 30),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30),
                     child: Text(
@@ -206,9 +204,13 @@ class _PatientHomePageState extends State<PatientHomePage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
-                  buildDoctorList(),
-                  SizedBox(height: 30),
+                  Container(
+                    height: 200,
+                    child: MyDoctorsList(
+                        patientDatabaseRef:
+                            DatabaseService(uid: currentUser.uid).patients,
+                        patientId: currentUser.uid),
+                  ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30),
                     child: Text(
@@ -220,9 +222,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 30),
                   buildAppointmentList(),
-                  SizedBox(height: 30),
                   Divider(height: 20, color: Colors.transparent),
                   Container(
                     child: Row(
@@ -287,21 +287,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
             ),
     );
   }
-}
-
-buildDoctorList() {
-  return Padding(
-    padding: EdgeInsets.symmetric(horizontal: 30),
-    child: Column(
-      children: <Widget>[
-        DoctorCard('Darla', 'V', 'Abagat', 'Cardiologist',
-            'assets/sample-patient.jpg'),
-        SizedBox(height: 20),
-        DoctorCard(
-            'Jed', 'C', 'Alejandro', 'Psychiatrist', 'assets/doctor_sample.png')
-      ],
-    ),
-  );
 }
 
 buildAppointmentList() {
