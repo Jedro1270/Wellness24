@@ -12,7 +12,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Home Page',
+        title: 'Emergency',
         leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
@@ -22,27 +22,27 @@ class _EmergencyPageState extends State<EmergencyPage> {
             }),
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 60.0, horizontal: 25.0),
+        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 25.0),
         child: ListView(
           children: <Widget>[
-            Container(
-              width: 100,
-              height: 70,
-              color: Colors.redAccent[700],
-              child:
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text(
-                  "Emergency",
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontFamily: "ShipporiMincho",
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ],),
+            // Container(
+            //   width: 100,
+            //   height: 70,
+            //   color: Colors.redAccent[700],
+            //   child:
+            //       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            //     Text(
+            //       "Emergency",
+            //       style: TextStyle(
+            //         fontSize: 25,
+            //         fontFamily: "ShipporiMincho",
+            //         fontWeight: FontWeight.bold,
+            //         color: Colors.white,
+            //       ),
+            //     ),
+            //   ],),
              
-            ),
+            // ),
             SizedBox(height: 20),
             Container(
               child: Row(
