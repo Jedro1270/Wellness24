@@ -42,7 +42,7 @@ class _ViewRequestState extends State<ViewRequest> {
         children: <Widget>[
           ...patientRequests.map(
             (patient) => Container(
-              height: 105,
+              height: 110,
               child: Card(
                 // shape: RoundedRectangleBorder(
                 //   borderRadius: BorderRadius.circular(15.0),
@@ -85,43 +85,40 @@ class _ViewRequestState extends State<ViewRequest> {
                                       fontSize: 15,
                                       fontFamily: 'ShipporiMincho'),
                                 ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: <Widget>[
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          print('Confirm');
+                                          database.acceptPatient(patient.uid);
+                                          // TODO: removes patient on the screen on accept
+                                        },
+                                        child: Icon(Icons.check)),
+                                    SizedBox(width: 10),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        print('Decline');
+                                        database.declinePatient(patient.uid);
+                                        // TODO: also remove patient on screen
+                                      },
+                                      child: Icon(Icons.clear,
+                                          color: Colors.black),
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateColor.resolveWith(
+                                                (states) => Colors.grey[50]),
+                                      ),
+                                    ),
+                                  ],
+                                )
                               ],
                             ),
                           ),
                         ],
                       ),
                       // SizedBox(width: 5),
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            ElevatedButton(
-                              onPressed: () {
-                                print('Confirm');
-                                database.acceptPatient(patient.uid);
-                                // TODO: removes patient on the screen on accept
-                              },
-                              child: Text('Confirm'),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                print('Decline');
-                                database.declinePatient(patient.uid);
-                                // TODO: also remove patient on screen
-                              },
-                              child: Text(
-                                'Decline',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                              style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateColor.resolveWith(
-                                          (states) => Colors.grey[50])),
-                            )
-                          ],
-                        ),
-                      )
                     ],
                   ),
                 ),

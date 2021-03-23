@@ -52,12 +52,12 @@ class _PatientHomePageState extends State<PatientHomePage> {
               })
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.message),
-        onPressed: () {
-          print("Message Icon click");
-        },
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   child: Icon(Icons.message),
+      //   onPressed: () {
+      //     print("Message Icon click");
+      //   },
+      // ),
       body: currentPatient == null
           ? Loading()
           : Container(

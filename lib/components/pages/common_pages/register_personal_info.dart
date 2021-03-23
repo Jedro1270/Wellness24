@@ -14,20 +14,19 @@ class RegisterPersonalInfo extends StatefulWidget {
 
 class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
   final _formKey = GlobalKey<FormState>();
-  String selectedRadio, lastName, firstName, middleInitial, birthDate, address;
+  String selectedRadio, lastName, firstName, middleInitial, address;
   DateTime _date = DateTime.now();
-  DateFormat format = DateFormat('MM-dd-yyyy');
+  DateFormat format = DateFormat.yMd();
   NewAccount account;
 
   _RegisterPersonalInfoState(this.account);
 
   Future<Null> _selectDate(BuildContext context) async {
     DateTime _datePicker = await showDatePicker(
-      context: context,
-      initialDate: _date,
-      firstDate: DateTime(1900),
-      lastDate: DateTime(2100)
-    );
+        context: context,
+        initialDate: _date,
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2100));
 
     if (_datePicker != null && _datePicker != _date) {
       setState(() {
@@ -176,9 +175,9 @@ class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
                             fontFamily: "ShipporiMincho",
                             fontWeight: FontWeight.normal)),
                     SizedBox(width: 10),
-                    Text("(mm-dd-yyyy)",
+                    Text("(mm/dd/yyyy)",
                         style: TextStyle(
-                          color: Colors.black38,
+                            color: Colors.black38,
                             fontSize: 20,
                             fontFamily: "ShipporiMincho",
                             fontWeight: FontWeight.normal)),
@@ -200,17 +199,8 @@ class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
                     onPressed: () {
                       setState(() {
                         _selectDate(context);
-                        print(format.format(_date));
                       });
                     }),
-                // SizedBox(
-                //     height: 50,
-                //     child: TextFormField(
-                //         decoration: InputDecoration(hintText: 'mm-dd-yy'),
-                //         obscureText: false,
-                //         onChanged: (val) => setState(() => birthDate = val),
-                //         validator: (val) =>
-                //             val.isEmpty ? 'This field is required' : null)),
                 SizedBox(height: 15),
                 Container(
                   child: Row(children: <Widget>[
@@ -243,7 +233,7 @@ class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
                                 firstName: firstName,
                                 middleInitial: middleInitial,
                                 gender: selectedRadio,
-                                birthDate: birthDate,
+                                birthDate: _date,
                                 address: address);
 
                             Navigator.push(

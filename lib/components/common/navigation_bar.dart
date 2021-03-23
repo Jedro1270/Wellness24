@@ -24,25 +24,6 @@ class NavBar extends StatelessWidget {
           ),
         ),
         ListTile(
-          leading: Icon(
-            Icons.home_outlined,
-            color: Colors.blueAccent,
-          ),
-          title: Text('Home'),
-          onTap: () => print("Home"),
-        ),
-        ListTile(
-          leading: Icon(Icons.notifications_outlined, color: Colors.blueAccent),
-          title: Text('Notifications'),
-          onTap: () => print("Notifications"),
-        ),
-        ListTile(
-          leading: Icon(Icons.person_outline, color: Colors.blueAccent),
-          title: Text('My Patients'),
-          onTap: () => print("My Patients"),
-        ),
-        Divider(),
-        ListTile(
           leading: Icon(Icons.settings_outlined, color: Colors.blueAccent),
           title: Text('Settings'),
           onTap: () => print("Settings"),
