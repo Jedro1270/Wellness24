@@ -129,7 +129,7 @@ class DatabaseService {
     });
 
     return Patient(
-        uid: snapshotPatient.data['uid'],
+        uid: snapshotPatient.documentID,
         firstName: snapshotPatient.data['firstName'],
         middleInitial: snapshotPatient.data['middleInitial'],
         lastName: snapshotPatient.data['lastName'],
@@ -195,13 +195,13 @@ class DatabaseService {
   Future acceptPatient(String patientId) async {
     await doctors.document(uid).setData({
       'patients': FieldValue.arrayUnion([
-        {uid: patientId}
+        {'uid': patientId}
       ])
     }, merge: true);
 
     await patientRequests.document(uid).updateData({
       'requests': FieldValue.arrayRemove([
-        {uid: patientId}
+        {'uid': patientId}
       ])
     });
   }
@@ -209,7 +209,7 @@ class DatabaseService {
   Future declinePatient(String patientId) async {
     await patientRequests.document(uid).updateData({
       'requests': FieldValue.arrayRemove([
-        {uid: patientId}
+        {'uid': patientId}
       ])
     });
   }
