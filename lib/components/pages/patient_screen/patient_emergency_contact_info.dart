@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wellness24/components/pages/patient_screen/medical_history.dart';
+import 'package:wellness24/components/pages/common_pages/medical_records/medical_histories/medical_history.dart';
 import 'package:wellness24/models/emergency_contact.dart';
 import 'package:wellness24/models/new_account.dart';
 
