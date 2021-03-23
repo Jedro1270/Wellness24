@@ -269,14 +269,9 @@ class _PatientHomePageState extends State<PatientHomePage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => MedicalRecords()));
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
                                     builder: (context) => MedicalRecords(
                                           patient: currentPatient,
                                         )));
-                            print("My Medical Records");
                           },
                           style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.symmetric(
