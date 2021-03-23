@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
-import 'package:wellness24/components/pages/patient_screen/medical_records/record_card.dart';
+import 'package:wellness24/components/pages/common_pages/medical_records/record_card.dart';
 import 'package:wellness24/models/patient.dart';
 
 class MedicalRecords extends StatefulWidget {
