@@ -2,15 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/pages/doctor_screen/patients_list/patient_info.dart';
-import 'package:wellness24/models/blood_pressure.dart';
 import 'package:wellness24/models/patient.dart';
 import 'package:wellness24/services/database.dart';
 
 class PatientsList extends StatefulWidget {
-  final CollectionReference patientDatabaseRef;
+  final CollectionReference doctorDatabaseRef;
   final String doctorId;
 
-  PatientsList({this.patientDatabaseRef, this.doctorId});
+  PatientsList({this.doctorDatabaseRef, this.doctorId});
 
   @override
   _PatientsListState createState() => _PatientsListState();
@@ -21,73 +20,25 @@ class _PatientsListState extends State<PatientsList> {
   DatabaseService database;
 
   void getPatients() async {
-    // List mappedPatients; // TO DO: implement this once we have finished patient requests to doctor
+    database = DatabaseService(uid: widget.doctorId);
 
-    // QuerySnapshot snapshots = await widget.patientDatabaseRef
-    //     .where('doctorIds', arrayContains: widget.doctorId)
-    //     .orderBy('lastName')
-    //     .getDocuments();
+    List<PatientInfo> mappedPatients = [];
 
-    // mappedPatients = snapshots.documents.map((document) async {
-    //   Patient currentPatient = await database.getPatient(document.documentID);
+    DocumentSnapshot snapshot =
+        await widget.doctorDatabaseRef.document(widget.doctorId).get();
 
-    //   return PatientInfo(patient: currentPatient);
-    // }).toList();
+    await Future.forEach(snapshot.data['patients'], (patient) async {
+      Patient currentPatient = await database.getPatient(patient['uid']);
 
-    // setState(() {
-    //   patients = mappedPatients;
-    // });
+      print(currentPatient.contactNo);
+
+      mappedPatients.add(PatientInfo(patient: currentPatient));
+    });
 
     setState(() {
-      List<Patient> temPatients = [
-        Patient(
-            firstName: 'Darla',
-            middleInitial: 'A',
-            lastName: 'Abagat',
-            gender: 'Female',
-            birthDate: '01-01-2000',
-            address: 'San Jose',
-            contactNo: '704230234',
-            medicalHistory: [],
-            emergencyContact: null,
-            bloodPressure: BloodPressure(
-                reading: '120/80 mm', lastChecked: DateTime.now()),
-            bloodType: 'A+',
-            weight: 55),
-        Patient(
-            firstName: 'Darla',
-            middleInitial: 'A',
-            lastName: 'Abagat',
-            gender: 'Female',
-            birthDate: '01-01-2000',
-            address: 'San Jose',
-            contactNo: '704230234',
-            medicalHistory: [],
-            emergencyContact: null,
-            bloodPressure: BloodPressure(
-                reading: '120/80 mm', lastChecked: DateTime.now()),
-            bloodType: 'A+',
-            weight: 55),
-        Patient(
-            firstName: 'Darla',
-            middleInitial: 'A',
-            lastName: 'Abagat',
-            gender: 'Female',
-            birthDate: '01-01-2000',
-            address: 'San Jose',
-            contactNo: '704230234',
-            medicalHistory: [],
-            emergencyContact: null,
-            bloodPressure: BloodPressure(
-                reading: '120/80 mm', lastChecked: DateTime.now()),
-            bloodType: 'A+',
-            weight: 55)
-      ];
-
-      patients = temPatients.map<PatientInfo>((Patient patient) {
-        return PatientInfo(patient: patient);
-      }).toList();
+      patients = mappedPatients;
     });
+
   }
 
   @override
