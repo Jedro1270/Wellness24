@@ -36,33 +36,17 @@ class _PatientsListState extends State<PatientsList> {
     setState(() {
       patients = mappedPatients;
     });
-
   }
 
   @override
   void initState() {
-    super.initState();
-
     getPatients();
+
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: CustomAppBar(
-        title: 'My Patients',
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.home_outlined),
-            iconSize: 30.0,
-          )
-        ],
-      ),
-      body: Container(
-        child: ListView(children: patients),
-      ),
-    );
+    return ListView(children: patients);
   }
 }
