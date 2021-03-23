@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
-import 'package:wellness24/components/pages/common_pages/medical_records/medical_record.dart';
 import 'package:wellness24/components/pages/common_pages/patient_profile/patient_condition.dart';
 import 'package:wellness24/models/blood_pressure.dart';
 import 'package:wellness24/models/patient.dart';
@@ -145,7 +144,7 @@ class _PatientProfileState extends State<PatientProfile> {
                         Icons.cake_outlined,
                         size: 30,
                       ),
-                      content: DateFormat.yMEd().format(widget.patient.birthDate),
+                      content: DateFormat.yMd().format(widget.patient.birthDate),
                       title: 'Birthday',
                       onChanged: (newContent) async {
                         widget.patient.birthDate = newContent;
@@ -220,42 +219,7 @@ class _PatientProfileState extends State<PatientProfile> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Divider(color: Colors.black),
-                  SizedBox(height: 10),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  MedicalRecords(patient: widget.patient)));
-                    },
-                    child: Container(
-                      child: Row(
-                        children: <Widget>[
-                          Text('History',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  fontFamily: 'ShipporiMincho')),
-                          SizedBox(width: 230),
-                          Container(
-                            child: Row(
-                              children: <Widget>[
-                                SizedBox(
-                                    height: 50,
-                                    width: 50,
-                                    child: Image(
-                                      image: AssetImage('assets/dots.png'),
-                                    ))
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  Divider(height: 40,color: Colors.black),
                 ],
               ),
             ),
