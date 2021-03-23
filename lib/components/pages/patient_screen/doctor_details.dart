@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
+import 'package:wellness24/components/pages/patient_screen/patient_schedule_page.dart';
 import 'package:wellness24/models/doctor.dart';
 import 'package:wellness24/models/patient.dart';
 import 'package:wellness24/services/database.dart';
@@ -222,6 +223,9 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                     ),
                   ),
                   onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => PatientAppointmentPage(),
+                    ));
                     print('Make an Appointment');
                   },
                 ),

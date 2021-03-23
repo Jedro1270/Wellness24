@@ -63,7 +63,7 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
             icon: Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => PatientHomePage()));
+                context, MaterialPageRoute(builder: (context) => PatientHomePage()));
             }),
       ),
       body: Container(
@@ -131,11 +131,27 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("Clinic Hours: 12:00 pm - 4:00 pm",
+                      Text("Clinic Hours:",
                           style: TextStyle(
                               fontSize: 20,
                               fontFamily: "ShipporiMincho",
                               color: Colors.black)),
+                      SizedBox(width: 15),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text("12:00 pm - 4:00 pm",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontFamily: "ShipporiMincho",
+                                  color: Colors.black)),
+                          Text("Thursday - Saturday",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontFamily: "ShipporiMincho",
+                                  color: Colors.black)),
+                        ],
+                      )
                     ],
                   )),
               Divider(height: 30, thickness: 2, color: Colors.black),
@@ -149,7 +165,8 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                   Container(
                       alignment: Alignment.centerLeft,
                       decoration: BoxDecoration(
-                          border: Border.all(color: Colors.blue[700], width: 2),
+                          border:
+                              Border.all(color: Color(0xFF40BEEE), width: 1),
                           borderRadius: BorderRadius.circular(20.0)),
                       padding:
                           EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -158,7 +175,7 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                         children: [
                           Text("${format.format(_date)}",
                               style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 18,
                                   fontFamily: "ShipporiMincho",
                                   color: Colors.black)),
                           IconButton(
@@ -186,7 +203,8 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                   Container(
                       alignment: Alignment.centerLeft,
                       decoration: BoxDecoration(
-                          border: Border.all(color: Colors.blue[700], width: 2),
+                          border:
+                              Border.all(color: Color(0xFF40BEEE), width: 1),
                           borderRadius: BorderRadius.circular(20.0)),
                       padding:
                           EdgeInsets.symmetric(horizontal: 10, vertical: 3),
@@ -195,7 +213,7 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                         children: [
                           Text("${_time.hour}:${_time.minute}",
                               style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 18,
                                   fontFamily: "ShipporiMincho",
                                   color: Colors.black)),
                           IconButton(
@@ -217,11 +235,11 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
                       side: BorderSide(color: Colors.black12)),
-                  color: Colors.blue[400],
+                  color: Color(0xFF40BEEE),
                   onPressed: () {},
                   child: Text("Submit",
                       style: TextStyle(
-                          color: Colors.black54,
+                          color: Colors.white,
                           fontSize: 25,
                           fontFamily: "ShipporiMincho",
                           fontWeight: FontWeight.normal)))
