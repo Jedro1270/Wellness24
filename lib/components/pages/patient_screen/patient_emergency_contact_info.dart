@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:wellness24/components/pages/common_pages/medical_records/medical_histories/medical_history.dart';
 import 'package:wellness24/models/emergency_contact.dart';
 import 'package:wellness24/models/new_account.dart';
@@ -62,6 +63,7 @@ class _EmergencyContactInfoState extends State<EmergencyContactInfo> {
                 ),
                 SizedBox(height: 5),
                 TextFormField(
+                    inputFormatters: [FilteringTextInputFormatter.deny(RegExp("[0-9]"))],
                     obscureText: false,
                     onChanged: (val) => setState(() => lastName = val),
                     validator: (val) =>
@@ -80,6 +82,7 @@ class _EmergencyContactInfoState extends State<EmergencyContactInfo> {
                 ),
                 SizedBox(height: 5),
                 TextFormField(
+                    inputFormatters: [FilteringTextInputFormatter.deny(RegExp("[0-9]"))],
                     obscureText: false,
                     onChanged: (val) => setState(() => firstName = val),
                     validator: (val) =>
@@ -98,6 +101,7 @@ class _EmergencyContactInfoState extends State<EmergencyContactInfo> {
                 ),
                 SizedBox(height: 5),
                 TextFormField(
+                    inputFormatters: [FilteringTextInputFormatter.deny(RegExp("[0-9]"))],
                     obscureText: false,
                     onChanged: (val) => setState(() => middleInitial = val),
                     validator: (val) => val.isEmpty
@@ -149,6 +153,7 @@ class _EmergencyContactInfoState extends State<EmergencyContactInfo> {
                 ),
                 SizedBox(height: 5),
                 TextFormField(
+                    inputFormatters: [FilteringTextInputFormatter.deny(RegExp("[0-9]"))],
                     obscureText: false,
                     onChanged: (val) => setState(() => relationship = val),
                     validator: (val) =>
