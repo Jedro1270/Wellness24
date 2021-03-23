@@ -22,7 +22,7 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
   initializeDoctor(String uid) async {
     DatabaseService database = DatabaseService(uid: uid);
     Doctor doctor = await database.getDoctor(uid);
-    
+
     setState(() {
       currentDoctor = doctor;
     });
@@ -65,45 +65,26 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
           : Container(
               child: ListView(
                 children: <Widget>[
-                  SizedBox(height: 30.0),
-                  Container(
-                    padding: EdgeInsets.only(left: 40.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: 60,
-                          width: 60,
-                          child:
-                              Image(image: AssetImage("assets/mypatient.png")),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => PatientsList(
-                                          doctorDatabaseRef:
-                                              DatabaseService(uid: user.uid)
-                                                  .doctors,
-                                          doctorId: user.uid,
-                                        )));
-                          },
-                          child: Text(
-                            "My patients",
-                            style: TextStyle(
-                                fontSize: 25,
-                                fontFamily: "ShipporiMincho",
-                                fontWeight: FontWeight.bold),
-                          ),
-                        )
-                      ],
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+                    child: Text(
+                      'My Patients',
+                      style: TextStyle(
+                        fontFamily: "ShipporiMincho",
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
-                  SizedBox(height: 30.0),
+                  Container(
+                      height: 200,
+                      child: PatientsList(
+                        doctorDatabaseRef:
+                            DatabaseService(uid: user.uid).doctors,
+                        doctorId: user.uid,
+                      )),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
                     child: Text(
                       'My Appointments',
                       style: TextStyle(
@@ -113,9 +94,7 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 30.0),
                   buildAppointmentList(),
-                  SizedBox(height: 30.0),
                 ],
               ),
             ),
