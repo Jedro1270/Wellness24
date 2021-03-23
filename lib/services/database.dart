@@ -120,7 +120,13 @@ class DatabaseService {
   Future<Patient> getPatient(String uid) async {
     DocumentSnapshot snapshotPatient = await patients.document(uid).get();
     DocumentSnapshot snapshotBloodPressure =
-        await bloodPressure.document(uid).get();
+        await bloodPressure.document(uid).get().then((doc) {
+      if (doc.exists) {
+        return doc;
+      }
+
+      return null;
+    });
 
     return Patient(
         firstName: snapshotPatient.data['firstName'],
@@ -129,12 +135,15 @@ class DatabaseService {
         gender: snapshotPatient.data['gender'],
         birthDate: snapshotPatient.data['birthDate'],
         address: snapshotPatient.data['address'],
-        contactNo: snapshotPatient.data['contactNo'],
+        contactNo: snapshotPatient.data['contactNumber'],
         medicalHistory: snapshotPatient.data['medicalHistory'],
         emergencyContact: snapshotPatient.data['emergencyContact'],
-        bloodPressure: BloodPressure(
-            reading: snapshotBloodPressure.data['reading'],
-            lastChecked: snapshotBloodPressure.data['lastChecked'].toDate()),
+        bloodPressure: snapshotBloodPressure == null
+            ? null
+            : BloodPressure(
+                reading: snapshotBloodPressure.data['reading'],
+                lastChecked:
+                    snapshotBloodPressure.data['lastChecked'].toDate()),
         bloodType: snapshotPatient.data['bloodType'],
         weight: snapshotPatient.data['weight']);
   }
