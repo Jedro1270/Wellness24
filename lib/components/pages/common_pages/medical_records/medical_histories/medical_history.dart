@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
+import 'package:wellness24/components/pages/common_pages/medical_records/medical_histories/medical_history_entry.dart';
 import 'package:wellness24/components/pages/patient_screen/patient_home_page.dart';
+import 'package:wellness24/models/medical_history_entry.dart';
 import 'package:wellness24/models/new_account.dart';
 import 'package:wellness24/models/user.dart';
 import 'package:wellness24/services/database.dart';
@@ -14,17 +16,17 @@ class MedicalHistory extends StatefulWidget {
 
 class _MedicalHistoryState extends State<MedicalHistory> {
   final medicalList = [
-    MedicalHistoryList(title: "Anemia"),
-    MedicalHistoryList(title: "Asthma"),
-    MedicalHistoryList(title: "Diabetes"),
-    MedicalHistoryList(title: "Hypertension"),
-    MedicalHistoryList(title: "Alergic Rhintis"),
-    MedicalHistoryList(title: "Obesity")
+    MedicalHistoryEntry(title: "Anemia"),
+    MedicalHistoryEntry(title: "Asthma"),
+    MedicalHistoryEntry(title: "Diabetes"),
+    MedicalHistoryEntry(title: "Hypertension"),
+    MedicalHistoryEntry(title: "Alergic Rhintis"),
+    MedicalHistoryEntry(title: "Obesity")
   ];
 
   final NewAccount account;
   bool loading = false;
-  String additional;
+  String additional = '';
 
   _MedicalHistoryState(this.account);
 
@@ -57,29 +59,18 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                   Divider(color: Colors.black),
                   SizedBox(height: 20),
                   ...medicalList
-                      .map((item) => Container(
-                            child: ListTile(
-                              onTap: () {
-                                setState(() {
-                                  item.value = !item.value;
-                                });
-                              },
-                              leading: Checkbox(
-                                value: item.value,
-                                activeColor: Colors.blueAccent,
-                                onChanged: (value) {
-                                  setState(() {
-                                    item.value = item.value;
-                                  });
-                                },
-                              ),
-                              title: Text(item.title,
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontFamily: "ShipporiMincho",
-                                      fontWeight: FontWeight.normal)),
-                              minVerticalPadding: 2,
-                            ),
+                      .map((item) => MedicalHistoryTile(
+                            onTap: () {
+                              setState(() {
+                                item.value = !item.value;
+                              });
+                            },
+                            onChanged: (value) {
+                              setState(() {
+                                item.value = value;
+                              });
+                            },
+                            medicalHistoryEntry: item,
                           ))
                       .toList(),
                   SizedBox(height: 15.0),
@@ -93,7 +84,17 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                                 fontSize: 20,
                                 fontFamily: "ShipporiMincho",
                                 fontWeight: FontWeight.normal)),
-                        Icon(Icons.add_box),
+                        InkWell(
+                            onTap: () {
+                              setState(() {
+                                if (additional.length > 1) {
+                                  medicalList.add(
+                                      MedicalHistoryEntry(title: additional));
+                                  additional = '';
+                                }
+                              });
+                            },
+                            child: Icon(Icons.add_box)),
                       ])
                     ],
                   )),
@@ -121,14 +122,10 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                               // minWidth: 100,
                               // padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                               onPressed: () async {
-                                List patientMedHistory = medicalList
+                                List<String> patientMedHistory = medicalList
                                     .where((c) => c.value == true)
                                     .map((e) => e.title)
                                     .toList();
-
-                                if (additional.isNotEmpty) {
-                                  patientMedHistory.add(additional);
-                                }
 
                                 setState(() {
                                   loading = true;
@@ -170,14 +167,4 @@ class _MedicalHistoryState extends State<MedicalHistory> {
             ),
           );
   }
-}
-
-class MedicalHistoryList {
-  String title;
-  bool value;
-
-  MedicalHistoryList({
-    @required this.title,
-    this.value = false,
-  });
 }
