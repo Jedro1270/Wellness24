@@ -7,7 +7,8 @@ class PatientCondition extends StatefulWidget {
   final String title;
   final Function onChanged;
 
-  PatientCondition({this.editable, this.icon, this.content, this.title, this.onChanged});
+  PatientCondition(
+      {this.editable, this.icon, this.content, this.title, this.onChanged});
 
   @override
   _PatientConditionState createState() => _PatientConditionState();
@@ -70,7 +71,7 @@ class _PatientConditionState extends State<PatientCondition> {
                             ),
                           )
                         : Text(
-                            newContent,
+                            newContent == null ? '' : newContent,
                             style: TextStyle(
                                 fontFamily: 'ShipporiMincho',
                                 fontSize: 18,
