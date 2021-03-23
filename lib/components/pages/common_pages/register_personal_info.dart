@@ -16,7 +16,7 @@ class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
   final _formKey = GlobalKey<FormState>();
   String selectedRadio, lastName, firstName, middleInitial, address;
   DateTime _date = DateTime.now();
-  DateFormat format = DateFormat('MM-dd-yyyy');
+  DateFormat format = DateFormat.yMEd();
   NewAccount account;
 
   _RegisterPersonalInfoState(this.account);
