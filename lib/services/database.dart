@@ -129,7 +129,7 @@ class DatabaseService {
     });
 
     return Patient(
-        uid: snapshotPatient.data['uid'],
+        uid: snapshotPatient.documentID,
         firstName: snapshotPatient.data['firstName'],
         middleInitial: snapshotPatient.data['middleInitial'],
         lastName: snapshotPatient.data['lastName'],
@@ -153,7 +153,7 @@ class DatabaseService {
     DocumentSnapshot snapshotDoctor = await doctors.document(uid).get();
 
     return Doctor(
-        uid: uid,
+        uid: snapshotDoctor.documentID,
         firstName: snapshotDoctor['firstName'],
         middleInitial: snapshotDoctor['middleInitial'],
         lastName: snapshotDoctor['lastName'],
