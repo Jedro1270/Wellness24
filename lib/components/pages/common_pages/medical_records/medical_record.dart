@@ -18,9 +18,11 @@ class _MedicalRecordsState extends State<MedicalRecords> {
 
   @override
   void initState() {
-    records = widget.patient.medicalHistory.map((title) {
-      return RecordCard(title: title);
-    }).toList();
+    if (widget.patient != null) {
+      records = widget.patient.medicalHistory.map((title) {
+        return RecordCard(title: title);
+      }).toList();
+    }
 
     super.initState();
   }
@@ -29,7 +31,7 @@ class _MedicalRecordsState extends State<MedicalRecords> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: widget.patient.fullName,
+        title: widget.patient == null ? '' : widget.patient.fullName,
         actions: [
           IconButton(
               icon: Icon(Icons.notifications),
@@ -39,7 +41,36 @@ class _MedicalRecordsState extends State<MedicalRecords> {
         ],
       ),
       body: Container(
-        child: ListView(children: records),
+        child: Column(
+          children: [
+            Container(
+              margin: EdgeInsets.all(20),
+              child: Text(
+                "Medical History",
+                style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: "ShipporiMincho",
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            Divider(thickness: 2),
+            Container(
+              height: 300,
+              child: ListView(children: records),
+            ),
+            Divider(thickness: 2),
+            Container(
+              margin: EdgeInsets.all(20),
+              child: Text(
+                "Medical Records",
+                style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: "ShipporiMincho",
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
