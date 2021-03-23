@@ -179,20 +179,10 @@ class DatabaseService {
     });
   }
 
-  Future sendRequest({String doctorId, Patient patient}) async {
+  Future sendRequest({String doctorId, String patientId}) async {
     await patientRequests.document(doctorId).setData({
       'requests': FieldValue.arrayUnion([
-        {
-          'uid': patient.uid,
-          'firstName': patient.firstName,
-          'lastName': patient.lastName,
-          'birthDate': patient.birthDate,
-          'address': patient.address,
-          'contactNo': patient.contactNo,
-          'medicalHistory': patient.medicalHistory,
-          'bloodType': patient.bloodType,
-          'weight': patient.weight
-        }
+        {'uid': patientId}
       ])
     });
   }
@@ -202,19 +192,34 @@ class DatabaseService {
     return document == null ? [] : document.data['requests'];
   }
 
-  Future acceptPatient(dynamic patientInfo) async {
+  Future acceptPatient(String patientId) async {
+    // adds patient id to doctor.patients
     await doctors.document(uid).setData({
-      'patients': FieldValue.arrayUnion([patientInfo])
+      'patients': FieldValue.arrayUnion([
+        {'uid': patientId}
+      ])
     }, merge: true);
 
+    // removes patient on patient requests
     await patientRequests.document(uid).updateData({
-      'requests': FieldValue.arrayRemove([patientInfo])
+      'requests': FieldValue.arrayRemove([
+        {'uid': patientId}
+      ])
     });
+
+    // adds doctor id to patient.doctors
+    await patients.document(patientId).setData({
+      'doctors': FieldValue.arrayUnion([
+        {'uid': uid}
+      ])
+    }, merge: true);
   }
 
-  Future declinePatient(dynamic patientInfo) async {
+  Future declinePatient(String patientId) async {
     await patientRequests.document(uid).updateData({
-      'requests': FieldValue.arrayRemove([patientInfo])
+      'requests': FieldValue.arrayRemove([
+        {'uid': patientId}
+      ])
     });
   }
 }
