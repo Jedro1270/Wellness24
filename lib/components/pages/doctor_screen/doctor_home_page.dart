@@ -22,9 +22,7 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
   initializeDoctor(String uid) async {
     DatabaseService database = DatabaseService(uid: uid);
     Doctor doctor = await database.getDoctor(uid);
-
-    print(doctor.firstName);
-
+    
     setState(() {
       currentDoctor = doctor;
     });
@@ -86,9 +84,9 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => PatientsList(
-                                          patientDatabaseRef:
+                                          doctorDatabaseRef:
                                               DatabaseService(uid: user.uid)
-                                                  .patients,
+                                                  .doctors,
                                           doctorId: user.uid,
                                         )));
                           },
