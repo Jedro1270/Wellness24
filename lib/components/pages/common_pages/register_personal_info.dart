@@ -16,7 +16,7 @@ class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
   final _formKey = GlobalKey<FormState>();
   String selectedRadio, lastName, firstName, middleInitial, address;
   DateTime _date = DateTime.now();
-  DateFormat format = DateFormat.yMEd();
+  DateFormat format = DateFormat.yMd();
   NewAccount account;
 
   _RegisterPersonalInfoState(this.account);
@@ -175,7 +175,7 @@ class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
                             fontFamily: "ShipporiMincho",
                             fontWeight: FontWeight.normal)),
                     SizedBox(width: 10),
-                    Text("(mm-dd-yyyy)",
+                    Text("(mm/dd/yyyy)",
                         style: TextStyle(
                             color: Colors.black38,
                             fontSize: 20,
