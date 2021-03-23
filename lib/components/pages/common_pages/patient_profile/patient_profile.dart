@@ -35,8 +35,11 @@ class _PatientProfileState extends State<PatientProfile> {
 
     if (widget.patient != null) {
       newBloodPressure = widget.patient.bloodPressure;
-      controller =
-          TextEditingController(text: widget.patient.bloodPressure.reading);
+
+      if (widget.patient.bloodPressure != null) {
+        controller =
+            TextEditingController(text: widget.patient.bloodPressure.reading);
+      }
     }
   }
 
@@ -185,7 +188,9 @@ class _PatientProfileState extends State<PatientProfile> {
                                   ),
                                 )
                               : Text(
-                                  newBloodPressure.reading,
+                                  newBloodPressure == null
+                                      ? ''
+                                      : newBloodPressure.reading,
                                   style: TextStyle(
                                       fontWeight: FontWeight.normal,
                                       fontSize: 15,
@@ -200,8 +205,10 @@ class _PatientProfileState extends State<PatientProfile> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
                                     Text(
-                                      widget.patient.bloodPressure
-                                          .sinceLastChecked,
+                                      widget.patient.bloodPressure == null
+                                          ? 'NA'
+                                          : widget.patient.bloodPressure
+                                              .sinceLastChecked,
                                       style: TextStyle(
                                           fontFamily: 'ShipporiMincho'),
                                     ),
@@ -220,7 +227,8 @@ class _PatientProfileState extends State<PatientProfile> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => MedicalRecords(patient: widget.patient)));
+                              builder: (context) =>
+                                  MedicalRecords(patient: widget.patient)));
                     },
                     child: Container(
                       child: Row(
