@@ -196,7 +196,8 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                     print('send request');
 
                     DatabaseService().sendRequest(
-                        doctorId: doctor.uid, patient: widget.currentPatient);
+                        doctorId: doctor.uid,
+                        patientId: widget.currentPatient.uid);
                     // TODO: confirm request sent or toggle to cancel request
                   },
                 ),
@@ -223,9 +224,11 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => PatientAppointmentPage(),
-                    ));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PatientAppointmentPage(),
+                        ));
                     print('Make an Appointment');
                   },
                 ),
