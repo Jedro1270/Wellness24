@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
@@ -144,7 +145,7 @@ class _PatientProfileState extends State<PatientProfile> {
                         Icons.cake_outlined,
                         size: 30,
                       ),
-                      content: widget.patient.birthDate,
+                      content: DateFormat.yMEd().format(widget.patient.birthDate),
                       title: 'Birthday',
                       onChanged: (newContent) async {
                         widget.patient.birthDate = newContent;
