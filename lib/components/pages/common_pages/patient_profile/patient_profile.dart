@@ -69,6 +69,22 @@ class _PatientProfileState extends State<PatientProfile> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
+                        ClipOval(
+                          child: Image(
+                            image: AssetImage('assets/sample-patient.jpg'), // _imageUrl
+                            width: 180,
+                            height: 180,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
                         Text(
                           widget.patient.fullName,
                           style: TextStyle(
@@ -90,21 +106,6 @@ class _PatientProfileState extends State<PatientProfile> {
                               fontFamily: 'ShipporiMincho',
                               fontWeight: FontWeight.normal),
                         )
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 30),
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          height: 150.0,
-                          width: 300.0,
-                          child: Image(
-                            image: AssetImage('assets/sample-patient.jpg'),
-                          ),
-                        ),
                       ],
                     ),
                   ),
