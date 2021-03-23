@@ -130,8 +130,6 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                                   patientMedHistory.add(additional);
                                 }
 
-                                print(patientMedHistory.toString());
-
                                 setState(() {
                                   loading = true;
                                 });
