@@ -5,28 +5,28 @@ import 'package:wellness24/services/database.dart';
 
 class NewAccount {
   final auth = AuthService();
-  String uid;
-  String role;
-  String email;
-  String password;
-  String contactNo;
-  String lastName;
-  String firstName;
-  String middleInitial;
-  String birthDate;
-  String address;
-  String gender;
-  String specialization;
-  String licenseNo;
-  String clinicLocation;
-  String clinicStart;
-  String clinicEnd;
-  String workingDays;
-  String education;
-  String about;
+  String uid,
+      role,
+      email,
+      password,
+      contactNo,
+      lastName,
+      firstName,
+      middleInitial,
+      address,
+      gender,
+      specialization,
+      licenseNo,
+      clinicLocation,
+      clinicStart,
+      clinicEnd,
+      workingDays,
+      education,
+      about;
   List<String> keywords;
   List<String> medicalHistory;
   EmergencyContact emergencyContact;
+  DateTime birthDate;
 
   NewAccount(this.role);
 
@@ -67,7 +67,7 @@ class NewAccount {
       String firstName,
       String middleInitial,
       String gender,
-      String birthDate,
+      DateTime birthDate,
       String address}) {
     this.lastName = lastName;
     this.firstName = firstName;

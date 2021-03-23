@@ -134,7 +134,7 @@ class DatabaseService {
         middleInitial: snapshotPatient.data['middleInitial'],
         lastName: snapshotPatient.data['lastName'],
         gender: snapshotPatient.data['gender'],
-        birthDate: snapshotPatient.data['birthDate'],
+        birthDate: snapshotPatient.data['birthDate'].toDate(),
         address: snapshotPatient.data['address'],
         contactNo: snapshotPatient.data['contactNumber'],
         medicalHistory: snapshotPatient.data['medicalHistory'],

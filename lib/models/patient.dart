@@ -8,7 +8,7 @@ class Patient {
   String middleInitial;
   String lastName;
   String gender;
-  String birthDate;
+  DateTime birthDate;
   String address;
   String contactNo;
   double weight;
@@ -37,15 +37,9 @@ class Patient {
   }
 
   int get age {
-    DateTime birthDateTime = DateTime.tryParse(birthDate);
     DateTime present = DateTime.now();
 
-    if (birthDateTime == null) {
-      birthDateTime = DateTime.parse(
-          '2000-01-01 00:00:00.000'); // For testing only, birthdate must be changed to datetime for future use
-    }
-
-    return Age.dateDifference(fromDate: birthDateTime, toDate: present).years;
+    return Age.dateDifference(fromDate: birthDate, toDate: present).years;
   }
 
   Map get object {
