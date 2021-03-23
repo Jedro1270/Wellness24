@@ -193,17 +193,26 @@ class DatabaseService {
   }
 
   Future acceptPatient(String patientId) async {
+    // adds patient id to doctor.patients
     await doctors.document(uid).setData({
       'patients': FieldValue.arrayUnion([
         {'uid': patientId}
       ])
     }, merge: true);
 
+    // removes patient on patient requests
     await patientRequests.document(uid).updateData({
       'requests': FieldValue.arrayRemove([
         {'uid': patientId}
       ])
     });
+
+    // adds doctor id to patient.doctors
+    await patients.document(patientId).setData({
+      'doctors': FieldValue.arrayUnion([
+        {'uid': uid}
+      ])
+    }, merge: true);
   }
 
   Future declinePatient(String patientId) async {
