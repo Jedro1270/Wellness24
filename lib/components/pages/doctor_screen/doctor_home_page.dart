@@ -39,7 +39,7 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
     }
 
     return Scaffold(
-      drawer: NavBar(),
+      drawer: NavBar(name: currentDoctor.fullName, email: user.email),
       appBar: CustomAppBar(
         title: 'Home Page',
         actions: [
