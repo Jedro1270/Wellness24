@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
-import 'package:wellness24/components/pages/doctor_screen/doctor_home_page.dart';
+import 'package:wellness24/components/pages/common_pages/login_page.dart';
 import 'package:wellness24/models/new_account.dart';
 import 'package:wellness24/models/user.dart';
 import 'package:wellness24/services/database.dart';
@@ -366,12 +366,12 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  DoctorHomePage()));
+                                                  Login()));
                                     }
                                   }
                                 },
                                 child: Text(
-                                  "Login",
+                                  "Register",
                                   style: TextStyle(
                                       color: Colors.black54,
                                       fontSize: 25,
