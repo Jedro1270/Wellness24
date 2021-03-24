@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
+import 'package:wellness24/components/common/messages.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
 import 'package:wellness24/components/common/navigation_bar.dart';
 import 'package:provider/provider.dart';
@@ -57,6 +58,7 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.message),
         onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => Messages()));
           print("Message Icon click");
         },
       ),
