@@ -14,9 +14,9 @@ class BloodPressure {
         Age.dateDifference(fromDate: lastChecked, toDate: present);
 
     if (duration.days < 32) {
-      output = '${duration.days} days ago';
+      output = '${duration.days} day/s ago';
     } else if ((duration.days / 7).floor() < 5) {
-      output = '${(duration.days / 7).floor()} weeks ago';
+      output = '${(duration.days / 7).floor()} week/s ago';
     }
 
     return output;
