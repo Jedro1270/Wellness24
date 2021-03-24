@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
-import 'package:wellness24/components/pages/common_pages/medical_records/medical_histories/medical_history_tile.dart';
-import 'package:wellness24/components/pages/patient_screen/patient_home_page.dart';
+import 'package:wellness24/components/pages/common_pages/login_page.dart';
+import 'package:wellness24/components/pages/patient_screen/medical_histories/medical_history_tile.dart';
 import 'package:wellness24/models/medical_history_entry.dart';
 import 'package:wellness24/models/new_account.dart';
 import 'package:wellness24/models/user.dart';
@@ -119,8 +119,6 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                                   borderRadius: BorderRadius.circular(30.0),
                                   side: BorderSide(color: Colors.black12)),
                               color: Colors.grey.withOpacity(0.5),
-                              // minWidth: 100,
-                              // padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                               onPressed: () async {
                                 List<String> patientMedHistory = medicalList
                                     .where((c) => c.value == true)
@@ -141,7 +139,7 @@ class _MedicalHistoryState extends State<MedicalHistory> {
 
                                 if (patient == null) {
                                   setState(() {
-                                    // error = 'Invalid credentials'; // TO DO: add error message
+                                    // error = 'Invalid credentials'; // TODO: add error message
                                     loading = false;
                                   });
                                 } else {
@@ -149,10 +147,10 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              PatientHomePage()));
+                                              Login()));
                                 }
                               },
-                              child: Text("Submit",
+                              child: Text("Register",
                                   style: TextStyle(
                                       color: Colors.black54,
                                       fontSize: 25,
