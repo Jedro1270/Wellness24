@@ -1,5 +1,6 @@
 import 'package:age/age.dart';
 import 'package:wellness24/models/blood_pressure.dart';
+import 'package:wellness24/models/blood_sugar_level.dart';
 import 'package:wellness24/models/emergency_contact.dart';
 
 class Patient {
@@ -12,8 +13,11 @@ class Patient {
   String address;
   String contactNo;
   double weight;
+  double bodyTemperature;
+  double height;
   String bloodType;
   BloodPressure bloodPressure;
+  BloodSugarLevel bloodSugarLevel;
   List medicalHistory;
   EmergencyContact emergencyContact;
 
@@ -28,8 +32,11 @@ class Patient {
       this.medicalHistory,
       this.emergencyContact,
       this.bloodPressure,
+      this.bloodSugarLevel,
       this.bloodType,
       this.weight,
+      this.height,
+      this.bodyTemperature,
       this.uid});
 
   String get fullName {

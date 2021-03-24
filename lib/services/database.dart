@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:wellness24/models/blood_pressure.dart';
+import 'package:wellness24/models/blood_sugar_level.dart';
 import 'package:wellness24/models/doctor.dart';
 import 'package:wellness24/models/emergency_contact.dart';
 import 'package:wellness24/models/new_account.dart';
@@ -17,8 +18,10 @@ class DatabaseService {
       Firestore.instance.collection('emergencyContacts');
   final CollectionReference patientRequests =
       Firestore.instance.collection('patientRequests');
-  final CollectionReference bloodPressure =
-      Firestore.instance.collection('bloodPressure');
+  final CollectionReference bloodPressures =
+      Firestore.instance.collection('bloodPressures');
+  final CollectionReference bloodSugarLevels =
+      Firestore.instance.collection('bloodSugarLevels');
 
   Future<String> getRole() async {
     String snapshot = await roles
@@ -111,7 +114,7 @@ class DatabaseService {
   }
 
   Stream<BloodPressure> get currentBloodPressure {
-    return bloodPressure
+    return bloodPressures
         .document(uid)
         .snapshots()
         .map(bloodPressureFromSnapshot);
@@ -120,7 +123,16 @@ class DatabaseService {
   Future<Patient> getPatient(String uid) async {
     DocumentSnapshot snapshotPatient = await patients.document(uid).get();
     DocumentSnapshot snapshotBloodPressure =
-        await bloodPressure.document(uid).get().then((doc) {
+        await bloodPressures.document(uid).get().then((doc) {
+      if (doc.exists) {
+        return doc;
+      }
+
+      return null;
+    });
+
+    DocumentSnapshot snapshotBloodSugarLevel =
+        await bloodSugarLevels.document(uid).get().then((doc) {
       if (doc.exists) {
         return doc;
       }
@@ -145,8 +157,16 @@ class DatabaseService {
                 reading: snapshotBloodPressure.data['reading'],
                 lastChecked:
                     snapshotBloodPressure.data['lastChecked'].toDate()),
+        bloodSugarLevel: snapshotBloodSugarLevel == null
+            ? null
+            : BloodSugarLevel(
+                reading: snapshotBloodSugarLevel.data['reading'],
+                lastChecked:
+                    snapshotBloodSugarLevel.data['lastChecked'].toDate()),
         bloodType: snapshotPatient.data['bloodType'],
-        weight: snapshotPatient.data['weight']);
+        weight: snapshotPatient.data['weight'],
+        height: snapshotPatient.data['height'],
+        bodyTemperature: snapshotPatient.data['bodyTemperature']);
   }
 
   Future<Doctor> getDoctor(String uid) async {
@@ -170,12 +190,19 @@ class DatabaseService {
     await patients.document(uid).updateData({
       'weight': patient.weight,
       'bloodType': patient.bloodType,
-      'birthDate': patient.birthDate
+      'birthDate': patient.birthDate,
+      'bodyTemperature': patient.bodyTemperature,
+      'height': patient.height
     });
 
-    await bloodPressure.document(uid).setData({
+    await bloodPressures.document(uid).setData({
       'reading': patient.bloodPressure.reading,
       'lastChecked': patient.bloodPressure.lastChecked
+    });
+
+    await bloodSugarLevels.document(uid).setData({
+      'reading': patient.bloodSugarLevel.reading,
+      'lastChecked': patient.bloodSugarLevel.lastChecked
     });
   }
 
