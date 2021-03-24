@@ -4,6 +4,10 @@ import 'package:wellness24/components/pages/common_pages/login_page.dart';
 
 class NavBar extends StatelessWidget {
   final AuthService auth = AuthService();
+  final String name;
+  final String email;
+
+  NavBar({this.name, this.email});
 
   @override
   Widget build(BuildContext context) {
@@ -11,8 +15,8 @@ class NavBar extends StatelessWidget {
         child: ListView(
       children: [
         UserAccountsDrawerHeader(
-          accountName: Text('Sapphire Tech'),
-          accountEmail: Text('sapphiretech@gmail.com'),
+          accountName: Text(name),
+          accountEmail: Text(email),
           currentAccountPicture: CircleAvatar(
             child: ClipOval(
                 child: Image(

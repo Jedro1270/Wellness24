@@ -1,10 +1,10 @@
 import 'package:age/age.dart';
 
-class BloodPressure {
+class BloodSugarLevel {
   String reading;
   DateTime lastChecked;
 
-  BloodPressure({this.reading, this.lastChecked});
+  BloodSugarLevel({this.reading, this.lastChecked});
 
   String get sinceLastChecked {
     String output;

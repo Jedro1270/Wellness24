@@ -1,21 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/pages/doctor_screen/patients_list/patient_info.dart';
 import 'package:wellness24/models/patient.dart';
 import 'package:wellness24/services/database.dart';
 
-class PatientsList extends StatefulWidget {
+class MyPatientsList extends StatefulWidget {
   final CollectionReference doctorDatabaseRef;
   final String doctorId;
 
-  PatientsList({this.doctorDatabaseRef, this.doctorId});
+  MyPatientsList({this.doctorDatabaseRef, this.doctorId});
 
   @override
-  _PatientsListState createState() => _PatientsListState();
+  _MyPatientsListState createState() => _MyPatientsListState();
 }
 
-class _PatientsListState extends State<PatientsList> {
+class _MyPatientsListState extends State<MyPatientsList> {
   List<PatientInfo> patients = [];
   DatabaseService database;
 
@@ -47,6 +46,6 @@ class _PatientsListState extends State<PatientsList> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(children: patients);
+    return ListView(primary: false, children: patients);
   }
 }

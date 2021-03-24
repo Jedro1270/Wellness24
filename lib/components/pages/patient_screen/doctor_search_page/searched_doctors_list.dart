@@ -4,23 +4,23 @@ import 'package:wellness24/components/pages/patient_screen/doctor_search_page/do
 import 'package:wellness24/models/doctor.dart';
 import 'package:wellness24/models/patient.dart';
 
-class DoctorsList extends StatefulWidget {
+class SearchedDoctorsList extends StatefulWidget {
   final Patient currentPatient;
   final String searchValue;
   final String filterValue;
   final CollectionReference doctorDatabaseRef;
 
-  DoctorsList(
+  SearchedDoctorsList(
       {this.searchValue,
       this.filterValue,
       this.doctorDatabaseRef,
       this.currentPatient});
 
   @override
-  DoctorsListState createState() => DoctorsListState();
+  _SearchedDoctorsListState createState() => _SearchedDoctorsListState();
 }
 
-class DoctorsListState extends State<DoctorsList> {
+class _SearchedDoctorsListState extends State<SearchedDoctorsList> {
   List<DoctorInfo> doctors = [];
 
   void getDoctors() async {
@@ -66,9 +66,8 @@ class DoctorsListState extends State<DoctorsList> {
 
   @override
   void initState() {
-    super.initState();
-
     getDoctors();
+    super.initState();
   }
 
   @override
