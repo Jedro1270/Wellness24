@@ -41,7 +41,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
     initializePatient(currentUser.uid);
 
     return Scaffold(
-      drawer: NavBar(),
+      drawer: NavBar(name: currentPatient.fullName, email: currentUser.email),
       appBar: CustomAppBar(
         title: 'Home Page',
         actions: [
