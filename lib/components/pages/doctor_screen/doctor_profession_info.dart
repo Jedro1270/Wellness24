@@ -19,6 +19,8 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
   String specialization = 'General Medicine';
   NewAccount account;
 
+  _DoctorProfessionInfoState(this.account);
+
   String licenseNo,
       clinicLoc,
       clinicStart,
@@ -62,10 +64,8 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
     'Neurologist',
   ];
 
-  String error;
+  String error = '';
   bool timeout = false;
-
-  _DoctorProfessionInfoState(this.account);
 
   @override
   Widget build(BuildContext context) {
