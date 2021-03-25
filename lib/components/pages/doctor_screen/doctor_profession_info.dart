@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
 import 'package:wellness24/components/pages/common_pages/login_page.dart';
 import 'package:wellness24/models/new_account.dart';
@@ -17,6 +18,9 @@ class DoctorProfessionInfo extends StatefulWidget {
 class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
   final _formKey = GlobalKey<FormState>();
   String specialization = 'General Medicine';
+  TimeOfDay time;
+  TimeOfDay startTime = TimeOfDay.now();
+  TimeOfDay endTime = TimeOfDay.now();
   NewAccount account;
   String licenseNo,
       clinicLoc,
@@ -60,6 +64,42 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
   ];
 
   _DoctorProfessionInfoState(this.account);
+
+  @override
+  void initState() {
+    super.initState();
+    startTime = TimeOfDay.now();
+  }
+
+  _pickStartTime() async {
+    TimeOfDay time = await showTimePicker(
+        context: context,
+        initialTime: startTime,
+        builder: (BuildContext context, Widget child) {
+          return Theme(data: ThemeData(), child: child);
+        });
+
+    if (time != null) {
+      setState(() {
+        startTime = time;
+      });
+    }
+  }
+
+  _pickEndTime() async {
+    TimeOfDay time = await showTimePicker(
+        context: context,
+        initialTime: endTime,
+        builder: (BuildContext context, Widget child) {
+          return Theme(data: ThemeData(), child: child);
+        });
+
+    if (time != null) {
+      setState(() {
+        endTime = time;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -177,14 +217,6 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                           children: <Widget>[
                             SizedBox(
                               width: 150,
-                              // child: TextFormField(
-                              //     obscureText: false,
-                              //     onChanged: (val) =>
-                              //         setState(() => clinicStart = val),
-                              //     validator: (val) => val.isEmpty
-                              //         ? 'This field is required'
-                              //         : null),
-
                               child: DropdownButton(
                                 hint: Text("Select Day"),
                                 value: clinicDayStart,
@@ -241,36 +273,52 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                             fontFamily: "ShipporiMincho",
                             fontWeight: FontWeight.normal),
                       ),
-                      Container(
-                        child: Row(children: <Widget>[
+                      SizedBox(height: 20),
+                      Row(
+                        children: [
                           SizedBox(
                             width: 150,
-                            child: TextFormField(
-                                obscureText: false,
-                                onChanged: (val) =>
-                                    setState(() => clinicStart = val),
-                                validator: (val) => val.isEmpty
-                                    ? 'This field is required'
-                                    : null),
+                            height: 50,
+                            child: OutlinedButton(
+                              child: Text("${startTime.format(context)}",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontFamily: "ShipporiMincho",
+                                      fontWeight: FontWeight.normal)),
+                              onPressed: () {
+                                setState(() {
+                                  _pickStartTime();
+                                });
+                              },
+                            ),
                           ),
                           SizedBox(width: 10),
-                          Text(
-                            "to",
-                            style: TextStyle(
-                                fontSize: 20, fontFamily: "ShipporiMincho"),
-                          ),
+                          Text("to",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontFamily: "ShipporiMincho",
+                                  fontWeight: FontWeight.normal)),
                           SizedBox(width: 10),
                           SizedBox(
                             width: 150,
-                            child: TextFormField(
-                                obscureText: false,
-                                onChanged: (val) =>
-                                    setState(() => clinicEnd = val),
-                                validator: (val) => val.isEmpty
-                                    ? 'This field is required'
-                                    : null),
+                            height: 50,
+                            child: OutlinedButton(
+                              child: Text("${endTime.format(context)}",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontFamily: "ShipporiMincho",
+                                      fontWeight: FontWeight.normal)),
+                              onPressed: () {
+                                setState(() {
+                                  _pickEndTime();
+                                });
+                              },
+                            ),
                           ),
-                        ]),
+                        ],
                       ),
                       SizedBox(height: 20),
                       Container(
@@ -315,8 +363,7 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                               minLines: 5,
                               maxLines: 50,
                               obscureText: false,
-                              onChanged: (val) =>
-                                  setState(() => about = val),
+                              onChanged: (val) => setState(() => about = val),
                               validator: (val) => val.isEmpty
                                   ? 'This field is required'
                                   : null)),
@@ -344,10 +391,11 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                                     User doctor = await account.registerDoctor(
                                         licenseNo: licenseNo,
                                         clinicLocation: clinicLoc,
-                                        clinicStart: clinicStart,
-                                        clinicEnd: clinicEnd,
+                                        clinicStart: startTime.toString(),
+                                        clinicEnd: endTime.toString(),
                                         specialization: specialization,
-                                        workingDays: '$clinicDayStart to $clinicDayEnd',
+                                        workingDays:
+                                            '$clinicDayStart to $clinicDayEnd',
                                         education: education,
                                         about: about);
 
@@ -365,8 +413,7 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  Login()));
+                                              builder: (context) => Login()));
                                     }
                                   }
                                 },
