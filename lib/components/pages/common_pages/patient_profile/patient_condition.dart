@@ -58,6 +58,7 @@ class _PatientConditionState extends State<PatientCondition> {
                             height: 50,
                             width: 100,
                             child: TextField(
+                              keyboardType: TextInputType.number,
                               onSubmitted: (newValue) {
                                 setState(() {
                                   newContent = newValue;
