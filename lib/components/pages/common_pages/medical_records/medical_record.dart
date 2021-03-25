@@ -31,7 +31,7 @@ class _MedicalRecordsState extends State<MedicalRecords> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: widget.patient == null ? '' : widget.patient.fullName,
+        title: 'Medical Records',
         actions: [
           IconButton(
               icon: Icon(Icons.notifications),
