@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class PatientCondition extends StatefulWidget {
   final bool editable;
@@ -6,9 +7,10 @@ class PatientCondition extends StatefulWidget {
   final String content;
   final String title;
   final Function onChanged;
+  final String inputFormat;
 
   PatientCondition(
-      {this.editable, this.icon, this.content, this.title, this.onChanged});
+      {this.editable, this.icon, this.content, this.title, this.onChanged, this.inputFormat});
 
   @override
   _PatientConditionState createState() => _PatientConditionState();
@@ -58,7 +60,7 @@ class _PatientConditionState extends State<PatientCondition> {
                             height: 50,
                             width: 100,
                             child: TextField(
-                              keyboardType: TextInputType.number,
+                              inputFormatters: [FilteringTextInputFormatter.allow(RegExp(widget.inputFormat))],
                               onSubmitted: (newValue) {
                                 setState(() {
                                   newContent = newValue;
