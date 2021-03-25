@@ -20,6 +20,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
       child: AppBar(
           centerTitle: true,
           toolbarHeight: 75,
+          backgroundColor: widget.title == 'Emergency' ? Colors.red[600] : Colors.blue,
           title: Text(widget.title,
               style: TextStyle(
                   fontFamily: "ShipporiMincho", fontWeight: FontWeight.normal)),
