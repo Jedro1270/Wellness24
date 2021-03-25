@@ -17,6 +17,8 @@ class DoctorDetails extends StatefulWidget {
 
 class _DoctorDetailsState extends State<DoctorDetails> {
   final Doctor doctor;
+  var _requestBtnColor = 0xFF40BEEE;
+  dynamic _requestBtnText = 'Send Request';
 
   _DoctorDetailsState({this.doctor});
 
@@ -180,21 +182,25 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                 height: 55.0,
                 child: ElevatedButton(
                   child: Text(
-                    'Send Request',
+                    '$_requestBtnText',
                     style: TextStyle(
                         fontSize: 20.0,
                         fontFamily: "ShipporiMincho",
                         color: Colors.white),
                   ),
                   style: ElevatedButton.styleFrom(
-                    primary: Color(0xFF40BEEE),
+                    primary: Color(_requestBtnColor),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                   ),
                   onPressed: () {
                     print('send request');
-
+                    setState(() {
+                      _requestBtnText = 'Cancel';
+                    _requestBtnColor = 0xD3D3D3;
+                    });
+                    
                     DatabaseService().sendRequest(
                         doctorId: doctor.uid,
                         patientId: widget.currentPatient.uid);

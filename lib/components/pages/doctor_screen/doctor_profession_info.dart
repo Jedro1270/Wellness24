@@ -22,6 +22,7 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
   TimeOfDay startTime = TimeOfDay.now();
   TimeOfDay endTime = TimeOfDay.now();
   NewAccount account;
+
   String licenseNo,
       clinicLoc,
       clinicStart,
@@ -31,7 +32,9 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
       clinicDayEnd,
       education,
       about;
+
   bool loading = false;
+
   List _days = [
     'Monday',
     'Tuesday',
@@ -62,6 +65,9 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
     'General Medicine',
     'Neurologist',
   ];
+
+  String error;
+  bool timeout = false;
 
   _DoctorProfessionInfoState(this.account);
 
@@ -388,16 +394,22 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                                       loading = true;
                                     });
 
-                                    User doctor = await account.registerDoctor(
-                                        licenseNo: licenseNo,
-                                        clinicLocation: clinicLoc,
-                                        clinicStart: startTime.toString(),
-                                        clinicEnd: endTime.toString(),
-                                        specialization: specialization,
-                                        workingDays:
-                                            '$clinicDayStart to $clinicDayEnd',
-                                        education: education,
-                                        about: about);
+                                    User doctor = await account
+                                        .registerDoctor(
+                                            licenseNo: licenseNo,
+                                            clinicLocation: clinicLoc,
+                                            clinicStart: clinicStart,
+                                            clinicEnd: clinicEnd,
+                                            specialization: specialization,
+                                            workingDays:
+                                                '$clinicDayStart to $clinicDayEnd',
+                                            education: education,
+                                            about: about)
+                                        .timeout(Duration(seconds: 20),
+                                            onTimeout: () {
+                                      timeout = true;
+                                      return null;
+                                    });
 
                                     final database =
                                         DatabaseService(uid: doctor.uid);
@@ -406,7 +418,12 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
 
                                     if (doctor == null) {
                                       setState(() {
-                                        // TO DO: add error message
+                                        if (timeout) {
+                                          error =
+                                              'The connection has timed out, please try again';
+                                        } else {
+                                          error = 'Email is already taken';
+                                        }
                                         loading = false;
                                       });
                                     } else {
@@ -429,6 +446,11 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                             ),
                           ],
                         ),
+                      ),
+                      Text(
+                        error,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.red, fontSize: 14.0),
                       ),
                     ],
                   )),

@@ -13,7 +13,10 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   final AuthService _auth = AuthService();
   String email, password;
+
   String error = '';
+  bool timeout = false;
+
   bool loading = false;
 
   @override
@@ -80,13 +83,23 @@ class _LoginState extends State<Login> {
                                 onPressed: () async {
                                   if (_formKey.currentState.validate()) {
                                     setState(() => loading = true);
-                                    dynamic result =
-                                        await _auth.signInWithEmailAndPassword(
-                                            email, password);
+                                    dynamic result = await _auth
+                                        .signInWithEmailAndPassword(
+                                            email, password)
+                                        .timeout(Duration(seconds: 20),
+                                            onTimeout: () {
+                                      timeout = true;
+                                      return null;
+                                    });
 
                                     if (result == null) {
                                       setState(() {
-                                        error = 'Invalid credentials';
+                                        if (timeout) {
+                                          error =
+                                              'The connection has timed out, please try again';
+                                        } else {
+                                          error = 'Invalid credentials';
+                                        }
                                         loading = false;
                                       });
                                     } else {

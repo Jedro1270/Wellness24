@@ -28,6 +28,9 @@ class _MedicalHistoryState extends State<MedicalHistory> {
   bool loading = false;
   String additional = '';
 
+  String error = '';
+  bool timeout = false;
+
   _MedicalHistoryState(this.account);
 
   @override
@@ -130,7 +133,12 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                                 });
 
                                 User patient = await account
-                                    .registerPatient(patientMedHistory);
+                                    .registerPatient(patientMedHistory)
+                                    .timeout(Duration(seconds: 20),
+                                        onTimeout: () {
+                                  timeout = true;
+                                  return null;
+                                });
 
                                 final database =
                                     DatabaseService(uid: patient.uid);
@@ -139,15 +147,19 @@ class _MedicalHistoryState extends State<MedicalHistory> {
 
                                 if (patient == null) {
                                   setState(() {
-                                    // error = 'Invalid credentials'; // TODO: add error message
+                                    if (timeout) {
+                                      error =
+                                          'The connection has timed out, please try again';
+                                    } else {
+                                      error = 'Email is already taken';
+                                    }
                                     loading = false;
                                   });
                                 } else {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              Login()));
+                                          builder: (context) => Login()));
                                 }
                               },
                               child: Text("Register",
@@ -159,6 +171,11 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                         ),
                       ],
                     ),
+                  ),
+                  Text(
+                    error,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.red, fontSize: 14.0),
                   ),
                 ],
               ),

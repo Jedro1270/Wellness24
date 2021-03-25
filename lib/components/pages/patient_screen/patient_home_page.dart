@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
+import 'package:wellness24/components/common/messages.dart';
 import 'package:wellness24/components/common/schedule_card.dart';
 import 'package:wellness24/components/pages/common_pages/medical_records/medical_record.dart';
 import 'package:wellness24/components/pages/common_pages/patient_profile/patient_profile.dart';
@@ -54,12 +55,12 @@ class _PatientHomePageState extends State<PatientHomePage> {
               })
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   child: Icon(Icons.message),
-      //   onPressed: () {
-      //     print("Message Icon click");
-      //   },
-      // ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.message),
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => Messages()));
+        },
+      ),
       body: currentPatient == null
           ? Loading()
           : Container(
@@ -172,24 +173,26 @@ class _PatientHomePageState extends State<PatientHomePage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        ElevatedButton(
-                          child: Text("EMERGENCY",
-                              style: TextStyle(
-                                  fontSize: 25,
-                                  fontFamily: "ShipporiMincho",
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white)),
-                          onPressed: () {
-                            print("EMERGENCY");
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => EmergencyPage()));
-                          },
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 100, vertical: 20),
-                            primary: Colors.redAccent[700],
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: ElevatedButton(
+                            child: Text("EMERGENCY",
+                                style: TextStyle(
+                                    fontSize: 25,
+                                    fontFamily: "ShipporiMincho",
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white)),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => EmergencyPage(patient: currentPatient)));
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 90, vertical: 20),
+                              primary: Colors.redAccent[700],
+                            ),
                           ),
                         )
                       ],
@@ -250,34 +253,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
                           style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 60, vertical: 20),
-                              primary: Colors.lightBlueAccent[100]),
-                        )
-                      ],
-                    ),
-                  ),
-                  Divider(height: 20, color: Colors.transparent),
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        ElevatedButton(
-                          child: Text("My Medical Records",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontFamily: "ShipporiMincho",
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black)),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MedicalRecords(
-                                          patient: currentPatient,
-                                        )));
-                          },
-                          style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 80, vertical: 20),
                               primary: Colors.lightBlueAccent[100]),
                         )
                       ],

@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       child: MaterialApp(
         title: 'Wellness24',
+        debugShowCheckedModeBanner: false,
         home: AuthWrapper(),
       ),
     );

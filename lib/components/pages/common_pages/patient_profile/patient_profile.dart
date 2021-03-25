@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
+import 'package:wellness24/components/pages/common_pages/medical_records/medical_record.dart';
 import 'package:wellness24/components/pages/common_pages/patient_profile/patient_condition.dart';
 import 'package:wellness24/models/blood_pressure.dart';
 import 'package:wellness24/models/blood_sugar_level.dart';
@@ -60,7 +61,7 @@ class _PatientProfileState extends State<PatientProfile> {
 
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Patient',
+        title: 'Patient Conditions',
         actions: [
           IconButton(
               icon: Icon(Icons.notifications),
@@ -127,7 +128,7 @@ class _PatientProfileState extends State<PatientProfile> {
                   SizedBox(height: 10),
                   PatientCondition(
                     editable: widget.editable,
-                    icon: Image(image: AssetImage('assets/weight.png')),
+                    icon: Image(image: AssetImage('assets/body-temp.png')),
                     content: widget.patient.bodyTemperature.toString(),
                     title: 'Body Temperature',
                     onChanged: (newContent) async {
@@ -147,7 +148,7 @@ class _PatientProfileState extends State<PatientProfile> {
                   ),
                   PatientCondition(
                     editable: widget.editable,
-                    icon: Image(image: AssetImage('assets/weight.png')),
+                    icon: Image(image: AssetImage('assets/height.png')),
                     content: widget.patient.height.toString(),
                     title: 'Height',
                     onChanged: (newContent) async {
@@ -192,7 +193,8 @@ class _PatientProfileState extends State<PatientProfile> {
                       });
                     },
                     child: Container(
-                      child: Row(
+                      height: 120,
+                      child: Column(
                         children: <Widget>[
                           Text('Blood Pressure:',
                               style: TextStyle(
@@ -230,8 +232,8 @@ class _PatientProfileState extends State<PatientProfile> {
                                       fontFamily: 'ShipporiMincho'),
                                 ),
                           SizedBox(
-                            height: 20,
-                            width: 80,
+                            height: 30,
+                            width: 120,
                             child: Container(
                                 color: Colors.redAccent[700],
                                 child: Row(
@@ -261,7 +263,8 @@ class _PatientProfileState extends State<PatientProfile> {
                       });
                     },
                     child: Container(
-                      child: Row(
+                      height: 120,
+                      child: Column(
                         children: <Widget>[
                           Text('Blood Sugar Level:',
                               style: TextStyle(
@@ -299,8 +302,8 @@ class _PatientProfileState extends State<PatientProfile> {
                                       fontFamily: 'ShipporiMincho'),
                                 ),
                           SizedBox(
-                            height: 20,
-                            width: 80,
+                            height: 30,
+                            width: 120,
                             child: Container(
                                 color: Colors.redAccent[700],
                                 child: Row(
@@ -320,6 +323,34 @@ class _PatientProfileState extends State<PatientProfile> {
                           ),
                         ],
                       ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        ElevatedButton(
+                          child: Text("Medical Records",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontFamily: "ShipporiMincho",
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black)),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MedicalRecords(
+                                          patient: widget.patient,
+                                        )));
+                          },
+                          style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 80, vertical: 20),
+                              primary: Colors.lightBlueAccent[100]),
+                        )
+                      ],
                     ),
                   ),
                 ],

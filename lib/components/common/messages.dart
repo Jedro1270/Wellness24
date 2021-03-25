@@ -16,52 +16,49 @@ class _MessagesState extends State<Messages> {
       ),
       body: Container(
           child: ListView(children: <Widget>[
-        Container(
-          margin: EdgeInsets.all(10),
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 30.0,
-                backgroundColor: Colors.grey,
-                child: ClipOval(
-                  child: SizedBox(
-                      width: 100.0,
-                      height: 100.0,
-                      child: Image(
-                          image: AssetImage('assets/sample-patient.jpg'))),
+        InkWell(
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => ChatRoom()));
+          },
+          child: Container(
+            margin: EdgeInsets.all(10),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  radius: 30.0,
+                  backgroundColor: Colors.grey,
+                  child: ClipOval(
+                    child: SizedBox(
+                        width: 100.0,
+                        height: 100.0,
+                        child: Image(
+                            image: AssetImage('assets/sample-patient.jpg'))),
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: 10.0,
-              ),
-              InkWell(
-                child: Text(
-                  "Elim C. Abagat",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: "ShipporiMincho",
-                      fontWeight: FontWeight.bold),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Elim C. Abagat",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: "ShipporiMincho",
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ChatRoom()));
-                },
-              ),
-              SizedBox(
-                width: 15.0,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Icon(
-                    Icons.circle,
-                    color: Colors.green,
-                    size: 15.0,
-                  )
-                ],
-              ),
-            ],
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Icon(
+                      Icons.circle,
+                      color: Colors.green,
+                      size: 15.0,
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
         Divider(thickness: 2),

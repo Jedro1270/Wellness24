@@ -20,6 +20,7 @@ class _RegisterCredentialsState extends State<RegisterCredentials> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.white,
         body: Container(

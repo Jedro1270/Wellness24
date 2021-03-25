@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
+import 'package:wellness24/components/pages/common_pages/patient_profile/patient_condition.dart';
 import 'package:wellness24/components/pages/patient_screen/patient_home_page.dart';
+import 'package:intl/intl.dart';
+import 'package:wellness24/models/patient.dart';
 
 class EmergencyPage extends StatefulWidget {
+  final Patient patient;
+
+  EmergencyPage({this.patient});
+
   @override
   _EmergencyPageState createState() => _EmergencyPageState();
 }
@@ -18,38 +25,19 @@ class _EmergencyPageState extends State<EmergencyPage> {
             onPressed: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => PatientHomePage()));
-
             }),
       ),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 25.0),
         child: ListView(
           children: <Widget>[
-            // Container(
-            //   width: 100,
-            //   height: 70,
-            //   color: Colors.redAccent[700],
-            //   child:
-            //       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            //     Text(
-            //       "Emergency",
-            //       style: TextStyle(
-            //         fontSize: 25,
-            //         fontFamily: "ShipporiMincho",
-            //         fontWeight: FontWeight.bold,
-            //         color: Colors.white,
-            //       ),
-            //     ),
-            //   ],),
-             
-            // ),
             SizedBox(height: 20),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    "Date: 3/10/2021",
+                    "Date: ${DateFormat.yMd().format(DateTime.now())}",
                     style: TextStyle(
                         fontSize: 20,
                         fontFamily: "ShipporiMincho",
@@ -63,15 +51,26 @@ class _EmergencyPageState extends State<EmergencyPage> {
             ),
             SizedBox(height: 20),
             Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+              height: 75,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Patient Name: Jedro Abagat",
+                    "Patient Name: ",
                     style: TextStyle(
                         fontSize: 20,
+                        fontWeight: FontWeight.bold,
                         fontFamily: "ShipporiMincho",
                         color: Colors.black),
+                  ),
+                  Expanded(
+                    child: Text(
+                      widget.patient.fullName,
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: "ShipporiMincho",
+                          color: Colors.black),
+                    ),
                   )
                 ],
               ),
@@ -82,7 +81,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    "Age: 21",
+                    "Age: ${widget.patient.age}",
                     style: TextStyle(
                         fontSize: 20,
                         fontFamily: "ShipporiMincho",
@@ -90,7 +89,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
                   ),
                   SizedBox(width: 100),
                   Text(
-                    "Gender: Male",
+                    "Gender: ${widget.patient.gender}",
                     style: TextStyle(
                         fontSize: 20,
                         fontFamily: "ShipporiMincho",
@@ -117,57 +116,39 @@ class _EmergencyPageState extends State<EmergencyPage> {
             ),
             Divider(color: Colors.black),
             SizedBox(height: 20),
-            Container(
-              child: Row(
-                children: <Widget>[
-                  CircleAvatar(
-                      radius: 25,
-                      child: Image(
-                        image: AssetImage("assets/body-temp.png"),
-                      )),
-                  Text(
-                    "Body\nTemperature: 36.3",
-                    style:
-                        TextStyle(fontSize: 13, fontFamily: "ShipporiMincho"),
-                  ),
-                  SizedBox(width: 50),
-                  Text(
-                    "Respiration Rate:",
-                    style:
-                        TextStyle(fontSize: 12, fontFamily: "ShipporiMincho"),
-                  ),
-                ],
-              ),
+            PatientCondition(
+              editable: false,
+              icon: Image(image: AssetImage('assets/body-temp.png')),
+              content: widget.patient.bodyTemperature.toString(),
+              title: 'Body Temperature',
             ),
-            Container(
-              child: Row(
-                children: <Widget>[
-                  CircleAvatar(
-                      radius: 30,
-                      child: Image(
-                        image: AssetImage(
-                            "assets/istockphoto-1133507993-612x612.jpg"),
-                      )),
-                  Text(
-                    "Body\nPressure: 120/80",
-                    style:
-                        TextStyle(fontSize: 13, fontFamily: "ShipporiMincho"),
-                  ),
-                  SizedBox(width: 50),
-                  Text(
-                    "Pulse Rate:",
-                    style:
-                        TextStyle(fontSize: 13, fontFamily: "ShipporiMincho"),
-                  ),
-                ],
-              ),
+            PatientCondition(
+              editable: false,
+              icon: Image(image: AssetImage('assets/weight.png')),
+              content: widget.patient.weight.toString(),
+              title: 'Weight',
             ),
-            SizedBox(height: 30),
+            PatientCondition(
+              editable: false,
+              icon: Image(image: AssetImage('assets/height.png')),
+              content: widget.patient.height.toString(),
+              title: 'Height',
+            ),
+            PatientCondition(
+                editable: false,
+                icon: Image(image: AssetImage('assets/droplet.png')),
+                content: widget.patient.bloodType,
+                title: 'Blood Type'),
+            PatientCondition(
+                editable: false,
+                icon: Image(image: AssetImage('assets/double-person.png')),
+                content: '${widget.patient.age} y.o',
+                title: 'Age'),
             Container(
               child: Row(
                 children: <Widget>[
                   Text(
-                    "Diagnosis of Medical Condition",
+                    "Symptoms",
                     style: TextStyle(
                       fontSize: 15,
                       fontFamily: "ShipporiMincho",
@@ -180,16 +161,35 @@ class _EmergencyPageState extends State<EmergencyPage> {
             SizedBox(
               height: 100,
               child: TextField(
-                // keyboardType: TextInputType.emailAddress,
-                // keyboardType: TextInputType.multiline,
+                keyboardType: TextInputType.multiline,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: Colors.blue[200],
+                  fillColor: Colors.red[50],
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black12)),
                 ),
               ),
-            )
+            ),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  ElevatedButton(
+                    child: Text("Submit",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: "ShipporiMincho",
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white)),
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 80, vertical: 20),
+                        primary: Colors.red[600]),
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),
