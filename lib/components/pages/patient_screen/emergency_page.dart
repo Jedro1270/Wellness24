@@ -169,7 +169,27 @@ class _EmergencyPageState extends State<EmergencyPage> {
                       borderSide: BorderSide(color: Colors.black12)),
                 ),
               ),
-            )
+            ),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  ElevatedButton(
+                    child: Text("Submit",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: "ShipporiMincho",
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white)),
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 80, vertical: 20),
+                        primary: Colors.red[600]),
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),
