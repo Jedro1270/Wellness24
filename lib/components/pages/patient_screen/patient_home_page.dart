@@ -173,24 +173,26 @@ class _PatientHomePageState extends State<PatientHomePage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        ElevatedButton(
-                          child: Text("EMERGENCY",
-                              style: TextStyle(
-                                  fontSize: 25,
-                                  fontFamily: "ShipporiMincho",
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white)),
-                          onPressed: () {
-                            print("EMERGENCY");
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => EmergencyPage()));
-                          },
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 100, vertical: 20),
-                            primary: Colors.redAccent[700],
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: ElevatedButton(
+                            child: Text("EMERGENCY",
+                                style: TextStyle(
+                                    fontSize: 25,
+                                    fontFamily: "ShipporiMincho",
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white)),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => EmergencyPage()));
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 90, vertical: 20),
+                              primary: Colors.redAccent[700],
+                            ),
                           ),
                         )
                       ],
