@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/pages/patient_screen/patient_schedule_page.dart';
 import 'package:wellness24/models/doctor.dart';
 import 'package:wellness24/models/patient.dart';
+import 'package:wellness24/models/user.dart';
 import 'package:wellness24/services/database.dart';
 
 class DoctorDetails extends StatefulWidget {
@@ -17,10 +19,23 @@ class DoctorDetails extends StatefulWidget {
 
 class _DoctorDetailsState extends State<DoctorDetails> {
   final Doctor doctor;
-  var _requestBtnColor = 0xFF40BEEE;
-  dynamic _requestBtnText = 'Send Request';
+  bool requestExists = false;
 
   _DoctorDetailsState({this.doctor});
+
+  void fetchExistingRequest() async {
+    final user = Provider.of<User>(context, listen: false);
+    DatabaseService database = DatabaseService(uid: user.uid);
+    bool result =
+        await database.requestExists(doctorId: doctor.uid, patientId: user.uid);
+    setState(() => requestExists = result);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchExistingRequest();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -182,29 +197,33 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                 height: 55.0,
                 child: ElevatedButton(
                   child: Text(
-                    '$_requestBtnText',
+                    '${requestExists ? 'Cancel Request' : 'Send Request'}',
                     style: TextStyle(
                         fontSize: 20.0,
                         fontFamily: "ShipporiMincho",
                         color: Colors.white),
                   ),
                   style: ElevatedButton.styleFrom(
-                    primary: Color(_requestBtnColor),
+                    primary:
+                        requestExists ? Color(0xD3D3D3) : Color(0xFF40BEEE),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                   ),
                   onPressed: () {
-                    print('send request');
+                    if (requestExists) {
+                      DatabaseService().cancelRequest(
+                          doctorId: doctor.uid,
+                          patientId: widget.currentPatient.uid);
+                    } else {
+                      DatabaseService().sendRequest(
+                          doctorId: doctor.uid,
+                          patientId: widget.currentPatient.uid);
+                    }
+
                     setState(() {
-                      _requestBtnText = 'Cancel';
-                    _requestBtnColor = 0xD3D3D3;
+                      requestExists = !requestExists;
                     });
-                    
-                    DatabaseService().sendRequest(
-                        doctorId: doctor.uid,
-                        patientId: widget.currentPatient.uid);
-                    // TODO: confirm request sent or toggle to cancel request
                   },
                 ),
               ),
