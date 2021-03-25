@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
+import 'package:wellness24/components/common/messages.dart';
 import 'package:wellness24/components/common/schedule_card.dart';
 import 'package:wellness24/components/pages/common_pages/medical_records/medical_record.dart';
 import 'package:wellness24/components/pages/common_pages/patient_profile/patient_profile.dart';
@@ -54,12 +55,12 @@ class _PatientHomePageState extends State<PatientHomePage> {
               })
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   child: Icon(Icons.message),
-      //   onPressed: () {
-      //     print("Message Icon click");
-      //   },
-      // ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.message),
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => Messages()));
+        },
+      ),
       body: currentPatient == null
           ? Loading()
           : Container(
