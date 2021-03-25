@@ -211,6 +211,14 @@ class DatabaseService {
       'requests': FieldValue.arrayUnion([
         {'uid': patientId}
       ])
+    }, merge: true);
+  }
+
+  Future cancelRequest({String doctorId, String patientId}) async {
+    await patientRequests.document(doctorId).updateData({
+      'requests': FieldValue.arrayRemove([
+        {'uid': patientId}
+      ])
     });
   }
 
