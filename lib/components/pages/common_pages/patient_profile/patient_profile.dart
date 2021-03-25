@@ -193,7 +193,8 @@ class _PatientProfileState extends State<PatientProfile> {
                       });
                     },
                     child: Container(
-                      child: Row(
+                      height: 100,
+                      child: Column(
                         children: <Widget>[
                           Text('Blood Pressure:',
                               style: TextStyle(
@@ -262,7 +263,8 @@ class _PatientProfileState extends State<PatientProfile> {
                       });
                     },
                     child: Container(
-                      child: Row(
+                      height: 100,
+                      child: Column(
                         children: <Widget>[
                           Text('Blood Sugar Level:',
                               style: TextStyle(
