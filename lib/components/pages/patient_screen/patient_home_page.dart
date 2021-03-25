@@ -186,7 +186,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => EmergencyPage()));
+                                      builder: (context) => EmergencyPage(patient: currentPatient)));
                             },
                             style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.symmetric(
