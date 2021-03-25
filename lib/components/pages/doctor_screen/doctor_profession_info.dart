@@ -18,6 +18,7 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
   final _formKey = GlobalKey<FormState>();
   String specialization = 'General Medicine';
   NewAccount account;
+
   String licenseNo,
       clinicLoc,
       clinicStart,
@@ -27,7 +28,9 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
       clinicDayEnd,
       education,
       about;
+
   bool loading = false;
+
   List _days = [
     'Monday',
     'Tuesday',
@@ -58,6 +61,9 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
     'General Medicine',
     'Neurologist',
   ];
+
+  String error;
+  bool timeout = false;
 
   _DoctorProfessionInfoState(this.account);
 
@@ -177,14 +183,6 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                           children: <Widget>[
                             SizedBox(
                               width: 150,
-                              // child: TextFormField(
-                              //     obscureText: false,
-                              //     onChanged: (val) =>
-                              //         setState(() => clinicStart = val),
-                              //     validator: (val) => val.isEmpty
-                              //         ? 'This field is required'
-                              //         : null),
-
                               child: DropdownButton(
                                 hint: Text("Select Day"),
                                 value: clinicDayStart,
@@ -315,8 +313,7 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                               minLines: 5,
                               maxLines: 50,
                               obscureText: false,
-                              onChanged: (val) =>
-                                  setState(() => about = val),
+                              onChanged: (val) => setState(() => about = val),
                               validator: (val) => val.isEmpty
                                   ? 'This field is required'
                                   : null)),
@@ -341,15 +338,22 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                                       loading = true;
                                     });
 
-                                    User doctor = await account.registerDoctor(
-                                        licenseNo: licenseNo,
-                                        clinicLocation: clinicLoc,
-                                        clinicStart: clinicStart,
-                                        clinicEnd: clinicEnd,
-                                        specialization: specialization,
-                                        workingDays: '$clinicDayStart to $clinicDayEnd',
-                                        education: education,
-                                        about: about);
+                                    User doctor = await account
+                                        .registerDoctor(
+                                            licenseNo: licenseNo,
+                                            clinicLocation: clinicLoc,
+                                            clinicStart: clinicStart,
+                                            clinicEnd: clinicEnd,
+                                            specialization: specialization,
+                                            workingDays:
+                                                '$clinicDayStart to $clinicDayEnd',
+                                            education: education,
+                                            about: about)
+                                        .timeout(Duration(seconds: 20),
+                                            onTimeout: () {
+                                      timeout = true;
+                                      return null;
+                                    });
 
                                     final database =
                                         DatabaseService(uid: doctor.uid);
@@ -358,15 +362,19 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
 
                                     if (doctor == null) {
                                       setState(() {
-                                        // TO DO: add error message
+                                        if (timeout) {
+                                          error =
+                                              'The connection has timed out, please try again';
+                                        } else {
+                                          error = 'Email is already taken';
+                                        }
                                         loading = false;
                                       });
                                     } else {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  Login()));
+                                              builder: (context) => Login()));
                                     }
                                   }
                                 },
@@ -382,6 +390,11 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                             ),
                           ],
                         ),
+                      ),
+                      Text(
+                        error,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.red, fontSize: 14.0),
                       ),
                     ],
                   )),
