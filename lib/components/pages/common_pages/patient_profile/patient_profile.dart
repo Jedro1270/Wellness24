@@ -193,7 +193,7 @@ class _PatientProfileState extends State<PatientProfile> {
                       });
                     },
                     child: Container(
-                      height: 100,
+                      height: 120,
                       child: Column(
                         children: <Widget>[
                           Text('Blood Pressure:',
@@ -232,8 +232,8 @@ class _PatientProfileState extends State<PatientProfile> {
                                       fontFamily: 'ShipporiMincho'),
                                 ),
                           SizedBox(
-                            height: 20,
-                            width: 80,
+                            height: 30,
+                            width: 120,
                             child: Container(
                                 color: Colors.redAccent[700],
                                 child: Row(
@@ -263,7 +263,7 @@ class _PatientProfileState extends State<PatientProfile> {
                       });
                     },
                     child: Container(
-                      height: 100,
+                      height: 120,
                       child: Column(
                         children: <Widget>[
                           Text('Blood Sugar Level:',
@@ -302,8 +302,8 @@ class _PatientProfileState extends State<PatientProfile> {
                                       fontFamily: 'ShipporiMincho'),
                                 ),
                           SizedBox(
-                            height: 20,
-                            width: 80,
+                            height: 30,
+                            width: 120,
                             child: Container(
                                 color: Colors.redAccent[700],
                                 child: Row(
