@@ -164,7 +164,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
                 keyboardType: TextInputType.multiline,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: Colors.blue[200],
+                  fillColor: Colors.red[50],
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black12)),
                 ),
