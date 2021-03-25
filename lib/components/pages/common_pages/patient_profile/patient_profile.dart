@@ -127,7 +127,7 @@ class _PatientProfileState extends State<PatientProfile> {
                   SizedBox(height: 10),
                   PatientCondition(
                     editable: widget.editable,
-                    icon: Image(image: AssetImage('assets/weight.png')),
+                    icon: Image(image: AssetImage('assets/body-temp.png')),
                     content: widget.patient.bodyTemperature.toString(),
                     title: 'Body Temperature',
                     onChanged: (newContent) async {
@@ -147,7 +147,7 @@ class _PatientProfileState extends State<PatientProfile> {
                   ),
                   PatientCondition(
                     editable: widget.editable,
-                    icon: Image(image: AssetImage('assets/weight.png')),
+                    icon: Image(image: AssetImage('assets/height.png')),
                     content: widget.patient.height.toString(),
                     title: 'Height',
                     onChanged: (newContent) async {
