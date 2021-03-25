@@ -83,7 +83,9 @@ class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
                 SizedBox(
                     height: 50,
                     child: TextFormField(
-                        inputFormatters: [FilteringTextInputFormatter.deny(RegExp("[0-9]"))],
+                        inputFormatters: [
+                          FilteringTextInputFormatter.deny(RegExp("[0-9]"))
+                        ],
                         obscureText: false,
                         onChanged: (val) => setState(() => lastName = val),
                         validator: (val) =>
@@ -104,7 +106,9 @@ class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
                 SizedBox(
                     height: 50,
                     child: TextFormField(
-                        inputFormatters: [FilteringTextInputFormatter.deny(RegExp("[0-9]"))],
+                        inputFormatters: [
+                          FilteringTextInputFormatter.deny(RegExp("[0-9]"))
+                        ],
                         obscureText: false,
                         onChanged: (val) => setState(() => firstName = val),
                         validator: (val) =>
@@ -125,7 +129,9 @@ class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
                 SizedBox(
                     height: 50,
                     child: TextFormField(
-                        inputFormatters: [FilteringTextInputFormatter.deny(RegExp("[0-9]"))],
+                        inputFormatters: [
+                          FilteringTextInputFormatter.deny(RegExp("[0-9]"))
+                        ],
                         obscureText: false,
                         onChanged: (val) => setState(() => middleInitial = val),
                         validator: (val) => val.isEmpty
