@@ -25,22 +25,6 @@ class RecordCard extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(width: 150),
-            IconButton(
-              icon: Icon(Icons.edit),
-              iconSize: 30,
-              onPressed: () {
-                print('Edit');
-              },
-            ),
-            SizedBox(width: 5),
-            IconButton(
-              icon: Icon(Icons.delete),
-              iconSize: 30,
-              onPressed: () {
-                print('Delete');
-              },
-            ),
           ],
         ),
       ),

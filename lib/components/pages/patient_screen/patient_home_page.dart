@@ -186,7 +186,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => EmergencyPage()));
+                                      builder: (context) => EmergencyPage(patient: currentPatient)));
                             },
                             style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.symmetric(
@@ -253,34 +253,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
                           style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 60, vertical: 20),
-                              primary: Colors.lightBlueAccent[100]),
-                        )
-                      ],
-                    ),
-                  ),
-                  Divider(height: 20, color: Colors.transparent),
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        ElevatedButton(
-                          child: Text("My Medical Records",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontFamily: "ShipporiMincho",
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black)),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MedicalRecords(
-                                          patient: currentPatient,
-                                        )));
-                          },
-                          style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 80, vertical: 20),
                               primary: Colors.lightBlueAccent[100]),
                         )
                       ],
