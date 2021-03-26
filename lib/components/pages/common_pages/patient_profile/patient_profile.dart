@@ -25,7 +25,7 @@ class _PatientProfileState extends State<PatientProfile> {
   TextEditingController bloodPressureController;
   TextEditingController bloodSugarController;
   bool editingBloodPressure = false;
-  bool edititngBloodSugarLevel = false;
+  bool editingBloodSugarLevel = false;
   BloodPressure newBloodPressure;
   BloodSugarLevel newBloodSugarLevel;
 
@@ -320,7 +320,7 @@ class _PatientProfileState extends State<PatientProfile> {
                   InkWell(
                     onTap: () {
                       setState(() {
-                        edititngBloodSugarLevel = true;
+                        editingBloodSugarLevel = true;
                       });
                     },
                     child: Container(
@@ -333,7 +333,7 @@ class _PatientProfileState extends State<PatientProfile> {
                                   fontSize: 20,
                                   fontFamily: 'ShipporiMincho')),
                           SizedBox(width: 20),
-                          edititngBloodSugarLevel && widget.editable
+                          editingBloodSugarLevel && widget.editable
                               ? SizedBox(
                                   height: 40,
                                   width: 100,
@@ -349,7 +349,7 @@ class _PatientProfileState extends State<PatientProfile> {
                                           newBloodSugarLevel = BloodSugarLevel(
                                               reading: newValue,
                                               lastChecked: DateTime.now());
-                                          edititngBloodSugarLevel = false;
+                                          editingBloodSugarLevel = false;
                                           widget.patient.bloodSugarLevel =
                                               newBloodSugarLevel;
                                           database
