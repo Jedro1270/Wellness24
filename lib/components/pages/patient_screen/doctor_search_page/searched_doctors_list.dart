@@ -36,7 +36,7 @@ class _SearchedDoctorsListState extends State<SearchedDoctorsList> {
     }
 
     final filteredDoctors = snapshots.documents.where((document) {
-      if (widget.filterValue == null) {
+      if (widget.filterValue == document.data['specialization']) {
         return true;
       }
 
