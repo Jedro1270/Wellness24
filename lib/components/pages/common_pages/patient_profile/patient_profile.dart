@@ -214,6 +214,7 @@ class _PatientProfileState extends State<PatientProfile> {
                       title: 'Age'),
                   PatientCondition(
                       editable: widget.editable,
+                      loading: loading,
                       inputFormat: "[0-9]",
                       icon: Icon(
                         Icons.cake_outlined,

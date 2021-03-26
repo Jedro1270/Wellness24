@@ -76,7 +76,7 @@ class _PatientConditionState extends State<PatientCondition> {
                                   width: 100,
                                   child: TextField(
                                     inputFormatters: [
-                                      FilteringTextInputFormatter.allow(widget.inputFormat)
+                                      FilteringTextInputFormatter.allow(RegExp(widget.inputFormat))
                                     ],
                                     onSubmitted: (newValue) {
                                       setState(() {
