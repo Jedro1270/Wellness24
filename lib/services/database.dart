@@ -183,7 +183,8 @@ class DatabaseService {
         clinicStartHour: snapshotDoctor['clinicStartHour'],
         clinicEndHour: snapshotDoctor['clinicEndHour'],
         clinicDayStart: snapshotDoctor['clinicDayStart'],
-        clinicDayEnd: snapshotDoctor['clinicDayEnd']);
+        clinicDayEnd: snapshotDoctor['clinicDayEnd'],
+        education: snapshotDoctor['education']);
   }
 
   Future updatePatient(Patient patient) async {

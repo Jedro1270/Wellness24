@@ -36,7 +36,7 @@ class _SearchedDoctorsListState extends State<SearchedDoctorsList> {
     }
 
     final filteredDoctors = snapshots.documents.where((document) {
-      if (widget.filterValue == null) {
+      if (widget.filterValue == document.data['specialization']) {
         return true;
       }
 
@@ -54,7 +54,8 @@ class _SearchedDoctorsListState extends State<SearchedDoctorsList> {
             about: document.data['about'],
             workingDays: document.data['workingDays'],
             clinicStartHour: document.data['clinicStart'],
-            clinicEndHour: document.data['clinicEnd']);
+            clinicEndHour: document.data['clinicEnd'],
+            education: document.data['education']);
 
         return DoctorInfo(
           doctor: currentDoctor,

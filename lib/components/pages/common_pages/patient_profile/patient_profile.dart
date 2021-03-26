@@ -58,6 +58,7 @@ class _PatientProfileState extends State<PatientProfile> {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     final DatabaseService database = DatabaseService(uid: user.uid);
+    bool loading = false;
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -82,8 +83,7 @@ class _PatientProfileState extends State<PatientProfile> {
                       children: <Widget>[
                         ClipOval(
                           child: Image(
-                            image: AssetImage(
-                                'assets/sample-patient.jpg'), // _imageUrl
+                            image: AssetImage('assets/sample-patient.jpg'),
                             width: 180,
                             height: 180,
                             fit: BoxFit.cover,
@@ -128,49 +128,86 @@ class _PatientProfileState extends State<PatientProfile> {
                   SizedBox(height: 10),
                   PatientCondition(
                     editable: widget.editable,
+                    loading: loading,
                     icon: Image(image: AssetImage('assets/body-temp.png')),
                     content: widget.patient.bodyTemperature.toString(),
                     title: 'Body Temperature',
                     inputFormat: "[0-9]",
                     onChanged: (newContent) async {
+                      setState(() {
+                        loading = true;
+                      });
+
                       widget.patient.bodyTemperature = double.parse(newContent);
                       await database.updatePatient(widget.patient);
+
+                      setState(() {
+                        loading = false;
+                      });
                     },
                   ),
                   PatientCondition(
                     editable: widget.editable,
+                    loading: loading,
                     icon: Image(image: AssetImage('assets/weight.png')),
                     content: widget.patient.weight.toString(),
                     title: 'Weight',
                     inputFormat: "[0-9]",
                     onChanged: (newContent) async {
+                      setState(() {
+                        loading = true;
+                      });
+
                       widget.patient.weight = double.parse(newContent);
                       await database.updatePatient(widget.patient);
+
+                      setState(() {
+                        loading = false;
+                      });
                     },
                   ),
                   PatientCondition(
                     editable: widget.editable,
+                    loading: loading,
                     icon: Image(image: AssetImage('assets/height.png')),
                     content: widget.patient.height.toString(),
                     title: 'Height',
                     inputFormat: "[0-9]",
                     onChanged: (newContent) async {
+                      setState(() {
+                        loading = true;
+                      });
+
                       widget.patient.height = double.parse(newContent);
                       await database.updatePatient(widget.patient);
+
+                      setState(() {
+                        loading = false;
+                      });
                     },
                   ),
                   PatientCondition(
                       editable: widget.editable,
+                      loading: loading,
                       icon: Image(image: AssetImage('assets/droplet.png')),
                       content: widget.patient.bloodType,
                       title: 'Blood Type',
                       inputFormat: "[A,O,B,a,b,o,+,-]",
                       onChanged: (newContent) async {
+                        setState(() {
+                          loading = true;
+                        });
+
                         widget.patient.bloodType = newContent;
                         await database.updatePatient(widget.patient);
+
+                        setState(() {
+                          loading = false;
+                        });
                       }),
                   PatientCondition(
                       editable: false,
+                      loading: loading,
                       icon:
                           Image(image: AssetImage('assets/double-person.png')),
                       content: '${widget.patient.age} y.o',
@@ -186,8 +223,16 @@ class _PatientProfileState extends State<PatientProfile> {
                           DateFormat.yMd().format(widget.patient.birthDate),
                       title: 'Birthday',
                       onChanged: (newContent) async {
+                        setState(() {
+                          loading = true;
+                        });
+
                         widget.patient.birthDate = newContent;
                         await database.updatePatient(widget.patient);
+
+                        setState(() {
+                          loading = false;
+                        });
                       }),
                   Divider(color: Colors.black),
                   SizedBox(height: 10),
@@ -248,22 +293,23 @@ class _PatientProfileState extends State<PatientProfile> {
                           SizedBox(
                             height: 30,
                             width: 120,
-                            child: Container(
-                                color: Colors.redAccent[700],
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(
-                                      widget.patient.bloodPressure == null
-                                          ? 'NA'
-                                          : widget.patient.bloodPressure
+                            child: widget.patient.bloodPressure == null
+                                ? Container()
+                                : Container(
+                                    color: Colors.redAccent[700],
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text(
+                                          widget.patient.bloodPressure
                                               .sinceLastChecked,
-                                      style: TextStyle(
-                                          fontFamily: 'ShipporiMincho',
-                                          color: Colors.white),
-                                    ),
-                                  ],
-                                )),
+                                          style: TextStyle(
+                                              fontFamily: 'ShipporiMincho',
+                                              color: Colors.white),
+                                        ),
+                                      ],
+                                    )),
                           ),
                         ],
                       ),
@@ -327,22 +373,23 @@ class _PatientProfileState extends State<PatientProfile> {
                           SizedBox(
                             height: 30,
                             width: 120,
-                            child: Container(
-                                color: Colors.redAccent[700],
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(
-                                      widget.patient.bloodSugarLevel == null
-                                          ? 'NA'
-                                          : widget.patient.bloodSugarLevel
+                            child: widget.patient.bloodSugarLevel == null
+                                ? Container()
+                                : Container(
+                                    color: Colors.redAccent[700],
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text(
+                                          widget.patient.bloodSugarLevel
                                               .sinceLastChecked,
-                                      style: TextStyle(
-                                          fontFamily: 'ShipporiMincho',
-                                          color: Colors.white),
-                                    ),
-                                  ],
-                                )),
+                                          style: TextStyle(
+                                              fontFamily: 'ShipporiMincho',
+                                              color: Colors.white),
+                                        ),
+                                      ],
+                                    )),
                           ),
                         ],
                       ),
