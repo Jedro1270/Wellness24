@@ -17,7 +17,7 @@ class PatientCondition extends StatefulWidget {
       this.content,
       this.title,
       this.onChanged,
-      this.loading,
+      this.loading = false,
       this.inputFormat});
 
   @override
