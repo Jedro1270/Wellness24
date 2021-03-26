@@ -209,22 +209,30 @@ class _PatientProfileState extends State<PatientProfile> {
                           SizedBox(width: 20),
                           editingBloodPressure && widget.editable
                               ? SizedBox(
-                                  height: 50,
+                                  height: 40,
                                   width: 100,
-                                  child: TextField(
-                                    onSubmitted: (newValue) {
-                                      setState(() {
-                                        newBloodPressure = BloodPressure(
-                                            reading: newValue,
-                                            lastChecked: DateTime.now());
-                                        editingBloodPressure = false;
-                                        widget.patient.bloodPressure =
-                                            newBloodPressure;
-                                        database.updatePatient(widget.patient);
-                                      });
-                                    },
-                                    autofocus: true,
-                                    controller: bloodPressureController,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border:
+                                          Border.all(color: Colors.blueAccent),
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    child: TextField(
+                                      onSubmitted: (newValue) {
+                                        setState(() {
+                                          newBloodPressure = BloodPressure(
+                                              reading: newValue,
+                                              lastChecked: DateTime.now());
+                                          editingBloodPressure = false;
+                                          widget.patient.bloodPressure =
+                                              newBloodPressure;
+                                          database
+                                              .updatePatient(widget.patient);
+                                        });
+                                      },
+                                      autofocus: true,
+                                      controller: bloodPressureController,
+                                    ),
                                   ),
                                 )
                               : Text(
@@ -236,6 +244,7 @@ class _PatientProfileState extends State<PatientProfile> {
                                       fontSize: 15,
                                       fontFamily: 'ShipporiMincho'),
                                 ),
+                          SizedBox(height: 10),
                           SizedBox(
                             height: 30,
                             width: 120,
@@ -279,22 +288,30 @@ class _PatientProfileState extends State<PatientProfile> {
                           SizedBox(width: 20),
                           edititngBloodSugarLevel && widget.editable
                               ? SizedBox(
-                                  height: 50,
+                                  height: 40,
                                   width: 100,
-                                  child: TextField(
-                                    onSubmitted: (newValue) {
-                                      setState(() {
-                                        newBloodSugarLevel = BloodSugarLevel(
-                                            reading: newValue,
-                                            lastChecked: DateTime.now());
-                                        edititngBloodSugarLevel = false;
-                                        widget.patient.bloodSugarLevel =
-                                            newBloodSugarLevel;
-                                        database.updatePatient(widget.patient);
-                                      });
-                                    },
-                                    autofocus: true,
-                                    controller: bloodSugarController,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border:
+                                          Border.all(color: Colors.blueAccent),
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    child: TextField(
+                                      onSubmitted: (newValue) {
+                                        setState(() {
+                                          newBloodSugarLevel = BloodSugarLevel(
+                                              reading: newValue,
+                                              lastChecked: DateTime.now());
+                                          edititngBloodSugarLevel = false;
+                                          widget.patient.bloodSugarLevel =
+                                              newBloodSugarLevel;
+                                          database
+                                              .updatePatient(widget.patient);
+                                        });
+                                      },
+                                      autofocus: true,
+                                      controller: bloodSugarController,
+                                    ),
                                   ),
                                 )
                               : Text(
@@ -306,6 +323,7 @@ class _PatientProfileState extends State<PatientProfile> {
                                       fontSize: 15,
                                       fontFamily: 'ShipporiMincho'),
                                 ),
+                          SizedBox(height: 10),
                           SizedBox(
                             height: 30,
                             width: 120,
