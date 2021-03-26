@@ -405,7 +405,7 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                                                 '$clinicDayStart to $clinicDayEnd',
                                             education: education,
                                             about: about)
-                                        .timeout(Duration(seconds: 20),
+                                        .timeout(Duration(seconds: 120),
                                             onTimeout: () {
                                       timeout = true;
                                       return null;
@@ -421,6 +421,7 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                                         if (timeout) {
                                           error =
                                               'The connection has timed out, please try again';
+                                          timeout = false;
                                         } else {
                                           error = 'Email is already taken';
                                         }
