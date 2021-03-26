@@ -25,7 +25,10 @@ class _MedicalRecordsState extends State<MedicalRecords> {
       }).toList();
 
       medicalRecords = [
-        RecordCard(title: 'Blood Test', date: DateTime.now(),) // TODO: replace placeholder
+        RecordCard(
+          title: 'Blood Test',
+          date: DateTime.now(),
+        ) // TODO: replace placeholder
       ];
     }
 
@@ -61,7 +64,7 @@ class _MedicalRecordsState extends State<MedicalRecords> {
             Divider(thickness: 2),
             Container(
               height: 200,
-              child: ListView(children: healthHistory),
+              child: ListView(primary: false, children: healthHistory),
             ),
             Divider(thickness: 2),
             Container(
@@ -76,7 +79,7 @@ class _MedicalRecordsState extends State<MedicalRecords> {
             ),
             Container(
               height: 275,
-              child: ListView(children: medicalRecords),
+              child: ListView(primary: false, children: medicalRecords),
             ),
           ],
         ),
