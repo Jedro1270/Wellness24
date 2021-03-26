@@ -14,14 +14,19 @@ class MedicalRecords extends StatefulWidget {
 }
 
 class _MedicalRecordsState extends State<MedicalRecords> {
-  List<RecordCard> records = [];
+  List<RecordCard> healthHistory = [];
+  List<RecordCard> medicalRecords = [];
 
   @override
   void initState() {
     if (widget.patient != null) {
-      records = widget.patient.medicalHistory.map((title) {
+      healthHistory = widget.patient.medicalHistory.map((title) {
         return RecordCard(title: title);
       }).toList();
+
+      medicalRecords = [
+        RecordCard(title: 'Blood Test', date: DateTime.now(),) // TODO: replace placeholder
+      ];
     }
 
     super.initState();
@@ -46,7 +51,7 @@ class _MedicalRecordsState extends State<MedicalRecords> {
             Container(
               margin: EdgeInsets.all(20),
               child: Text(
-                "Medical History",
+                "Health History",
                 style: TextStyle(
                     fontSize: 20,
                     fontFamily: "ShipporiMincho",
@@ -55,8 +60,8 @@ class _MedicalRecordsState extends State<MedicalRecords> {
             ),
             Divider(thickness: 2),
             Container(
-              height: 300,
-              child: ListView(children: records),
+              height: 200,
+              child: ListView(children: healthHistory),
             ),
             Divider(thickness: 2),
             Container(
@@ -68,6 +73,10 @@ class _MedicalRecordsState extends State<MedicalRecords> {
                     fontFamily: "ShipporiMincho",
                     fontWeight: FontWeight.bold),
               ),
+            ),
+            Container(
+              height: 275,
+              child: ListView(children: medicalRecords),
             ),
           ],
         ),
