@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
-import 'package:wellness24/components/common/chat_room.dart';
+import 'package:wellness24/components/pages/common_pages/chat/chat_room.dart';
 
 class Messages extends StatefulWidget {
   @override
