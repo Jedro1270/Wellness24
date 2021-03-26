@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/pages/common_pages/patient_profile/patient_condition.dart';
 import 'package:wellness24/components/pages/patient_screen/patient_home_page.dart';
 import 'package:intl/intl.dart';
 import 'package:wellness24/models/patient.dart';
+
+import '../../../models/user.dart';
+import '../common_pages/login_page.dart';
 
 class EmergencyPage extends StatefulWidget {
   final Patient patient;
@@ -17,6 +21,12 @@ class EmergencyPage extends StatefulWidget {
 class _EmergencyPageState extends State<EmergencyPage> {
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
+
+    if (user == null) {
+      return Login();
+    }
+
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Emergency',
@@ -29,7 +39,6 @@ class _EmergencyPageState extends State<EmergencyPage> {
       ),
       body: Center(
         child: Container(
-          
           padding: EdgeInsets.all(10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
