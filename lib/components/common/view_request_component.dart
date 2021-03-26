@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wellness24/components/pages/common_pages/login_page.dart';
 import 'package:wellness24/models/patient.dart';
 import 'package:wellness24/models/user.dart';
 import 'package:wellness24/services/database.dart';
@@ -35,6 +36,11 @@ class _ViewRequestState extends State<ViewRequest> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
+
+    if (user == null) {
+      return Login();
+    }
+
     final database = DatabaseService(uid: user.uid);
 
     return Container(
