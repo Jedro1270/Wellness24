@@ -93,7 +93,10 @@ class _ViewRequestState extends State<ViewRequest> {
                                         onPressed: () {
                                           print('Confirm');
                                           database.acceptPatient(patient.uid);
-                                          // TODO: removes patient on the screen on accept
+                                          setState(() {
+                                            patientRequests.removeWhere(
+                                                (e) => e.uid == patient.uid);
+                                          });
                                         },
                                         child: Icon(Icons.check)),
                                     SizedBox(width: 10),
@@ -101,7 +104,10 @@ class _ViewRequestState extends State<ViewRequest> {
                                       onPressed: () {
                                         print('Decline');
                                         database.declinePatient(patient.uid);
-                                        // TODO: also remove patient on screen
+                                        setState(() {
+                                          patientRequests.removeWhere(
+                                              (e) => e.uid == patient.uid);
+                                        });
                                       },
                                       child: Icon(Icons.clear,
                                           color: Colors.black),
@@ -129,10 +135,4 @@ class _ViewRequestState extends State<ViewRequest> {
       ),
     );
   }
-}
-
-class DummyUsers {
-  String name;
-
-  DummyUsers({@required this.name});
 }
