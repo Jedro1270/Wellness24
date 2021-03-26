@@ -27,13 +27,7 @@ class _DoctorSearchPageState extends State<DoctorSearchPage> {
       backgroundColor: Colors.white,
       appBar: CustomAppBar(
         title: 'Registered Doctors',
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.home_outlined),
-            iconSize: 30.0,
-          )
-        ],
+       
       ),
       body: Container(
           child: SearchedDoctorsList(

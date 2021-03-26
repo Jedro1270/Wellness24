@@ -42,13 +42,6 @@ class _DoctorDetailsState extends State<DoctorDetails> {
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Doctor',
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.home_outlined),
-            iconSize: 30.0,
-          )
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
