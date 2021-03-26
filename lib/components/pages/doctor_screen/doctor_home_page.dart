@@ -33,6 +33,10 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
 
+    if (user == null) {
+      return Login();
+    }
+
     initializeDoctor(user.uid);
 
     if (user == null) {
@@ -60,7 +64,8 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.message),
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => Messages()));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Messages()));
         },
       ),
       body: currentDoctor == null
