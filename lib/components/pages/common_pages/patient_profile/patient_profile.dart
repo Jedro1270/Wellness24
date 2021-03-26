@@ -132,6 +132,7 @@ class _PatientProfileState extends State<PatientProfile> {
                     icon: Image(image: AssetImage('assets/body-temp.png')),
                     content: widget.patient.bodyTemperature.toString(),
                     title: 'Body Temperature',
+                    inputFormat: "[0-9]",
                     onChanged: (newContent) async {
                       setState(() {
                         loading = true;
@@ -151,6 +152,7 @@ class _PatientProfileState extends State<PatientProfile> {
                     icon: Image(image: AssetImage('assets/weight.png')),
                     content: widget.patient.weight.toString(),
                     title: 'Weight',
+                    inputFormat: "[0-9]",
                     onChanged: (newContent) async {
                       setState(() {
                         loading = true;
@@ -170,6 +172,7 @@ class _PatientProfileState extends State<PatientProfile> {
                     icon: Image(image: AssetImage('assets/height.png')),
                     content: widget.patient.height.toString(),
                     title: 'Height',
+                    inputFormat: "[0-9]",
                     onChanged: (newContent) async {
                       setState(() {
                         loading = true;
@@ -189,6 +192,7 @@ class _PatientProfileState extends State<PatientProfile> {
                       icon: Image(image: AssetImage('assets/droplet.png')),
                       content: widget.patient.bloodType,
                       title: 'Blood Type',
+                      inputFormat: "[A,O,B,a,b,o,+,-]",
                       onChanged: (newContent) async {
                         setState(() {
                           loading = true;
@@ -211,6 +215,7 @@ class _PatientProfileState extends State<PatientProfile> {
                   PatientCondition(
                       editable: widget.editable,
                       loading: loading,
+                      inputFormat: "[0-9]",
                       icon: Icon(
                         Icons.cake_outlined,
                         size: 30,

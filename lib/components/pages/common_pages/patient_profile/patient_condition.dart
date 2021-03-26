@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
 
 class PatientCondition extends StatefulWidget {
@@ -8,6 +9,7 @@ class PatientCondition extends StatefulWidget {
   final String title;
   final Function onChanged;
   final bool loading;
+  final String inputFormat;
 
   PatientCondition(
       {this.editable,
@@ -15,7 +17,8 @@ class PatientCondition extends StatefulWidget {
       this.content,
       this.title,
       this.onChanged,
-      this.loading});
+      this.loading,
+      this.inputFormat});
 
   @override
   _PatientConditionState createState() => _PatientConditionState();
@@ -72,7 +75,9 @@ class _PatientConditionState extends State<PatientCondition> {
                                   height: 50,
                                   width: 100,
                                   child: TextField(
-                                    keyboardType: TextInputType.number,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(RegExp(widget.inputFormat))
+                                    ],
                                     onSubmitted: (newValue) {
                                       setState(() {
                                         newContent = newValue;
