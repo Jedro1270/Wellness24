@@ -136,9 +136,3 @@ class _ViewRequestState extends State<ViewRequest> {
     );
   }
 }
-
-class DummyUsers {
-  String name;
-
-  DummyUsers({@required this.name});
-}
