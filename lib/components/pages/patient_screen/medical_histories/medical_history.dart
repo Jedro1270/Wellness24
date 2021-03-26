@@ -49,7 +49,7 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                       child: Row(
                         children: <Widget>[
                           Text(
-                            "Medical History",
+                            "Health History",
                             style: TextStyle(
                                 fontSize: 20,
                                 fontFamily: "ShipporiMincho",
