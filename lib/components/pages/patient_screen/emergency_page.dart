@@ -144,6 +144,94 @@ class _EmergencyPageState extends State<EmergencyPage> {
                 icon: Image(image: AssetImage('assets/double-person.png')),
                 content: '${widget.patient.age} y.o',
                 title: 'Age'),
+            Divider(color: Colors.black),
+            SizedBox(height: 10),
+            Container(
+              height: 120,
+              child: Column(
+                children: <Widget>[
+                  Text('Blood Pressure:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          fontFamily: 'ShipporiMincho')),
+                  SizedBox(width: 20),
+                  Text(
+                    widget.patient.bloodPressure == null
+                        ? ''
+                        : widget.patient.bloodPressure.reading,
+                    style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 15,
+                        fontFamily: 'ShipporiMincho'),
+                  ),
+                  SizedBox(height: 10),
+                  SizedBox(
+                    height: 30,
+                    width: 120,
+                    child: widget.patient.bloodPressure == null
+                        ? Container()
+                        : Container(
+                            color: Colors.redAccent[700],
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  widget.patient.bloodPressure.sinceLastChecked,
+                                  style: TextStyle(
+                                      fontFamily: 'ShipporiMincho',
+                                      color: Colors.white),
+                                ),
+                              ],
+                            )),
+                  ),
+                ],
+              ),
+            ),
+            Divider(height: 40, color: Colors.black),
+            Container(
+              height: 120,
+              child: Column(
+                children: <Widget>[
+                  Text('Blood Sugar Level:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          fontFamily: 'ShipporiMincho')),
+                  SizedBox(width: 20),
+                  Text(
+                    widget.patient.bloodSugarLevel == null
+                        ? ''
+                        : widget.patient.bloodSugarLevel.reading,
+                    style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 15,
+                        fontFamily: 'ShipporiMincho'),
+                  ),
+                  SizedBox(height: 10),
+                  SizedBox(
+                    height: 30,
+                    width: 120,
+                    child: widget.patient.bloodSugarLevel == null
+                        ? Container()
+                        : Container(
+                            color: Colors.redAccent[700],
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  widget
+                                      .patient.bloodSugarLevel.sinceLastChecked,
+                                  style: TextStyle(
+                                      fontFamily: 'ShipporiMincho',
+                                      color: Colors.white),
+                                ),
+                              ],
+                            )),
+                  ),
+                ],
+              ),
+            ),
             Container(
               child: Row(
                 children: <Widget>[
