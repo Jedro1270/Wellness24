@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
-import 'package:wellness24/components/common/messages.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
 import 'package:wellness24/components/common/navigation_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness24/components/common/schedule_card.dart';
+import 'package:wellness24/components/pages/common_pages/chat/messages.dart';
 import 'package:wellness24/components/pages/doctor_screen/notification_page.dart';
 import 'package:wellness24/components/pages/doctor_screen/patients_list/my_patients_list.dart';
 import 'package:wellness24/models/doctor.dart';

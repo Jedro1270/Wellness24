@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
-import 'package:wellness24/components/pages/common_pages/medical_records/medical_record.dart';
+import 'package:wellness24/components/pages/common_pages/medical_records/medical_records.dart';
 import 'package:wellness24/components/pages/common_pages/patient_profile/patient_condition.dart';
 import 'package:wellness24/models/blood_pressure.dart';
 import 'package:wellness24/models/blood_sugar_level.dart';
