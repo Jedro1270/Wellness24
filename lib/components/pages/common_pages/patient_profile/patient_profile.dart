@@ -126,6 +126,7 @@ class _PatientProfileState extends State<PatientProfile> {
                   ),
                   SizedBox(height: 10),
                   PatientCondition(
+                    key: Key('bodyTemp'),
                     editable: widget.editable,
                     loading: loading,
                     icon: Image(image: AssetImage('assets/body-temp.png')),
@@ -135,9 +136,10 @@ class _PatientProfileState extends State<PatientProfile> {
                     onChanged: (newContent) async {
                       setState(() {
                         loading = true;
+                        widget.patient.bodyTemperature =
+                            double.parse(newContent);
                       });
 
-                      widget.patient.bodyTemperature = double.parse(newContent);
                       await widget.database.updatePatient(widget.patient);
 
                       setState(() {
@@ -146,6 +148,7 @@ class _PatientProfileState extends State<PatientProfile> {
                     },
                   ),
                   PatientCondition(
+                    key: Key('weight'),
                     editable: widget.editable,
                     loading: loading,
                     icon: Image(image: AssetImage('assets/weight.png')),
@@ -155,9 +158,9 @@ class _PatientProfileState extends State<PatientProfile> {
                     onChanged: (newContent) async {
                       setState(() {
                         loading = true;
+                        widget.patient.weight = double.parse(newContent);
                       });
 
-                      widget.patient.weight = double.parse(newContent);
                       await widget.database.updatePatient(widget.patient);
 
                       setState(() {
@@ -166,6 +169,7 @@ class _PatientProfileState extends State<PatientProfile> {
                     },
                   ),
                   PatientCondition(
+                    key: Key('height'),
                     editable: widget.editable,
                     loading: loading,
                     icon: Image(image: AssetImage('assets/height.png')),
@@ -175,9 +179,9 @@ class _PatientProfileState extends State<PatientProfile> {
                     onChanged: (newContent) async {
                       setState(() {
                         loading = true;
+                        widget.patient.height = double.parse(newContent);
                       });
 
-                      widget.patient.height = double.parse(newContent);
                       await widget.database.updatePatient(widget.patient);
 
                       setState(() {
@@ -195,9 +199,9 @@ class _PatientProfileState extends State<PatientProfile> {
                       onChanged: (newContent) async {
                         setState(() {
                           loading = true;
+                          widget.patient.bloodType = newContent;
                         });
 
-                        widget.patient.bloodType = newContent;
                         await widget.database.updatePatient(widget.patient);
 
                         setState(() {
@@ -212,7 +216,7 @@ class _PatientProfileState extends State<PatientProfile> {
                       content: '${widget.patient.age} y.o',
                       title: 'Age'),
                   PatientCondition(
-                      editable: widget.editable,
+                      editable: false,
                       loading: loading,
                       inputFormat: "[0-9]",
                       icon: Icon(
@@ -221,19 +225,7 @@ class _PatientProfileState extends State<PatientProfile> {
                       ),
                       content:
                           DateFormat.yMd().format(widget.patient.birthDate),
-                      title: 'Birthday',
-                      onChanged: (newContent) async {
-                        setState(() {
-                          loading = true;
-                        });
-
-                        widget.patient.birthDate = newContent;
-                        await widget.database.updatePatient(widget.patient);
-
-                        setState(() {
-                          loading = false;
-                        });
-                      }),
+                      title: 'Birthday'),
                   Divider(color: Colors.black),
                   SizedBox(height: 10),
                   InkWell(
