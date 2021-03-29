@@ -8,20 +8,29 @@ import 'package:wellness24/models/patient.dart';
 
 class DatabaseService {
   final String uid;
-  DatabaseService({this.uid});
+  var firestore;
 
-  final CollectionReference roles = Firestore.instance.collection('roles');
-  final CollectionReference doctors = Firestore.instance.collection('doctors');
-  final CollectionReference patients =
-      Firestore.instance.collection('patients');
-  final CollectionReference emergencyContacts =
-      Firestore.instance.collection('emergencyContacts');
-  final CollectionReference patientRequests =
-      Firestore.instance.collection('patientRequests');
-  final CollectionReference bloodPressures =
-      Firestore.instance.collection('bloodPressures');
-  final CollectionReference bloodSugarLevels =
-      Firestore.instance.collection('bloodSugarLevels');
+  CollectionReference roles;
+  CollectionReference doctors;
+  CollectionReference patients;
+  CollectionReference emergencyContacts;
+  CollectionReference patientRequests;
+  CollectionReference bloodPressures;
+  CollectionReference bloodSugarLevels;
+
+  DatabaseService({this.uid, this.firestore}) {
+    if (this.firestore == null) {
+      this.firestore = Firestore.instance;
+    }
+
+    roles = firestore.collection('roles');
+    doctors = firestore.collection('doctors');
+    patients = firestore.collection('patients');
+    emergencyContacts = firestore.collection('emergencyContacts');
+    patientRequests = firestore.collection('patientRequests');
+    bloodPressures = firestore.collection('bloodPressures');
+    bloodSugarLevels = firestore.collection('bloodSugarLevels');
+  }
 
   Future<String> getRole() async {
     String snapshot = await roles
