@@ -15,7 +15,7 @@ class BloodPressure {
 
     if (duration.days < 32) {
       output = '${duration.days} day/s ago';
-    } else if ((duration.days / 7).floor() < 5) {
+    } else {
       output = '${(duration.days / 7).floor()} week/s ago';
     }
 
