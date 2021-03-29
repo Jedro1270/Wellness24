@@ -12,6 +12,7 @@ import 'package:wellness24/models/user.dart';
 import 'package:wellness24/services/database.dart';
 import 'package:wellness24/components/common/navigation_bar.dart';
 
+import '../common_pages/login_page.dart';
 import './doctor_search_page/doctor_search_page.dart';
 
 class PatientHomePage extends StatefulWidget {
@@ -38,6 +39,10 @@ class _PatientHomePageState extends State<PatientHomePage> {
     User currentUser = Provider.of<User>(context);
     // Patient currentPatient = Provider.of<Patient>(context);
 
+    if (currentUser == null) {
+      return Login();
+    }
+
     initializePatient(currentUser.uid);
 
     return Scaffold(
@@ -57,7 +62,8 @@ class _PatientHomePageState extends State<PatientHomePage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.message),
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => PatientMessages()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => PatientMessages()));
         },
       ),
       body: currentPatient == null
@@ -185,7 +191,8 @@ class _PatientHomePageState extends State<PatientHomePage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => EmergencyPage(patient: currentPatient)));
+                                      builder: (context) => EmergencyPage(
+                                          patient: currentPatient)));
                             },
                             style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.symmetric(
