@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/pages/common_pages/patient_profile/patient_profile.dart';
 import 'package:wellness24/models/patient.dart';
+import 'package:wellness24/services/database.dart';
 
 class PatientInfo extends StatelessWidget {
   final Patient patient;
@@ -18,8 +19,10 @@ class PatientInfo extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) =>
-                    PatientProfile(patient: patient, editable: false)),
+                builder: (context) => PatientProfile(
+                    patient: patient,
+                    editable: false,
+                    database: DatabaseService(uid: patient.uid))),
           );
         },
         child: Card(
