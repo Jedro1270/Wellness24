@@ -14,8 +14,9 @@ import 'package:wellness24/services/database.dart';
 class PatientProfile extends StatefulWidget {
   final bool editable;
   final Patient patient;
+  final DatabaseService database;
 
-  PatientProfile({this.editable, this.patient});
+  PatientProfile({this.editable, this.patient, this.database});
 
   @override
   _PatientProfileState createState() => _PatientProfileState();
@@ -56,8 +57,6 @@ class _PatientProfileState extends State<PatientProfile> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
-    final DatabaseService database = DatabaseService(uid: user.uid);
     bool loading = false;
 
     return Scaffold(
@@ -139,7 +138,7 @@ class _PatientProfileState extends State<PatientProfile> {
                       });
 
                       widget.patient.bodyTemperature = double.parse(newContent);
-                      await database.updatePatient(widget.patient);
+                      await widget.database.updatePatient(widget.patient);
 
                       setState(() {
                         loading = false;
@@ -159,7 +158,7 @@ class _PatientProfileState extends State<PatientProfile> {
                       });
 
                       widget.patient.weight = double.parse(newContent);
-                      await database.updatePatient(widget.patient);
+                      await widget.database.updatePatient(widget.patient);
 
                       setState(() {
                         loading = false;
@@ -179,7 +178,7 @@ class _PatientProfileState extends State<PatientProfile> {
                       });
 
                       widget.patient.height = double.parse(newContent);
-                      await database.updatePatient(widget.patient);
+                      await widget.database.updatePatient(widget.patient);
 
                       setState(() {
                         loading = false;
@@ -199,7 +198,7 @@ class _PatientProfileState extends State<PatientProfile> {
                         });
 
                         widget.patient.bloodType = newContent;
-                        await database.updatePatient(widget.patient);
+                        await widget.database.updatePatient(widget.patient);
 
                         setState(() {
                           loading = false;
@@ -229,7 +228,7 @@ class _PatientProfileState extends State<PatientProfile> {
                         });
 
                         widget.patient.birthDate = newContent;
-                        await database.updatePatient(widget.patient);
+                        await widget.database.updatePatient(widget.patient);
 
                         setState(() {
                           loading = false;
@@ -272,7 +271,7 @@ class _PatientProfileState extends State<PatientProfile> {
                                           editingBloodPressure = false;
                                           widget.patient.bloodPressure =
                                               newBloodPressure;
-                                          database
+                                          widget.database
                                               .updatePatient(widget.patient);
                                         });
                                       },
@@ -352,7 +351,7 @@ class _PatientProfileState extends State<PatientProfile> {
                                           editingBloodSugarLevel = false;
                                           widget.patient.bloodSugarLevel =
                                               newBloodSugarLevel;
-                                          database
+                                          widget.database
                                               .updatePatient(widget.patient);
                                         });
                                       },
