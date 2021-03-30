@@ -38,11 +38,7 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
     }
 
     initializeDoctor(user.uid);
-
-    if (user == null) {
-      return Login();
-    }
-
+    
     return Scaffold(
       drawer: NavBar(
           name: currentDoctor == null ? '' : currentDoctor.fullName,
