@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/common/navigation_bar.dart';
-import 'package:wellness24/components/common/view_request_component.dart';
+import 'package:wellness24/components/pages/doctor_screen/view_request_component.dart';
 import 'package:wellness24/components/pages/doctor_screen/doctor_home_page.dart';
+import 'package:wellness24/models/user.dart';
+import 'package:wellness24/services/database.dart';
 
 class NotificationPage extends StatefulWidget {
   @override
@@ -12,6 +15,7 @@ class NotificationPage extends StatefulWidget {
 class _NotificationPageState extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
     return Scaffold(
         drawer: NavBar(),
         appBar: CustomAppBar(
@@ -30,6 +34,8 @@ class _NotificationPageState extends State<NotificationPage> {
                 })
           ],
         ),
-        body: ViewRequest());
+        body: ViewRequest(
+          database: DatabaseService(uid: user.uid),
+        ));
   }
 }
