@@ -123,6 +123,7 @@ class _RegisterCredentialsState extends State<RegisterCredentials> {
                       ),
                       SizedBox(width: 5),
                       InkWell(
+                        key: Key('logInBtn'),
                         onTap: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) => Login()));
