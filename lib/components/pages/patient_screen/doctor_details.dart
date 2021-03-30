@@ -24,10 +24,9 @@ class _DoctorDetailsState extends State<DoctorDetails> {
   _DoctorDetailsState({this.doctor});
 
   void fetchExistingRequest() async {
-    final user = Provider.of<User>(context, listen: false);
-    DatabaseService database = DatabaseService(uid: user.uid);
+    DatabaseService database = DatabaseService(uid: widget.currentPatient.uid);
     bool result =
-        await database.requestExists(doctorId: doctor.uid, patientId: user.uid);
+        await database.requestExists(doctorId: doctor.uid, patientId: widget.currentPatient.uid);
     setState(() => requestExists = result);
   }
 
