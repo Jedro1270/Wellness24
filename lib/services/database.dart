@@ -189,8 +189,8 @@ class DatabaseService {
         specialization: snapshotDoctor['specialization'],
         about: snapshotDoctor['about'],
         workingDays: snapshotDoctor['workingDays'],
-        clinicStartHour: snapshotDoctor['clinicStartHour'],
-        clinicEndHour: snapshotDoctor['clinicEndHour'],
+        clinicStartHour: snapshotDoctor['clinicStart'],
+        clinicEndHour: snapshotDoctor['clinicEnd'],
         clinicDayStart: snapshotDoctor['clinicDayStart'],
         clinicDayEnd: snapshotDoctor['clinicDayEnd'],
         education: snapshotDoctor['education']);
