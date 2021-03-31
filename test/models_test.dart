@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wellness24/models/blood_pressure.dart';
+import 'package:wellness24/models/doctor.dart';
 import 'package:wellness24/models/emergency_contact.dart';
 import 'package:wellness24/models/new_account.dart';
 
@@ -30,7 +31,11 @@ void main() {
   group('Doctor', () {
     test(
         '.fullName should return the firstName, middleInitial and lastName joined together.',
-        () {});
+        () {
+      Doctor testDoc =
+          Doctor(firstName: 'Veto', middleInitial: 'C', lastName: 'Bastiero');
+      expect(testDoc.fullName, 'Veto C. Bastiero');
+    });
   });
 
   group('NewAccount', () {
