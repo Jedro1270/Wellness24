@@ -1,22 +1,21 @@
-import 'package:age/age.dart';
+import 'package:clock/clock.dart';
 
 class BloodPressure {
   String reading;
   DateTime lastChecked;
+  final Clock clock;
 
-  BloodPressure({this.reading, this.lastChecked});
+  BloodPressure({this.reading, this.lastChecked, this.clock = const Clock()});
 
   String get sinceLastChecked {
     String output;
-    DateTime present = DateTime.now();
 
-    AgeDuration duration =
-        Age.dateDifference(fromDate: lastChecked, toDate: present);
+    final difference = lastChecked.difference(clock.now());
 
-    if (duration.days < 32) {
-      output = '${duration.days} day/s ago';
+    if (difference.inDays < 32) {
+      output = '${difference.inDays} day/s ago';
     } else {
-      output = '${(duration.days / 7).floor()} week/s ago';
+      output = '${(difference.inDays / 7).floor()} week/s ago';
     }
 
     return output;
