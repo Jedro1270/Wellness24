@@ -62,8 +62,8 @@ class _MedicalRecordsState extends State<MedicalRecords> {
               ),
             ),
             Divider(thickness: 2),
-            Container(
-              height: 200,
+            Expanded(
+              flex: 1,
               child: ListView(primary: false, children: healthHistory),
             ),
             Divider(thickness: 2),
@@ -77,8 +77,8 @@ class _MedicalRecordsState extends State<MedicalRecords> {
                     fontWeight: FontWeight.bold),
               ),
             ),
-            Container(
-              height: 275,
+            Expanded(
+              flex: 1,
               child: ListView(primary: false, children: medicalRecords),
             ),
           ],
