@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wellness24/models/blood_pressure.dart';
+import 'package:wellness24/models/doctor.dart';
 import 'package:wellness24/models/emergency_contact.dart';
 import 'package:wellness24/models/new_account.dart';
+import 'package:wellness24/models/patient.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +32,11 @@ void main() {
   group('Doctor', () {
     test(
         '.fullName should return the firstName, middleInitial and lastName joined together.',
-        () {});
+        () {
+      Doctor testDoc =
+          Doctor(firstName: 'Veto', middleInitial: 'C', lastName: 'Bastiero');
+      expect(testDoc.fullName, 'Veto C. Bastiero');
+    });
   });
 
   group('NewAccount', () {
@@ -145,13 +151,23 @@ void main() {
           relationship: 'Mother');
 
       testAcc.addEmergencyContact(contact);
-      expect(testAcc.emergencyContact, contact);
+
+      expect(testAcc.emergencyContact.lastName, 'Bastiero');
+      expect(testAcc.emergencyContact.firstName, 'Mom');
+      expect(testAcc.emergencyContact.middleInitial, 'J');
+      expect(testAcc.emergencyContact.address, 'Cabatuan, Iloilo');
+      expect(testAcc.emergencyContact.contactNo, '09221321235');
+      expect(testAcc.emergencyContact.relationship, 'Mother');
     });
   });
 
   group('Patient', () {
     test(
         '.fullName should return the firstName, middleInitial and lastName joined together.',
-        () {});
+        () {
+      Patient testPatient =
+          Patient(firstName: 'Veto', middleInitial: 'C', lastName: 'Bastiero');
+      expect(testPatient.fullName, 'Veto C. Bastiero');
+    });
   });
 }
