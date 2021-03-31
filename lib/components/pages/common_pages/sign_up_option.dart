@@ -48,6 +48,7 @@ class _SignupOptionState extends State<SignupOption> {
                   ),
                   SizedBox(width: 10),
                   InkWell(
+                    key: Key('Doctor'),
                       child: Text("Doctor",
                           style: TextStyle(
                               color: Colors.black87,
@@ -75,6 +76,7 @@ class _SignupOptionState extends State<SignupOption> {
                       child: Image(image: AssetImage("assets/patient.png"))),
                   SizedBox(width: 10),
                   InkWell(
+                    key: Key('Patient'),
                     child: (Text(
                       "Patient",
                       style: TextStyle(
