@@ -20,20 +20,32 @@ class DoctorDetails extends StatefulWidget {
 class _DoctorDetailsState extends State<DoctorDetails> {
   final Doctor doctor;
   bool requestExists = false;
+  bool isDoctor = false;
+  final Widget emptyWidget = Container(
+    width: 0,
+    height: 0,
+  );
 
   _DoctorDetailsState({this.doctor});
 
   void fetchExistingRequest() async {
     DatabaseService database = DatabaseService(uid: widget.currentPatient.uid);
-    bool result =
-        await database.requestExists(doctorId: doctor.uid, patientId: widget.currentPatient.uid);
+    bool result = await database.requestExists(
+        doctorId: doctor.uid, patientId: widget.currentPatient.uid);
     setState(() => requestExists = result);
+  }
+
+  void fetchIsMyDoctor() async {
+    DatabaseService database = DatabaseService(uid: widget.currentPatient.uid);
+    bool result = await database.isDoctor(doctor.uid);
+    setState(() => isDoctor = result);
   }
 
   @override
   void initState() {
     super.initState();
     fetchExistingRequest();
+    fetchIsMyDoctor();
   }
 
   @override
@@ -187,37 +199,40 @@ class _DoctorDetailsState extends State<DoctorDetails> {
               child: SizedBox(
                 width: double.infinity,
                 height: 55.0,
-                child: ElevatedButton(
-                  child: Text(
-                    '${requestExists ? 'Cancel Request' : 'Send Request'}',
-                    style: TextStyle(
-                        fontSize: 20.0,
-                        fontFamily: "ShipporiMincho",
-                        color: Colors.white),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary:
-                        requestExists ? Color(0xD3D3D3) : Color(0xFF40BEEE),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                    ),
-                  ),
-                  onPressed: () {
-                    if (requestExists) {
-                      DatabaseService().cancelRequest(
-                          doctorId: doctor.uid,
-                          patientId: widget.currentPatient.uid);
-                    } else {
-                      DatabaseService().sendRequest(
-                          doctorId: doctor.uid,
-                          patientId: widget.currentPatient.uid);
-                    }
+                child: isDoctor
+                    ? emptyWidget
+                    : ElevatedButton(
+                        child: Text(
+                          '${requestExists ? 'Cancel Request' : 'Send Request'}',
+                          style: TextStyle(
+                              fontSize: 20.0,
+                              fontFamily: "ShipporiMincho",
+                              color: Colors.white),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: requestExists
+                              ? Color(0xD3D3D3)
+                              : Color(0xFF40BEEE),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                          ),
+                        ),
+                        onPressed: () {
+                          if (requestExists) {
+                            DatabaseService().cancelRequest(
+                                doctorId: doctor.uid,
+                                patientId: widget.currentPatient.uid);
+                          } else {
+                            DatabaseService().sendRequest(
+                                doctorId: doctor.uid,
+                                patientId: widget.currentPatient.uid);
+                          }
 
-                    setState(() {
-                      requestExists = !requestExists;
-                    });
-                  },
-                ),
+                          setState(() {
+                            requestExists = !requestExists;
+                          });
+                        },
+                      ),
               ),
             ),
             SizedBox(height: 20.0),
