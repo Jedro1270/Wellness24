@@ -4,6 +4,7 @@ import 'package:wellness24/models/blood_pressure.dart';
 import 'package:wellness24/models/doctor.dart';
 import 'package:wellness24/models/emergency_contact.dart';
 import 'package:wellness24/models/new_account.dart';
+import 'package:wellness24/models/patient.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -157,6 +158,10 @@ void main() {
   group('Patient', () {
     test(
         '.fullName should return the firstName, middleInitial and lastName joined together.',
-        () {});
+        () {
+      Patient testPatient =
+          Patient(firstName: 'Veto', middleInitial: 'C', lastName: 'Bastiero');
+      expect(testPatient.fullName, 'Veto C. Bastiero');
+    });
   });
 }
