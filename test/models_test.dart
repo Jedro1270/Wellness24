@@ -151,7 +151,13 @@ void main() {
           relationship: 'Mother');
 
       testAcc.addEmergencyContact(contact);
-      expect(testAcc.emergencyContact, contact);
+
+      expect(testAcc.emergencyContact.lastName, 'Bastiero');
+      expect(testAcc.emergencyContact.firstName, 'Mom');
+      expect(testAcc.emergencyContact.middleInitial, 'J');
+      expect(testAcc.emergencyContact.address, 'Cabatuan, Iloilo');
+      expect(testAcc.emergencyContact.contactNo, '09221321235');
+      expect(testAcc.emergencyContact.relationship, 'Mother');
     });
   });
 
