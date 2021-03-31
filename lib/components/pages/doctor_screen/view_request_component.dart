@@ -6,6 +6,8 @@ import 'package:wellness24/models/user.dart';
 import 'package:wellness24/services/database.dart';
 
 class ViewRequest extends StatefulWidget {
+  final DatabaseService database;
+  ViewRequest({this.database});
   @override
   _ViewRequestState createState() => _ViewRequestState();
 }
@@ -14,9 +16,7 @@ class _ViewRequestState extends State<ViewRequest> {
   List<Patient> patientRequests = [];
 
   void fetchRequests() async {
-    final user = Provider.of<User>(context, listen: false);
-    List requestsData =
-        await DatabaseService(uid: user.uid).getPatientRequest();
+    List requestsData = await widget.database.getPatientRequest();
 
     List<Patient> requestsInfo = await Future.wait(requestsData.map((e) async {
       return await DatabaseService().getPatient(e['uid']);
@@ -41,18 +41,14 @@ class _ViewRequestState extends State<ViewRequest> {
       return Login();
     }
 
-    final database = DatabaseService(uid: user.uid);
-
     return Container(
       child: ListView(
         children: <Widget>[
           ...patientRequests.map(
             (patient) => Container(
+              key: Key('requestPanel'),
               height: 110,
               child: Card(
-                // shape: RoundedRectangleBorder(
-                //   borderRadius: BorderRadius.circular(15.0),
-                // ),
                 elevation: 10,
                 child: Container(
                   child: Row(
@@ -98,7 +94,8 @@ class _ViewRequestState extends State<ViewRequest> {
                                     ElevatedButton(
                                         onPressed: () {
                                           print('Confirm');
-                                          database.acceptPatient(patient.uid);
+                                          widget.database
+                                              .acceptPatient(patient.uid);
                                           setState(() {
                                             patientRequests.removeWhere(
                                                 (e) => e.uid == patient.uid);
@@ -109,7 +106,8 @@ class _ViewRequestState extends State<ViewRequest> {
                                     ElevatedButton(
                                       onPressed: () {
                                         print('Decline');
-                                        database.declinePatient(patient.uid);
+                                        widget.database
+                                            .declinePatient(patient.uid);
                                         setState(() {
                                           patientRequests.removeWhere(
                                               (e) => e.uid == patient.uid);
