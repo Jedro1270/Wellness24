@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:clock/clock.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wellness24/models/blood_pressure.dart';
 import 'package:wellness24/models/doctor.dart';
@@ -10,23 +10,57 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   group('BloodPressure', () {
     group('.sinceLastChecked', () {
+      final mockClock = Clock.fixed(DateTime(2021, 01, 01));
       test(
           'should return the difference in days from lastChecked to current date if the difference is less than 32 days.',
-          () {});
+          () {
+        final BloodPressure testBloodPressure1 = BloodPressure(
+            clock: mockClock, lastChecked: DateTime(2021, 01, 27));
+        final BloodPressure testBloodPressure2 = BloodPressure(
+            clock: mockClock, lastChecked: DateTime(2021, 01, 31));
+
+        expect(testBloodPressure1.sinceLastChecked, '26 day/s ago');
+        expect(testBloodPressure2.sinceLastChecked, '30 day/s ago');
+      });
       test(
           'should return the difference in weeks from lastChecked to current date if the difference is greater or equal to 32 days.',
-          () {});
+          () {
+        final BloodPressure testBloodPressure1 = BloodPressure(
+            clock: mockClock, lastChecked: DateTime(2021, 02, 02));
+        final BloodPressure testBloodPressure2 =
+            BloodPressure(clock: mockClock, lastChecked: DateTime(2021, 02, 9));
+
+        expect(testBloodPressure1.sinceLastChecked, '4 week/s ago');
+        expect(testBloodPressure2.sinceLastChecked, '5 week/s ago');
+      });
     });
   });
 
   group('BloodSugarLevel', () {
+    final mockClock = Clock.fixed(DateTime(2021, 01, 01));
     group('.sinceLastChecked', () {
       test(
           'should return the difference in days from lastChecked to current date if the difference is less than 32 days.',
-          () {});
+          () {
+        final BloodPressure testBloodPressure1 = BloodPressure(
+            clock: mockClock, lastChecked: DateTime(2021, 01, 27));
+        final BloodPressure testBloodPressure2 = BloodPressure(
+            clock: mockClock, lastChecked: DateTime(2021, 01, 31));
+
+        expect(testBloodPressure1.sinceLastChecked, '26 day/s ago');
+        expect(testBloodPressure2.sinceLastChecked, '30 day/s ago');
+      });
       test(
           'should return the difference in weeks from lastChecked to current date if the difference is greater or equal to 32 days.',
-          () {});
+          () {
+        final BloodPressure testBloodPressure1 = BloodPressure(
+            clock: mockClock, lastChecked: DateTime(2021, 02, 02));
+        final BloodPressure testBloodPressure2 =
+            BloodPressure(clock: mockClock, lastChecked: DateTime(2021, 02, 9));
+
+        expect(testBloodPressure1.sinceLastChecked, '4 week/s ago');
+        expect(testBloodPressure2.sinceLastChecked, '5 week/s ago');
+      });
     });
   });
   group('Doctor', () {
