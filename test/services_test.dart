@@ -1,6 +1,8 @@
+import 'package:cloud_firestore_mocks/cloud_firestore_mocks.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wellness24/services/auth_service.dart';
+import 'package:wellness24/services/database.dart';
 
 void main() {
   group('AuthService', () {
@@ -17,5 +19,29 @@ void main() {
           () async {});
     });
   });
-  group('DatabaseService', () {});
+  group('DatabaseService', () {
+    group('.getRole', () {
+      MockFirestoreInstance instance = MockFirestoreInstance();
+      String uid = '123';
+      DatabaseService database = DatabaseService(uid: uid, firestore: instance);
+
+      test('should return role string either "doctor" or "patient"', () async {
+        await instance
+            .collection('roles')
+            .document(uid)
+            .setData({'role': 'Patient'});
+
+        String role = await database.getRole();
+        expect(role, 'Patient');
+
+        await instance
+            .collection('roles')
+            .document(uid)
+            .updateData({'role': 'Doctor'});
+
+        String updatedRole = await database.getRole();
+        expect(updatedRole, 'Doctor');
+      });
+    });
+  });
 }
