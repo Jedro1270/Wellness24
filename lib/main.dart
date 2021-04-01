@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/auth/auth_wrapper.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamProvider<User>.value(
       initialData: null,
-      value: AuthService().user,
+      value: AuthService(auth: FirebaseAuth.instance).user,
       child: MaterialApp(
         title: 'Wellness24',
         debugShowCheckedModeBanner: false,
