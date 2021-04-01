@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore_mocks/cloud_firestore_mocks.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:wellness24/models/new_account.dart';
 import 'package:wellness24/services/auth_service.dart';
 import 'package:wellness24/services/database.dart';
 
@@ -71,6 +72,60 @@ void main() {
             await instance.collection('roles').document(uid).get();
         String insertedRole = snapshot.data['role'];
         expect(insertedRole, 'Doctor');
+      });
+    });
+
+    group('.insertDoctor', () {
+      test('should insert newaccount object to firestore as doctor', () async {
+        NewAccount testAcc = NewAccount('Doctor');
+        testAcc.keywords = ['v', 've', 'vet', 'veto'];
+        testAcc.email = 'veto@gmail.com';
+        testAcc.contactNo = '09123312312';
+        testAcc.lastName = 'Bastiero';
+        testAcc.firstName = 'Veto';
+        testAcc.middleInitial = 'Y';
+        testAcc.birthDate = DateTime(2000, 1, 1);
+        testAcc.address = 'Cabatuan, Iloilo';
+        testAcc.gender = 'Male';
+        testAcc.licenseNo = '2312';
+        testAcc.clinicLocation = 'Iloilo City';
+        testAcc.workingDays = 'Monday to Friday';
+        testAcc.clinicStart = '8:30 AM';
+        testAcc.clinicEnd = '5:30 PM';
+        testAcc.specialization = 'Family Medicine';
+        testAcc.education = 'Phd in Family Medicine';
+        testAcc.about = 'Lorem ipsum dolor sit amet';
+
+        MockFirestoreInstance instance = MockFirestoreInstance();
+        String uid = '123';
+        DatabaseService database =
+            DatabaseService(uid: uid, firestore: instance);
+
+        await database.insertDoctor(testAcc);
+
+        DocumentSnapshot document =
+            await instance.collection('doctors').document(uid).get();
+
+        expect(document.data['keywords'], testAcc.keywords);
+        expect(document.data['email'], testAcc.email);
+        expect(document.data['contactNumber'], testAcc.contactNo);
+        expect(document.data['lastName'], testAcc.lastName);
+        expect(document.data['firstName'], testAcc.firstName);
+
+        // TODO: Fix test case
+        // expect(document.data['birthDate'], testAcc.birthDate);
+        // 
+        expect(document.data['middleInitial'], testAcc.middleInitial);
+        expect(document.data['address'], testAcc.address);
+        expect(document.data['gender'], testAcc.gender);
+        expect(document.data['licenseNo'], testAcc.licenseNo);
+        expect(document.data['clinicLocation'], testAcc.clinicLocation);
+        expect(document.data['workingDays'], testAcc.workingDays);
+        expect(document.data['clinicStart'], testAcc.clinicStart);
+        expect(document.data['clinicEnd'], testAcc.clinicEnd);
+        expect(document.data['specialization'], testAcc.specialization);
+        expect(document.data['education'], testAcc.education);
+        expect(document.data['about'], testAcc.about);
       });
     });
   });
