@@ -46,9 +46,8 @@ void main() {
         expect(updatedRole, 'Doctor');
       });
     });
-    
     group('.insertRole', () {
-      test('should insert the role "Patient" to firestore', () async {
+      test('should insert the role "Patient" to roles collection', () async {
         MockFirestoreInstance instance = MockFirestoreInstance();
         String uid = '123';
         DatabaseService database =
@@ -59,6 +58,19 @@ void main() {
             await instance.collection('roles').document(uid).get();
         String insertedRole = snapshot.data['role'];
         expect(insertedRole, 'Patient');
+      });
+
+      test('should insert the role "Doctor" to roles collection', () async {
+        MockFirestoreInstance instance = MockFirestoreInstance();
+        String uid = '123';
+        DatabaseService database =
+            DatabaseService(uid: uid, firestore: instance);
+
+        await database.insertRole('Doctor');
+        DocumentSnapshot snapshot =
+            await instance.collection('roles').document(uid).get();
+        String insertedRole = snapshot.data['role'];
+        expect(insertedRole, 'Doctor');
       });
     });
   });
