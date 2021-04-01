@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore_mocks/cloud_firestore_mocks.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -43,6 +44,21 @@ void main() {
 
         String updatedRole = await database.getRole();
         expect(updatedRole, 'Doctor');
+      });
+    });
+    
+    group('.insertRole', () {
+      test('should insert the role "Patient" to firestore', () async {
+        MockFirestoreInstance instance = MockFirestoreInstance();
+        String uid = '123';
+        DatabaseService database =
+            DatabaseService(uid: uid, firestore: instance);
+
+        await database.insertRole('Patient');
+        DocumentSnapshot snapshot =
+            await instance.collection('roles').document(uid).get();
+        String insertedRole = snapshot.data['role'];
+        expect(insertedRole, 'Patient');
       });
     });
   });
