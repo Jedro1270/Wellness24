@@ -41,7 +41,7 @@ class DatabaseService {
   }
 
   Future insertRole(String role) async {
-    roles.document(uid).setData({'role': role});
+    await roles.document(uid).setData({'role': role});
   }
 
   Future insertDoctor(NewAccount doctorAccount) async {
