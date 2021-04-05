@@ -17,6 +17,7 @@ class DatabaseService {
   CollectionReference patientRequests;
   CollectionReference bloodPressures;
   CollectionReference bloodSugarLevels;
+  CollectionReference messages;
 
   DatabaseService({this.uid, this.firestore}) {
     if (this.firestore == null) {
@@ -30,6 +31,7 @@ class DatabaseService {
     patientRequests = firestore.collection('patientRequests');
     bloodPressures = firestore.collection('bloodPressures');
     bloodSugarLevels = firestore.collection('bloodSugarLevels');
+    messages = firestore.collection('messages');
   }
 
   Future<String> getRole() async {
@@ -289,4 +291,16 @@ class DatabaseService {
 
     return false;
   }
+
+  Future uploadMessage(
+      String senderUid, String receiverUid, String content) async {
+    await messages.add({
+      'senderUid': senderUid,
+      'receiverUid': receiverUid,
+      'dateCreated': DateTime.now(),
+      'content': content
+    });
+  }
+
+  // Stream builder to be used for getting a stream of messages
 }
