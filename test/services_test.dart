@@ -280,6 +280,11 @@ void main() {
         DatabaseService database =
             DatabaseService(uid: uid, firestore: instance);
 
+        String education =
+            'Phd Pediatrics - UP Diliman,  Medicine - UST, BS Bio Central Philippine University';
+        String about =
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at sem feugiat, hendrerit ex sed, tincidunt diam. Praesent et pellentesque mi. Vivamus luctus libero in tempus tristique. Mauris dapibus nunc sit amet nibh fringilla, sed accumsan magna commodo. Praesent quis maximus metus. Suspendisse nec gravida est. Donec finibus libero vel augue fringilla volutpat. Maecenas nec neque volutpat, rutrum nunc sit amet, maximus sem. Fusce sit amet placerat mi. Aliquam sodales ligula erat, in sagittis lectus commodo nec. Proin tincidunt enim et augue euismod laoreet. Donec dapibus quam ut ullamcorper aliquam. Nulla facilisi.';
+
         await instance.collection('doctors').document(uid).setData({
           'firstName': 'Veto',
           'middleInitial': 'X',
@@ -290,15 +295,24 @@ void main() {
           'contactNumber': '09121231234',
           'specialization': 'Pediatrician',
           'workingDays': 'Monday to Friday',
-          'about':
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at sem feugiat, hendrerit ex sed, tincidunt diam. Praesent et pellentesque mi. Vivamus luctus libero in tempus tristique. Mauris dapibus nunc sit amet nibh fringilla, sed accumsan magna commodo. Praesent quis maximus metus. Suspendisse nec gravida est. Donec finibus libero vel augue fringilla volutpat. Maecenas nec neque volutpat, rutrum nunc sit amet, maximus sem. Fusce sit amet placerat mi. Aliquam sodales ligula erat, in sagittis lectus commodo nec. Proin tincidunt enim et augue euismod laoreet. Donec dapibus quam ut ullamcorper aliquam. Nulla facilisi.',
+          'about': about,
           'clinicStart': '8:30 AM',
           'clinicEnd': '9:00 PM',
-          'education':
-              'Phd Pediatrics - UP Diliman,  Medicine - UST, BS Bio Central Philippine University',
+          'education': education
         });
 
         Doctor testDoc = await database.getDoctor(uid);
+
+        expect(testDoc, isInstanceOf<Doctor>());
+        expect(testDoc.firstName, 'Veto');
+        expect(testDoc.lastName, 'Bastiero');
+        expect(testDoc.middleInitial, 'X');
+        expect(testDoc.specialization, 'Pediatrician');
+        expect(testDoc.about, about);
+        expect(testDoc.workingDays, 'Monday to Friday');
+        expect(testDoc.clinicStartHour, '8:30 AM');
+        expect(testDoc.clinicEndHour, '9:00 PM');
+        expect(testDoc.education, education);
       });
     });
   });
