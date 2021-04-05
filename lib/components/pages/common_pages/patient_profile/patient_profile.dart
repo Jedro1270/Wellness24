@@ -393,6 +393,7 @@ class _PatientProfileState extends State<PatientProfile> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         ElevatedButton(
+                          key: Key('medicalRecordsBtn'),
                           child: Text("Medical Records",
                               style: TextStyle(
                                   fontSize: 20,

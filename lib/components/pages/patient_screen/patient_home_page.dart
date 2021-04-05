@@ -146,6 +146,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                           ),
                         ),
                         Align(
+                          key: Key('searchBtn'),
                           alignment: Alignment.centerRight,
                           child: MaterialButton(
                             onPressed: () {
@@ -181,6 +182,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                         Padding(
                           padding: const EdgeInsets.all(10),
                           child: ElevatedButton(
+                            key: Key('emergencyBtn'),
                             child: Text("EMERGENCY",
                                 style: TextStyle(
                                     fontSize: 25,
@@ -240,6 +242,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         ElevatedButton(
+                          key: Key('myCurrentConditionBtn'),
                           child: Text("My Current Conditions",
                               style: TextStyle(
                                   fontSize: 20,
