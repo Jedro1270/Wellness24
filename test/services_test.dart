@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore_mocks/cloud_firestore_mocks.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:wellness24/models/blood_pressure.dart';
+import 'package:wellness24/models/blood_sugar_level.dart';
 import 'package:wellness24/models/emergency_contact.dart';
 import 'package:wellness24/models/new_account.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -240,9 +242,9 @@ void main() {
           'medicalHistory': ['Anemia', 'AIDS', 'Diabetes'],
           // emergency contact
           'bloodType': 'B',
-          'weight': 57,
-          'height': 166,
-          'bodyTemperature': 37
+          'weight': 57.0,
+          'height': 166.0,
+          'bodyTemperature': 37.0
         });
 
         await instance
@@ -256,7 +258,17 @@ void main() {
             .setData({'lastChecked': DateTime.now(), 'reading': '100mg'});
 
         Patient testPatient = await database.getPatient(uid);
-        
+
+        expect(testPatient, isInstanceOf<Patient>());
+        expect(testPatient.fullName, 'Veto X. Bastiero');
+        expect(testPatient.address, 'Cabatuan, Iloilo');
+        expect(testPatient.height, 166);
+        expect(testPatient.weight, 57);
+
+        expect(testPatient.bloodPressure, isInstanceOf<BloodPressure>());
+        expect(testPatient.bloodPressure.reading, '120/80 mm');
+        expect(testPatient.bloodSugarLevel, isInstanceOf<BloodSugarLevel>());
+        expect(testPatient.bloodSugarLevel.reading, '100mg');
       });
     });
   });
