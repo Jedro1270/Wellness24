@@ -6,6 +6,7 @@ import 'package:wellness24/models/emergency_contact.dart';
 import 'package:wellness24/models/new_account.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mockito/mockito.dart';
+import 'package:wellness24/models/patient.dart';
 import 'package:wellness24/models/user.dart';
 import 'package:wellness24/services/auth_service.dart';
 import 'package:wellness24/services/database.dart';
@@ -217,6 +218,45 @@ void main() {
         expect(patientDoc.data['medicalHistory'], testAcc.medicalHistory);
 
         // TODO: add test cases to check contact
+      });
+    });
+
+    group('.getPatient', () {
+      test('returns patient instance given uid parameter from firestore',
+          () async {
+        MockFirestoreInstance instance = MockFirestoreInstance();
+        String uid = '123';
+        DatabaseService database =
+            DatabaseService(uid: uid, firestore: instance);
+
+        await instance.collection('patients').document(uid).setData({
+          'firstName': 'Veto',
+          'middleInitial': 'X',
+          'lastName': 'Bastiero',
+          'gender': 'Male',
+          'birthDate': DateTime(2000, 1, 1),
+          'address': 'Cabatuan, Iloilo',
+          'contactNumber': '09121231234',
+          'medicalHistory': ['Anemia', 'AIDS', 'Diabetes'],
+          // emergency contact
+          'bloodType': 'B',
+          'weight': 57,
+          'height': 166,
+          'bodyTemperature': 37
+        });
+
+        await instance
+            .collection('bloodPressures')
+            .document(uid)
+            .setData({'lastChecked': DateTime.now(), 'reading': '120/80 mm'});
+
+        await instance
+            .collection('bloodSugarLevels')
+            .document(uid)
+            .setData({'lastChecked': DateTime.now(), 'reading': '100mg'});
+
+        Patient testPatient = await database.getPatient(uid);
+        
       });
     });
   });
