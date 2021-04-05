@@ -4,6 +4,7 @@ import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wellness24/models/blood_pressure.dart';
 import 'package:wellness24/models/blood_sugar_level.dart';
+import 'package:wellness24/models/doctor.dart';
 import 'package:wellness24/models/emergency_contact.dart';
 import 'package:wellness24/models/new_account.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -269,6 +270,35 @@ void main() {
         expect(testPatient.bloodPressure.reading, '120/80 mm');
         expect(testPatient.bloodSugarLevel, isInstanceOf<BloodSugarLevel>());
         expect(testPatient.bloodSugarLevel.reading, '100mg');
+      });
+    });
+    group('.getDoctor', () {
+      test('returns doctor instance given uid parameter from firestore',
+          () async {
+        MockFirestoreInstance instance = MockFirestoreInstance();
+        String uid = '123';
+        DatabaseService database =
+            DatabaseService(uid: uid, firestore: instance);
+
+        await instance.collection('doctors').document(uid).setData({
+          'firstName': 'Veto',
+          'middleInitial': 'X',
+          'lastName': 'Bastiero',
+          'gender': 'Male',
+          'birthDate': DateTime(2000, 1, 1),
+          'address': 'Cabatuan, Iloilo',
+          'contactNumber': '09121231234',
+          'specialization': 'Pediatrician',
+          'workingDays': 'Monday to Friday',
+          'about':
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at sem feugiat, hendrerit ex sed, tincidunt diam. Praesent et pellentesque mi. Vivamus luctus libero in tempus tristique. Mauris dapibus nunc sit amet nibh fringilla, sed accumsan magna commodo. Praesent quis maximus metus. Suspendisse nec gravida est. Donec finibus libero vel augue fringilla volutpat. Maecenas nec neque volutpat, rutrum nunc sit amet, maximus sem. Fusce sit amet placerat mi. Aliquam sodales ligula erat, in sagittis lectus commodo nec. Proin tincidunt enim et augue euismod laoreet. Donec dapibus quam ut ullamcorper aliquam. Nulla facilisi.',
+          'clinicStart': '8:30 AM',
+          'clinicEnd': '9:00 PM',
+          'education':
+              'Phd Pediatrics - UP Diliman,  Medicine - UST, BS Bio Central Philippine University',
+        });
+
+        Doctor testDoc = await database.getDoctor(uid);
       });
     });
   });
