@@ -132,22 +132,10 @@ class DatabaseService {
   Future<Patient> getPatient(String uid) async {
     DocumentSnapshot snapshotPatient = await patients.document(uid).get();
     DocumentSnapshot snapshotBloodPressure =
-        await bloodPressures.document(uid).get().then((doc) {
-      if (doc.exists) {
-        return doc;
-      }
-
-      return null;
-    });
+        await bloodPressures.document(uid).get();
 
     DocumentSnapshot snapshotBloodSugarLevel =
-        await bloodSugarLevels.document(uid).get().then((doc) {
-      if (doc.exists) {
-        return doc;
-      }
-
-      return null;
-    });
+        await bloodSugarLevels.document(uid).get();
 
     return Patient(
         uid: snapshotPatient.documentID,
