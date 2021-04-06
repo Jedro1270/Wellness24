@@ -3,6 +3,10 @@ import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/pages/common_pages/chat/chat_bubble.dart';
 
 class ChatRoom extends StatefulWidget {
+  final String title;
+
+  ChatRoom({this.title});
+
   @override
   _ChatRoomState createState() => _ChatRoomState();
 }
@@ -13,7 +17,7 @@ class _ChatRoomState extends State<ChatRoom> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Elim C. Abagat'),
+      appBar: CustomAppBar(title: widget.title),
       body: Container(
         child: Column(
           children: <Widget>[
@@ -61,7 +65,6 @@ class _ChatRoomState extends State<ChatRoom> {
                 ],
               ),
             ),
-            SizedBox(height: 10),
           ],
         ),
       ),
