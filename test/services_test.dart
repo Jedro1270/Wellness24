@@ -4,6 +4,7 @@ import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wellness24/models/blood_pressure.dart';
 import 'package:wellness24/models/blood_sugar_level.dart';
+import 'package:wellness24/models/doctor.dart';
 import 'package:wellness24/models/emergency_contact.dart';
 import 'package:wellness24/models/new_account.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -269,6 +270,131 @@ void main() {
         expect(testPatient.bloodPressure.reading, '120/80 mm');
         expect(testPatient.bloodSugarLevel, isInstanceOf<BloodSugarLevel>());
         expect(testPatient.bloodSugarLevel.reading, '100mg');
+      });
+    });
+    group('.getDoctor', () {
+      test('returns doctor instance given uid parameter from firestore',
+          () async {
+        MockFirestoreInstance instance = MockFirestoreInstance();
+        String uid = '123';
+        DatabaseService database =
+            DatabaseService(uid: uid, firestore: instance);
+
+        String education =
+            'Phd Pediatrics - UP Diliman,  Medicine - UST, BS Bio Central Philippine University';
+        String about =
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at sem feugiat, hendrerit ex sed, tincidunt diam. Praesent et pellentesque mi. Vivamus luctus libero in tempus tristique. Mauris dapibus nunc sit amet nibh fringilla, sed accumsan magna commodo. Praesent quis maximus metus. Suspendisse nec gravida est. Donec finibus libero vel augue fringilla volutpat. Maecenas nec neque volutpat, rutrum nunc sit amet, maximus sem. Fusce sit amet placerat mi. Aliquam sodales ligula erat, in sagittis lectus commodo nec. Proin tincidunt enim et augue euismod laoreet. Donec dapibus quam ut ullamcorper aliquam. Nulla facilisi.';
+
+        await instance.collection('doctors').document(uid).setData({
+          'firstName': 'Veto',
+          'middleInitial': 'X',
+          'lastName': 'Bastiero',
+          'gender': 'Male',
+          'birthDate': DateTime(2000, 1, 1),
+          'address': 'Cabatuan, Iloilo',
+          'contactNumber': '09121231234',
+          'specialization': 'Pediatrician',
+          'workingDays': 'Monday to Friday',
+          'about': about,
+          'clinicStart': '8:30 AM',
+          'clinicEnd': '9:00 PM',
+          'education': education
+        });
+
+        Doctor testDoc = await database.getDoctor(uid);
+
+        expect(testDoc, isInstanceOf<Doctor>());
+        expect(testDoc.firstName, 'Veto');
+        expect(testDoc.lastName, 'Bastiero');
+        expect(testDoc.middleInitial, 'X');
+        expect(testDoc.specialization, 'Pediatrician');
+        expect(testDoc.about, about);
+        expect(testDoc.workingDays, 'Monday to Friday');
+        expect(testDoc.clinicStartHour, '8:30 AM');
+        expect(testDoc.clinicEndHour, '9:00 PM');
+        expect(testDoc.education, education);
+      });
+    });
+    group('.updatePatient', () {
+      MockFirestoreInstance instance = MockFirestoreInstance();
+      String uid = '123';
+      DatabaseService database = DatabaseService(uid: uid, firestore: instance);
+
+      Patient testPatient = Patient(
+          weight: 60.0,
+          bloodType: 'A',
+          birthDate: DateTime(2000, 1, 1),
+          bodyTemperature: 35.9,
+          height: 166,
+          bloodPressure:
+              BloodPressure(reading: '120/80 mm', lastChecked: DateTime.now()),
+          bloodSugarLevel:
+              BloodSugarLevel(lastChecked: DateTime.now(), reading: '100mg'));
+
+      test('updates patient fields with data from patient instance', () async {
+        await instance.collection('patients').document(uid).setData({
+          'firstName': 'Veto',
+          'middleInitial': 'X',
+          'lastName': 'Bastiero',
+          'gender': 'Male',
+          'birthDate': DateTime(2000, 1, 1),
+          'address': 'Cabatuan, Iloilo',
+          'contactNumber': '09121231234',
+          'medicalHistory': ['Anemia', 'AIDS', 'Diabetes'],
+        });
+
+        await database.updatePatient(testPatient);
+
+        DocumentSnapshot updatedData =
+            await instance.collection('patients').document(uid).get();
+
+        expect(updatedData.data['weight'], 60);
+        expect(updatedData.data['height'], 166);
+        expect(updatedData.data['bloodType'], 'A');
+        expect(updatedData.data['bodyTemperature'], 35.9);
+      });
+      test(
+          'updates/sets bloodPressure fields on firestore given data from patient instance',
+          () async {
+        await instance.collection('patients').document(uid).setData({
+          'firstName': 'Veto',
+          'middleInitial': 'X',
+          'lastName': 'Bastiero',
+          'gender': 'Male',
+          'birthDate': DateTime(2000, 1, 1),
+          'address': 'Cabatuan, Iloilo',
+          'contactNumber': '09121231234',
+          'medicalHistory': ['Anemia', 'AIDS', 'Diabetes'],
+        });
+
+        await database.updatePatient(testPatient);
+
+        DocumentSnapshot updatedBloodPressure =
+            await instance.collection('bloodPressures').document(uid).get();
+
+        expect(updatedBloodPressure.data['reading'], '120/80 mm');
+      });
+
+      test(
+          'updates/sets bloodSugarLevels fields on firestore given data from patient instance',
+          () async {
+        await instance.collection('patients').document(uid).setData({
+          'firstName': 'Veto',
+          'middleInitial': 'X',
+          'lastName': 'Bastiero',
+          'gender': 'Male',
+          'birthDate': DateTime(2000, 1, 1),
+          'address': 'Cabatuan, Iloilo',
+          'contactNumber': '09121231234',
+          'medicalHistory': ['Anemia', 'AIDS', 'Diabetes'],
+        });
+
+        await database.updatePatient(testPatient);
+
+        DocumentSnapshot updatedBloodSugar =
+            await instance.collection('bloodSugarLevels').document(uid).get();
+
+        expect(updatedBloodSugar.data['reading'], '100mg');
       });
     });
   });
