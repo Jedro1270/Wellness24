@@ -138,7 +138,7 @@ class DatabaseService {
 
     DocumentSnapshot snapshotBloodSugarLevel =
         await bloodSugarLevels.document(uid).get();
-
+        
     return Patient(
         uid: snapshotPatient.documentID,
         firstName: snapshotPatient.data['firstName'],
@@ -150,13 +150,13 @@ class DatabaseService {
         contactNo: snapshotPatient.data['contactNumber'],
         medicalHistory: snapshotPatient.data['medicalHistory'],
         emergencyContact: snapshotPatient.data['emergencyContact'],
-        bloodPressure: snapshotBloodPressure == null
+        bloodPressure: snapshotBloodPressure.data == null
             ? null
             : BloodPressure(
                 reading: snapshotBloodPressure.data['reading'],
                 lastChecked:
                     snapshotBloodPressure.data['lastChecked'].toDate()),
-        bloodSugarLevel: snapshotBloodSugarLevel == null
+        bloodSugarLevel: snapshotBloodSugarLevel.data == null
             ? null
             : BloodSugarLevel(
                 reading: snapshotBloodSugarLevel.data['reading'],
