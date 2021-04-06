@@ -11,7 +11,7 @@ class UserTile extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ChatRoom()));
+            context, MaterialPageRoute(builder: (context) => ChatRoom(title: name)));
       },
       child: Card(
         elevation: 2,
