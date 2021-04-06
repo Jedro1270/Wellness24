@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:wellness24/models/message.dart';
 
 class ChatBubble extends StatelessWidget {
-  bool isMe;
+  final bool isMe;
+  final Message message;
 
-  ChatBubble({this.isMe});
+  ChatBubble({this.isMe, this.message});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -51,10 +54,6 @@ class ChatBubble extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // padding: EdgeInsets.fromLTRB(10.0, 5.0, 5.0, 5.0),
-                    // decoration: BoxDecoration(
-                    //     color: Colors.blue[300],
-                    //     borderRadius: BorderRadius.circular(10)),
                   ),
                 ),
                 SizedBox(width: 5.0),
