@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
 import 'package:wellness24/components/common/schedule_card.dart';
+import 'package:wellness24/components/pages/common_pages/chat/messages.dart';
 import 'package:wellness24/components/pages/common_pages/patient_profile/patient_profile.dart';
-import 'package:wellness24/components/pages/patient_screen/messages_patient.dart';
 import 'package:wellness24/components/pages/patient_screen/emergency_page.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness24/components/pages/patient_screen/my_doctors_list.dart';
@@ -63,7 +63,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
         child: Icon(Icons.message),
         onPressed: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => PatientMessages()));
+              MaterialPageRoute(builder: (context) => Messages(currentUser: currentUser)));
         },
       ),
       body: currentPatient == null

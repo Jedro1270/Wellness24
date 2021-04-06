@@ -61,7 +61,7 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
         child: Icon(Icons.message),
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Messages()));
+              context, MaterialPageRoute(builder: (context) => Messages(currentUser: user)));
         },
       ),
       body: currentDoctor == null
