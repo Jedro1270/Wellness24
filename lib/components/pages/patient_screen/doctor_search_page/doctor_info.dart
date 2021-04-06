@@ -27,7 +27,7 @@ class DoctorInfo extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
-          elevation: 10,
+          elevation: 2,
           child: Container(
             child: Row(
               children: <Widget>[
