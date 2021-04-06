@@ -355,5 +355,42 @@ void main() {
         expect(updatedData.data['bodyTemperature'], 35.9);
       });
     });
+
+    test(
+        'updates/sets bloodPressure fields on firestore given data from patient instance',
+        () async {
+      MockFirestoreInstance instance = MockFirestoreInstance();
+      String uid = '123';
+      DatabaseService database = DatabaseService(uid: uid, firestore: instance);
+
+      await instance.collection('patients').document(uid).setData({
+        'firstName': 'Veto',
+        'middleInitial': 'X',
+        'lastName': 'Bastiero',
+        'gender': 'Male',
+        'birthDate': DateTime(2000, 1, 1),
+        'address': 'Cabatuan, Iloilo',
+        'contactNumber': '09121231234',
+        'medicalHistory': ['Anemia', 'AIDS', 'Diabetes'],
+      });
+
+      Patient testPatient = Patient(
+          weight: 60.0,
+          bloodType: 'A',
+          birthDate: DateTime(2000, 1, 1),
+          bodyTemperature: 35.9,
+          height: 166,
+          bloodPressure:
+              BloodPressure(reading: '120/80 mm', lastChecked: DateTime.now()),
+          bloodSugarLevel:
+              BloodSugarLevel(lastChecked: DateTime.now(), reading: '100mg'));
+
+      await database.updatePatient(testPatient);
+
+      DocumentSnapshot updatedBloodPressure =
+          await instance.collection('bloodPressures').document(uid).get();
+
+      expect(updatedBloodPressure.data['reading'], '120/80 mm');
+    });
   });
 }
