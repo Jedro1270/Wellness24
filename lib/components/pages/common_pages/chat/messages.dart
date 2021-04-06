@@ -46,17 +46,6 @@ class _MessagesState extends State<Messages> {
                         fontWeight: FontWeight.bold),
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Icon(
-                      Icons.circle,
-                      color: Colors.green,
-                      size: 15.0,
-                    )
-                  ],
-                ),
               ],
             ),
           ),
