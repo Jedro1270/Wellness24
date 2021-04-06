@@ -374,6 +374,28 @@ void main() {
 
         expect(updatedBloodPressure.data['reading'], '120/80 mm');
       });
+
+      test(
+          'updates/sets bloodSugarLevels fields on firestore given data from patient instance',
+          () async {
+        await instance.collection('patients').document(uid).setData({
+          'firstName': 'Veto',
+          'middleInitial': 'X',
+          'lastName': 'Bastiero',
+          'gender': 'Male',
+          'birthDate': DateTime(2000, 1, 1),
+          'address': 'Cabatuan, Iloilo',
+          'contactNumber': '09121231234',
+          'medicalHistory': ['Anemia', 'AIDS', 'Diabetes'],
+        });
+
+        await database.updatePatient(testPatient);
+
+        DocumentSnapshot updatedBloodSugar =
+            await instance.collection('bloodSugarLevels').document(uid).get();
+
+        expect(updatedBloodSugar.data['reading'], '100mg');
+      });
     });
   });
 }
