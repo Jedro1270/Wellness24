@@ -471,6 +471,15 @@ void main() {
 
         expect(requests, requestsValue);
       });
+      test('should return empty array if no patient request document',
+          () async {
+        MockFirestoreInstance instance = MockFirestoreInstance();
+        DatabaseService database =
+            DatabaseService(uid: doctorId, firestore: instance);
+        List requests = await database.getPatientRequest();
+
+        expect(requests, []);
+      });
     });
   });
 }
