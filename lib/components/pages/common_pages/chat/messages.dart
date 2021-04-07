@@ -34,13 +34,13 @@ class _MessagesState extends State<Messages> {
       await Future.forEach(snapshot.data['doctors'], (doctor) async {
         Doctor currentDoctor = await database.getDoctor(doctor['uid']);
 
-        mappedUsers.add(UserTile(name: currentDoctor.fullName));
+        mappedUsers.add(UserTile(name: currentDoctor.fullName, userUid: currentDoctor.uid));
       });
     } else {
       await Future.forEach(snapshot.data['patients'], (patient) async {
         Patient currentPatient = await database.getPatient(patient['uid']);
 
-        mappedUsers.add(UserTile(name: currentPatient.fullName));
+        mappedUsers.add(UserTile(name: currentPatient.fullName, userUid: currentPatient.uid));
       });
     }
 
