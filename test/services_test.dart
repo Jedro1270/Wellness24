@@ -401,14 +401,27 @@ void main() {
     group('.requestExists', () {
       MockFirestoreInstance instance = MockFirestoreInstance();
       String doctorId = '123';
-      DatabaseService database = DatabaseService(uid: doctorId, firestore: instance);
+      DatabaseService database =
+          DatabaseService(uid: doctorId, firestore: instance);
 
       test(
           'should return false if patient id does not exist on doctor\'s requests',
           () async {
-            // await instance
+        await instance
+            .collection('patientRequests')
+            .document(doctorId)
+            .setData({
+          'requests': [
+            {'uid': 'A1'},
+            {'uid': 'B2'}
+          ]
+        });
 
-          });
+        bool exists =
+            await database.requestExists(doctorId: doctorId, patientId: 'C3');
+
+        expect(exists, false);
+      });
     });
   });
 }
