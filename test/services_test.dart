@@ -452,5 +452,26 @@ void main() {
         expect(exists, false);
       });
     });
+    group('.getPatientRequests', () {
+      MockFirestoreInstance instance = MockFirestoreInstance();
+      String doctorId = '123';
+      DatabaseService database =
+          DatabaseService(uid: doctorId, firestore: instance);
+
+      test('should return array of patient requests', () async {
+        List requestsValue = [
+          {'uid': 'A1'},
+          {'uid': 'A2'}
+        ];
+        await instance
+            .collection('patientRequests')
+            .document(doctorId)
+            .setData({'requests': requestsValue});
+
+        List requests = await database.getPatientRequest();
+
+        expect(requests, requestsValue);
+      });
+    });
   });
 }
