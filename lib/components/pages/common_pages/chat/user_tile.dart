@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wellness24/components/pages/common_pages/chat/chat_room.dart';
+import 'package:wellness24/models/user.dart';
 
 class UserTile extends StatelessWidget {
   final String name;
+  final String userUid;
 
-  UserTile({this.name});
+  UserTile({this.name, this.userUid});
 
   @override
   Widget build(BuildContext context) {
+    User currentUser = Provider.of<User>(context);
+
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ChatRoom(title: name)));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => ChatRoom(title: name, currentUid: currentUser.uid, partnerUid: userUid)));
       },
       child: Card(
         elevation: 2,
@@ -27,8 +32,8 @@ class UserTile extends StatelessWidget {
                   child: SizedBox(
                       width: 100.0,
                       height: 100.0,
-                      child:
-                          Image(image: AssetImage('assets/sample-patient.jpg'))),
+                      child: Image(
+                          image: AssetImage('assets/sample-patient.jpg'))),
                 ),
               ),
             ),
