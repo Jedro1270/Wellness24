@@ -235,7 +235,11 @@ class DatabaseService {
 
   Future<List> getPatientRequest() async {
     DocumentSnapshot document = await patientRequests.document(uid).get();
-    return document == null ? [] : document.data['requests'];
+    return document == null
+        ? []
+        : document.data['requests'] == null
+            ? []
+            : document.data['requests'];
   }
 
   Future acceptPatient(String patientId) async {
