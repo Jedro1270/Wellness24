@@ -224,13 +224,13 @@ class DatabaseService {
 
   Future<bool> requestExists({String doctorId, String patientId}) async {
     DocumentSnapshot document = await patientRequests.document(doctorId).get();
-    if (document.exists) {
-      return document.data['requests'].any((e) {
-        return e['uid'] == patientId;
-      });
+    if (document.data['requests'] == null) {
+      return false;
     }
 
-    return false;
+    return document.data['requests'].any((e) {
+      return e['uid'] == patientId;
+    });
   }
 
   Future<List> getPatientRequest() async {
