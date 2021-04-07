@@ -422,6 +422,23 @@ void main() {
 
         expect(exists, false);
       });
+      test('should return true if patient id is present in doctor\'s requests',
+          () async {
+        await instance
+            .collection('patientRequests')
+            .document(doctorId)
+            .setData({
+          'requests': [
+            {'uid': 'A1'},
+            {'uid': 'B2'}
+          ]
+        });
+
+        bool exists =
+            await database.requestExists(doctorId: doctorId, patientId: 'B2');
+
+        expect(exists, true);
+      });
     });
   });
 }
