@@ -453,12 +453,11 @@ void main() {
       });
     });
     group('.getPatientRequests', () {
-      MockFirestoreInstance instance = MockFirestoreInstance();
       String doctorId = '123';
-      DatabaseService database =
-          DatabaseService(uid: doctorId, firestore: instance);
-
       test('should return array of patient requests', () async {
+        MockFirestoreInstance instance = MockFirestoreInstance();
+        DatabaseService database =
+            DatabaseService(uid: doctorId, firestore: instance);
         List requestsValue = [
           {'uid': 'A1'},
           {'uid': 'A2'}
