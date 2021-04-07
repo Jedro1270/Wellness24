@@ -398,5 +398,17 @@ void main() {
         expect(updatedBloodSugar.data['reading'], '100mg');
       });
     });
+    group('.requestExists', () {
+      MockFirestoreInstance instance = MockFirestoreInstance();
+      String doctorId = '123';
+      DatabaseService database = DatabaseService(uid: doctorId, firestore: instance);
+
+      test(
+          'should return false if patient id does not exist on doctor\'s requests',
+          () async {
+            // await instance
+
+          });
+    });
   });
 }
