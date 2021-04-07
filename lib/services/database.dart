@@ -138,7 +138,7 @@ class DatabaseService {
 
     DocumentSnapshot snapshotBloodSugarLevel =
         await bloodSugarLevels.document(uid).get();
-        
+
     return Patient(
         uid: snapshotPatient.documentID,
         firstName: snapshotPatient.data['firstName'],
@@ -289,6 +289,4 @@ class DatabaseService {
       'content': content
     });
   }
-
-  // Stream builder to be used for getting a stream of messages
 }
