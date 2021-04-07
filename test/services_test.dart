@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore_mocks/cloud_firestore_mocks.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wellness24/models/blood_pressure.dart';
 import 'package:wellness24/models/blood_sugar_level.dart';
@@ -397,25 +398,5 @@ void main() {
         expect(updatedBloodSugar.data['reading'], '100mg');
       });
     });
-    // group('.sendRequest', () {
-    //   MockFirestoreInstance instance = MockFirestoreInstance();
-    //   String uid = '123';
-    //   DatabaseService database =
-    //       DatabaseService(uid: uid, firestore: instance);
-    //   test('adds patient id to requests field of doctor id', () async {
-    //     await database.sendRequest(doctorId: uid, patientId: 'A1');
-
-    //     DocumentSnapshot field = await instance
-    //         .collection('patientRequests')  
-    //         .document(uid)
-    //         .get();
-
-    //     // expect(field.data['requests'], [
-    //     //   {'uid': 'A1'}
-    //     // ]);
-
-    //     expect(1, 1);
-    //   });
-    // });
   });
 }
