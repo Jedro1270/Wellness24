@@ -397,5 +397,25 @@ void main() {
         expect(updatedBloodSugar.data['reading'], '100mg');
       });
     });
+    // group('.sendRequest', () {
+    //   MockFirestoreInstance instance = MockFirestoreInstance();
+    //   String uid = '123';
+    //   DatabaseService database =
+    //       DatabaseService(uid: uid, firestore: instance);
+    //   test('adds patient id to requests field of doctor id', () async {
+    //     await database.sendRequest(doctorId: uid, patientId: 'A1');
+
+    //     DocumentSnapshot field = await instance
+    //         .collection('patientRequests')  
+    //         .document(uid)
+    //         .get();
+
+    //     // expect(field.data['requests'], [
+    //     //   {'uid': 'A1'}
+    //     // ]);
+
+    //     expect(1, 1);
+    //   });
+    // });
   });
 }
