@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:wellness24/models/message.dart';
 
 class ChatBubble extends StatelessWidget {
@@ -42,11 +43,11 @@ class ChatBubble extends StatelessWidget {
                                   ],
                                 ),
                                 child: Text(
-                                  'Good day Ms. Abagat. I\'m happy to inform you that your covid swab test result last March 9 2021 is negative. ',
+                                  message.content,
                                 ),
                               ),
                               Text(
-                                DateTime.now().toString(),
+                                DateFormat.yMd().add_jm().format(message.dateCreated),
                                 style: TextStyle(fontSize: 10),
                               )
                             ],
@@ -109,28 +110,16 @@ class ChatBubble extends StatelessWidget {
                           ],
                         ),
                         child: Text(
-                          'Hi Doc! Thank you so much. ',
+                          message.content
                         ),
                       ),
                       Text(
-                        DateTime.now().toString(),
+                        DateFormat.yMd().add_jm().format(message.dateCreated),
                         style: TextStyle(fontSize: 10),
                       )
                     ],
                   ),
                 ),
-                // Expanded(
-                //   child: Container(
-                //     height: 40,
-                //     child: Text(
-                //       'Hi Doc! Thank you so much. ',
-                //     ),
-                //     padding: EdgeInsets.fromLTRB(10.0, 10.0, 5.0, 5.0),
-                //     decoration: BoxDecoration(
-                //         color: Colors.grey[300],
-                //         borderRadius: BorderRadius.circular(10)),
-                //   ),
-                // ),
               ],
             ),
     );
