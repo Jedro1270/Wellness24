@@ -439,6 +439,18 @@ void main() {
 
         expect(exists, true);
       });
+      test(
+          'should return false if doctor still doesn\'t have patientRequest fields',
+          () async {
+        MockFirestoreInstance newInstance = MockFirestoreInstance();
+        String doctorId = '123';
+        DatabaseService newDatabase =
+            DatabaseService(uid: doctorId, firestore: newInstance);
+        bool exists = await newDatabase.requestExists(
+            doctorId: doctorId, patientId: 'B2');
+
+        expect(exists, false);
+      });
     });
   });
 }
