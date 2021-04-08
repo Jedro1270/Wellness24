@@ -33,7 +33,7 @@ class _ChatRoomState extends State<ChatRoom> {
     return Scaffold(
         appBar: CustomAppBar(title: widget.title),
         body: StreamBuilder(
-            stream: database.messages.snapshots(),
+            stream: database.messages.orderBy('dateCreated').snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData == false) {
