@@ -504,8 +504,31 @@ void main() {
         });
 
         bool isDoctor = await database.isDoctor(doctorId);
-
         expect(isDoctor, true);
+      });
+      test(
+          'should return false if doctorId is not present in patient\'s doctors',
+          () async {
+        String patientId = '123';
+        MockFirestoreInstance instance = MockFirestoreInstance();
+        DatabaseService database =
+            DatabaseService(uid: patientId, firestore: instance);
+        await instance.collection('patients').document(patientId).setData({
+          'firstName': 'Veto',
+          'lastName': 'Bastiero',
+          'birthDate': DateTime(2000, 1, 1),
+          'contactNumber': '09221231221',
+          'email': 'v@gmail.com',
+          'gender': 'Male',
+          'keywords': ['v', 've', 'vet'],
+          'medicalHistory': ['Anemia', 'Alergic Rhinitis'],
+          'doctors': [
+            {'uid': '321'}
+          ]
+        });
+
+        bool isDoctor = await database.isDoctor('111');
+        expect(isDoctor, false);
       });
     });
   });
