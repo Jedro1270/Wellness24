@@ -503,7 +503,7 @@ void main() {
           ]
         });
 
-        bool isDoctor = await database.isDoctor(doctorId);
+        bool isDoctor = await database.isMyDoctor(doctorId);
         expect(isDoctor, true);
       });
       test(
@@ -527,7 +527,7 @@ void main() {
           ]
         });
 
-        bool isDoctor = await database.isDoctor('111');
+        bool isDoctor = await database.isMyDoctor('111');
         expect(isDoctor, false);
       });
       test('should return false if patient does not have doctors field',
@@ -547,7 +547,7 @@ void main() {
           'medicalHistory': ['Anemia', 'Alergic Rhinitis']
         });
 
-        bool isDoctor = await database.isDoctor('123');
+        bool isDoctor = await database.isMyDoctor('123');
         expect(isDoctor, false);
       });
     });
