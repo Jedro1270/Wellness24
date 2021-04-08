@@ -530,6 +530,26 @@ void main() {
         bool isDoctor = await database.isDoctor('111');
         expect(isDoctor, false);
       });
+      test('should return false if patient does not have doctors field',
+          () async {
+        String patientId = '123';
+        MockFirestoreInstance instance = MockFirestoreInstance();
+        DatabaseService database =
+            DatabaseService(uid: patientId, firestore: instance);
+        await instance.collection('patients').document(patientId).setData({
+          'firstName': 'Veto',
+          'lastName': 'Bastiero',
+          'birthDate': DateTime(2000, 1, 1),
+          'contactNumber': '09221231221',
+          'email': 'v@gmail.com',
+          'gender': 'Male',
+          'keywords': ['v', 've', 'vet'],
+          'medicalHistory': ['Anemia', 'Alergic Rhinitis']
+        });
+
+        bool isDoctor = await database.isDoctor('123');
+        expect(isDoctor, false);
+      });
     });
   });
 }
