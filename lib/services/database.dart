@@ -224,18 +224,22 @@ class DatabaseService {
 
   Future<bool> requestExists({String doctorId, String patientId}) async {
     DocumentSnapshot document = await patientRequests.document(doctorId).get();
-    if (document.exists) {
-      return document.data['requests'].any((e) {
-        return e['uid'] == patientId;
-      });
+    if (document.data['requests'] == null) {
+      return false;
     }
 
-    return false;
+    return document.data['requests'].any((e) {
+      return e['uid'] == patientId;
+    });
   }
 
   Future<List> getPatientRequest() async {
     DocumentSnapshot document = await patientRequests.document(uid).get();
-    return document == null ? [] : document.data['requests'];
+    return document == null
+        ? []
+        : document.data['requests'] == null
+            ? []
+            : document.data['requests'];
   }
 
   Future acceptPatient(String patientId) async {
@@ -269,9 +273,9 @@ class DatabaseService {
     });
   }
 
-  Future<bool> isDoctor(String doctorId) async {
+  Future<bool> isMyDoctor(String doctorId) async {
     DocumentSnapshot document = await patients.document(uid).get();
-    if (document.exists) {
+    if (document.data['doctors'] != null) {
       return document.data['doctors'].any((e) {
         return e['uid'] == doctorId;
       });

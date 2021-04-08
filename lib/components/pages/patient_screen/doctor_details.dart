@@ -37,7 +37,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
 
   void fetchIsMyDoctor() async {
     DatabaseService database = DatabaseService(uid: widget.currentPatient.uid);
-    bool result = await database.isDoctor(doctor.uid);
+    bool result = await database.isMyDoctor(doctor.uid);
     setState(() => isDoctor = result);
   }
 

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore_mocks/cloud_firestore_mocks.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wellness24/models/blood_pressure.dart';
 import 'package:wellness24/models/blood_sugar_level.dart';
@@ -395,6 +396,159 @@ void main() {
             await instance.collection('bloodSugarLevels').document(uid).get();
 
         expect(updatedBloodSugar.data['reading'], '100mg');
+      });
+    });
+    group('.requestExists', () {
+      MockFirestoreInstance instance = MockFirestoreInstance();
+      String doctorId = '123';
+      DatabaseService database =
+          DatabaseService(uid: doctorId, firestore: instance);
+
+      test(
+          'should return false if patient id does not exist on doctor\'s requests',
+          () async {
+        await instance
+            .collection('patientRequests')
+            .document(doctorId)
+            .setData({
+          'requests': [
+            {'uid': 'A1'},
+            {'uid': 'B2'}
+          ]
+        });
+
+        bool exists =
+            await database.requestExists(doctorId: doctorId, patientId: 'C3');
+
+        expect(exists, false);
+      });
+      test('should return true if patient id is present in doctor\'s requests',
+          () async {
+        await instance
+            .collection('patientRequests')
+            .document(doctorId)
+            .setData({
+          'requests': [
+            {'uid': 'A1'},
+            {'uid': 'B2'}
+          ]
+        });
+
+        bool exists =
+            await database.requestExists(doctorId: doctorId, patientId: 'B2');
+
+        expect(exists, true);
+      });
+      test(
+          'should return false if doctor still doesn\'t have patientRequest fields',
+          () async {
+        MockFirestoreInstance newInstance = MockFirestoreInstance();
+        String doctorId = '123';
+        DatabaseService newDatabase =
+            DatabaseService(uid: doctorId, firestore: newInstance);
+        bool exists = await newDatabase.requestExists(
+            doctorId: doctorId, patientId: 'B2');
+
+        expect(exists, false);
+      });
+    });
+    group('.getPatientRequests', () {
+      String doctorId = '123';
+      test('should return array of patient requests', () async {
+        MockFirestoreInstance instance = MockFirestoreInstance();
+        DatabaseService database =
+            DatabaseService(uid: doctorId, firestore: instance);
+        List requestsValue = [
+          {'uid': 'A1'},
+          {'uid': 'A2'}
+        ];
+        await instance
+            .collection('patientRequests')
+            .document(doctorId)
+            .setData({'requests': requestsValue});
+
+        List requests = await database.getPatientRequest();
+
+        expect(requests, requestsValue);
+      });
+      test('should return empty array if no patient request document',
+          () async {
+        MockFirestoreInstance instance = MockFirestoreInstance();
+        DatabaseService database =
+            DatabaseService(uid: doctorId, firestore: instance);
+        List requests = await database.getPatientRequest();
+
+        expect(requests, []);
+      });
+    });
+    group('.isDoctor', () {
+      test('should return true if doctorId is present in patient\'s doctors',
+          () async {
+        String patientId = '123';
+        String doctorId = '321';
+        MockFirestoreInstance instance = MockFirestoreInstance();
+        DatabaseService database =
+            DatabaseService(uid: patientId, firestore: instance);
+        await instance.collection('patients').document(patientId).setData({
+          'firstName': 'Veto',
+          'lastName': 'Bastiero',
+          'birthDate': DateTime(2000, 1, 1),
+          'contactNumber': '09221231221',
+          'email': 'v@gmail.com',
+          'gender': 'Male',
+          'keywords': ['v', 've', 'vet'],
+          'medicalHistory': ['Anemia', 'Alergic Rhinitis'],
+          'doctors': [
+            {'uid': doctorId}
+          ]
+        });
+
+        bool isDoctor = await database.isMyDoctor(doctorId);
+        expect(isDoctor, true);
+      });
+      test(
+          'should return false if doctorId is not present in patient\'s doctors',
+          () async {
+        String patientId = '123';
+        MockFirestoreInstance instance = MockFirestoreInstance();
+        DatabaseService database =
+            DatabaseService(uid: patientId, firestore: instance);
+        await instance.collection('patients').document(patientId).setData({
+          'firstName': 'Veto',
+          'lastName': 'Bastiero',
+          'birthDate': DateTime(2000, 1, 1),
+          'contactNumber': '09221231221',
+          'email': 'v@gmail.com',
+          'gender': 'Male',
+          'keywords': ['v', 've', 'vet'],
+          'medicalHistory': ['Anemia', 'Alergic Rhinitis'],
+          'doctors': [
+            {'uid': '321'}
+          ]
+        });
+
+        bool isDoctor = await database.isMyDoctor('111');
+        expect(isDoctor, false);
+      });
+      test('should return false if patient does not have doctors field',
+          () async {
+        String patientId = '123';
+        MockFirestoreInstance instance = MockFirestoreInstance();
+        DatabaseService database =
+            DatabaseService(uid: patientId, firestore: instance);
+        await instance.collection('patients').document(patientId).setData({
+          'firstName': 'Veto',
+          'lastName': 'Bastiero',
+          'birthDate': DateTime(2000, 1, 1),
+          'contactNumber': '09221231221',
+          'email': 'v@gmail.com',
+          'gender': 'Male',
+          'keywords': ['v', 've', 'vet'],
+          'medicalHistory': ['Anemia', 'Alergic Rhinitis']
+        });
+
+        bool isDoctor = await database.isMyDoctor('123');
+        expect(isDoctor, false);
       });
     });
   });
