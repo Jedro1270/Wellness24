@@ -481,5 +481,32 @@ void main() {
         expect(requests, []);
       });
     });
+    group('.isDoctor', () {
+      test('should return true if doctorId is present in patient\'s doctors',
+          () async {
+        String patientId = '123';
+        String doctorId = '321';
+        MockFirestoreInstance instance = MockFirestoreInstance();
+        DatabaseService database =
+            DatabaseService(uid: patientId, firestore: instance);
+        await instance.collection('patients').document(patientId).setData({
+          'firstName': 'Veto',
+          'lastName': 'Bastiero',
+          'birthDate': DateTime(2000, 1, 1),
+          'contactNumber': '09221231221',
+          'email': 'v@gmail.com',
+          'gender': 'Male',
+          'keywords': ['v', 've', 'vet'],
+          'medicalHistory': ['Anemia', 'Alergic Rhinitis'],
+          'doctors': [
+            {'uid': doctorId}
+          ]
+        });
+
+        bool isDoctor = await database.isDoctor(doctorId);
+
+        expect(isDoctor, true);
+      });
+    });
   });
 }
