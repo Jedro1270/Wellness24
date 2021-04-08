@@ -275,7 +275,7 @@ class DatabaseService {
 
   Future<bool> isDoctor(String doctorId) async {
     DocumentSnapshot document = await patients.document(uid).get();
-    if (document.exists) {
+    if (document.data['doctors'] != null) {
       return document.data['doctors'].any((e) {
         return e['uid'] == doctorId;
       });
