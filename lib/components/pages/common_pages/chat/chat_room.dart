@@ -131,11 +131,8 @@ class _ChatRoomState extends State<ChatRoom> {
                         children: <Widget>[
                           Expanded(
                             child: TextField(
-<<<<<<< HEAD
                               key: Key('textFieldKey'),
                               autofocus: true,
-=======
->>>>>>> 94a674ede1efbce3852a2963ba807794f92318ff
                               maxLines: null,
                               keyboardType: TextInputType.multiline,
                               controller: messageController,
