@@ -7,30 +7,30 @@
 // import 'package:wellness24/models/message.dart';
 // import 'package:wellness24/services/database.dart';
 
-// void main() {
-//   test('Chat .uploadMessage should upload message to firestore', () async {
-//     MockFirestoreInstance instance = MockFirestoreInstance();
-//     String uid = '123';
-//     DatabaseService database = DatabaseService(uid: uid, firestore: instance);
+void main() {
+  // test('Chat .uploadMessage should upload message to firestore', () async {
+  //   MockFirestoreInstance instance = MockFirestoreInstance();
+  //   String uid = '123';
+  //   DatabaseService database = DatabaseService(uid: uid, firestore: instance);
 
-//     String content = 'test';
-//     String receiverUid = '456';
-//     String senderUid = uid;
+  //   String content = 'test';
+  //   String receiverUid = '456';
+  //   String senderUid = uid;
 
-//     await database.uploadMessage(content, receiverUid, senderUid);
+  //   await database.uploadMessage(content, receiverUid, senderUid);
 
-//     DocumentSnapshot snapshot =
-//         await instance.collection('messages').document(uid).get();
-//     String uploadedContent = snapshot.data['content'];
-//     String uploadedReceiverUid = snapshot.data['receiverUid'];
-//     String uploadedSenderUid = snapshot.data['senderUid'];
+  //   DocumentSnapshot snapshot =
+  //       await instance.collection('messages').document(uid).get();
+  //   String uploadedContent = snapshot.data['content'];
+  //   String uploadedReceiverUid = snapshot.data['receiverUid'];
+  //   String uploadedSenderUid = snapshot.data['senderUid'];
 
-//     print(content);
-//     print(snapshot.data['content']);
-//     expect(uploadedContent, content);
-//     expect(uploadedReceiverUid, receiverUid);
-//     expect(uploadedSenderUid, senderUid);
-//   });
+  //   print(content);
+  //   print(snapshot.data['content']);
+  //   expect(uploadedContent, content);
+  //   expect(uploadedReceiverUid, receiverUid);
+  //   expect(uploadedSenderUid, senderUid);
+  // });
 
 //   // QuerySnapshot snapshot = await database.messages.getDocuments();
 //   // List messages = snapshot.documents.toList();
@@ -53,7 +53,7 @@
 //   // expect(insertedReceiverUid, '678');
 //   // expect(insertedContent, 'test');
 //   //});
-// }
+}
 
 // TestWidget
 
