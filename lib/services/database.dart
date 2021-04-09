@@ -84,7 +84,7 @@ class DatabaseService {
 
     EmergencyContact emergencyContact = patientAccount.emergencyContact;
 
-    await emergencyContacts.add({
+    await emergencyContacts.document(uid).setData({
       'patientId': uid,
       'lastName': emergencyContact.lastName,
       'firstName': emergencyContact.firstName,
