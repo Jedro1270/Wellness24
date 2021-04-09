@@ -177,32 +177,31 @@ void main() {
     });
 
     group('.insertPatient', () {
+      EmergencyContact testContact = EmergencyContact(
+          lastName: 'Bastiero',
+          firstName: 'Mom',
+          middleInitial: 'F',
+          address: 'Cabatuan, Iloilo',
+          contactNo: '09221231232',
+          relationship: 'Mother');
+
+      NewAccount testAcc = NewAccount('Patient');
+      testAcc.keywords = ['v', 've', 'vet', 'veto'];
+      testAcc.email = 'veto@gmail.com';
+      testAcc.contactNo = '09123312312';
+      testAcc.lastName = 'Bastiero';
+      testAcc.firstName = 'Veto';
+      testAcc.middleInitial = 'Y';
+      testAcc.birthDate = DateTime(2000, 1, 1);
+      testAcc.address = 'Cabatuan, Iloilo';
+      testAcc.gender = 'Male';
+      testAcc.medicalHistory = ['Anemia', 'Diabetes', 'AIDS'];
+      testAcc.emergencyContact = testContact;
+
+      MockFirestoreInstance instance = MockFirestoreInstance();
+      String uid = '123';
+      DatabaseService database = DatabaseService(uid: uid, firestore: instance);
       test('should insert newacc object to firestore as patient', () async {
-        EmergencyContact testContact = EmergencyContact(
-            lastName: 'Bastiero',
-            firstName: 'Mom',
-            middleInitial: 'F',
-            address: 'Cabatuan, Iloilo',
-            contactNo: '09221231232',
-            relationship: 'Mother');
-
-        NewAccount testAcc = NewAccount('Patient');
-        testAcc.keywords = ['v', 've', 'vet', 'veto'];
-        testAcc.email = 'veto@gmail.com';
-        testAcc.contactNo = '09123312312';
-        testAcc.lastName = 'Bastiero';
-        testAcc.firstName = 'Veto';
-        testAcc.middleInitial = 'Y';
-        testAcc.birthDate = DateTime(2000, 1, 1);
-        testAcc.address = 'Cabatuan, Iloilo';
-        testAcc.gender = 'Male';
-        testAcc.medicalHistory = ['Anemia', 'Diabetes', 'AIDS'];
-        testAcc.emergencyContact = testContact;
-
-        MockFirestoreInstance instance = MockFirestoreInstance();
-        String uid = '123';
-        DatabaseService database =
-            DatabaseService(uid: uid, firestore: instance);
         await database.insertPatient(testAcc);
         DocumentSnapshot patientDoc =
             await instance.collection('patients').document(uid).get();
@@ -220,8 +219,18 @@ void main() {
         expect(patientDoc.data['address'], testAcc.address);
         expect(patientDoc.data['gender'], testAcc.gender);
         expect(patientDoc.data['medicalHistory'], testAcc.medicalHistory);
+      });
+      test(
+          'should insert emergency contact info, to emergencyContacts collecion',
+          () async {
+        DocumentSnapshot emergContactInfo =
+            await instance.collection('emergencyContacts').document(uid).get();
 
-        // TODO: add test cases to check contact
+        expect(emergContactInfo.data['firstName'], testContact.firstName);
+        expect(emergContactInfo.data['lastName'], testContact.lastName);
+        expect(emergContactInfo.data['address'], testContact.address);
+        expect(emergContactInfo.data['contactNumber'], testContact.contactNo);
+        expect(emergContactInfo.data['relationship'], testContact.relationship);
       });
     });
 
@@ -479,6 +488,76 @@ void main() {
         List requests = await database.getPatientRequest();
 
         expect(requests, []);
+      });
+    });
+    group('.isDoctor', () {
+      test('should return true if doctorId is present in patient\'s doctors',
+          () async {
+        String patientId = '123';
+        String doctorId = '321';
+        MockFirestoreInstance instance = MockFirestoreInstance();
+        DatabaseService database =
+            DatabaseService(uid: patientId, firestore: instance);
+        await instance.collection('patients').document(patientId).setData({
+          'firstName': 'Veto',
+          'lastName': 'Bastiero',
+          'birthDate': DateTime(2000, 1, 1),
+          'contactNumber': '09221231221',
+          'email': 'v@gmail.com',
+          'gender': 'Male',
+          'keywords': ['v', 've', 'vet'],
+          'medicalHistory': ['Anemia', 'Alergic Rhinitis'],
+          'doctors': [
+            {'uid': doctorId}
+          ]
+        });
+
+        bool isDoctor = await database.isMyDoctor(doctorId);
+        expect(isDoctor, true);
+      });
+      test(
+          'should return false if doctorId is not present in patient\'s doctors',
+          () async {
+        String patientId = '123';
+        MockFirestoreInstance instance = MockFirestoreInstance();
+        DatabaseService database =
+            DatabaseService(uid: patientId, firestore: instance);
+        await instance.collection('patients').document(patientId).setData({
+          'firstName': 'Veto',
+          'lastName': 'Bastiero',
+          'birthDate': DateTime(2000, 1, 1),
+          'contactNumber': '09221231221',
+          'email': 'v@gmail.com',
+          'gender': 'Male',
+          'keywords': ['v', 've', 'vet'],
+          'medicalHistory': ['Anemia', 'Alergic Rhinitis'],
+          'doctors': [
+            {'uid': '321'}
+          ]
+        });
+
+        bool isDoctor = await database.isMyDoctor('111');
+        expect(isDoctor, false);
+      });
+      test('should return false if patient does not have doctors field',
+          () async {
+        String patientId = '123';
+        MockFirestoreInstance instance = MockFirestoreInstance();
+        DatabaseService database =
+            DatabaseService(uid: patientId, firestore: instance);
+        await instance.collection('patients').document(patientId).setData({
+          'firstName': 'Veto',
+          'lastName': 'Bastiero',
+          'birthDate': DateTime(2000, 1, 1),
+          'contactNumber': '09221231221',
+          'email': 'v@gmail.com',
+          'gender': 'Male',
+          'keywords': ['v', 've', 'vet'],
+          'medicalHistory': ['Anemia', 'Alergic Rhinitis']
+        });
+
+        bool isDoctor = await database.isMyDoctor('123');
+        expect(isDoctor, false);
       });
     });
   });

@@ -17,7 +17,7 @@ void main() {
     (WidgetTester tester) async {
       await tester.runAsync(() async {
         await tester.pumpWidget(MaterialApp(
-          home: RegisterPersonalInfo(NewAccount('Doctor'))
+          home: RegisterPersonalInfo(NewAccount('Patient')),
         ));
 
       expect(firstNameField, findsOneWidget);
