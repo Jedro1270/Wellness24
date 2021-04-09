@@ -93,6 +93,7 @@ class _ChatRoomState extends State<ChatRoom> {
                     loadMore,
                     Expanded(
                       child: ListView(
+                        key: Key('Message'),
                           controller: _scrollController,
                           children: snapshot.data.documents
                               .where((message) =>
