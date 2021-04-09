@@ -131,6 +131,8 @@ class _ChatRoomState extends State<ChatRoom> {
                         children: <Widget>[
                           Expanded(
                             child: TextField(
+                              key: Key('textFieldKey'),
+                              autofocus: true,
                               maxLines: null,
                               keyboardType: TextInputType.multiline,
                               controller: messageController,
@@ -152,6 +154,7 @@ class _ChatRoomState extends State<ChatRoom> {
                             ),
                           ),
                           IconButton(
+                            key: Key('SendBtn'),
                               icon: Icon(Icons.send),
                               onPressed: () {
                                 setState(() {
