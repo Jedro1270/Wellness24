@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
@@ -18,22 +20,67 @@ class ChatRoom extends StatefulWidget {
 }
 
 class _ChatRoomState extends State<ChatRoom> {
-  var messageController = TextEditingController();
+  TextEditingController messageController = TextEditingController();
+  ScrollController _scrollController = ScrollController();
+
   DatabaseService database;
+
+  Widget loadMore = Container();
+
+  int messagesLimit = 20;
+  bool screenInitialized = false;
 
   @override
   void initState() {
     database = DatabaseService(uid: widget.currentUid);
+
+    _scrollController.addListener(() {
+      double currentScroll = _scrollController.position.pixels;
+
+      if (currentScroll == 0) {
+        setState(() {
+          loadMore = InkWell(
+            onTap: () {
+              setState(() {
+                messagesLimit += 20;
+              });
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Load More'),
+            ),
+          );
+        });
+      } else {
+        setState(() {
+          loadMore = Container();
+        });
+      }
+    });
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (screenInitialized == false) {
+      Timer(Duration(milliseconds: 500), () {
+        _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+            curve: Curves.easeOut, duration: const Duration(milliseconds: 250));
+      });
+
+      setState(() {
+        screenInitialized = true;
+      });
+    }
+
     return Scaffold(
         appBar: CustomAppBar(title: widget.title),
         body: StreamBuilder(
-            stream: database.messages.snapshots(),
+            stream: database.messages
+                .orderBy('dateCreated', descending: true)
+                .limit(messagesLimit)
+                .snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData == false) {
@@ -43,27 +90,36 @@ class _ChatRoomState extends State<ChatRoom> {
               return Container(
                 child: Column(
                   children: <Widget>[
+                    loadMore,
                     Expanded(
                       child: ListView(
+                          controller: _scrollController,
                           children: snapshot.data.documents
                               .where((message) =>
                                   message.data['recieverUid'] ==
                                       widget.currentUid ||
                                   message.data['recieverUid'] ==
                                       widget.partnerUid ||
-                                  message.data['senderUid'] == widget.currentUid ||
-                                  message.data['senderUid'] == widget.partnerUid)
+                                  message.data['senderUid'] ==
+                                      widget.currentUid ||
+                                  message.data['senderUid'] ==
+                                      widget.partnerUid)
                               .map((message) {
-                        Message currentMessage = Message(
-                            content: message.data['content'],
-                            dateCreated: message.data['dateCreated'].toDate(),
-                            receiverUid: message.data['receiverUid'],
-                            senderUid: message.data['senderUid']);
+                                Message currentMessage = Message(
+                                    content: message.data['content'],
+                                    dateCreated:
+                                        message.data['dateCreated'].toDate(),
+                                    receiverUid: message.data['receiverUid'],
+                                    senderUid: message.data['senderUid']);
 
-                        return ChatBubble(
-                            isMe: currentMessage.senderUid == widget.currentUid,
-                            message: currentMessage);
-                      }).toList()),
+                                return ChatBubble(
+                                    isMe: currentMessage.senderUid ==
+                                        widget.currentUid,
+                                    message: currentMessage);
+                              })
+                              .toList()
+                              .reversed
+                              .toList()),
                     ),
                     Divider(
                       thickness: 2,
@@ -75,8 +131,11 @@ class _ChatRoomState extends State<ChatRoom> {
                         children: <Widget>[
                           Expanded(
                             child: TextField(
+<<<<<<< HEAD
                               key: Key('textFieldKey'),
                               autofocus: true,
+=======
+>>>>>>> 94a674ede1efbce3852a2963ba807794f92318ff
                               maxLines: null,
                               keyboardType: TextInputType.multiline,
                               controller: messageController,
