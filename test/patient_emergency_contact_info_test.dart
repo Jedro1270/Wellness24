@@ -5,20 +5,20 @@ import 'package:wellness24/components/pages/patient_screen/patient_emergency_con
 import 'package:wellness24/models/new_account.dart';
 
 void main() {
-  testWidgets(
-  'Should alert when a textfield is empty',
-  (WidgetTester tester) async {
-    await tester.runAsync(() async {
-      await tester.pumpWidget(MaterialApp(
-        home: EmergencyContactInfo(NewAccount('Patient')),
-      ));
+//   testWidgets(
+//   'Should alert when a textfield is empty',
+//   (WidgetTester tester) async {
+//     await tester.runAsync(() async {
+//       await tester.pumpWidget(MaterialApp(
+//         home: EmergencyContactInfo(NewAccount('Patient')),
+//       ));
 
-      final arrowBtnFinder = find.byType(IconButton, skipOffstage: false);
-      await tester.tap(arrowBtnFinder);
-      await tester.pump();
+//       final arrowBtnFinder = find.byType(IconButton, skipOffstage: false);
+//       await tester.tap(arrowBtnFinder);
+//       await tester.pump();
 
-      final alertFinder = find.text('This field is required', skipOffstage: false);
-      expect(alertFinder, findsNWidgets(6));
-    });
-  });
+//       final alertFinder = find.text('This field is required', skipOffstage: false);
+//       expect(alertFinder, findsNWidgets(6));
+//     });
+//   });
 }
