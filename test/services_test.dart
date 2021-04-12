@@ -570,7 +570,10 @@ void main() {
         await database.uploadMessage(patientId, doctorId, 'Test message');
         QuerySnapshot snapshots =
             await instance.collection('messages').getDocuments();
-        DocumentSnapshot message = snapshots.documents.first;
+        Map messageData = snapshots.documents.first.data;
+        expect(messageData['senderUid'], patientId);
+        expect(messageData['receiverUid'], doctorId);
+        expect(messageData['content'], 'Test message');
       });
     });
   });
