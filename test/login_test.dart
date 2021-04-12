@@ -31,7 +31,7 @@ void main() {
           home: Login(),
         ));
 
-        final signupLinkFinder = find.byKey(Key('signupbtn'));
+        final signupLinkFinder = find.byKey(Key('signup'));
 
         await tester.tap(signupLinkFinder);
         await tester.pumpAndSettle();
