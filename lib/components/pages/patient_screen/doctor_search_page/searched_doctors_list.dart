@@ -14,7 +14,9 @@ class SearchedDoctorsList extends StatefulWidget {
       {this.searchValue,
       this.filterValue,
       this.doctorDatabaseRef,
-      this.currentPatient});
+      this.currentPatient,
+      Key key})
+      : super(key: key);
 
   @override
   _SearchedDoctorsListState createState() => _SearchedDoctorsListState();
