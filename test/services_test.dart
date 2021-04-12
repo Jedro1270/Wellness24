@@ -560,5 +560,18 @@ void main() {
         expect(isDoctor, false);
       });
     });
+    group('.uploadMessage', () {
+      String patientId = '123';
+      String doctorId = '321';
+      MockFirestoreInstance instance = MockFirestoreInstance();
+      DatabaseService database =
+          DatabaseService(uid: patientId, firestore: instance);
+      test('should insert message to firestore messages collection', () async {
+        await database.uploadMessage(patientId, doctorId, 'Test message');
+        QuerySnapshot snapshots =
+            await instance.collection('messages').getDocuments();
+        DocumentSnapshot message = snapshots.documents.first;
+      });
+    });
   });
 }
