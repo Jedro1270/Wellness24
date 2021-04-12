@@ -144,7 +144,7 @@ class _LoginState extends State<Login> {
                           ),
                           SizedBox(width: 5),
                           InkWell(
-                            key: Key('signupbtn'),
+                            key: Key('signup'),
                             onTap: () {
                               Navigator.push(
                                   context,
