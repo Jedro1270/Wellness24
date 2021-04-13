@@ -1,9 +1,7 @@
 import 'package:cloud_firestore_mocks/cloud_firestore_mocks.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:provider/provider.dart';
 import 'package:wellness24/components/pages/doctor_screen/view_request_component.dart';
-import 'package:wellness24/models/user.dart';
 import 'package:wellness24/services/database.dart';
 
 void main() {
@@ -15,6 +13,14 @@ void main() {
   //     final String uid = '123';
   //     final DatabaseService database =
   //         DatabaseService(uid: uid, firestore: instance);
+
+  //     await instance.collection('doctors').document(uid).setData({
+  //       'firstName': 'Elim',
+  //       'middleInitial': 'C',
+  //       'lastName': 'Abagat',
+  //       'birthDate': DateTime(2000, 1, 22),
+  //       'gender': 'Female',
+  //     });
 
   //     // dummy account: 111A
   //     final String dummy1Uid = '111A';
@@ -30,16 +36,6 @@ void main() {
   //       'height': 172.72
   //     });
 
-  //     await instance
-  //         .collection('bloodPressures')
-  //         .document(dummy1Uid)
-  //         .setData({'lastChecked': DateTime.now(), 'reading': '120/80 mm'});
-
-  //     await instance
-  //         .collection('bloodSugarLevels')
-  //         .document(dummy1Uid)
-  //         .setData({'lastChecked': DateTime.now(), 'reading': '100 mg'});
-
   //     // dummy acount: 222B
   //     final String dummy2Uid = '222B';
   //     await instance.collection('patients').document(dummy2Uid).setData({
@@ -54,16 +50,6 @@ void main() {
   //       'height': 177.72
   //     });
 
-  //     await instance
-  //         .collection('bloodPressures')
-  //         .document(dummy2Uid)
-  //         .setData({'lastChecked': DateTime.now(), 'reading': '110/90 mm'});
-
-  //     await instance
-  //         .collection('bloodSugarLevels')
-  //         .document(dummy2Uid)
-  //         .setData({'lastChecked': DateTime.now(), 'reading': '129 mg'});
-
   //     // both uid's on patient requests
   //     await instance.collection('patientRequests').document(uid).setData({
   //       'requests': [
@@ -73,17 +59,21 @@ void main() {
   //     });
 
   //     await tester.pumpWidget(
-  //       StreamProvider<User>.value(
-  //           value: Stream.value(User(uid: uid, email: 'test@gmail.com')),
-  //           initialData: null,
-  //           child: MaterialApp(home: ViewRequest(database: database))),
+  //       MaterialApp(
+  //           home: ViewRequest(
+  //               database: DatabaseService(uid: uid, firestore: instance))),
   //     );
 
-  //     expect(find.text('Jedro Vienne Deo E. Pagayonan'), findsOneWidget);
-  //     expect(find.text('Veto C. Bastiero'), findsOneWidget);
+  //     // expect(find.text('Jedro Vienne Deo E. Pagayonan'), findsOneWidget);
+  //     // expect(find.text('Veto C. Bastiero'), findsOneWidget);
+  //     // expect(find.textContaining('Jedro'),  findsOneWidget);
 
-  //     final requestPanels = find.byKey(Key('requestPanel'));
-  //     expect(requestPanels, findsNWidgets(2));
+  //     // final requestPanels = find.byKey(Key('requestpanel'));
+  //     // expect(requestPanels, findsNWidgets(2));
+
+  //     //  idk why this works tho
+  //     // final master = find.byKey(Key('master'));
+  //     // expect(master, findsOneWidget);
   //   });
   // });
 }
