@@ -150,13 +150,13 @@ class DatabaseService {
         contactNo: snapshotPatient.data['contactNumber'],
         medicalHistory: snapshotPatient.data['medicalHistory'],
         emergencyContact: snapshotPatient.data['emergencyContact'],
-        bloodPressure: snapshotBloodPressure.data == null
+        bloodPressure: snapshotBloodPressure.data.isEmpty
             ? null
             : BloodPressure(
                 reading: snapshotBloodPressure.data['reading'],
                 lastChecked:
                     snapshotBloodPressure.data['lastChecked'].toDate()),
-        bloodSugarLevel: snapshotBloodSugarLevel.data == null
+        bloodSugarLevel: snapshotBloodSugarLevel.data.isEmpty
             ? null
             : BloodSugarLevel(
                 reading: snapshotBloodSugarLevel.data['reading'],
