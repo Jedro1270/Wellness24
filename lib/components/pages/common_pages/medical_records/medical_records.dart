@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
+import 'package:wellness24/components/pages/common_pages/medical_records/add_medical_record.dart';
 import 'package:wellness24/components/pages/common_pages/medical_records/record_card.dart';
 import 'package:wellness24/models/patient.dart';
 
@@ -47,6 +48,13 @@ class _MedicalRecordsState extends State<MedicalRecords> {
                 print('Notif button clicked');
               })
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AddMedicalRecord()));
+        },
       ),
       body: Container(
         child: Column(
