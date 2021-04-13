@@ -8,34 +8,6 @@ import 'package:cloud_firestore_mocks/cloud_firestore_mocks.dart';
 import 'package:wellness24/services/database.dart';
 
 void main() {
-  Future<Patient> mockGetPatient(String uid, database) async {
-    var snapshotPatient = await database.patients.document(uid).get();
-
-    var snapshotBloodPressure =
-        await database.bloodPressures.document(uid).get();
-
-    var snapshotBloodSugarLevel =
-        await database.bloodSugarLevels.document(uid).get();
-
-    return Patient(
-        uid: snapshotPatient.documentID,
-        firstName: snapshotPatient.data['firstName'],
-        middleInitial: snapshotPatient.data['middleInitial'],
-        lastName: snapshotPatient.data['lastName'],
-        gender: snapshotPatient.data['gender'],
-        birthDate: snapshotPatient.data['birthDate'],
-        medicalHistory: snapshotPatient.data['medicalHistory'],
-        bloodPressure: BloodPressure(
-            reading: snapshotBloodPressure.data['reading'],
-            lastChecked: snapshotBloodPressure.data['lastChecked']),
-        bloodSugarLevel: BloodSugarLevel(
-            reading: snapshotBloodSugarLevel.data['reading'],
-            lastChecked: snapshotBloodSugarLevel.data['lastChecked']),
-        bloodType: snapshotPatient.data['bloodType'],
-        weight: snapshotPatient.data['weight'],
-        height: snapshotPatient.data['height'],
-        bodyTemperature: snapshotPatient.data['bodyTemperature']);
-  }
   testWidgets(
       'Medical History should show the list of medical history of the patient',
       (WidgetTester tester) async {
@@ -47,14 +19,15 @@ void main() {
           DatabaseService(uid: uid, firestore: instance);
 
       await instance.collection('patients').document(uid).setData({
-        'medicalHistory': ['asthma', 'diabetes']
+        'medicalHistory': ['asthma', 'diabetes'],
+        'birthDate': DateTime(2000, 1, 1)
       });
 
-      Patient testPatient = await mockGetPatient(uid, database);
+      Patient testPatient = await database.getPatient(uid);
 
       await tester.pumpWidget(MaterialApp(
-          home: MedicalRecords(editable: false, patient: testPatient),
-          ));
+        home: MedicalRecords(editable: false, patient: testPatient),
+      ));
 
       expect(find.text('asthma'), findsOneWidget);
       expect(find.text('diabetes'), findsOneWidget);
