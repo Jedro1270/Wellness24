@@ -2,8 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/pages/common_pages/medical_records/medical_records.dart';
 import 'package:wellness24/models/patient.dart';
-import 'package:wellness24/models/blood_pressure.dart';
-import 'package:wellness24/models/blood_sugar_level.dart';
 import 'package:cloud_firestore_mocks/cloud_firestore_mocks.dart';
 import 'package:wellness24/services/database.dart';
 
