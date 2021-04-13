@@ -82,8 +82,15 @@ class _DoctorSearchPageState extends State<DoctorSearchPage> {
                       color: Color(0xffF2F2F2),
                       borderRadius: BorderRadius.circular(30)),
                   child: TextField(
-                    onChanged: (val) =>
-                        temporarySearchValue = val,
+                    onChanged: (val) {
+                      temporarySearchValue = val;
+                      
+                      if (temporarySearchValue.trim().length == 0) {
+                        setState(() {
+                          searchValue = temporarySearchValue;
+                        });
+                      }
+                    },
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Search for doctors'),
@@ -114,7 +121,7 @@ class _DoctorSearchPageState extends State<DoctorSearchPage> {
           ),
           Expanded(
             child: SearchedDoctorsList(
-                key: UniqueKey(),
+                key: ValueKey('$filterValue$searchValue'),
                 currentPatient: widget.currentPatient,
                 searchValue: searchValue,
                 filterValue: filterValue,
