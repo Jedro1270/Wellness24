@@ -5,7 +5,8 @@ import 'package:wellness24/services/database.dart';
 
 class ViewRequest extends StatefulWidget {
   final DatabaseService database;
-  ViewRequest({this.database});
+  final List requests;
+  ViewRequest({this.database, this.requests});
   @override
   _ViewRequestState createState() => _ViewRequestState();
 }
@@ -14,15 +15,22 @@ class _ViewRequestState extends State<ViewRequest> {
   List<Patient> patientRequests = [];
 
   void fetchRequests() async {
-    List requestsData = await widget.database.getPatientRequest();
+    if (widget.requests == null) {
+      List requestsData = await widget.database.getPatientRequest();
 
-    List<Patient> requestsInfo = await Future.wait(requestsData.map((e) async {
-      return await DatabaseService().getPatient(e['uid']);
-    }));
+      List<Patient> requestsInfo =
+          await Future.wait(requestsData.map((e) async {
+        return await DatabaseService().getPatient(e['uid']);
+      }));
 
-    setState(() {
-      patientRequests = requestsInfo;
-    });
+      setState(() {
+        patientRequests = requestsInfo;
+      });
+    } else {
+      setState(() {
+        patientRequests = widget.requests;
+      });
+    }
   }
 
   @override
@@ -38,12 +46,11 @@ class _ViewRequestState extends State<ViewRequest> {
     }
 
     return Container(
-      key: Key('master'),
       child: ListView(
         children: <Widget>[
           ...patientRequests.map(
             (patient) => Container(
-              key: Key('requestpanel'),
+              key: Key('requestPanel'),
               height: 110,
               child: Card(
                 elevation: 10,
