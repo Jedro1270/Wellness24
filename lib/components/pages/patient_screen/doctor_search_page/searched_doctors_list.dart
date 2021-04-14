@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/pages/patient_screen/doctor_search_page/doctor_info.dart';
@@ -25,15 +27,47 @@ class SearchedDoctorsList extends StatefulWidget {
 class _SearchedDoctorsListState extends State<SearchedDoctorsList> {
   List<DoctorInfo> doctors = [];
 
+  ScrollController _scrollController = ScrollController();
+  Widget loadMore = Container();
+  int doctorsLimit = 3;
+  bool screenInitialized = false;
+
   void getDoctors() async {
     var snapshots;
 
+    _scrollController.addListener(() {
+      double currentScroll = _scrollController.position.pixels;
+
+      if (currentScroll == 0) {
+        setState(() {
+          loadMore = InkWell(
+            onTap: () {
+              setState(() {
+                doctorsLimit += 3;
+              });
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Load More'),
+            ),
+          );
+        });
+      } else {
+        setState(() {
+          loadMore = Container();
+        });
+      }
+    });
+
     if (widget.searchValue.trim() == '') {
-      snapshots = await widget.doctorDatabaseRef.getDocuments();
+      snapshots = await widget.doctorDatabaseRef
+          .limit(doctorsLimit)
+          .getDocuments();
     } else {
       snapshots = await widget.doctorDatabaseRef
           .where('keywords', arrayContains: widget.searchValue.toLowerCase())
           .orderBy('lastName')
+          .limit(doctorsLimit)
           .getDocuments();
     }
 
@@ -75,6 +109,29 @@ class _SearchedDoctorsListState extends State<SearchedDoctorsList> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(children: doctors);
+    if (screenInitialized == false) {
+      Timer(Duration(milliseconds: 500), () {
+        _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+            curve: Curves.easeOut, duration: const Duration(milliseconds: 250));
+      });
+
+      setState(() {
+        screenInitialized = true;
+      });
+    }
+    //return ListView(children: doctors, controller: _scrollController,);
+    return Container(
+      child: Column(
+        children: <Widget>[
+          loadMore,
+          Expanded(
+            child: ListView(
+              controller: _scrollController,
+              children: doctors,
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
