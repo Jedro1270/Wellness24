@@ -1,7 +1,10 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:provider/provider.dart';
 import 'package:wellness24/components/common/app_bar.dart';
@@ -498,7 +501,7 @@ class _PatientProfileState extends State<PatientProfile> {
         MaterialButton(
               onPressed: () {
                 print('Save Photo');
-                //savePhoto(_imageFile.path);
+                uploadPhoto(this.context);
               },
               child: Text('Save Photo',
               style: TextStyle(
@@ -516,6 +519,23 @@ class _PatientProfileState extends State<PatientProfile> {
 
     setState(() {
       _imageFile = pickedFile;
+      print(_imageFile.path);
+    });
+  }
+
+  void uploadPhoto(BuildContext context) async{
+    String fileName = basename(_imageFile.path);
+    StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child(fileName);
+
+    //converts pickedFile to file
+    File convertedFile = File(_imageFile.path);
+
+    StorageUploadTask uploadTask = firebaseStorageRef.putFile(convertedFile);
+    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+
+    setState(() {
+      print("Profile Picture Uploaded");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text('Profile Picture Uploaded'),));
     });
   }
 }
