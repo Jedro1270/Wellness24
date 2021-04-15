@@ -1,6 +1,15 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/common/editable_text.dart';
+import 'package:wellness24/models/doctor.dart';
+import 'package:wellness24/models/user.dart';
+import 'package:wellness24/services/database.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:path/path.dart';
 
 class AddMedicalRecord extends StatefulWidget {
   @override
@@ -9,8 +18,58 @@ class AddMedicalRecord extends StatefulWidget {
 
 class _AddMedicalRecordState extends State<AddMedicalRecord> {
   bool editable = true;
+  Doctor currentDoctor;
+  File _image;
+  final picker = ImagePicker();
+
+  initializeDoctor(String uid) async {
+    DatabaseService database = DatabaseService(uid: uid);
+    Doctor doctor = await database.getDoctor(uid);
+
+    setState(() {
+      currentDoctor = doctor;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
+    initializeDoctor(user.uid);
+
+    Future getImage() async {
+      final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+      setState(() {
+        if (pickedFile != null) {
+          _image = File(pickedFile.path);
+        } else {
+          print('No image selected');
+        }
+      });
+    }
+
+    clearImage() {
+      setState(() {
+        _image = null;
+      });
+    }
+
+    final FirebaseStorage storage =
+        FirebaseStorage(storageBucket: 'gs://wellness24-95ff9.appspot.com');
+    Future<String> uploadPic(_image) async {
+      String fileName = basename(_image.path);
+      // String filePath = 'images/${DateTime.now()}.jpg';
+      // uploadTask = storage.ref().child(filePath).putFile(file)
+      StorageReference firebaseStorageRef =
+          FirebaseStorage.instance.ref().child(fileName);
+      StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
+      StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+      String _url = await taskSnapshot.ref.getDownloadURL();
+      // String url = _url.toString();
+      print(_url);
+      return _url;
+    }
+
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Add Medical Records',
@@ -43,12 +102,12 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                   ),
                   Divider(thickness: 2, height: 20.0),
                   Container(
-                    child: Row(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () => getImage(),
                           child: Text(
                             'Upload File',
                             style: TextStyle(
@@ -58,6 +117,22 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                             ),
                           ),
                         ),
+                        Container(
+                          height: 200,
+                          width: 400,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              _image == null
+                                  ? Icon(
+                                      Icons.image,
+                                      size: 50,
+                                    )
+                                  : _image
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -97,7 +172,7 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () => uploadPic(_image),
                           child: Text(
                             'Save',
                             style: TextStyle(
