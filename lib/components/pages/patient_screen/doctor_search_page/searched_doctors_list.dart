@@ -33,31 +33,7 @@ class _SearchedDoctorsListState extends State<SearchedDoctorsList> {
   bool screenInitialized = false;
 
   void getDoctors() async {
-    var snapshots;
-
-    _scrollController.addListener(() {
-      double currentScroll = _scrollController.position.pixels;
-
-      if (currentScroll == 0) {
-        setState(() {
-          loadMore = InkWell(
-            onTap: () {
-              setState(() {
-                doctorsLimit += 3;
-              });
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('Load More'),
-            ),
-          );
-        });
-      } else {
-        setState(() {
-          loadMore = Container();
-        });
-      }
-    });
+    QuerySnapshot snapshots;
 
     if (widget.searchValue.trim() == '') {
       snapshots = await widget.doctorDatabaseRef
@@ -104,6 +80,30 @@ class _SearchedDoctorsListState extends State<SearchedDoctorsList> {
   @override
   void initState() {
     getDoctors();
+
+    _scrollController.addListener(() {
+      double currentScroll = _scrollController.position.pixels;
+
+      if (currentScroll == 0) {
+        setState(() {
+          loadMore = InkWell(
+            onTap: () {
+              setState(() {
+                doctorsLimit += 3;
+              });
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Load More'),
+            ),
+          );
+        });
+      } else {
+        setState(() {
+          loadMore = Container();
+        });
+      }
+    });
     super.initState();
   }
 
