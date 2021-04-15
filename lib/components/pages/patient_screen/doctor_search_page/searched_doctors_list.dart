@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/pages/patient_screen/doctor_search_page/doctor_info.dart';
@@ -80,10 +78,11 @@ class _SearchedDoctorsListState extends State<SearchedDoctorsList> {
   @override
   void initState() {
     getDoctors();
+
     _scrollController.addListener(() {
       double currentScroll = _scrollController.position.pixels;
 
-      if (currentScroll == _scrollController.position.maxScrollExtent) {
+      if (currentScroll == 0) {
         setState(() {
           loadMore = InkWell(
             onTap: () {

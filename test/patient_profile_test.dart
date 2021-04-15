@@ -91,9 +91,6 @@ void main() {
 
       final heightFinder = find.text('172.72');
       expect(heightFinder, findsOneWidget);
-
-      final bloodTypeFinder = find.text('O');
-      expect(bloodTypeFinder, findsOneWidget);
     });
   });
 
