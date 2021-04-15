@@ -6,7 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-import 'package:provider/provider.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
 import 'package:wellness24/components/pages/common_pages/medical_records/medical_records.dart';
@@ -14,7 +13,6 @@ import 'package:wellness24/components/pages/common_pages/patient_profile/patient
 import 'package:wellness24/models/blood_pressure.dart';
 import 'package:wellness24/models/blood_sugar_level.dart';
 import 'package:wellness24/models/patient.dart';
-import 'package:wellness24/models/user.dart';
 import 'package:wellness24/services/database.dart';
 
 class PatientProfile extends StatefulWidget {

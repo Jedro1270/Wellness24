@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/pages/patient_screen/doctor_search_page/doctor_info.dart';
@@ -33,31 +31,7 @@ class _SearchedDoctorsListState extends State<SearchedDoctorsList> {
   bool screenInitialized = false;
 
   void getDoctors() async {
-    var snapshots;
-
-    _scrollController.addListener(() {
-      double currentScroll = _scrollController.position.pixels;
-
-      if (currentScroll == 0) {
-        setState(() {
-          loadMore = InkWell(
-            onTap: () {
-              setState(() {
-                doctorsLimit += 3;
-              });
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('Load More'),
-            ),
-          );
-        });
-      } else {
-        setState(() {
-          loadMore = Container();
-        });
-      }
-    });
+    QuerySnapshot snapshots;
 
     if (widget.searchValue.trim() == '') {
       snapshots = await widget.doctorDatabaseRef
@@ -104,32 +78,46 @@ class _SearchedDoctorsListState extends State<SearchedDoctorsList> {
   @override
   void initState() {
     getDoctors();
+
+    _scrollController.addListener(() {
+      double currentScroll = _scrollController.position.pixels;
+
+      if (currentScroll == 0) {
+        setState(() {
+          loadMore = InkWell(
+            onTap: () {
+              setState(() {
+                doctorsLimit += 3;
+              });
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Load More'),
+            ),
+          );
+        });
+      } else {
+        setState(() {
+          loadMore = Container();
+        });
+      }
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (screenInitialized == false) {
-      Timer(Duration(milliseconds: 500), () {
-        _scrollController.animateTo(_scrollController.position.maxScrollExtent,
-            curve: Curves.easeOut, duration: const Duration(milliseconds: 250));
-      });
-
-      setState(() {
-        screenInitialized = true;
-      });
-    }
     //return ListView(children: doctors, controller: _scrollController,);
     return Container(
       child: Column(
         children: <Widget>[
-          loadMore,
           Expanded(
             child: ListView(
               controller: _scrollController,
               children: doctors,
             ),
-          )
+          ),
+          loadMore
         ],
       ),
     );
