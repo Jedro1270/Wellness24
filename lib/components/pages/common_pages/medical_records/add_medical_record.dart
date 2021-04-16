@@ -19,8 +19,9 @@ class AddMedicalRecord extends StatefulWidget {
 class _AddMedicalRecordState extends State<AddMedicalRecord> {
   bool editable = true;
   Doctor currentDoctor;
-  File _image;
-  final picker = ImagePicker();
+  PickedFile _imageFile;
+  final ImagePicker _imagePicker = ImagePicker();
+  String imagePath;
 
   initializeDoctor(String uid) async {
     DatabaseService database = DatabaseService(uid: uid);
@@ -36,39 +37,39 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
     final user = Provider.of<User>(context);
     initializeDoctor(user.uid);
 
-    Future getImage() async {
-      final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    // Future getImage() async {
+    //   final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
-      setState(() {
-        if (pickedFile != null) {
-          _image = File(pickedFile.path);
-        } else {
-          print('No image selected');
-        }
-      });
-    }
+    //   setState(() {
+    //     if (pickedFile != null) {
+    //       _image = File(pickedFile.path);
+    //     } else {
+    //       print('No image selected');
+    //     }
+    //   });
+    // }
 
-    clearImage() {
-      setState(() {
-        _image = null;
-      });
-    }
+    // clearImage() {
+    //   setState(() {
+    //     _image = null;
+    //   });
+    // }
 
-    final FirebaseStorage storage =
-        FirebaseStorage(storageBucket: 'gs://wellness24-95ff9.appspot.com');
-    Future<String> uploadPic(_image) async {
-      String fileName = basename(_image.path);
-      // String filePath = 'images/${DateTime.now()}.jpg';
-      // uploadTask = storage.ref().child(filePath).putFile(file)
-      StorageReference firebaseStorageRef =
-          FirebaseStorage.instance.ref().child(fileName);
-      StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
-      StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-      String _url = await taskSnapshot.ref.getDownloadURL();
-      // String url = _url.toString();
-      print(_url);
-      return _url;
-    }
+    // final FirebaseStorage storage =
+    //     FirebaseStorage(storageBucket: 'gs://wellness24-95ff9.appspot.com');
+    // Future<String> uploadPic(_image) async {
+    //   String fileName = basename(_image.path);
+    //   // String filePath = 'images/${DateTime.now()}.jpg';
+    //   // uploadTask = storage.ref().child(filePath).putFile(file)
+    //   StorageReference firebaseStorageRef =
+    //       FirebaseStorage.instance.ref().child(fileName);
+    //   StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
+    //   StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+    //   String _url = await taskSnapshot.ref.getDownloadURL();
+    //   // String url = _url.toString();
+    //   print(_url);
+    //   return _url;
+    // }
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -107,7 +108,11 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         ElevatedButton(
-                          onPressed: () => getImage(),
+                          onPressed: () {
+                            showModalBottomSheet(
+                                context: context,
+                                builder: ((builder) => optionView()));
+                          },
                           child: Text(
                             'Upload File',
                             style: TextStyle(
@@ -124,12 +129,13 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              _image == null
-                                  ? Icon(
-                                      Icons.image,
-                                      size: 50,
-                                    )
-                                  : _image
+                              Image(
+                                image: _imageFile == null
+                                    ? AssetImage('assets/image.png')
+                                    : FileImage(
+                                        File(_imageFile.path),
+                                      ),
+                              ),
                             ],
                           ),
                         )
@@ -172,7 +178,7 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         ElevatedButton(
-                          onPressed: () => uploadPic(_image),
+                          onPressed: () => uploadPhoto(this.context),
                           child: Text(
                             'Save',
                             style: TextStyle(
@@ -192,5 +198,97 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
         ),
       ),
     );
+  }
+
+  Widget optionView() {
+    return Container(
+      margin: EdgeInsets.all(15.0),
+      height: 200,
+      child: Column(children: [
+        Text(
+          'Select Picture',
+          style: TextStyle(
+            fontFamily: "ShipporiMincho",
+            fontWeight: FontWeight.bold,
+            fontSize: 21,
+          ),
+        ),
+        Divider(height: 40, color: Colors.transparent),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            MaterialButton(
+                onPressed: () {
+                  print('open camera');
+                  updatePhoto(ImageSource.camera);
+                },
+                child: Column(
+                  children: [
+                    Icon(Icons.camera_alt_sharp),
+                    Text('Camera',
+                        style: TextStyle(
+                          fontFamily: "ShipporiMincho",
+                          fontSize: 18,
+                        )),
+                  ],
+                )),
+            SizedBox(width: 50),
+            MaterialButton(
+                onPressed: () {
+                  print('open gallery');
+                  updatePhoto(ImageSource.gallery);
+                },
+                child: Column(
+                  children: [
+                    Icon(Icons.image),
+                    Text('Gallery',
+                        style: TextStyle(
+                          fontFamily: "ShipporiMincho",
+                          fontSize: 18,
+                        )),
+                  ],
+                )),
+          ],
+        ),
+        Divider(height: 25, color: Colors.transparent),
+        MaterialButton(
+          onPressed: () {
+            print('Done');
+            Navigator.pop(this.context);
+          },
+          child: Text('Done', style: TextStyle()),
+          color: Colors.blueAccent[400],
+          textColor: Colors.black,
+        )
+      ]),
+    );
+  }
+
+  void updatePhoto(ImageSource source) async {
+    final pickedFile = await _imagePicker.getImage(source: source);
+
+    setState(() {
+      _imageFile = pickedFile;
+      print(_imageFile.path);
+    });
+  }
+
+  void uploadPhoto(BuildContext context) async {
+    String fileName = basename(_imageFile.path);
+    StorageReference firebaseStorageRef =
+        FirebaseStorage.instance.ref().child(fileName);
+
+    //converts pickedFile to file
+    File convertedFile = File(_imageFile.path);
+
+    StorageUploadTask uploadTask = firebaseStorageRef.putFile(convertedFile);
+    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+
+    setState(() {
+      print("File Uploaded");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('File Uploaded'),
+      ));
+    });
   }
 }
