@@ -7,8 +7,9 @@ import 'package:wellness24/services/database.dart';
 class MyPatientsList extends StatefulWidget {
   final CollectionReference doctorDatabaseRef;
   final String doctorId;
+  final List mockPatients;
 
-  MyPatientsList({this.doctorDatabaseRef, this.doctorId});
+  MyPatientsList({this.doctorDatabaseRef, this.doctorId, this.mockPatients});
 
   @override
   _MyPatientsListState createState() => _MyPatientsListState();
@@ -19,22 +20,29 @@ class _MyPatientsListState extends State<MyPatientsList> {
   DatabaseService database;
 
   void getPatients() async {
-    database = DatabaseService(uid: widget.doctorId);
+    if (widget.mockPatients.isEmpty) {
+      database = DatabaseService(uid: widget.doctorId);
 
-    List<PatientInfo> mappedPatients = [];
+      List<PatientInfo> mappedPatients = [];
 
-    DocumentSnapshot snapshot =
-        await widget.doctorDatabaseRef.document(widget.doctorId).get();
+      DocumentSnapshot snapshot =
+          await widget.doctorDatabaseRef.document(widget.doctorId).get();
 
-    await Future.forEach(snapshot.data['patients'], (patient) async {
-      Patient currentPatient = await database.getPatient(patient['uid']);
+      await Future.forEach(snapshot.data['patients'], (patient) async {
+        Patient currentPatient = await database.getPatient(patient['uid']);
 
-      mappedPatients.add(PatientInfo(patient: currentPatient));
-    });
+        mappedPatients.add(PatientInfo(patient: currentPatient));
+      });
 
-    setState(() {
-      patients = mappedPatients;
-    });
+      setState(() {
+        patients = mappedPatients;
+      });
+    } else {
+      setState(() {
+        patients =
+            widget.mockPatients.map((p) => PatientInfo(patient: p)).toList();
+      });
+    }
   }
 
   @override

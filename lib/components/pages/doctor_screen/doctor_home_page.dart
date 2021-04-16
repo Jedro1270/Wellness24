@@ -14,21 +14,21 @@ import 'package:wellness24/services/database.dart';
 
 class DoctorHomePage extends StatefulWidget {
   final Doctor mockDoctor;
-  DoctorHomePage({this.mockDoctor});
+  final List mockPatients;
+  DoctorHomePage({this.mockDoctor, this.mockPatients});
   @override
   _DoctorHomePageState createState() => _DoctorHomePageState();
 }
 
 class _DoctorHomePageState extends State<DoctorHomePage> {
   Doctor currentDoctor;
-  User user;
 
-  initializeDoctor(String uid, BuildContext context) async {
+  initializeDoctor() async {
     if (widget.mockDoctor == null) {
-      DatabaseService database = DatabaseService(uid: uid);
-      Doctor doctor = await database.getDoctor(uid);
+      User user = Provider.of<User>(context, listen: false);
+      DatabaseService database = DatabaseService(uid: user.uid);
+      Doctor doctor = await database.getDoctor(user.uid);
       setState(() {
-        user = Provider.of<User>(context);
         currentDoctor = doctor;
       });
     } else {
@@ -37,10 +37,16 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
       });
     }
   }
-  
+
+  @override
+  void initState() {
+    super.initState();
+    initializeDoctor();
+  }
+
   @override
   Widget build(BuildContext context) {
-    initializeDoctor(user.uid, context);
+    User user = Provider.of<User>(context);
 
     if (user == null) {
       return Login();
@@ -92,6 +98,7 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
                   Container(
                       height: 200,
                       child: MyPatientsList(
+                        mockPatients: widget.mockPatients ?? [],
                         doctorDatabaseRef:
                             DatabaseService(uid: user.uid).doctors,
                         doctorId: user.uid,
