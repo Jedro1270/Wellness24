@@ -13,32 +13,39 @@ import 'package:wellness24/components/pages/common_pages/login_page.dart';
 import 'package:wellness24/services/database.dart';
 
 class DoctorHomePage extends StatefulWidget {
+  final Doctor mockDoctor;
+  DoctorHomePage({this.mockDoctor});
   @override
   _DoctorHomePageState createState() => _DoctorHomePageState();
 }
 
 class _DoctorHomePageState extends State<DoctorHomePage> {
   Doctor currentDoctor;
+  User user;
 
-  initializeDoctor(String uid) async {
-    DatabaseService database = DatabaseService(uid: uid);
-    Doctor doctor = await database.getDoctor(uid);
-
-    setState(() {
-      currentDoctor = doctor;
-    });
+  initializeDoctor(String uid, BuildContext context) async {
+    if (widget.mockDoctor == null) {
+      DatabaseService database = DatabaseService(uid: uid);
+      Doctor doctor = await database.getDoctor(uid);
+      setState(() {
+        user = Provider.of<User>(context);
+        currentDoctor = doctor;
+      });
+    } else {
+      setState(() {
+        currentDoctor = widget.mockDoctor;
+      });
+    }
   }
-
+  
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
+    initializeDoctor(user.uid, context);
 
     if (user == null) {
       return Login();
     }
 
-    initializeDoctor(user.uid);
-    
     return Scaffold(
       drawer: NavBar(
           name: currentDoctor == null ? '' : currentDoctor.fullName,
@@ -61,7 +68,9 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
         child: Icon(Icons.message),
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Messages(currentUser: user)));
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Messages(currentUser: user)));
         },
       ),
       body: currentDoctor == null
