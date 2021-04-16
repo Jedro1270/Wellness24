@@ -2,15 +2,9 @@ import 'package:cloud_firestore_mocks/cloud_firestore_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/pages/doctor_screen/doctor_home_page.dart';
-import 'package:wellness24/components/pages/doctor_screen/notification_page.dart';
-import 'package:wellness24/components/pages/doctor_screen/patients_list/my_patients_list.dart';
 import 'package:wellness24/models/doctor.dart';
 import 'package:wellness24/models/patient.dart';
 import 'package:wellness24/models/user.dart';
-import 'package:wellness24/models/blood_pressure.dart';
-import 'package:wellness24/models/blood_sugar_level.dart';
-import 'package:wellness24/services/auth_service.dart';
-import 'package:wellness24/services/database.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -33,8 +27,6 @@ void main() {
     ];
     testWidgets('Should display list of patients', (WidgetTester tester) async {
       await tester.runAsync(() async {
-        final MockFirestoreInstance instance = MockFirestoreInstance();
-
         await tester.pumpWidget(MaterialApp(
             home: StreamProvider<User>.value(
           initialData: User(uid: uid),
