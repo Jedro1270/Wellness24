@@ -7,6 +7,7 @@ import 'package:wellness24/components/common/schedule_card.dart';
 import 'package:wellness24/components/pages/common_pages/chat/messages.dart';
 import 'package:wellness24/components/pages/doctor_screen/notification_page.dart';
 import 'package:wellness24/components/pages/doctor_screen/patients_list/my_patients_list.dart';
+import 'package:wellness24/components/pages/doctor_screen/doctor_queue_monitor.dart';
 import 'package:wellness24/models/doctor.dart';
 import 'package:wellness24/models/user.dart';
 import 'package:wellness24/components/pages/common_pages/login_page.dart';
@@ -115,6 +116,14 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
                     ),
                   ),
                   buildAppointmentList(),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DoctorQueueMonitor()));
+                      },
+                      child: Text('Number Queue'))
                 ],
               ),
             ),
