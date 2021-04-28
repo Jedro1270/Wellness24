@@ -259,7 +259,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => PatientAppointmentPage(),
+                          builder: (context) => PatientAppointmentPage(doctor: widget.doctor),
                         ));
                     print('Make an Appointment');
                   },
