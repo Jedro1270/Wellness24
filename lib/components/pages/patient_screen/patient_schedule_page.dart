@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:wellness24/components/common/app_bar.dart';
-import 'package:wellness24/components/pages/patient_screen/patient_home_page.dart';
 import 'package:wellness24/components/pages/patient_screen/patient_priority_page.dart';
+import 'package:wellness24/models/doctor.dart';
 
 class PatientAppointmentPage extends StatefulWidget {
+  final Doctor doctor;
+
+  PatientAppointmentPage({@required this.doctor});
+
   @override
   _PatientAppointmentState createState() => _PatientAppointmentState();
 }
@@ -38,12 +42,11 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
         leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => PatientHomePage()));
+              Navigator.pop(context);
             }),
       ),
       body: Container(
-          padding: EdgeInsets.symmetric(vertical: 60.0, horizontal: 25.0),
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 25.0),
           child: ListView(
             children: <Widget>[
               Container(
@@ -59,7 +62,8 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                       ),
                     ),
                     Divider(height: 30, color: Colors.transparent),
-                    Text('Doctor',
+                    Text('Doctor ${widget.doctor.fullName}',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 20,
                             fontFamily: "ShipporiMincho",
@@ -74,12 +78,13 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                           color: Colors.black),
                     ),
                     Divider(height: 5, color: Colors.transparent),
-                    Text("12:00 pm - 4:00 pm",
+                    Text(widget.doctor.workingDays,
                         style: TextStyle(
                             fontSize: 18,
                             fontFamily: "ShipporiMincho",
                             color: Colors.black)),
-                    Text("Thursday - Saturday",
+                    Text(
+                        '${widget.doctor.clinicStartHour} - ${widget.doctor.clinicEndHour}',
                         style: TextStyle(
                             fontSize: 18,
                             fontFamily: "ShipporiMincho",
@@ -103,7 +108,7 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text("${format.format(_date)}",
+                                Text(format.format(_date),
                                     style: TextStyle(
                                         fontSize: 18,
                                         fontFamily: "ShipporiMincho",
@@ -136,12 +141,13 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                   onPressed: () {
                     _showDialog(context);
                   },
-                  child: Text("Schedule Appointment",
+                  child: Text(
+                      "Schedule Appointment", // TODO: this changes based on whether the patient has already scheduled for the picked date
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 21,
                           fontFamily: "ShipporiMincho",
-                          fontWeight: FontWeight.normal)))
+                          fontWeight: FontWeight.normal))),
             ],
           )),
     );
@@ -157,18 +163,17 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                 ElevatedButton(
                     onPressed: () {
                       print('yes');
+                      Navigator.pop(context);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => PatientPriorityNumber()));
+                              builder: (context) => PatientPriorityNumber(
+                                  doctor: widget.doctor, date: _date)));
                     },
                     child: Text('YES')),
                 ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PatientAppointmentPage()));
+                      Navigator.pop(context);
                     },
                     child: Text('NO'))
               ],
