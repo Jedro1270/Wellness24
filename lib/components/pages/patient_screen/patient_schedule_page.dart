@@ -132,7 +132,9 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                       borderRadius: BorderRadius.circular(30.0),
                       side: BorderSide(color: Colors.black12)),
                   color: Color(0xFF40BEEE),
-                  onPressed: () {},
+                  onPressed: () {
+                     _showDialog(context);
+                  },
                   child: Text("Schedule Appointment",
                       style: TextStyle(
                           color: Colors.white,
@@ -143,4 +145,19 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
           )),
     );
   }
+
+  
+ _showDialog(BuildContext context) {
+    showDialog(context: context, builder: (context) => AlertDialog(
+      content: Text('Are you sure you want to schedule an appointment?'),
+      actions: [
+        ElevatedButton(onPressed: (){
+          
+        }, child: Text('YES')),
+        ElevatedButton(onPressed: (){
+          
+        }, child: Text('NO'))
+      ],
+    ));
+ }
 }
