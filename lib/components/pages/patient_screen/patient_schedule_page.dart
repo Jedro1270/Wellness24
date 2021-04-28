@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/pages/patient_screen/patient_home_page.dart';
+import 'package:wellness24/components/pages/patient_screen/patient_priority_page.dart';
 
 class PatientAppointmentPage extends StatefulWidget {
   @override
@@ -133,7 +134,7 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                       side: BorderSide(color: Colors.black12)),
                   color: Color(0xFF40BEEE),
                   onPressed: () {
-                     _showDialog(context);
+                    _showDialog(context);
                   },
                   child: Text("Schedule Appointment",
                       style: TextStyle(
@@ -146,18 +147,31 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
     );
   }
 
-  
- _showDialog(BuildContext context) {
-    showDialog(context: context, builder: (context) => AlertDialog(
-      content: Text('Are you sure you want to schedule an appointment?'),
-      actions: [
-        ElevatedButton(onPressed: (){
-          
-        }, child: Text('YES')),
-        ElevatedButton(onPressed: (){
-          
-        }, child: Text('NO'))
-      ],
-    ));
- }
+  _showDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              content:
+                  Text('Are you sure you want to schedule an appointment?'),
+              actions: [
+                ElevatedButton(
+                    onPressed: () {
+                      print('yes');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PatientPriorityNumber()));
+                    },
+                    child: Text('YES')),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PatientAppointmentPage()));
+                    },
+                    child: Text('NO'))
+              ],
+            ));
+  }
 }
