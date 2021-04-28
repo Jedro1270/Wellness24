@@ -11,7 +11,6 @@ class PatientAppointmentPage extends StatefulWidget {
 class _PatientAppointmentState extends State<PatientAppointmentPage> {
   DateTime _date = DateTime.now();
   DateFormat format = DateFormat('MM-dd-yyyy');
-  TimeOfDay _time;
 
   Future<Null> _selectDate(BuildContext context) async {
     DateTime _datePicker = await showDatePicker(
@@ -31,30 +30,6 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    _time = TimeOfDay.now();
-  }
-
-  _pickTime() async {
-    TimeOfDay time = await showTimePicker(
-        context: context,
-        initialTime: _time,
-        builder: (BuildContext context, Widget child) {
-          return Theme(
-            data: ThemeData(),
-            child: child,
-          );
-        });
-
-    if (time != null) {
-      setState(() {
-        _time = time;
-      });
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
@@ -62,8 +37,8 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
         leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.push(
-                context, MaterialPageRoute(builder: (context) => PatientHomePage()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => PatientHomePage()));
             }),
       ),
       body: Container(
@@ -71,164 +46,85 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
           child: ListView(
             children: <Widget>[
               Container(
-                child: Row(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Row(
-                      children: [
-                        Text.rich(
-                          TextSpan(
-                            children: [
-                              TextSpan(
-                                text: 'Elimjoyce Abagat\n',
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontFamily: "ShipporiMincho",
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black),
-                              ),
-                              TextSpan(
-                                  text: "Cardiologist",
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontFamily: "ShipporiMincho",
-                                      color: Colors.black)),
-                            ],
-                          ),
-                        ),
-                      ],
+                    ClipOval(
+                      child: Image(
+                        image: AssetImage('assets/sample-patient.jpg'),
+                        width: 180,
+                        height: 180,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ],
-                ),
-              ),
-              Divider(height: 30, color: Colors.transparent),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                    Divider(height: 30, color: Colors.transparent),
+                    Text('Doctor',
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: "ShipporiMincho",
+                            color: Colors.black)),
+                    Divider(height: 30, color: Colors.transparent),
                     Text(
-                      "SCHEDULE",
+                      "Doctor's Schedule",
                       style: TextStyle(
                           fontSize: 20,
                           fontFamily: "ShipporiMincho",
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
-                    Text(
-                      "Limit: 30",
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: "ShipporiMincho",
-                          color: Colors.black),
-                    )
+                    Divider(height: 5, color: Colors.transparent),
+                    Text("12:00 pm - 4:00 pm",
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: "ShipporiMincho",
+                            color: Colors.black)),
+                    Text("Thursday - Saturday",
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: "ShipporiMincho",
+                            color: Colors.black)),
+                    Divider(height: 30, color: Colors.transparent),
+                    Row(
+                      children: [
+                        Text("Pick Date:   ",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: "ShipporiMincho",
+                                color: Colors.black)),
+                        Container(
+                            alignment: Alignment.centerLeft,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Color(0xFF40BEEE), width: 1),
+                                borderRadius: BorderRadius.circular(10.0)),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 4),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text("${format.format(_date)}",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontFamily: "ShipporiMincho",
+                                        color: Colors.black)),
+                                IconButton(
+                                  icon: Icon(Icons.calendar_today,
+                                      color: Colors.blue),
+                                  onPressed: () {
+                                    setState(() {
+                                      _selectDate(context);
+                                      print(format.format(_date));
+                                    });
+                                  },
+                                ),
+                              ],
+                            ))
+                      ],
+                    ),
                   ],
                 ),
               ),
-              Divider(height: 20, thickness: 2, color: Colors.black),
-              Container(
-                  alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text("Clinic Hours:",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontFamily: "ShipporiMincho",
-                              color: Colors.black)),
-                      SizedBox(width: 15),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text("12:00 pm - 4:00 pm",
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  fontFamily: "ShipporiMincho",
-                                  color: Colors.black)),
-                          Text("Thursday - Saturday",
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  fontFamily: "ShipporiMincho",
-                                  color: Colors.black)),
-                        ],
-                      )
-                    ],
-                  )),
-              Divider(height: 30, thickness: 2, color: Colors.black),
-              Row(
-                children: [
-                  Text("Date:   ",
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: "ShipporiMincho",
-                          color: Colors.black)),
-                  Container(
-                      alignment: Alignment.centerLeft,
-                      decoration: BoxDecoration(
-                          border:
-                              Border.all(color: Color(0xFF40BEEE), width: 1),
-                          borderRadius: BorderRadius.circular(20.0)),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text("${format.format(_date)}",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontFamily: "ShipporiMincho",
-                                  color: Colors.black)),
-                          IconButton(
-                            icon:
-                                Icon(Icons.calendar_today, color: Colors.blue),
-                            onPressed: () {
-                              setState(() {
-                                _selectDate(context);
-                                print(format.format(_date));
-                              });
-                            },
-                          ),
-                        ],
-                      ))
-                ],
-              ),
-              Divider(height: 20, thickness: 2, color: Colors.transparent),
-              Row(
-                children: [
-                  Text("Time:  ",
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: "ShipporiMincho",
-                          color: Colors.black)),
-                  Container(
-                      alignment: Alignment.centerLeft,
-                      decoration: BoxDecoration(
-                          border:
-                              Border.all(color: Color(0xFF40BEEE), width: 1),
-                          borderRadius: BorderRadius.circular(20.0)),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text("${_time.hour}:${_time.minute}",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontFamily: "ShipporiMincho",
-                                  color: Colors.black)),
-                          IconButton(
-                            icon: Icon(Icons.access_time, color: Colors.blue),
-                            onPressed: () {
-                              setState(() {
-                                _pickTime();
-                              });
-                            },
-                          ),
-                        ],
-                      ))
-                ],
-              ),
-              Divider(height: 10, color: Colors.transparent),
+              Divider(height: 30, color: Colors.transparent),
               MaterialButton(
                   minWidth: 200,
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
@@ -237,10 +133,10 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                       side: BorderSide(color: Colors.black12)),
                   color: Color(0xFF40BEEE),
                   onPressed: () {},
-                  child: Text("Submit",
+                  child: Text("Schedule Appointment",
                       style: TextStyle(
                           color: Colors.white,
-                          fontSize: 25,
+                          fontSize: 21,
                           fontFamily: "ShipporiMincho",
                           fontWeight: FontWeight.normal)))
             ],
