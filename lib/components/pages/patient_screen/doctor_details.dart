@@ -261,7 +261,6 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                         MaterialPageRoute(
                           builder: (context) => PatientAppointmentPage(doctor: widget.doctor),
                         ));
-                    print('Make an Appointment');
                   },
                 ),
               ),
