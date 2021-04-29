@@ -17,6 +17,9 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
   DateTime _date = DateTime.now();
   DateFormat format = DateFormat('MM-dd-yyyy');
 
+  bool isScheduled = false; // Change to database data
+  bool isAvailable = true; // Change to database data
+
   Future<Null> _selectDate(BuildContext context) async {
     DateTime _datePicker = await showDatePicker(
       context: context,
@@ -56,8 +59,8 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                     ClipOval(
                       child: Image(
                         image: AssetImage('assets/sample-patient.jpg'),
-                        width: 180,
-                        height: 180,
+                        width: 120,
+                        height: 120,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -130,23 +133,48 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                 ),
               ),
               Divider(height: 30, color: Colors.transparent),
-              MaterialButton(
-                  minWidth: 200,
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      side: BorderSide(color: Colors.black12)),
-                  color: Color(0xFF40BEEE),
-                  onPressed: () {
-                    _showDialog(context);
-                  },
-                  child: Text(
-                      "Schedule Appointment", // TODO: this changes based on whether the patient has already scheduled for the picked date
-                      style: TextStyle(
+              isAvailable
+                  ? MaterialButton(
+                      minWidth: 200,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          side: BorderSide(color: Colors.black12)),
+                      color: Color(0xFF40BEEE),
+                      onPressed: () {
+                        isScheduled
+                            ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PatientPriorityNumber(
+                                        doctor: widget.doctor, date: _date)))
+                            : _showDialog(context);
+                      },
+                      child: Text(
+                          isScheduled
+                              ? "View Appointment Number"
+                              : "Schedule Appointment",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 21,
+                              fontFamily: "ShipporiMincho",
+                              fontWeight: FontWeight.normal)))
+                  : Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        color: Colors.red,
+                      ),
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        'Sorry. your doctor is no longer available for appointments. \n\nPlease schedule for a priority number again tomorrow.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
                           color: Colors.white,
-                          fontSize: 21,
-                          fontFamily: "ShipporiMincho",
-                          fontWeight: FontWeight.normal))),
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
             ],
           )),
     );
@@ -161,6 +189,11 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
               actions: [
                 ElevatedButton(
                     onPressed: () {
+                      // add appointment date to firestore
+                      setState(() {
+                        isScheduled = true;
+                      });
+                      
                       Navigator.pop(context);
                       Navigator.push(
                           context,
