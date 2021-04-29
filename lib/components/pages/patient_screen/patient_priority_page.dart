@@ -41,9 +41,9 @@ class _PatientPriorityNumberState extends State<PatientPriorityNumber> {
                 ),
               ),
               Divider(height: 20, color: Colors.transparent),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Expanded(
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: Text('Doctor ${widget.doctor.fullName}',
                       textAlign: TextAlign.center,
                       style: TextStyle(
