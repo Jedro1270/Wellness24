@@ -193,7 +193,7 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                       setState(() {
                         isScheduled = true;
                       });
-                      
+
                       Navigator.pop(context);
                       Navigator.push(
                           context,
