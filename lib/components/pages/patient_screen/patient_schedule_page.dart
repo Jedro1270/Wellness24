@@ -119,7 +119,6 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                                   onPressed: () {
                                     setState(() {
                                       _selectDate(context);
-                                      print(format.format(_date));
                                     });
                                   },
                                 ),
@@ -162,7 +161,6 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
               actions: [
                 ElevatedButton(
                     onPressed: () {
-                      print('yes');
                       Navigator.pop(context);
                       Navigator.push(
                           context,
