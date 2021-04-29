@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/app_bar.dart';
+import 'package:wellness24/components/common/large_button.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
 import 'package:wellness24/components/common/navigation_bar.dart';
 import 'package:provider/provider.dart';
@@ -115,15 +116,16 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
                       ),
                     ),
                   ),
-                  buildAppointmentList(),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => DoctorQueueMonitor()));
-                      },
-                      child: Text('Number Queue'))
+                  LargeButton(
+                    content: 'View Priority Numbers',
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DoctorQueueMonitor()));
+                    },
+                  ),
+                  // buildAppointmentList(),
                 ],
               ),
             ),

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:wellness24/components/common/app_bar.dart';
-import 'package:wellness24/components/pages/patient_screen/patient_home_page.dart';
 import 'package:wellness24/components/pages/patient_screen/patient_priority_page.dart';
+import 'package:wellness24/models/doctor.dart';
 
 class PatientAppointmentPage extends StatefulWidget {
+  final Doctor doctor;
+
+  PatientAppointmentPage({@required this.doctor});
+
   @override
   _PatientAppointmentState createState() => _PatientAppointmentState();
 }
@@ -12,6 +16,9 @@ class PatientAppointmentPage extends StatefulWidget {
 class _PatientAppointmentState extends State<PatientAppointmentPage> {
   DateTime _date = DateTime.now();
   DateFormat format = DateFormat('MM-dd-yyyy');
+
+  bool isScheduled = false; // Change to database data
+  bool isAvailable = true; // Change to database data
 
   Future<Null> _selectDate(BuildContext context) async {
     DateTime _datePicker = await showDatePicker(
@@ -38,12 +45,11 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
         leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => PatientHomePage()));
+              Navigator.pop(context);
             }),
       ),
       body: Container(
-          padding: EdgeInsets.symmetric(vertical: 60.0, horizontal: 25.0),
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 25.0),
           child: ListView(
             children: <Widget>[
               Container(
@@ -53,13 +59,14 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                     ClipOval(
                       child: Image(
                         image: AssetImage('assets/sample-patient.jpg'),
-                        width: 180,
-                        height: 180,
+                        width: 120,
+                        height: 120,
                         fit: BoxFit.cover,
                       ),
                     ),
                     Divider(height: 30, color: Colors.transparent),
-                    Text('Doctor',
+                    Text('Doctor ${widget.doctor.fullName}',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 20,
                             fontFamily: "ShipporiMincho",
@@ -74,12 +81,13 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                           color: Colors.black),
                     ),
                     Divider(height: 5, color: Colors.transparent),
-                    Text("12:00 pm - 4:00 pm",
+                    Text(widget.doctor.workingDays,
                         style: TextStyle(
                             fontSize: 18,
                             fontFamily: "ShipporiMincho",
                             color: Colors.black)),
-                    Text("Thursday - Saturday",
+                    Text(
+                        '${widget.doctor.clinicStartHour} - ${widget.doctor.clinicEndHour}',
                         style: TextStyle(
                             fontSize: 18,
                             fontFamily: "ShipporiMincho",
@@ -103,7 +111,7 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text("${format.format(_date)}",
+                                Text(format.format(_date),
                                     style: TextStyle(
                                         fontSize: 18,
                                         fontFamily: "ShipporiMincho",
@@ -114,7 +122,6 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                                   onPressed: () {
                                     setState(() {
                                       _selectDate(context);
-                                      print(format.format(_date));
                                     });
                                   },
                                 ),
@@ -126,22 +133,48 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                 ),
               ),
               Divider(height: 30, color: Colors.transparent),
-              MaterialButton(
-                  minWidth: 200,
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      side: BorderSide(color: Colors.black12)),
-                  color: Color(0xFF40BEEE),
-                  onPressed: () {
-                    _showDialog(context);
-                  },
-                  child: Text("Schedule Appointment",
-                      style: TextStyle(
+              isAvailable
+                  ? MaterialButton(
+                      minWidth: 200,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          side: BorderSide(color: Colors.black12)),
+                      color: Color(0xFF40BEEE),
+                      onPressed: () {
+                        isScheduled
+                            ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PatientPriorityNumber(
+                                        doctor: widget.doctor, date: _date)))
+                            : _showDialog(context);
+                      },
+                      child: Text(
+                          isScheduled
+                              ? "View Appointment Number"
+                              : "Schedule Appointment",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 21,
+                              fontFamily: "ShipporiMincho",
+                              fontWeight: FontWeight.normal)))
+                  : Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        color: Colors.red,
+                      ),
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        'Sorry. your doctor is no longer available for appointments. \n\nPlease schedule for a priority number again tomorrow.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
                           color: Colors.white,
-                          fontSize: 21,
-                          fontFamily: "ShipporiMincho",
-                          fontWeight: FontWeight.normal)))
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
             ],
           )),
     );
@@ -156,19 +189,22 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
               actions: [
                 ElevatedButton(
                     onPressed: () {
-                      print('yes');
+                      // add appointment date to firestore
+                      setState(() {
+                        isScheduled = true;
+                      });
+
+                      Navigator.pop(context);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => PatientPriorityNumber()));
+                              builder: (context) => PatientPriorityNumber(
+                                  doctor: widget.doctor, date: _date)));
                     },
                     child: Text('YES')),
                 ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PatientAppointmentPage()));
+                      Navigator.pop(context);
                     },
                     child: Text('NO'))
               ],

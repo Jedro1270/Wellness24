@@ -128,7 +128,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                       ),
                     ),
                   ),
-                  buildAppointmentList(),
+                  buildAppointmentList(), // Replace with calendar
                   Divider(height: 20, color: Colors.transparent),
                   LargeButton(
                     content: 'My Current Conditions',
