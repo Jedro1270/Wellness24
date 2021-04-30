@@ -13,7 +13,9 @@ import 'package:path/path.dart';
 class AddMedicalRecord extends StatefulWidget {
   final String title;
 
-  AddMedicalRecord({this.title = 'Title'});
+  AddMedicalRecord({
+    this.title = 'Title',
+  });
 
   @override
   _AddMedicalRecordState createState() => _AddMedicalRecordState();
@@ -23,7 +25,6 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
   TextEditingController noteController = TextEditingController();
   DatabaseService database;
 
-  
   bool editable = true;
   Doctor currentDoctor;
   PickedFile _imageFile;
@@ -36,10 +37,11 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
     database = DatabaseService(uid: uid);
     Doctor doctor = await database.getDoctor(uid);
 
-    if (mounted) { // setState if it is not yet disposed
+    if (mounted) {
+      // setState if it is not yet disposed
       setState(() {
-      currentDoctor = doctor;
-    });
+        currentDoctor = doctor;
+      });
     }
   }
 
@@ -169,21 +171,10 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                       children: <Widget>[
                         ElevatedButton(
                           // onPressed: () => uploadPhoto(this.context),
-                          /*
-
-                          Diri ga error kung i save na notes sa database.
-                          naga The method 'uploadMedicalRecord' was called on null.
-                          Receiver: null
-                          Tried calling: uploadMedicalRecord("notes")
-
-
-                          ang notes lang danay try i upload sa database. kung ma fix, i add ko lang ang image URL hehe
-
-                          -- al
-                          
-                          */
                           onPressed: () {
-                            database.uploadMedicalRecord(noteController.text); 
+                            uploadPhoto(this.context);
+                            database.uploadMedicalRecord(
+                                newTitle, noteController.text);
                           },
                           child: Text(
                             'Save',
@@ -289,7 +280,9 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
 
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(convertedFile);
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-
+    String _url = await taskSnapshot.ref.getDownloadURL();
+    String url = _url.toString();
+    print(url);
     setState(() {
       print("File Uploaded");
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
