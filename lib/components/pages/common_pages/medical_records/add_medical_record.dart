@@ -2,74 +2,60 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness24/components/common/app_bar.dart';
-import 'package:wellness24/components/common/editable_text.dart';
+import 'package:wellness24/components/common/editable_title.dart';
 import 'package:wellness24/models/doctor.dart';
 import 'package:wellness24/models/user.dart';
 import 'package:wellness24/services/database.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:path/path.dart';
 
 class AddMedicalRecord extends StatefulWidget {
+  final String title;
+
+  AddMedicalRecord({
+    this.title = 'Title',
+  });
+
   @override
   _AddMedicalRecordState createState() => _AddMedicalRecordState();
 }
 
 class _AddMedicalRecordState extends State<AddMedicalRecord> {
+  TextEditingController noteController = TextEditingController();
+  DatabaseService database;
+
   bool editable = true;
   Doctor currentDoctor;
   PickedFile _imageFile;
   final ImagePicker _imagePicker = ImagePicker();
+
+  String newTitle;
   String imagePath;
+  dynamic imageUrl;
 
   initializeDoctor(String uid) async {
-    DatabaseService database = DatabaseService(uid: uid);
+    database = DatabaseService(uid: uid);
     Doctor doctor = await database.getDoctor(uid);
 
-    setState(() {
-      currentDoctor = doctor;
-    });
+    if (mounted) {
+      // setState if it is not yet disposed
+      setState(() {
+        currentDoctor = doctor;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    newTitle = widget.title;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     initializeDoctor(user.uid);
-
-    // Future getImage() async {
-    //   final pickedFile = await picker.getImage(source: ImageSource.gallery);
-
-    //   setState(() {
-    //     if (pickedFile != null) {
-    //       _image = File(pickedFile.path);
-    //     } else {
-    //       print('No image selected');
-    //     }
-    //   });
-    // }
-
-    // clearImage() {
-    //   setState(() {
-    //     _image = null;
-    //   });
-    // }
-
-    // final FirebaseStorage storage =
-    //     FirebaseStorage(storageBucket: 'gs://wellness24-95ff9.appspot.com');
-    // Future<String> uploadPic(_image) async {
-    //   String fileName = basename(_image.path);
-    //   // String filePath = 'images/${DateTime.now()}.jpg';
-    //   // uploadTask = storage.ref().child(filePath).putFile(file)
-    //   StorageReference firebaseStorageRef =
-    //       FirebaseStorage.instance.ref().child(fileName);
-    //   StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
-    //   StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-    //   String _url = await taskSnapshot.ref.getDownloadURL();
-    //   // String url = _url.toString();
-    //   print(_url);
-    //   return _url;
-    // }
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -92,9 +78,14 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: EditableTextField(
-                      isEditing: editable,
+                    padding: EdgeInsets.all(10),
+                    child: EditableTitle(
+                      initialText: newTitle,
+                      onSubmitted: (newValue) {
+                        setState(() {
+                          newTitle = newValue;
+                        });
+                      },
                     ),
                   ),
                   Divider(
@@ -161,6 +152,8 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                             maxWidth: MediaQuery.of(context).size.width * 1,
                           ),
                           child: TextField(
+                            key: Key('Notes'),
+                            controller: noteController,
                             keyboardType: TextInputType.multiline,
                             maxLines: null,
                             decoration: InputDecoration(
@@ -178,7 +171,12 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         ElevatedButton(
-                          onPressed: () => uploadPhoto(this.context),
+                          // onPressed: () => uploadPhoto(this.context),
+                          onPressed: () {
+                            uploadPhoto(this.context);
+                            database.uploadMedicalRecord(
+                                newTitle, noteController.text, imageUrl);
+                          },
                           child: Text(
                             'Save',
                             style: TextStyle(
@@ -281,9 +279,13 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
     //converts pickedFile to file
     File convertedFile = File(_imageFile.path);
 
+    dynamic url = firebaseStorageRef.getDownloadURL(); // Use this to get the download URL
+
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(convertedFile);
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-
+    String _url = await taskSnapshot.ref.getDownloadURL();
+    imageUrl = url.toString();
+    print(url);
     setState(() {
       print("File Uploaded");
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -292,3 +294,37 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
     });
   }
 }
+
+// Future getImage() async {
+//   final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+//   setState(() {
+//     if (pickedFile != null) {
+//       _image = File(pickedFile.path);
+//     } else {
+//       print('No image selected');
+//     }
+//   });
+// }
+
+// clearImage() {
+//   setState(() {
+//     _image = null;
+//   });
+// }
+
+// final FirebaseStorage storage =
+//     FirebaseStorage(storageBucket: 'gs://wellness24-95ff9.appspot.com');
+// Future<String> uploadPic(_image) async {
+//   String fileName = basename(_image.path);
+//   // String filePath = 'images/${DateTime.now()}.jpg';
+//   // uploadTask = storage.ref().child(filePath).putFile(file)
+//   StorageReference firebaseStorageRef =
+//       FirebaseStorage.instance.ref().child(fileName);
+//   StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
+//   StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+//   String _url = await taskSnapshot.ref.getDownloadURL();
+//   // String url = _url.toString();
+//   print(_url);
+//   return _url;
+// }

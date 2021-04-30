@@ -29,6 +29,10 @@ class _MedicalRecordsState extends State<MedicalRecords> {
         RecordCard(
           title: 'Blood Test',
           date: DateTime.now(),
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => AddMedicalRecord(title: 'Blood Test')));
+          },
         ) // TODO: replace placeholder
       ];
     }

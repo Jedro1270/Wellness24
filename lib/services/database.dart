@@ -19,6 +19,7 @@ class DatabaseService {
   CollectionReference bloodPressures;
   CollectionReference bloodSugarLevels;
   CollectionReference messages;
+  CollectionReference medicalRecords;
 
   DatabaseService({this.uid, this.firestore}) {
     if (this.firestore == null) {
@@ -33,6 +34,7 @@ class DatabaseService {
     bloodPressures = firestore.collection('bloodPressures');
     bloodSugarLevels = firestore.collection('bloodSugarLevels');
     messages = firestore.collection('messages');
+    medicalRecords = firestore.collection('medicalRecords');
   }
 
   Future<String> getRole() async {
@@ -306,5 +308,15 @@ class DatabaseService {
     }
 
     return false;
+  }
+
+  Future uploadMedicalRecord(
+      String title, String notes, String imageUrl) async {
+    await medicalRecords.add({
+      'title': title,
+      'notes': notes,
+      'dateCreated': DateTime.now(),
+      'imageUrl': imageUrl
+    });
   }
 }
