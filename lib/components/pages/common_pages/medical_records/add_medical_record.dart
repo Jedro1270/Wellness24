@@ -2,16 +2,19 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness24/components/common/app_bar.dart';
-import 'package:wellness24/components/common/editable_text.dart';
+import 'package:wellness24/components/common/editable_title.dart';
 import 'package:wellness24/models/doctor.dart';
 import 'package:wellness24/models/user.dart';
 import 'package:wellness24/services/database.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:path/path.dart';
 
 class AddMedicalRecord extends StatefulWidget {
+  final String title;
+
+  AddMedicalRecord({this.title = 'Title'});
+
   @override
   _AddMedicalRecordState createState() => _AddMedicalRecordState();
 }
@@ -21,15 +24,25 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
   Doctor currentDoctor;
   PickedFile _imageFile;
   final ImagePicker _imagePicker = ImagePicker();
+
+  String newTitle;
   String imagePath;
 
   initializeDoctor(String uid) async {
     DatabaseService database = DatabaseService(uid: uid);
     Doctor doctor = await database.getDoctor(uid);
 
-    setState(() {
+    if (mounted) { // setState if it is not yet disposed
+      setState(() {
       currentDoctor = doctor;
     });
+    }
+  }
+
+  @override
+  void initState() {
+    newTitle = widget.title;
+    super.initState();
   }
 
   @override
@@ -92,9 +105,14 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: EditableTextField(
-                      isEditing: editable,
+                    padding: EdgeInsets.all(10),
+                    child: EditableTitle(
+                      initialText: newTitle,
+                      onSubmitted: (newValue) {
+                        setState(() {
+                          newTitle = newValue;
+                        });
+                      },
                     ),
                   ),
                   Divider(
