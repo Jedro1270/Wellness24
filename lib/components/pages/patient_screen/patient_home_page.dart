@@ -111,9 +111,11 @@ class _PatientHomePageState extends State<PatientHomePage> {
                   Container(
                     height: 200,
                     child: MyDoctorsList(
-                        patientDatabaseRef:
-                            DatabaseService(uid: currentUser.uid).patients,
-                        patientId: currentUser.uid),
+                      patientDatabaseRef:
+                          DatabaseService(uid: currentUser.uid).patients,
+                      patientId: currentUser.uid,
+                      currentPatient: currentPatient,
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30),
@@ -126,7 +128,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                       ),
                     ),
                   ),
-                  buildAppointmentList(),
+                  buildAppointmentList(), // Replace with calendar
                   Divider(height: 20, color: Colors.transparent),
                   LargeButton(
                     content: 'My Current Conditions',

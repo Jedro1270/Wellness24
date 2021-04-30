@@ -2,13 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/pages/patient_screen/doctor_search_page/doctor_info.dart';
 import 'package:wellness24/models/doctor.dart';
+import 'package:wellness24/models/patient.dart';
 import 'package:wellness24/services/database.dart';
 
 class MyDoctorsList extends StatefulWidget {
   final CollectionReference patientDatabaseRef;
   final String patientId;
+  final Patient currentPatient;
 
-  MyDoctorsList({this.patientDatabaseRef, this.patientId});
+  MyDoctorsList({this.patientDatabaseRef, this.patientId, this.currentPatient});
 
   @override
   _MyDoctorsListState createState() => _MyDoctorsListState();
@@ -29,7 +31,7 @@ class _MyDoctorsListState extends State<MyDoctorsList> {
     await Future.forEach(snapshot.data['doctors'], (doctor) async {
       Doctor currentDoctor = await database.getDoctor(doctor['uid']);
 
-      mappedDoctors.add(DoctorInfo(doctor: currentDoctor));
+      mappedDoctors.add(DoctorInfo(doctor: currentDoctor, currentPatient: widget.currentPatient,));
     });
 
     setState(() {
