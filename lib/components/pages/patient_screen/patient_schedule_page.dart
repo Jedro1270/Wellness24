@@ -19,7 +19,7 @@ class PatientAppointmentPage extends StatefulWidget {
 class _PatientAppointmentState extends State<PatientAppointmentPage> {
   DateTime _date = DateTime.now();
   DateFormat format = DateFormat('MM-dd-yyyy');
-  bool isScheduled = false; // Change to database data
+  bool isScheduled = false;
   bool isAvailable = true; // Change to database data
 
   Future updateScheduledStatus(DateTime date) async {
