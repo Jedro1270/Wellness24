@@ -3,11 +3,14 @@ import 'package:intl/intl.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/pages/patient_screen/patient_priority_page.dart';
 import 'package:wellness24/models/doctor.dart';
+import 'package:wellness24/models/patient.dart';
+import 'package:wellness24/services/database.dart';
 
 class PatientAppointmentPage extends StatefulWidget {
   final Doctor doctor;
+  final Patient currentPatient;
 
-  PatientAppointmentPage({@required this.doctor});
+  PatientAppointmentPage({@required this.doctor, this.currentPatient});
 
   @override
   _PatientAppointmentState createState() => _PatientAppointmentState();
@@ -16,9 +19,16 @@ class PatientAppointmentPage extends StatefulWidget {
 class _PatientAppointmentState extends State<PatientAppointmentPage> {
   DateTime _date = DateTime.now();
   DateFormat format = DateFormat('MM-dd-yyyy');
-
   bool isScheduled = false; // Change to database data
   bool isAvailable = true; // Change to database data
+
+  Future updateScheduledStatus(DateTime date) async {
+    bool scheduledStatus = await DatabaseService(uid: widget.currentPatient.uid)
+        .isScheduled(date, widget.doctor.uid);
+    setState(() {
+      isScheduled = scheduledStatus;
+    });
+  }
 
   Future<Null> _selectDate(BuildContext context) async {
     DateTime _datePicker = await showDatePicker(
@@ -34,7 +44,14 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
       setState(() {
         _date = _datePicker;
       });
+      await updateScheduledStatus(_date);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    updateScheduledStatus(_date);
   }
 
   @override
