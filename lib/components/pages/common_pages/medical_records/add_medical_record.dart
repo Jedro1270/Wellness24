@@ -23,7 +23,6 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
   TextEditingController noteController = TextEditingController();
   DatabaseService database;
 
-  
   bool editable = true;
   Doctor currentDoctor;
   PickedFile _imageFile;
@@ -36,10 +35,11 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
     database = DatabaseService(uid: uid);
     Doctor doctor = await database.getDoctor(uid);
 
-    if (mounted) { // setState if it is not yet disposed
+    if (mounted) {
+      // setState if it is not yet disposed
       setState(() {
-      currentDoctor = doctor;
-    });
+        currentDoctor = doctor;
+      });
     }
   }
 
@@ -183,7 +183,7 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                           
                           */
                           onPressed: () {
-                            database.uploadMedicalRecord(noteController.text); 
+                            database.uploadMedicalRecord(noteController.text);
                           },
                           child: Text(
                             'Save',
@@ -286,6 +286,8 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
 
     //converts pickedFile to file
     File convertedFile = File(_imageFile.path);
+
+    dynamic url = firebaseStorageRef.getDownloadURL(); // Use this to get the download URL
 
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(convertedFile);
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
