@@ -99,6 +99,12 @@ flutter:
         - asset: fonts/ShipporiMincho-Medium.ttf
         - asset: fonts/ShipporiMincho-Regular.ttf
         - asset: fonts/ShipporiMincho-SemiBold.ttf
+    - family: Roboto
+      fonts:
+        - asset: fonts/Roboto-Black.ttf
+        - asset: fonts/Roboto-Regular.ttf
+        - asset: fonts/Roboto-Bold.ttf
+        - asset: fonts/Roboto-Medium.ttf
         # - asset: fonts/Schyler-Italic.ttf
         #   style: italic
   #   - family: Trajan Pro
