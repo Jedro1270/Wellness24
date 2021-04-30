@@ -32,6 +32,7 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
 
   String newTitle;
   String imagePath;
+  dynamic imageUrl;
 
   initializeDoctor(String uid) async {
     database = DatabaseService(uid: uid);
@@ -174,7 +175,7 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                           onPressed: () {
                             uploadPhoto(this.context);
                             database.uploadMedicalRecord(
-                                newTitle, noteController.text);
+                                newTitle, noteController.text, imageUrl);
                           },
                           child: Text(
                             'Save',
@@ -278,10 +279,12 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
     //converts pickedFile to file
     File convertedFile = File(_imageFile.path);
 
+    dynamic url = firebaseStorageRef.getDownloadURL(); // Use this to get the download URL
+
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(convertedFile);
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
     String _url = await taskSnapshot.ref.getDownloadURL();
-    String url = _url.toString();
+    imageUrl = url.toString();
     print(url);
     setState(() {
       print("File Uploaded");
