@@ -298,7 +298,16 @@ class DatabaseService {
     });
   }
 
-  Future uploadMedicalRecord(String notes) async {
-    await medicalRecords.add({'notes': notes});
+  Future uploadMedicalRecord(
+    String title,
+    String notes,
+    String imageUrl
+  ) async {
+    await medicalRecords.add({
+      'title': title,
+      'notes': notes,
+      'dateCreated': DateTime.now(),
+      'imageUrl' : imageUrl
+    });
   }
 }
