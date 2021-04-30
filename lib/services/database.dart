@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'package:wellness24/models/blood_pressure.dart';
 import 'package:wellness24/models/blood_sugar_level.dart';
 import 'package:wellness24/models/doctor.dart';
@@ -294,5 +295,16 @@ class DatabaseService {
       'dateCreated': DateTime.now(),
       'content': content
     });
+  }
+
+  Future<bool> isScheduled(DateTime date, String doctorId) async {
+    String dateString = DateFormat('MM-dd-yyyy').format(date);
+    DocumentSnapshot document = await patients.document(uid).get();
+    List dateAppointment = document.data['appointments'][dateString];
+    if (dateAppointment != null) {
+      return dateAppointment.any((id) => id == doctorId);
+    }
+
+    return false;
   }
 }
