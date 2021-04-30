@@ -20,6 +20,10 @@ class AddMedicalRecord extends StatefulWidget {
 }
 
 class _AddMedicalRecordState extends State<AddMedicalRecord> {
+  TextEditingController noteController = TextEditingController();
+  DatabaseService database;
+
+  
   bool editable = true;
   Doctor currentDoctor;
   PickedFile _imageFile;
@@ -29,7 +33,7 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
   String imagePath;
 
   initializeDoctor(String uid) async {
-    DatabaseService database = DatabaseService(uid: uid);
+    database = DatabaseService(uid: uid);
     Doctor doctor = await database.getDoctor(uid);
 
     if (mounted) { // setState if it is not yet disposed
@@ -49,40 +53,6 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     initializeDoctor(user.uid);
-
-    // Future getImage() async {
-    //   final pickedFile = await picker.getImage(source: ImageSource.gallery);
-
-    //   setState(() {
-    //     if (pickedFile != null) {
-    //       _image = File(pickedFile.path);
-    //     } else {
-    //       print('No image selected');
-    //     }
-    //   });
-    // }
-
-    // clearImage() {
-    //   setState(() {
-    //     _image = null;
-    //   });
-    // }
-
-    // final FirebaseStorage storage =
-    //     FirebaseStorage(storageBucket: 'gs://wellness24-95ff9.appspot.com');
-    // Future<String> uploadPic(_image) async {
-    //   String fileName = basename(_image.path);
-    //   // String filePath = 'images/${DateTime.now()}.jpg';
-    //   // uploadTask = storage.ref().child(filePath).putFile(file)
-    //   StorageReference firebaseStorageRef =
-    //       FirebaseStorage.instance.ref().child(fileName);
-    //   StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
-    //   StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-    //   String _url = await taskSnapshot.ref.getDownloadURL();
-    //   // String url = _url.toString();
-    //   print(_url);
-    //   return _url;
-    // }
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -179,6 +149,8 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                             maxWidth: MediaQuery.of(context).size.width * 1,
                           ),
                           child: TextField(
+                            key: Key('Notes'),
+                            controller: noteController,
                             keyboardType: TextInputType.multiline,
                             maxLines: null,
                             decoration: InputDecoration(
@@ -196,7 +168,23 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         ElevatedButton(
-                          onPressed: () => uploadPhoto(this.context),
+                          // onPressed: () => uploadPhoto(this.context),
+                          /*
+
+                          Diri ga error kung i save na notes sa database.
+                          naga The method 'uploadMedicalRecord' was called on null.
+                          Receiver: null
+                          Tried calling: uploadMedicalRecord("notes")
+
+
+                          ang notes lang danay try i upload sa database. kung ma fix, i add ko lang ang image URL hehe
+
+                          -- al
+                          
+                          */
+                          onPressed: () {
+                            database.uploadMedicalRecord(noteController.text); 
+                          },
                           child: Text(
                             'Save',
                             style: TextStyle(
@@ -310,3 +298,37 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
     });
   }
 }
+
+// Future getImage() async {
+//   final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+//   setState(() {
+//     if (pickedFile != null) {
+//       _image = File(pickedFile.path);
+//     } else {
+//       print('No image selected');
+//     }
+//   });
+// }
+
+// clearImage() {
+//   setState(() {
+//     _image = null;
+//   });
+// }
+
+// final FirebaseStorage storage =
+//     FirebaseStorage(storageBucket: 'gs://wellness24-95ff9.appspot.com');
+// Future<String> uploadPic(_image) async {
+//   String fileName = basename(_image.path);
+//   // String filePath = 'images/${DateTime.now()}.jpg';
+//   // uploadTask = storage.ref().child(filePath).putFile(file)
+//   StorageReference firebaseStorageRef =
+//       FirebaseStorage.instance.ref().child(fileName);
+//   StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
+//   StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+//   String _url = await taskSnapshot.ref.getDownloadURL();
+//   // String url = _url.toString();
+//   print(_url);
+//   return _url;
+// }
