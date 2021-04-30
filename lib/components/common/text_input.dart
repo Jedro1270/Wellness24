@@ -5,7 +5,7 @@ class TextInput extends StatefulWidget {
   final keyboardType;
   final obscureText;
 
-  TextInput({this.hint, this.keyboardType, this.obscureText});
+  TextInput({this.hint, this.keyboardType, this.obscureText = false});
 
   @override
   _TextInputState createState() => _TextInputState();
