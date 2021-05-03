@@ -12,10 +12,9 @@ import 'package:path/path.dart';
 
 class AddMedicalRecord extends StatefulWidget {
   final String title;
+  final String imageurl;
 
-  AddMedicalRecord({
-    this.title = 'Title',
-  });
+  AddMedicalRecord({this.title = 'Title', this.imageurl});
 
   @override
   _AddMedicalRecordState createState() => _AddMedicalRecordState();
@@ -49,6 +48,7 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
   @override
   void initState() {
     newTitle = widget.title;
+    imageUrl = widget.imageurl;
     super.initState();
   }
 
@@ -173,9 +173,13 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                         ElevatedButton(
                           // onPressed: () => uploadPhoto(this.context),
                           onPressed: () {
-                            uploadPhoto(this.context);
                             database.uploadMedicalRecord(
                                 newTitle, noteController.text, imageUrl);
+                            print('image url: $imageUrl');
+                            print("File Uploaded");
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text('File Uploaded'),
+                            ));
                           },
                           child: Text(
                             'Save',
@@ -251,6 +255,7 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
         Divider(height: 25, color: Colors.transparent),
         MaterialButton(
           onPressed: () {
+            uploadPhoto(this.context);
             print('Done');
             Navigator.pop(this.context);
           },
@@ -279,52 +284,13 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
     //converts pickedFile to file
     File convertedFile = File(_imageFile.path);
 
-    dynamic url = firebaseStorageRef.getDownloadURL(); // Use this to get the download URL
-
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(convertedFile);
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
     String _url = await taskSnapshot.ref.getDownloadURL();
-    imageUrl = url.toString();
-    print(url);
+    
     setState(() {
-      print("File Uploaded");
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('File Uploaded'),
-      ));
+      imageUrl = _url;
+      print(imageUrl);
     });
   }
 }
-
-// Future getImage() async {
-//   final pickedFile = await picker.getImage(source: ImageSource.gallery);
-
-//   setState(() {
-//     if (pickedFile != null) {
-//       _image = File(pickedFile.path);
-//     } else {
-//       print('No image selected');
-//     }
-//   });
-// }
-
-// clearImage() {
-//   setState(() {
-//     _image = null;
-//   });
-// }
-
-// final FirebaseStorage storage =
-//     FirebaseStorage(storageBucket: 'gs://wellness24-95ff9.appspot.com');
-// Future<String> uploadPic(_image) async {
-//   String fileName = basename(_image.path);
-//   // String filePath = 'images/${DateTime.now()}.jpg';
-//   // uploadTask = storage.ref().child(filePath).putFile(file)
-//   StorageReference firebaseStorageRef =
-//       FirebaseStorage.instance.ref().child(fileName);
-//   StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
-//   StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-//   String _url = await taskSnapshot.ref.getDownloadURL();
-//   // String url = _url.toString();
-//   print(_url);
-//   return _url;
-// }
