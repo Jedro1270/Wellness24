@@ -28,9 +28,11 @@ class _PatientHomePageState extends State<PatientHomePage> {
     DatabaseService database = DatabaseService();
     Patient patient = await database.getPatient(uid);
 
-    setState(() {
-      currentPatient = patient;
-    });
+    if (mounted) {
+      setState(() {
+        currentPatient = patient;
+      });
+    }
   }
 
   @override
