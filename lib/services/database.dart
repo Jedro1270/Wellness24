@@ -4,6 +4,7 @@ import 'package:wellness24/models/blood_pressure.dart';
 import 'package:wellness24/models/blood_sugar_level.dart';
 import 'package:wellness24/models/doctor.dart';
 import 'package:wellness24/models/emergency_contact.dart';
+import 'package:wellness24/models/medical_record.dart';
 import 'package:wellness24/models/new_account.dart';
 import 'package:wellness24/models/patient.dart';
 
@@ -310,13 +311,22 @@ class DatabaseService {
     return false;
   }
 
-  Future uploadMedicalRecord(
-      String title, String notes, String imageUrl) async {
+  Future uploadMedicalRecord(MedicalRecord medicalRecord) async {
     await medicalRecords.add({
-      'title': title,
-      'notes': notes,
-      'dateCreated': DateTime.now(),
-      'imageUrl': imageUrl
+      'patientUid': medicalRecord.patientUid,
+      'title': medicalRecord.title,
+      'notes': medicalRecord.notes,
+      'lastEdited': medicalRecord.lastEdited,
+      'imageUrl': medicalRecord.imageUrl
     });
   }
+
+  // Future<List<MedicalRecord>> getMedicalRecords(String patientUid) async {
+  //   QuerySnapshot snapshot = await medicalRecords.getDocuments();
+  //   var result = snapshot.documents
+  //       .where((document) => document.data['patientUid'] == patientUid)
+  //       .toList();
+
+  //   print(result);
+  // }
 }
