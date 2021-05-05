@@ -13,11 +13,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart';
 
 class AddMedicalRecord extends StatefulWidget {
-  final String title;
-  final String imageurl;
   final Patient patient;
+  final MedicalRecord medicalRecord;
+  final bool createNewRecord;
 
-  AddMedicalRecord({this.title = 'Title', this.imageurl, this.patient});
+  AddMedicalRecord({this.patient, this.medicalRecord, this.createNewRecord});
 
   @override
   _AddMedicalRecordState createState() => _AddMedicalRecordState();
@@ -27,12 +27,11 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
   TextEditingController noteController = TextEditingController();
   DatabaseService database;
 
-  bool editable = true;
   Doctor currentDoctor;
   PickedFile _imageFile;
   final ImagePicker _imagePicker = ImagePicker();
 
-  MedicalRecord medicalRecord;
+  MedicalRecord editedMedicalRecord;
 
   String newTitle;
   String imagePath;
@@ -52,9 +51,10 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
 
   @override
   void initState() {
-    newTitle = widget.title;
-    imageUrl = widget.imageurl;
-    medicalRecord = MedicalRecord(patientUid: widget.patient.uid);
+    editedMedicalRecord = MedicalRecord(patientUid: widget.patient.uid);
+
+    newTitle = widget.medicalRecord.title ?? 'Title';
+    imageUrl = widget.medicalRecord.imageUrl ?? '';
     super.initState();
   }
 
@@ -95,7 +95,7 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                         onSubmitted: (newValue) {
                           setState(() {
                             newTitle = newValue;
-                            medicalRecord.title = newValue;
+                            editedMedicalRecord.title = newValue;
                           });
                         },
                       ),
@@ -167,7 +167,7 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                               controller: noteController,
                               onChanged: (value) {
                                 setState(() {
-                                  medicalRecord.notes = value;
+                                  editedMedicalRecord.notes = value;
                                 });
                               },
                               keyboardType: TextInputType.multiline,
@@ -191,11 +191,15 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                               String imageUrl = await uploadPhoto(this.context);
 
                               setState(() {
-                                medicalRecord.imageUrl = imageUrl;
-                                medicalRecord.lastEdited = DateTime.now();
+                                editedMedicalRecord.imageUrl = imageUrl;
+                                editedMedicalRecord.lastEdited = DateTime.now();
                               });
-                              
-                              database.uploadMedicalRecord(medicalRecord);
+
+                              if (widget.createNewRecord) {
+                                database
+                                    .uploadMedicalRecord(editedMedicalRecord);
+                              }
+
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
                                 content: Text('File Uploaded'),
