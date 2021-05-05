@@ -151,6 +151,19 @@ class _MedicalRecordsState extends State<MedicalRecords> {
                           height: 180,
                           child: ListView(
                               primary: false, children: medicalRecords)),
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AddMedicalRecord()));
+                        },
+                        icon: Icon(Icons.add),
+                        label: Text('Add Medical Record'),
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.orange[200],
+                            onPrimary: Colors.black),
+                      ),
                       TextButton(
                           onPressed: () {},
                           child: Text(
