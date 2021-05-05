@@ -331,7 +331,6 @@ class DatabaseService {
 
     DocumentSnapshot updatedDoc = await doctors.document(doctorId).get();
     dynamic priorityNum = updatedDoc.data['appointments'][dateString];
-    print('priorityNum ' + priorityNum.toString());
 
     await patients.document(uid).updateData({
       'appointments.$dateString': FieldValue.arrayUnion([
