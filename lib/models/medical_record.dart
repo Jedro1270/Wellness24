@@ -1,4 +1,5 @@
 class MedicalRecord {
+  String id;
   String patientUid;
   String title;
   String imageUrl;
@@ -7,6 +8,7 @@ class MedicalRecord {
 
   MedicalRecord(
       {this.patientUid,
+      this.id,
       this.title,
       this.imageUrl,
       this.notes,
