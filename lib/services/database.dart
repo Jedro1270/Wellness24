@@ -305,7 +305,7 @@ class DatabaseService {
     DocumentSnapshot document = await patients.document(uid).get();
     List dateAppointment = document.data['appointments'][dateString];
     if (dateAppointment != null) {
-      return dateAppointment.any((id) => id == doctorId);
+      return dateAppointment.any((info) => info['doctorId'] == doctorId);
     }
 
     return false;
