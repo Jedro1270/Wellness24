@@ -319,4 +319,29 @@ class DatabaseService {
       'imageUrl': imageUrl
     });
   }
+
+  Future addAppointment(String doctorId, DateTime date) async {
+    String dateString = DateFormat('MM-dd-yyyy').format(date);
+
+    await doctors.document(doctorId).updateData({
+      'appointments.$dateString':
+          FieldValue == null ? 1 : FieldValue.increment(1)
+    });
+
+    DocumentSnapshot updatedDoc = await doctors.document(doctorId).get();
+    dynamic priorityNum = updatedDoc.data['appointments'][dateString];
+    print('priorityNum ' + priorityNum.toString());
+
+    await patients.document(uid).updateData({
+      'appointments.$dateString': FieldValue == null
+          ? [
+              {doctorId: doctorId, priorityNum: 1}
+            ]
+          : FieldValue.arrayUnion([
+              {doctorId: doctorId, priorityNum: 1}
+            ])
+    });
+
+    print(priorityNum);
+  }
 }
