@@ -321,12 +321,20 @@ class DatabaseService {
     });
   }
 
-  // Future<List<MedicalRecord>> getMedicalRecords(String patientUid) async {
-  //   QuerySnapshot snapshot = await medicalRecords.getDocuments();
-  //   var result = snapshot.documents
-  //       .where((document) => document.data['patientUid'] == patientUid)
-  //       .toList();
+  Future<List<MedicalRecord>> getMedicalRecords(String patientUid) async {
+    QuerySnapshot snapshot = await medicalRecords.getDocuments();
+    var result = snapshot.documents
+        .where((document) => document.data['patientUid'] == patientUid)
+        .toList();
 
-  //   print(result);
-  // }
+    return result
+        .map((document) => MedicalRecord(
+              patientUid: document.data['patientUid'],
+              title: document.data['title'],
+              notes: document.data['notes'],
+              lastEdited: document.data['lastEdited'].toDate(),
+              imageUrl: document.data['imageUrl'],
+            ))
+        .toList();
+  }
 }
