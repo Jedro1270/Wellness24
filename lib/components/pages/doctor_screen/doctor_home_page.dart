@@ -30,13 +30,17 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
       User user = Provider.of<User>(context, listen: false);
       DatabaseService database = DatabaseService(uid: user.uid);
       Doctor doctor = await database.getDoctor(user.uid);
-      setState(() {
-        currentDoctor = doctor;
-      });
+      if (mounted) {
+        setState(() {
+          currentDoctor = doctor;
+        });
+      }
     } else {
-      setState(() {
-        currentDoctor = widget.mockDoctor;
-      });
+      if (mounted) {
+        setState(() {
+          currentDoctor = widget.mockDoctor;
+        });
+      }
     }
   }
 

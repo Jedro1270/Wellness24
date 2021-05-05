@@ -6,29 +6,29 @@ import 'package:cloud_firestore_mocks/cloud_firestore_mocks.dart';
 import 'package:wellness24/services/database.dart';
 
 void main() {
-  testWidgets(
-      'Medical History should show the list of medical history of the patient',
-      (WidgetTester tester) async {
-    await tester.runAsync(() async {
-      final MockFirestoreInstance instance = MockFirestoreInstance();
+  // testWidgets(
+  //     'Medical History should show the list of medical history of the patient',
+  //     (WidgetTester tester) async {
+  //   await tester.runAsync(() async {
+  //     final MockFirestoreInstance instance = MockFirestoreInstance();
 
-      final String uid = '101';
-      final DatabaseService database =
-          DatabaseService(uid: uid, firestore: instance);
+  //     final String uid = '101';
+  //     final DatabaseService database =
+  //         DatabaseService(uid: uid, firestore: instance);
 
-      await instance.collection('patients').document(uid).setData({
-        'medicalHistory': ['asthma', 'diabetes'],
-        'birthDate': DateTime(2000, 1, 1)
-      });
+  //     await instance.collection('patients').document(uid).setData({
+  //       'medicalHistory': ['asthma', 'diabetes'],
+  //       'birthDate': DateTime(2000, 1, 1)
+  //     });
 
-      Patient testPatient = await database.getPatient(uid);
+  //     Patient testPatient = await database.getPatient(uid);
 
-      await tester.pumpWidget(MaterialApp(
-        home: MedicalRecords(editable: false, patient: testPatient),
-      ));
+  //     await tester.pumpWidget(MaterialApp(
+  //       home: MedicalRecords(editable: false, patient: testPatient),
+  //     ));
 
-      expect(find.text('asthma'), findsOneWidget);
-      expect(find.text('diabetes'), findsOneWidget);
-    });
-  });
+  //     expect(find.text('asthma'), findsOneWidget);
+  //     expect(find.text('diabetes'), findsOneWidget);
+  //   });
+  // });
 }

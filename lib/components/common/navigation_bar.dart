@@ -37,10 +37,7 @@ class NavBar extends StatelessWidget {
           leading: Icon(Icons.logout, color: Colors.blueAccent),
           title: Text('Log out'),
           onTap: () async {
-            print("Log out");
             await auth.signOut();
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Login()));
           },
         ),
       ],

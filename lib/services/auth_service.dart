@@ -4,7 +4,9 @@ import 'package:wellness24/models/user.dart';
 class AuthService {
   FirebaseAuth auth;
 
-  AuthService({this.auth});
+  AuthService({this.auth}) {
+    this.auth = this.auth ?? FirebaseAuth.instance;
+  }
 
   User _userFromFirebase(FirebaseUser user) {
     return user != null ? User(uid: user.uid, email: user.email) : null;
