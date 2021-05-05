@@ -24,7 +24,7 @@ class RecordCard extends StatelessWidget {
               Text(
                 title,
                 style: TextStyle(
-                  fontSize: 25,
+                  fontSize: 20,
                   fontFamily: 'ShipporiMincho',
                   fontWeight: FontWeight.bold,
                 ),
