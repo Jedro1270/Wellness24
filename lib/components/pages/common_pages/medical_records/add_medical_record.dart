@@ -53,8 +53,9 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
   void initState() {
     editedMedicalRecord = MedicalRecord(patientUid: widget.patient.uid);
 
-    newTitle = widget.medicalRecord.title ?? 'Title';
-    imageUrl = widget.medicalRecord.imageUrl ?? '';
+    noteController.text = widget.medicalRecord.notes;
+    newTitle = widget.medicalRecord?.title ?? 'Title';
+    imageUrl = widget.medicalRecord?.imageUrl ?? '';
     super.initState();
   }
 
@@ -198,6 +199,9 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                               if (widget.createNewRecord) {
                                 database
                                     .uploadMedicalRecord(editedMedicalRecord);
+                              } else {
+                                database
+                                    .updateMedicalRecord(editedMedicalRecord);
                               }
 
                               ScaffoldMessenger.of(context)
@@ -299,17 +303,21 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
   }
 
   Future<String> uploadPhoto(BuildContext context) async {
-    String fileName = basename(_imageFile.path);
-    StorageReference firebaseStorageRef =
-        FirebaseStorage.instance.ref().child(fileName);
+    try {
+      String fileName = basename(_imageFile.path);
+      StorageReference firebaseStorageRef =
+          FirebaseStorage.instance.ref().child(fileName);
 
-    //converts pickedFile to file
-    File convertedFile = File(_imageFile.path);
+      //converts pickedFile to file
+      File convertedFile = File(_imageFile.path);
 
-    StorageUploadTask uploadTask = firebaseStorageRef.putFile(convertedFile);
-    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-    String _url = await taskSnapshot.ref.getDownloadURL();
+      StorageUploadTask uploadTask = firebaseStorageRef.putFile(convertedFile);
+      StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+      String _url = await taskSnapshot.ref.getDownloadURL();
 
-    return _url;
+      return _url;
+    } catch (error) {
+      return '';
+    }
   }
 }
