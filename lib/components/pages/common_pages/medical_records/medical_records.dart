@@ -91,18 +91,6 @@ class _MedicalRecordsState extends State<MedicalRecords> {
                 })
           ],
         ),
-        // floatingActionButton: isDoctor
-        //     ? FloatingActionButton(
-        //         child: Icon(Icons.add),
-        //         onPressed: () {
-        //           Navigator.push(
-        //               context,
-        //               MaterialPageRoute(
-        //                   builder: (context) =>
-        //                       AddMedicalRecord(patient: widget.patient)));
-        //         },
-        //       )
-        //     : Container(),
         body: Container(
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             child: Column(children: [
@@ -159,7 +147,7 @@ class _MedicalRecordsState extends State<MedicalRecords> {
                       Divider(thickness: 2),
                       SizedBox(
                           height: 80,
-                          child: ListView(primary: false, children: [])),
+                          child: ListView(primary: false, children: medicalRecordCards)),
                       isDoctor
                           ? ElevatedButton.icon(
                               onPressed: () {
@@ -168,6 +156,7 @@ class _MedicalRecordsState extends State<MedicalRecords> {
                                     MaterialPageRoute(
                                         builder: (context) => AddMedicalRecord(
                                               patient: widget.patient,
+                                              createNewRecord: true,
                                             )));
                               },
                               icon: Icon(Icons.add),
