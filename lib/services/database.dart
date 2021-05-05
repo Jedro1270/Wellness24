@@ -321,6 +321,16 @@ class DatabaseService {
     });
   }
 
+  Future updateMedicalRecord(MedicalRecord medicalRecord) async {
+    await medicalRecords.document(medicalRecord.id).setData({
+      'patientUid': medicalRecord.patientUid,
+      'title': medicalRecord.title,
+      'notes': medicalRecord.notes,
+      'lastEdited': medicalRecord.lastEdited,
+      'imageUrl': medicalRecord.imageUrl
+    });
+  }
+
   Future<List<MedicalRecord>> getMedicalRecords(String patientUid) async {
     QuerySnapshot snapshot = await medicalRecords.getDocuments();
     var result = snapshot.documents
@@ -329,6 +339,7 @@ class DatabaseService {
 
     return result
         .map((document) => MedicalRecord(
+              id: document.documentID,
               patientUid: document.data['patientUid'],
               title: document.data['title'],
               notes: document.data['notes'],
