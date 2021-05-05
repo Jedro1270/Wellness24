@@ -334,17 +334,12 @@ class DatabaseService {
     print('priorityNum ' + priorityNum.toString());
 
     await patients.document(uid).updateData({
-      'appointments.$dateString': FieldValue == null
-          ? [
-              {doctorId: doctorId, priorityNum: 1}
-            ]
-          : FieldValue.arrayUnion([
-              {doctorId: doctorId, priorityNum: 1}
-            ])
+      'appointments.$dateString': FieldValue.arrayUnion([
+        {'doctorId': doctorId, 'priorityNum': priorityNum}
+      ])
     });
-
-    print(priorityNum);
   }
+
   // Future<List<MedicalRecord>> getMedicalRecords(String patientUid) async {
   //   QuerySnapshot snapshot = await medicalRecords.getDocuments();
   //   var result = snapshot.documents
