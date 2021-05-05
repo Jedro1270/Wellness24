@@ -81,18 +81,18 @@ class _MedicalRecordsState extends State<MedicalRecords> {
                 })
           ],
         ),
-        floatingActionButton: isDoctor
-            ? FloatingActionButton(
-                child: Icon(Icons.add),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              AddMedicalRecord(patient: widget.patient)));
-                },
-              )
-            : Container(),
+        // floatingActionButton: isDoctor
+        //     ? FloatingActionButton(
+        //         child: Icon(Icons.add),
+        //         onPressed: () {
+        //           Navigator.push(
+        //               context,
+        //               MaterialPageRoute(
+        //                   builder: (context) =>
+        //                       AddMedicalRecord(patient: widget.patient)));
+        //         },
+        //       )
+        //     : Container(),
         body: Container(
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             child: Column(children: [
@@ -148,22 +148,25 @@ class _MedicalRecordsState extends State<MedicalRecords> {
                       ),
                       Divider(thickness: 2),
                       SizedBox(
-                          height: 180,
+                          height: 80,
                           child: ListView(
                               primary: false, children: medicalRecords)),
-                      ElevatedButton.icon(
+                      
+                      isDoctor ? ElevatedButton.icon(
                         onPressed: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => AddMedicalRecord()));
+                                  builder: (context) => AddMedicalRecord(patient: widget.patient,)));
                         },
                         icon: Icon(Icons.add),
                         label: Text('Add Medical Record'),
                         style: ElevatedButton.styleFrom(
                             primary: Colors.orange[200],
                             onPrimary: Colors.black),
-                      ),
+                      )
+                      : Container(),
+
                       TextButton(
                           onPressed: () {},
                           child: Text(
