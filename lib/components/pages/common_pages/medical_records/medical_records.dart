@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/pages/common_pages/medical_records/add_medical_record.dart';
 import 'package:wellness24/components/pages/common_pages/medical_records/record_card.dart';
+import 'package:wellness24/models/medical_record.dart';
 import 'package:wellness24/models/patient.dart';
 import 'package:wellness24/models/user.dart';
 import 'package:wellness24/services/database.dart';
@@ -19,7 +20,8 @@ class MedicalRecords extends StatefulWidget {
 
 class _MedicalRecordsState extends State<MedicalRecords> {
   List<RecordCard> healthHistory = [];
-  List<RecordCard> medicalRecords = [];
+  List<RecordCard> medicalRecordCards = [];
+  DatabaseService databaseService;
 
   bool isDoctor = false;
 
@@ -35,7 +37,9 @@ class _MedicalRecordsState extends State<MedicalRecords> {
   }
 
   _initializeBody(String uid) async {
-    String role = await DatabaseService(uid: uid).getRole();
+    databaseService = DatabaseService(uid: uid);
+
+    String role = await databaseService.getRole();
 
     if (role == 'Doctor') {
       if (mounted) {
@@ -45,23 +49,29 @@ class _MedicalRecordsState extends State<MedicalRecords> {
       }
     }
 
-    medicalRecords = [
-      RecordCard(
-        title: 'Blood Test',
-        date: DateTime.now(),
-        onTap: isDoctor
-            ? () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AddMedicalRecord(
-                              title: 'Blood Test',
-                              patient: widget.patient,
-                            )));
-              }
-            : null,
-      ) // TODO: replace placeholder
-    ];
+    List<MedicalRecord> medicalRecords =
+        await databaseService.getMedicalRecords(widget.patient.uid);
+
+    setState(() {
+      medicalRecordCards = medicalRecords
+          .map((medicalRecord) => RecordCard(
+                title: medicalRecord.title,
+                date: medicalRecord.lastEdited,
+                onTap: isDoctor
+                    ? () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddMedicalRecord(
+                                      patient: widget.patient,
+                                      medicalRecord: medicalRecord,
+                                      createNewRecord: false,
+                                    )));
+                      }
+                    : null,
+              ))
+          .toList();
+    });
   }
 
   @override
@@ -88,8 +98,10 @@ class _MedicalRecordsState extends State<MedicalRecords> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            AddMedicalRecord(patient: widget.patient)));
+                        builder: (context) => AddMedicalRecord(
+                              patient: widget.patient,
+                              createNewRecord: true,
+                            )));
               },
             )
           : Container(),
@@ -124,7 +136,7 @@ class _MedicalRecordsState extends State<MedicalRecords> {
             ),
             Expanded(
               flex: 1,
-              child: ListView(primary: false, children: medicalRecords),
+              child: ListView(primary: false, children: medicalRecordCards),
             ),
           ],
         ),
