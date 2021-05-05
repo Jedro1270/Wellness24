@@ -205,8 +205,11 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                   Text('Are you sure you want to schedule an appointment?'),
               actions: [
                 ElevatedButton(
-                    onPressed: () {
-                      // add appointment date to firestore
+                    onPressed: () async {
+                      DatabaseService database =
+                          DatabaseService(uid: widget.currentPatient.uid);
+                      await database.addAppointment(widget.doctor.uid, _date);
+
                       setState(() {
                         isScheduled = true;
                       });
