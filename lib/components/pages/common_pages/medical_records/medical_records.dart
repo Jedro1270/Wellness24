@@ -52,26 +52,28 @@ class _MedicalRecordsState extends State<MedicalRecords> {
     List<MedicalRecord> medicalRecords =
         await databaseService.getMedicalRecords(widget.patient.uid);
 
-    setState(() {
-      medicalRecordCards = medicalRecords
-          .map((medicalRecord) => RecordCard(
-                title: medicalRecord.title,
-                date: medicalRecord.lastEdited,
-                onTap: isDoctor
-                    ? () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AddMedicalRecord(
-                                      patient: widget.patient,
-                                      medicalRecord: medicalRecord,
-                                      createNewRecord: false,
-                                    )));
-                      }
-                    : null,
-              ))
-          .toList();
-    });
+    List recordCards = medicalRecords
+        .map((medicalRecord) => RecordCard(
+            title: medicalRecord.title,
+            date: medicalRecord.lastEdited,
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AddMedicalRecord(
+                            patient: widget.patient,
+                            medicalRecord: medicalRecord,
+                            createNewRecord: false,
+                            editable: isDoctor,
+                          )));
+            }))
+        .toList();
+
+    if (mounted) {
+      setState(() {
+        medicalRecordCards = recordCards;
+      });
+    }
   }
 
   @override
@@ -147,7 +149,8 @@ class _MedicalRecordsState extends State<MedicalRecords> {
                       Divider(thickness: 2),
                       SizedBox(
                           height: 80,
-                          child: ListView(primary: false, children: medicalRecordCards)),
+                          child: ListView(
+                              primary: false, children: medicalRecordCards)),
                       isDoctor
                           ? ElevatedButton.icon(
                               onPressed: () {
