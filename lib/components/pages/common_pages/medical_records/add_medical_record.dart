@@ -53,7 +53,7 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
   void initState() {
     editedMedicalRecord = MedicalRecord(patientUid: widget.patient.uid);
 
-    noteController.text = widget.medicalRecord.notes;
+    noteController.text = widget.medicalRecord?.notes ?? '';
     newTitle = widget.medicalRecord?.title ?? 'Title';
     imageUrl = widget.medicalRecord?.imageUrl ?? '';
     super.initState();
@@ -85,12 +85,13 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
           child: ListView(
             children: <Widget>[
               Container(
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      padding: EdgeInsets.all(10),
+                      // padding: EdgeInsets.all(5),
                       child: EditableTitle(
                         initialText: newTitle,
                         onSubmitted: (newValue) {
@@ -106,6 +107,13 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                       height: 30.0,
                     ),
                     Container(
+                      margin: EdgeInsets.symmetric(vertical: 12),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 15, horizontal: 18),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.blueAccent[100],
+                      ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -116,6 +124,9 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                                   context: context,
                                   builder: ((builder) => optionView()));
                             },
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.orange[200],
+                                onPrimary: Colors.black),
                             child: Text(
                               'Upload File',
                               style: TextStyle(
@@ -160,6 +171,13 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                                 fontWeight: FontWeight.bold),
                           ),
                           Container(
+                            margin: EdgeInsets.symmetric(vertical: 12),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 18),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.blueAccent[100],
+                            ),
                             constraints: BoxConstraints(
                               maxWidth: MediaQuery.of(context).size.width * 1,
                             ),
@@ -174,9 +192,10 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                               keyboardType: TextInputType.multiline,
                               maxLines: null,
                               decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: 'Add notes',
-                              ),
+                                  border: OutlineInputBorder(),
+                                  hintText: 'Add notes',
+                                  fillColor: Colors.white,
+                                  filled: true),
                             ),
                           ),
                         ],
