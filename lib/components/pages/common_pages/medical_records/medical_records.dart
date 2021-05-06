@@ -119,7 +119,9 @@ class _MedicalRecordsState extends State<MedicalRecords> {
                             ListView(primary: false, children: healthHistory),
                       ),
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            modalList(context);
+                          },
                           child: Text(
                             'View all',
                             style: TextStyle(
@@ -151,24 +153,27 @@ class _MedicalRecordsState extends State<MedicalRecords> {
                           height: 80,
                           child: ListView(
                               primary: false, children: medicalRecords)),
-                      
-                      isDoctor ? ElevatedButton.icon(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AddMedicalRecord(patient: widget.patient,)));
-                        },
-                        icon: Icon(Icons.add),
-                        label: Text('Add Medical Record'),
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.orange[200],
-                            onPrimary: Colors.black),
-                      )
-                      : Container(),
-
+                      isDoctor
+                          ? ElevatedButton.icon(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AddMedicalRecord(
+                                              patient: widget.patient,
+                                            )));
+                              },
+                              icon: Icon(Icons.add),
+                              label: Text('Add Medical Record'),
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.orange[200],
+                                  onPrimary: Colors.black),
+                            )
+                          : Container(),
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            modalList(context);
+                          },
                           child: Text(
                             'View all',
                             style: TextStyle(
@@ -180,5 +185,50 @@ class _MedicalRecordsState extends State<MedicalRecords> {
                     ],
                   ))
             ])));
+  }
+
+  modalList(context) {
+    return showGeneralDialog(
+        context: context,
+        transitionDuration: Duration(microseconds: 1000),
+        pageBuilder: (BuildContext context, Animation first, Animation second) {
+          return Scaffold(
+              body: Container(
+                  margin: EdgeInsets.all(30),
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.blueAccent[100],
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: IconButton(
+                            alignment: Alignment.topRight,
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(Icons.close)),
+                      ),
+                      Container(
+                          child: Text(
+                        'Medical Records',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontFamily: "ShipporiMincho",
+                          fontWeight: FontWeight.bold
+                        ),
+                      )),
+                      SizedBox(
+                          height: 150,
+                          child: ListView(
+                              primary: false, children: medicalRecords)),
+                    ],
+                  )));
+        });
   }
 }
