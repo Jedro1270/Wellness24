@@ -16,8 +16,13 @@ class AddMedicalRecord extends StatefulWidget {
   final Patient patient;
   final MedicalRecord medicalRecord;
   final bool createNewRecord;
+  final bool editable;
 
-  AddMedicalRecord({this.patient, this.medicalRecord, this.createNewRecord});
+  AddMedicalRecord(
+      {this.patient,
+      this.medicalRecord,
+      this.createNewRecord,
+      this.editable = true});
 
   @override
   _AddMedicalRecordState createState() => _AddMedicalRecordState();
@@ -51,7 +56,8 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
 
   @override
   void initState() {
-    editedMedicalRecord = MedicalRecord(patientUid: widget.patient.uid);
+    editedMedicalRecord = MedicalRecord(
+        patientUid: widget.patient.uid, id: widget.medicalRecord?.id);
 
     noteController.text = widget.medicalRecord?.notes ?? '';
     newTitle = widget.medicalRecord?.title ?? 'Title';
@@ -94,6 +100,7 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                       // padding: EdgeInsets.all(5),
                       child: EditableTitle(
                         initialText: newTitle,
+                        readOnly: !widget.editable,
                         onSubmitted: (newValue) {
                           setState(() {
                             newTitle = newValue;
@@ -118,24 +125,25 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          ElevatedButton(
-                            onPressed: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: ((builder) => optionView()));
-                            },
-                            style: ElevatedButton.styleFrom(
-                                primary: Colors.orange[200],
-                                onPrimary: Colors.black),
-                            child: Text(
-                              'Upload File',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18.0,
-                                fontFamily: 'ShipporiMincho',
+                          if (widget.editable)
+                            ElevatedButton(
+                              onPressed: () {
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: ((builder) => optionView()));
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.orange[200],
+                                  onPrimary: Colors.black),
+                              child: Text(
+                                'Upload File',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18.0,
+                                  fontFamily: 'ShipporiMincho',
+                                ),
                               ),
                             ),
-                          ),
                           Container(
                             height: 200,
                             width: 400,
@@ -183,6 +191,7 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                             ),
                             child: TextField(
                               key: Key('Notes'),
+                              readOnly: !widget.editable,
                               controller: noteController,
                               onChanged: (value) {
                                 setState(() {
@@ -206,37 +215,43 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          ElevatedButton(
-                            onPressed: () async {
-                              String imageUrl = await uploadPhoto(this.context);
+                          if (widget.editable)
+                            ElevatedButton(
+                              onPressed: () async {
+                                String imageUrl =
+                                    await uploadPhoto(this.context);
 
-                              setState(() {
-                                editedMedicalRecord.imageUrl = imageUrl;
-                                editedMedicalRecord.lastEdited = DateTime.now();
-                              });
+                                setState(() {
+                                  editedMedicalRecord.title = newTitle;
+                                  editedMedicalRecord.imageUrl = imageUrl;
+                                  editedMedicalRecord.notes =
+                                      noteController.text;
+                                  editedMedicalRecord.lastEdited =
+                                      DateTime.now();
+                                });
 
-                              if (widget.createNewRecord) {
-                                database
-                                    .uploadMedicalRecord(editedMedicalRecord);
-                              } else {
-                                database
-                                    .updateMedicalRecord(editedMedicalRecord);
-                              }
+                                if (widget.createNewRecord) {
+                                  database
+                                      .uploadMedicalRecord(editedMedicalRecord);
+                                } else {
+                                  database
+                                      .updateMedicalRecord(editedMedicalRecord);
+                                }
 
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text('File Uploaded'),
-                              ));
-                            },
-                            child: Text(
-                              'Save',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18.0,
-                                fontFamily: 'ShipporiMincho',
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text('File Uploaded'),
+                                ));
+                              },
+                              child: Text(
+                                'Save',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18.0,
+                                  fontFamily: 'ShipporiMincho',
+                                ),
                               ),
                             ),
-                          ),
                         ],
                       ),
                     ),
