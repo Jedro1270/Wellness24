@@ -305,7 +305,7 @@ class DatabaseService {
     DocumentSnapshot document = await patients.document(uid).get();
     List dateAppointment = document.data['appointments'][dateString];
     if (dateAppointment != null) {
-      return dateAppointment.any((id) => id == doctorId);
+      return dateAppointment.any((info) => info['doctorId'] == doctorId);
     }
 
     return false;
@@ -347,5 +347,23 @@ class DatabaseService {
               imageUrl: document.data['imageUrl'],
             ))
         .toList();
+  }
+
+  Future addAppointment(String doctorId, DateTime date) async {
+    String dateString = DateFormat('MM-dd-yyyy').format(date);
+
+    await doctors.document(doctorId).updateData({
+      'appointments.$dateString':
+          FieldValue == null ? 1 : FieldValue.increment(1)
+    });
+
+    DocumentSnapshot updatedDoc = await doctors.document(doctorId).get();
+    dynamic priorityNum = updatedDoc.data['appointments'][dateString];
+
+    await patients.document(uid).updateData({
+      'appointments.$dateString': FieldValue.arrayUnion([
+        {'doctorId': doctorId, 'priorityNum': priorityNum}
+      ])
+    });
   }
 }
