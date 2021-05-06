@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 class EditableTitle extends StatefulWidget {
   final String initialText;
   final Function onSubmitted;
+  final bool readOnly;
 
-  EditableTitle({@required this.initialText, @required this.onSubmitted});
+  EditableTitle(
+      {@required this.initialText,
+      @required this.onSubmitted,
+      this.readOnly = false});
 
   @override
   _EditableTitleState createState() => _EditableTitleState();
@@ -32,8 +36,9 @@ class _EditableTitleState extends State<EditableTitle> {
         constraints: BoxConstraints(
           maxWidth: MediaQuery.of(context).size.width * 0.95,
         ),
-        child: _isEditingText
+        child: _isEditingText && !widget.readOnly
             ? TextField(
+                readOnly: widget.readOnly,
                 onSubmitted: (newValue) {
                   widget.onSubmitted(newValue);
                   setState(() {
