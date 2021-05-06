@@ -154,6 +154,7 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
           Text('This will let your patients know that you are no longer available. \n\nWould you like to continue?'),
         actions: [
           ElevatedButton(
+            key: Key('elevatedYes'),
             onPressed: () {
               setState(() {
                 isAcceptingCustomers = false;

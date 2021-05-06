@@ -243,7 +243,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                 height: 55.0,
                 child: ElevatedButton(
                   child: Text(
-                    'Make an Appointment',
+                    'Appointment',
                     style: TextStyle(
                         fontSize: 20.0,
                         fontFamily: "ShipporiMincho",
