@@ -12,23 +12,23 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart';
 
-class AddMedicalRecord extends StatefulWidget {
+class MedicalRecordPage extends StatefulWidget {
   final Patient patient;
   final MedicalRecord medicalRecord;
   final bool createNewRecord;
   final bool editable;
 
-  AddMedicalRecord(
+  MedicalRecordPage(
       {this.patient,
       this.medicalRecord,
       this.createNewRecord,
       this.editable = true});
 
   @override
-  _AddMedicalRecordState createState() => _AddMedicalRecordState();
+  _MedicalRecordPageState createState() => _MedicalRecordPageState();
 }
 
-class _AddMedicalRecordState extends State<AddMedicalRecord> {
+class _MedicalRecordPageState extends State<MedicalRecordPage> {
   TextEditingController noteController = TextEditingController();
   DatabaseService database;
 
@@ -151,13 +151,16 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                                Image(
-                                  image: _imageFile == null
-                                      ? AssetImage('assets/image.png')
-                                      : FileImage(
-                                          File(_imageFile.path),
-                                        ),
-                                ),
+                                widget.medicalRecord?.imageUrl == null
+                                    ? Image(
+                                        image: _imageFile == null
+                                            ? AssetImage('assets/image.png')
+                                            : FileImage(
+                                                File(_imageFile.path),
+                                              ),
+                                      )
+                                    : Image.network(
+                                        widget.medicalRecord.imageUrl)
                               ],
                             ),
                           )
