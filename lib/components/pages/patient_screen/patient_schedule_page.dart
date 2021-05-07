@@ -165,7 +165,10 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => PatientPriorityNumber(
-                                        doctor: widget.doctor, date: _date)))
+                                          doctor: widget.doctor,
+                                          date: _date,
+                                          currentPatient: widget.currentPatient,
+                                        )))
                             : _showDialog(context);
                       },
                       child: Text(
@@ -219,7 +222,10 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => PatientPriorityNumber(
-                                  doctor: widget.doctor, date: _date)));
+                                    doctor: widget.doctor,
+                                    date: _date,
+                                    currentPatient: widget.currentPatient,
+                                  )));
                     },
                     child: Text('YES')),
                 ElevatedButton(
