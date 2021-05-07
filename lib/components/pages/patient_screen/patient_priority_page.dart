@@ -93,7 +93,7 @@ class _PatientPriorityNumberState extends State<PatientPriorityNumber> {
                 ),
               ),
               Text(
-                priorityNum.toString(),
+                '$priorityNum',
                 style: TextStyle(
                   fontFamily: "ShipporiMincho",
                   fontWeight: FontWeight.bold,
