@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
 import 'package:wellness24/components/pages/doctor_screen/doctor_queue_monitor.dart';
+import 'package:wellness24/models/doctor.dart';
+
 void main() {
+  Doctor testDoctor = Doctor(uid: 'test123');
   group('Doctor queue monitor page', () {
     testWidgets('Should locate buttons and text', (WidgetTester tester) async {
       await tester.runAsync(() async {
-        await tester.pumpWidget(MaterialApp(
-          home: DoctorQueueMonitor()
-        ));
+        await tester
+            .pumpWidget(MaterialApp(home: DoctorQueueMonitor(testDoctor)));
 
         DateTime currentDate = DateTime.now();
         DateFormat format = DateFormat.yMMMMd('en_US');
@@ -24,11 +26,11 @@ void main() {
       });
     });
 
-     testWidgets('Message would change if switch button is tapped', (WidgetTester tester) async {
+    testWidgets('Message would change if switch button is tapped',
+        (WidgetTester tester) async {
       await tester.runAsync(() async {
-        await tester.pumpWidget(MaterialApp(
-          home: DoctorQueueMonitor()
-        ));
+        await tester
+            .pumpWidget(MaterialApp(home: DoctorQueueMonitor(testDoctor)));
 
         final switchBtn = find.byType(Switch);
         await tester.tap(switchBtn);
