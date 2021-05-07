@@ -366,4 +366,16 @@ class DatabaseService {
       ])
     });
   }
+
+  Future<int> getPriorityNum(String doctorId, DateTime date) async {
+    String dateString = DateFormat('MM-dd-yyyy').format(date);
+    DocumentSnapshot patientDoc = await patients.document(uid).get();
+    List appointmentsOnDate = patientDoc.data['appointments'][dateString];
+    
+    Map appointmentData = appointmentsOnDate.firstWhere((el) {
+      return el['doctorId'] == doctorId;
+    });
+
+    return appointmentData['priorityNum'];
+  }
 }
