@@ -14,7 +14,7 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   final AuthService _auth = AuthService(auth: FirebaseAuth.instance);
   String email, password;
-  bool showPassword = false;
+  bool hidePassword = true;
 
   String error = '';
   bool timeout = false;
@@ -67,7 +67,7 @@ class _LoginState extends State<Login> {
                                 decoration:
                                     InputDecoration(hintText: 'Password'),
                                 keyboardType: TextInputType.visiblePassword,
-                                obscureText: showPassword,
+                                obscureText: hidePassword,
                                 validator: (val) => val.isEmpty
                                     ? 'This field is required'
                                     : null,
@@ -77,12 +77,12 @@ class _LoginState extends State<Login> {
                             ),
                             Expanded(
                                 child: IconButton(
-                                    icon: Icon(showPassword
+                                    icon: Icon(hidePassword
                                         ? Icons.visibility
                                         : Icons.visibility_off),
                                     onPressed: () {
                                       setState(() {
-                                        showPassword = !showPassword;
+                                        hidePassword = !hidePassword;
                                       });
                                     }))
                           ],
