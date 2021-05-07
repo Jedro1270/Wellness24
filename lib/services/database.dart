@@ -332,7 +332,8 @@ class DatabaseService {
   }
 
   Future<List<MedicalRecord>> getMedicalRecords(String patientUid) async {
-    QuerySnapshot snapshot = await medicalRecords.getDocuments();
+    QuerySnapshot snapshot =
+        await medicalRecords.orderBy('lastEdited').getDocuments();
     var result = snapshot.documents
         .where((document) => document.data['patientUid'] == patientUid)
         .toList();
