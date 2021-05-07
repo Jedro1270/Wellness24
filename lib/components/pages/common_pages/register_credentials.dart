@@ -17,7 +17,7 @@ class _RegisterCredentialsState extends State<RegisterCredentials> {
   NewAccount account;
   _RegisterCredentialsState(this.account);
 
-  bool showPassword = false;
+  bool hidePassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -74,16 +74,16 @@ class _RegisterCredentialsState extends State<RegisterCredentials> {
                                   : null,
                           keyboardType: TextInputType.visiblePassword,
                           onChanged: (val) => setState(() => password = val),
-                          obscureText: showPassword),
+                          obscureText: hidePassword),
                     ),
                     Expanded(
                         child: IconButton(
-                            icon: Icon(showPassword
+                            icon: Icon(hidePassword
                                 ? Icons.visibility
                                 : Icons.visibility_off),
                             onPressed: () {
                               setState(() {
-                                showPassword = !showPassword;
+                                hidePassword = !hidePassword;
                               });
                             }))
                   ],
