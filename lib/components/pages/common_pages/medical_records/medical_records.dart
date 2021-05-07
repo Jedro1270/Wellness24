@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness24/components/common/app_bar.dart';
-import 'package:wellness24/components/pages/common_pages/medical_records/add_medical_record.dart';
+import 'package:wellness24/components/pages/common_pages/medical_records/medical_record_page.dart';
 import 'package:wellness24/components/pages/common_pages/medical_records/record_card.dart';
 import 'package:wellness24/models/medical_record.dart';
 import 'package:wellness24/models/patient.dart';
@@ -60,7 +60,7 @@ class _MedicalRecordsState extends State<MedicalRecords> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => AddMedicalRecord(
+                      builder: (context) => MedicalRecordPage(
                             patient: widget.patient,
                             medicalRecord: medicalRecord,
                             createNewRecord: false,
@@ -157,7 +157,7 @@ class _MedicalRecordsState extends State<MedicalRecords> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => AddMedicalRecord(
+                                        builder: (context) => MedicalRecordPage(
                                               patient: widget.patient,
                                               createNewRecord: true,
                                             )));
