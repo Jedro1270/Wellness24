@@ -13,9 +13,9 @@ class BloodPressure {
     final difference = lastChecked.difference(clock.now());
 
     if (difference.inDays < 32) {
-      output = '${difference.inDays} day/s ago';
+      output = '${difference.inDays.abs()} day/s ago';
     } else {
-      output = '${(difference.inDays / 7).floor()} week/s ago';
+      output = '${(difference.inDays / 7).floor().abs()} week/s ago';
     }
 
     return output;
