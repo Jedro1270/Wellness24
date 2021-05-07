@@ -226,17 +226,7 @@ class _MedicalRecordPageState extends State<MedicalRecordPage> {
                                     await uploadPhoto(this.context);
 
                                 setState(() {
-                                  editedMedicalRecord.title = newTitle;
-                                  editedMedicalRecord.imageUrl =
-                                      widget.medicalRecord?.imageUrl == null ||
-                                              widget.medicalRecord.imageUrl
-                                                  .isEmpty
-                                          ? imageUrl
-                                          : widget.medicalRecord.imageUrl;
-                                  editedMedicalRecord.notes =
-                                      noteController.text;
-                                  editedMedicalRecord.lastEdited =
-                                      DateTime.now();
+                                  updateEditedMedicalRecord(imageUrl);
                                 });
 
                                 if (widget.createNewRecord) {
@@ -335,6 +325,18 @@ class _MedicalRecordPageState extends State<MedicalRecordPage> {
         )
       ]),
     );
+  }
+
+  void updateEditedMedicalRecord(String imageUrl) {
+    editedMedicalRecord.title = newTitle;
+    if (widget.medicalRecord?.imageUrl == null ||
+        widget.medicalRecord.imageUrl.isEmpty) {
+      editedMedicalRecord.imageUrl = imageUrl;
+    } else {
+      editedMedicalRecord.imageUrl = widget.medicalRecord.imageUrl;
+    }
+    editedMedicalRecord.notes = noteController.text;
+    editedMedicalRecord.lastEdited = DateTime.now();
   }
 
   void updatePhoto(ImageSource source) async {
