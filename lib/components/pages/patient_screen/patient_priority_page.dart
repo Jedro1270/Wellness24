@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/models/doctor.dart';
+import 'package:wellness24/models/patient.dart';
+import 'package:wellness24/services/database.dart';
 
 class PatientPriorityNumber extends StatefulWidget {
   final Doctor doctor;
   final DateTime date;
+  final Patient currentPatient;
 
-  PatientPriorityNumber({@required this.doctor, @required this.date});
+  PatientPriorityNumber(
+      {@required this.doctor,
+      @required this.date,
+      @required this.currentPatient});
 
   @override
   _PatientPriorityNumberState createState() => _PatientPriorityNumberState();
@@ -15,7 +21,23 @@ class PatientPriorityNumber extends StatefulWidget {
 
 class _PatientPriorityNumberState extends State<PatientPriorityNumber> {
   DateFormat format = DateFormat.yMMMMd('en_US');
+  int priorityNum;
 
+  void fetchPriorityNum() async {
+    DatabaseService _database = DatabaseService(uid: widget.currentPatient.uid);
+    int result = await _database.getPriorityNum(widget.doctor.uid, widget.date);
+    setState(() {
+      priorityNum = result;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchPriorityNum();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppBar(
@@ -71,7 +93,7 @@ class _PatientPriorityNumberState extends State<PatientPriorityNumber> {
                 ),
               ),
               Text(
-                '24', // TODO: Replace with number generated based on previous number from database
+                priorityNum.toString(),
                 style: TextStyle(
                   fontFamily: "ShipporiMincho",
                   fontWeight: FontWeight.bold,
