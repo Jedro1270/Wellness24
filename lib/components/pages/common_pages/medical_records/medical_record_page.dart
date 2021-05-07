@@ -151,7 +151,8 @@ class _MedicalRecordPageState extends State<MedicalRecordPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                                widget.medicalRecord?.imageUrl == null
+                                widget.medicalRecord?.imageUrl == null ||
+                                        widget.medicalRecord.imageUrl.isEmpty
                                     ? Image(
                                         image: _imageFile == null
                                             ? AssetImage('assets/image.png')
@@ -226,7 +227,12 @@ class _MedicalRecordPageState extends State<MedicalRecordPage> {
 
                                 setState(() {
                                   editedMedicalRecord.title = newTitle;
-                                  editedMedicalRecord.imageUrl = imageUrl;
+                                  editedMedicalRecord.imageUrl =
+                                      widget.medicalRecord?.imageUrl == null ||
+                                              widget.medicalRecord.imageUrl
+                                                  .isEmpty
+                                          ? imageUrl
+                                          : widget.medicalRecord.imageUrl;
                                   editedMedicalRecord.notes =
                                       noteController.text;
                                   editedMedicalRecord.lastEdited =
