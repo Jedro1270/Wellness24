@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:wellness24/components/common/app_bar.dart';
+import 'package:wellness24/models/doctor.dart';
+import 'package:wellness24/services/database.dart';
 
 class DoctorQueueMonitor extends StatefulWidget {
+  final Doctor currentDoctor;
+
+  DoctorQueueMonitor(this.currentDoctor);
+
   @override
   _DoctorQueueMonitorState createState() => _DoctorQueueMonitorState();
 }
@@ -12,25 +18,36 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
   bool _selectDate = true;
   DateTime currentDate = DateTime.now();
   DateFormat format = DateFormat.yMMMMd('en_US');
-
-  int currentNumber = 0;
-
+  int queueCapacity, currentNumber = 0;
   bool isAcceptingCustomers = true;
+
+  void fetchQueueCap() async {
+    DatabaseService _database = DatabaseService(uid: widget.currentDoctor.uid);
+    int result = await _database.getAppointmentQueueCap(currentDate);
+    setState(() {
+      queueCapacity = result;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchQueueCap();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: '',
-        leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pop(context);
-            }),
-      ),
-      body: SingleChildScrollView(
-        child:
-        Column(
-          children: <Widget>[
+        appBar: CustomAppBar(
+          title: '',
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+        ),
+        body: SingleChildScrollView(
+          child: Column(children: <Widget>[
             // Container(
             //   color: Colors.lightBlue,
             //   padding: EdgeInsets.all(16),
@@ -125,8 +142,9 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
                       fontFamily: "ShipporiMincho",
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
-                      color:
-                          isAcceptingCustomers ? Colors.green[700] : Colors.red),
+                      color: isAcceptingCustomers
+                          ? Colors.green[700]
+                          : Colors.red),
                 ),
                 Switch(
                     value: isAcceptingCustomers,
@@ -141,36 +159,33 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
                     }),
               ],
             ),
-          ]
-        ),
-      )
-    );
+          ]),
+        ));
   }
+
   _showDialog(BuildContext context) {
     showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        content:
-          Text('This will let your patients know that you are no longer available. \n\nWould you like to continue?'),
-        actions: [
-          ElevatedButton(
-            key: Key('elevatedYes'),
-            onPressed: () {
-              setState(() {
-                isAcceptingCustomers = false;
-              });
-              Navigator.pop(context);
-            },
-            child: Text('YES')),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text('NO')
-          )
-        ],
-      )
-    );
+        context: context,
+        builder: (context) => AlertDialog(
+              content: Text(
+                  'This will let your patients know that you are no longer available. \n\nWould you like to continue?'),
+              actions: [
+                ElevatedButton(
+                    key: Key('elevatedYes'),
+                    onPressed: () {
+                      setState(() {
+                        isAcceptingCustomers = false;
+                      });
+                      Navigator.pop(context);
+                    },
+                    child: Text('YES')),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('NO'))
+              ],
+            ));
   }
 }
 
@@ -188,47 +203,41 @@ class _dateWidgetState extends State<dateWidget> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        setState(() {
-          _selectDate = !_selectDate;
-        });
-      },
-      child: Container(
-        decoration: _selectDate ? null : BoxDecoration(
-          color: Colors.red,
-          borderRadius: BorderRadius.all(
-            Radius.circular(4)
-          )
-        ),
-        padding: EdgeInsets.all(8),
-        child: Column(
-          children: <Widget>[
-            Text(
-              list[widget.index],
-              style: TextStyle(
-                fontWeight: _selectDate ? FontWeight.normal : FontWeight.bold,
-                color: _selectDate ?  Color(0xffa79abf) : Colors.white
+        onTap: () {
+          setState(() {
+            _selectDate = !_selectDate;
+          });
+        },
+        child: Container(
+            decoration: _selectDate
+                ? null
+                : BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.all(Radius.circular(4))),
+            padding: EdgeInsets.all(8),
+            child: Column(children: <Widget>[
+              Text(
+                list[widget.index],
+                style: TextStyle(
+                    fontWeight:
+                        _selectDate ? FontWeight.normal : FontWeight.bold,
+                    color: _selectDate ? Color(0xffa79abf) : Colors.white),
               ),
-            ),
-            Text(
-              "${10 + widget.index}",
-              style: TextStyle(
-                fontWeight: _selectDate ? FontWeight.normal : FontWeight.bold,
-                color:  _selectDate ?  Color(0xffa79abf) : Colors.white
+              Text(
+                "${10 + widget.index}",
+                style: TextStyle(
+                    fontWeight:
+                        _selectDate ? FontWeight.normal : FontWeight.bold,
+                    color: _selectDate ? Color(0xffa79abf) : Colors.white),
               ),
-            ),
-            Container(
-              width: 4,
-              height: 4,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color:  _selectDate ? Color(0xff8e7daf) : Colors.white
-              ),
-            )
-          ]
-        )
-      )
-    );
+              Container(
+                width: 4,
+                height: 4,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: _selectDate ? Color(0xff8e7daf) : Colors.white),
+              )
+            ])));
   }
 }
 
@@ -237,41 +246,35 @@ class topRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Row(
-          children: <Widget>[
-            Text(
-              "Priority",
-              style: TextStyle(
+        Row(children: <Widget>[
+          Text(
+            "Priority",
+            style: TextStyle(
                 color: Colors.white,
                 fontSize: 35,
                 fontFamily: "Roboto",
-                fontWeight: FontWeight.bold
-              ),
-            ),
-            SizedBox(width: 8.0),
-            Text(
-              "numbers",
-              style: TextStyle(
+                fontWeight: FontWeight.bold),
+          ),
+          SizedBox(width: 8.0),
+          Text(
+            "numbers",
+            style: TextStyle(
                 color: Color(0xffa79abf),
                 fontSize: 35,
                 fontFamily: "Roboto",
-                fontWeight: FontWeight.bold
-              ),
-            )
-          ]
-        ),
+                fontWeight: FontWeight.bold),
+          )
+        ]),
         Spacer(),
         Text(
           "Apr",
           style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-            fontFamily: "Roboto",
-            fontWeight: FontWeight.bold
-          ),
+              color: Colors.white,
+              fontSize: 18,
+              fontFamily: "Roboto",
+              fontWeight: FontWeight.bold),
         ),
       ],
     );
   }
 }
-
