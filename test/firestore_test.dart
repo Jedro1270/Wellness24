@@ -557,19 +557,20 @@ void main() {
     });
   });
 
-  group('.getAppointmentQueueCap', () {});
-  MockFirestoreInstance instance = MockFirestoreInstance();
-  String doctorId = 'doctor321';
-  DatabaseService database =
-      DatabaseService(uid: doctorId, firestore: instance);
-  test('should return number of appointment reservations', () async {
-    await database.doctors.document(doctorId).setData({
-      'firstName': 'Veto',
-      'lastName': 'Bastiero',
-      'appointments': {'01-01-2021': 22}
-    });
+  group('.getAppointmentQueueCap', () {
+    MockFirestoreInstance instance = MockFirestoreInstance();
+    String doctorId = 'doctor321';
+    DatabaseService database =
+        DatabaseService(uid: doctorId, firestore: instance);
+    test('should return number of appointment reservations', () async {
+      await database.doctors.document(doctorId).setData({
+        'firstName': 'Veto',
+        'lastName': 'Bastiero',
+        'appointments': {'01-01-2021': 22}
+      });
 
-    int result = await database.getAppointmentQueueCap(DateTime(2021, 1, 1));
-    expect(result, 22);
+      int result = await database.getAppointmentQueueCap(DateTime(2021, 1, 1));
+      expect(result, 22);
+    });
   });
 }
