@@ -532,8 +532,27 @@ void main() {
       expect(result, true);
     });
   });
-  group('.addAppointment', () {
+  group('.getPriorityNum', () {
+    MockFirestoreInstance instance = MockFirestoreInstance();
     String patientId = 'patient123';
     String doctorId = 'doctor321';
+    DatabaseService database =
+        DatabaseService(uid: patientId, firestore: instance);
+
+    test('should return priority number when fetched', () async {
+      await database.patients.document(patientId).setData({
+        'firstName': 'Veto',
+        'lastName': 'Bastiero',
+        'appointments': {
+          '01-01-2021': [
+            {'doctorId': doctorId, 'priorityNum': 7}
+          ]
+        }
+      });
+
+      int result =
+          await database.getPriorityNum(doctorId, DateTime(2021, 1, 1));
+      expect(result, 7);
+    });
   });
 }
