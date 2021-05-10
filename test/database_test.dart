@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore_mocks/cloud_firestore_mocks.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:wellness24/components/pages/patient_screen/doctor_search_page/doctor_search_page.dart';
 import 'package:wellness24/models/blood_pressure.dart';
 import 'package:wellness24/models/blood_sugar_level.dart';
 import 'package:wellness24/models/doctor.dart';
