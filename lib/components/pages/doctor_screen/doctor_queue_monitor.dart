@@ -105,7 +105,9 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
                     IconButton(
                       onPressed: () {
                         setState(() {
-                          currentNumber--;
+                          currentNumber <= 0
+                              ? currentNumber = 0
+                              : currentNumber--;
                         });
                       },
                       iconSize: 50,
