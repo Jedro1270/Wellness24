@@ -34,7 +34,7 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
     DateTime _datePicker = await showDatePicker(
       context: context,
       initialDate: _date,
-      firstDate: DateTime(1921),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2100),
       selectableDayPredicate: (DateTime val) =>
           val.weekday == 6 || val.weekday == 7 ? false : true,
@@ -165,7 +165,10 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => PatientPriorityNumber(
-                                        doctor: widget.doctor, date: _date)))
+                                          doctor: widget.doctor,
+                                          date: _date,
+                                          currentPatient: widget.currentPatient,
+                                        )))
                             : _showDialog(context);
                       },
                       child: Text(
@@ -219,7 +222,10 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => PatientPriorityNumber(
-                                  doctor: widget.doctor, date: _date)));
+                                    doctor: widget.doctor,
+                                    date: _date,
+                                    currentPatient: widget.currentPatient,
+                                  )));
                     },
                     child: Text('YES')),
                 ElevatedButton(
