@@ -14,7 +14,7 @@ class NewAccount {
       role,
       email,
       password,
-      contactNo,
+      contactNumber,
       lastName,
       firstName,
       middleInitial,
@@ -67,7 +67,7 @@ class NewAccount {
   void supplyCredentials({String email, String password, String contactNo}) {
     this.email = email;
     this.password = password;
-    this.contactNo = contactNo;
+    this.contactNumber = contactNo;
   }
 
   void supplyPersonalInfo(

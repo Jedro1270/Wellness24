@@ -13,7 +13,7 @@ NewAccount _$NewAccountFromJson(Map<String, dynamic> json) {
     ..uid = json['uid'] as String
     ..email = json['email'] as String
     ..password = json['password'] as String
-    ..contactNo = json['contactNo'] as String
+    ..contactNumber = json['contactNumber'] as String
     ..lastName = json['lastName'] as String
     ..firstName = json['firstName'] as String
     ..middleInitial = json['middleInitial'] as String
@@ -39,7 +39,7 @@ Map<String, dynamic> _$NewAccountToJson(NewAccount instance) =>
       'role': instance.role,
       'email': instance.email,
       'password': instance.password,
-      'contactNo': instance.contactNo,
+      'contactNumber': instance.contactNumber,
       'lastName': instance.lastName,
       'firstName': instance.firstName,
       'middleInitial': instance.middleInitial,

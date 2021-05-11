@@ -4,14 +4,14 @@ part 'emergency_contact.g.dart';
 
 @JsonSerializable(nullable: false, explicitToJson: true)
 class EmergencyContact {
-  String firstName, lastName, middleInitial, address, contactNo, relationship;
+  String firstName, lastName, middleInitial, address, contactNumber, relationship;
 
   EmergencyContact({
     this.lastName,
     this.firstName,
     this.middleInitial,
     this.address,
-    this.contactNo,
+    this.contactNumber,
     this.relationship,
   });
 

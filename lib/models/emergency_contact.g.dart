@@ -12,7 +12,7 @@ EmergencyContact _$EmergencyContactFromJson(Map<String, dynamic> json) {
     firstName: json['firstName'] as String,
     middleInitial: json['middleInitial'] as String,
     address: json['address'] as String,
-    contactNo: json['contactNo'] as String,
+    contactNumber: json['contactNumber'] as String,
     relationship: json['relationship'] as String,
   );
 }
@@ -23,6 +23,6 @@ Map<String, dynamic> _$EmergencyContactToJson(EmergencyContact instance) =>
       'lastName': instance.lastName,
       'middleInitial': instance.middleInitial,
       'address': instance.address,
-      'contactNo': instance.contactNo,
+      'contactNumber': instance.contactNumber,
       'relationship': instance.relationship,
     };

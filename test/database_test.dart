@@ -68,7 +68,7 @@ void main() {
       NewAccount testAcc = NewAccount('Doctor');
       testAcc.keywords = ['v', 've', 'vet', 'veto'];
       testAcc.email = 'veto@gmail.com';
-      testAcc.contactNo = '09123312312';
+      testAcc.contactNumber = '09123312312';
       testAcc.lastName = 'Bastiero';
       testAcc.firstName = 'Veto';
       testAcc.middleInitial = 'Y';
@@ -95,7 +95,7 @@ void main() {
 
       expect(document.data['keywords'], testAcc.keywords);
       expect(document.data['email'], testAcc.email);
-      expect(document.data['contactNumber'], testAcc.contactNo);
+      expect(document.data['contactNumber'], testAcc.contactNumber);
       expect(document.data['lastName'], testAcc.lastName);
       expect(document.data['firstName'], testAcc.firstName);
 
@@ -122,13 +122,13 @@ void main() {
         firstName: 'Mom',
         middleInitial: 'F',
         address: 'Cabatuan, Iloilo',
-        contactNo: '09221231232',
+        contactNumber: '09221231232',
         relationship: 'Mother');
 
     NewAccount testAcc = NewAccount('Patient');
     testAcc.keywords = ['v', 've', 'vet', 'veto'];
     testAcc.email = 'veto@gmail.com';
-    testAcc.contactNo = '09123312312';
+    testAcc.contactNumber = '09123312312';
     testAcc.lastName = 'Bastiero';
     testAcc.firstName = 'Veto';
     testAcc.middleInitial = 'Y';
@@ -148,7 +148,7 @@ void main() {
 
       expect(patientDoc.data['keywords'], testAcc.keywords);
       expect(patientDoc.data['email'], testAcc.email);
-      expect(patientDoc.data['contactNumber'], testAcc.contactNo);
+      expect(patientDoc.data['contactNumber'], testAcc.contactNumber);
       expect(patientDoc.data['lastName'], testAcc.lastName);
       expect(patientDoc.data['firstName'], testAcc.firstName);
 
@@ -168,7 +168,7 @@ void main() {
       expect(emergContactInfo.data['firstName'], testContact.firstName);
       expect(emergContactInfo.data['lastName'], testContact.lastName);
       expect(emergContactInfo.data['address'], testContact.address);
-      expect(emergContactInfo.data['contactNumber'], testContact.contactNo);
+      expect(emergContactInfo.data['contactNumber'], testContact.contactNumber);
       expect(emergContactInfo.data['relationship'], testContact.relationship);
     });
   });
@@ -185,7 +185,7 @@ void main() {
         'middleInitial': 'X',
         'lastName': 'Bastiero',
         'gender': 'Male',
-        'birthDate': DateTime(2000, 1, 1),
+        'birthDate': DateTime(2000, 1, 1).toIso8601String(),
         'address': 'Cabatuan, Iloilo',
         'contactNumber': '09121231234',
         'medicalHistory': ['Anemia', 'AIDS', 'Diabetes'],
@@ -199,12 +199,12 @@ void main() {
       await instance
           .collection('bloodPressures')
           .document(uid)
-          .setData({'lastChecked': DateTime.now(), 'reading': '120/80 mm'});
+          .setData({'lastChecked': DateTime.now().toIso8601String(), 'reading': '120/80 mm'});
 
       await instance
           .collection('bloodSugarLevels')
           .document(uid)
-          .setData({'lastChecked': DateTime.now(), 'reading': '100mg'});
+          .setData({'lastChecked': DateTime.now().toIso8601String(), 'reading': '100mg'});
 
       Patient testPatient = await database.getPatient(uid);
 
@@ -237,7 +237,7 @@ void main() {
         'middleInitial': 'X',
         'lastName': 'Bastiero',
         'gender': 'Male',
-        'birthDate': DateTime(2000, 1, 1),
+        'birthDate': DateTime(2000, 1, 1).toIso8601String(),
         'address': 'Cabatuan, Iloilo',
         'contactNumber': '09121231234',
         'specialization': 'Pediatrician',
@@ -257,8 +257,8 @@ void main() {
       expect(testDoc.specialization, 'Pediatrician');
       expect(testDoc.about, about);
       expect(testDoc.workingDays, 'Monday to Friday');
-      expect(testDoc.clinicStartHour, '8:30 AM');
-      expect(testDoc.clinicEndHour, '9:00 PM');
+      expect(testDoc.clinicStart, '8:30 AM');
+      expect(testDoc.clinicEnd, '9:00 PM');
       expect(testDoc.education, education);
     });
   });
@@ -284,7 +284,7 @@ void main() {
         'middleInitial': 'X',
         'lastName': 'Bastiero',
         'gender': 'Male',
-        'birthDate': DateTime(2000, 1, 1),
+        'birthDate': DateTime(2000, 1, 1).toIso8601String(),
         'address': 'Cabatuan, Iloilo',
         'contactNumber': '09121231234',
         'medicalHistory': ['Anemia', 'AIDS', 'Diabetes'],
@@ -308,7 +308,7 @@ void main() {
         'middleInitial': 'X',
         'lastName': 'Bastiero',
         'gender': 'Male',
-        'birthDate': DateTime(2000, 1, 1),
+        'birthDate': DateTime(2000, 1, 1).toIso8601String(),
         'address': 'Cabatuan, Iloilo',
         'contactNumber': '09121231234',
         'medicalHistory': ['Anemia', 'AIDS', 'Diabetes'],
@@ -330,7 +330,7 @@ void main() {
         'middleInitial': 'X',
         'lastName': 'Bastiero',
         'gender': 'Male',
-        'birthDate': DateTime(2000, 1, 1),
+        'birthDate': DateTime(2000, 1, 1).toIso8601String(),
         'address': 'Cabatuan, Iloilo',
         'contactNumber': '09121231234',
         'medicalHistory': ['Anemia', 'AIDS', 'Diabetes'],
@@ -431,7 +431,7 @@ void main() {
       await instance.collection('patients').document(patientId).setData({
         'firstName': 'Veto',
         'lastName': 'Bastiero',
-        'birthDate': DateTime(2000, 1, 1),
+        'birthDate': DateTime(2000, 1, 1).toIso8601String(),
         'contactNumber': '09221231221',
         'email': 'v@gmail.com',
         'gender': 'Male',
@@ -454,7 +454,7 @@ void main() {
       await instance.collection('patients').document(patientId).setData({
         'firstName': 'Veto',
         'lastName': 'Bastiero',
-        'birthDate': DateTime(2000, 1, 1),
+        'birthDate': DateTime(2000, 1, 1).toIso8601String(),
         'contactNumber': '09221231221',
         'email': 'v@gmail.com',
         'gender': 'Male',
@@ -477,7 +477,7 @@ void main() {
       await instance.collection('patients').document(patientId).setData({
         'firstName': 'Veto',
         'lastName': 'Bastiero',
-        'birthDate': DateTime(2000, 1, 1),
+        'birthDate': DateTime(2000, 1, 1).toIso8601String(),
         'contactNumber': '09221231221',
         'email': 'v@gmail.com',
         'gender': 'Male',
