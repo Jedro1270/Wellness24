@@ -20,8 +20,8 @@ void main() {
         specialization: snapshotDoctor['specialization'],
         about: snapshotDoctor['about'],
         workingDays: snapshotDoctor['workingDays'],
-        clinicStartHour: snapshotDoctor['clinicStart'],
-        clinicEndHour: snapshotDoctor['clinicEnd'],
+        clinicStart: snapshotDoctor['clinicStart'],
+        clinicEnd: snapshotDoctor['clinicEnd'],
         education: snapshotDoctor['education']);
   }
 

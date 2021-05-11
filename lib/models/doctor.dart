@@ -11,8 +11,8 @@ class Doctor {
   String specialization;
   String about;
   String workingDays;
-  String clinicStartHour;
-  String clinicEndHour;
+  String clinicStart;
+  String clinicEnd;
   String clinicDayStart;
   String clinicDayEnd;
   String education;
@@ -25,8 +25,8 @@ class Doctor {
       this.specialization,
       this.about,
       this.workingDays,
-      this.clinicStartHour,
-      this.clinicEndHour,
+      this.clinicStart,
+      this.clinicEnd,
       this.clinicDayEnd,
       this.clinicDayStart,
       this.education});
@@ -36,6 +36,7 @@ class Doctor {
   }
 
   factory Doctor.fromJson(Map<String, dynamic> json, String uid) {
+    print(json['clinicStart']);
     return _$DoctorFromJson(json)..uid = uid;
   }
 

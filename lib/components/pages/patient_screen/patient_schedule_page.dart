@@ -104,7 +104,7 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                             fontFamily: "ShipporiMincho",
                             color: Colors.black)),
                     Text(
-                        '${widget.doctor.clinicStartHour} - ${widget.doctor.clinicEndHour}',
+                        '${widget.doctor.clinicStart} - ${widget.doctor.clinicEnd}',
                         style: TextStyle(
                             fontSize: 18,
                             fontFamily: "ShipporiMincho",

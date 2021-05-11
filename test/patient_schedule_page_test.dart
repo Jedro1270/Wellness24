@@ -14,8 +14,8 @@ void main() {
       lastName: 'Abagat',
       middleInitial: 'F',
       workingDays: 'Monday to Friday',
-      clinicStartHour: '7:00 AM',
-      clinicEndHour: '5:00 PM'
+      clinicStart: '7:00 AM',
+      clinicEnd: '5:00 PM'
     );
 
     Patient mockPatient = Patient(
