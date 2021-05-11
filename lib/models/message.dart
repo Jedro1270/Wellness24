@@ -1,3 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'message.g.dart';
+
+@JsonSerializable(nullable: false, explicitToJson: true)
 class Message {
   String content;
   DateTime dateCreated;
@@ -6,4 +12,10 @@ class Message {
   String senderUid;
 
   Message({this.content, this.dateCreated, this.receiverUid, this.senderUid});
+
+  factory Message.fromJson(Map<String, dynamic> json) {
+    json["dateCreated"] = ((json["dateCreated"] as Timestamp).toDate().toString());
+    return _$MessageFromJson(json);
+  }
+  Map<String, dynamic> toJson() => _$MessageToJson(this);
 }

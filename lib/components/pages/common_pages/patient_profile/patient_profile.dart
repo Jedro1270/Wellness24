@@ -428,6 +428,9 @@ class _PatientProfileState extends State<PatientProfile> {
                                 MaterialPageRoute(
                                     builder: (context) => MedicalRecords(
                                           patient: widget.patient,
+                                          role: widget.editable
+                                              ? 'Patient'
+                                              : 'Doctor',
                                         )));
                           },
                           style: ElevatedButton.styleFrom(
@@ -492,22 +495,18 @@ class _PatientProfileState extends State<PatientProfile> {
                         )),
                   ],
                 )),
-            
           ],
         ),
         Divider(height: 25, color: Colors.transparent),
         MaterialButton(
-              onPressed: () {
-                print('Save Photo');
-                uploadPhoto(this.context);
-              },
-              child: Text('Save Photo',
-              style: TextStyle(
-
-              )),
-              color: Colors.blueAccent[400],
-              textColor: Colors.black,
-            )
+          onPressed: () {
+            print('Save Photo');
+            uploadPhoto(this.context);
+          },
+          child: Text('Save Photo', style: TextStyle()),
+          color: Colors.blueAccent[400],
+          textColor: Colors.black,
+        )
       ]),
     );
   }
@@ -521,9 +520,10 @@ class _PatientProfileState extends State<PatientProfile> {
     });
   }
 
-  void uploadPhoto(BuildContext context) async{
+  void uploadPhoto(BuildContext context) async {
     String fileName = basename(_imageFile.path);
-    StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child(fileName);
+    StorageReference firebaseStorageRef =
+        FirebaseStorage.instance.ref().child(fileName);
 
     //converts pickedFile to file
     File convertedFile = File(_imageFile.path);
@@ -533,7 +533,9 @@ class _PatientProfileState extends State<PatientProfile> {
 
     setState(() {
       print("Profile Picture Uploaded");
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text('Profile Picture Uploaded'),));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Profile Picture Uploaded'),
+      ));
     });
   }
 }

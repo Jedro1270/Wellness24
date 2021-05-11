@@ -13,6 +13,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart';
 
 class MedicalRecordPage extends StatefulWidget {
+  final Function refresh;
   final Patient patient;
   final MedicalRecord medicalRecord;
   final bool createNewRecord;
@@ -22,7 +23,8 @@ class MedicalRecordPage extends StatefulWidget {
       {this.patient,
       this.medicalRecord,
       this.createNewRecord,
-      this.editable = true});
+      this.editable = true,
+      this.refresh});
 
   @override
   _MedicalRecordPageState createState() => _MedicalRecordPageState();
@@ -32,7 +34,6 @@ class _MedicalRecordPageState extends State<MedicalRecordPage> {
   TextEditingController noteController = TextEditingController();
   DatabaseService database;
 
-  Doctor currentDoctor;
   PickedFile _imageFile;
   final ImagePicker _imagePicker = ImagePicker();
 
@@ -42,20 +43,10 @@ class _MedicalRecordPageState extends State<MedicalRecordPage> {
   String imagePath;
   dynamic imageUrl;
 
-  initializeDoctor(String uid) async {
-    database = DatabaseService(uid: uid);
-    Doctor doctor = await database.getDoctor(uid);
-
-    if (mounted) {
-      // setState if it is not yet disposed
-      setState(() {
-        currentDoctor = doctor;
-      });
-    }
-  }
-
   @override
   void initState() {
+    database = DatabaseService();
+
     editedMedicalRecord = MedicalRecord(
         patientUid: widget.patient.uid, id: widget.medicalRecord?.id);
 
@@ -67,197 +58,200 @@ class _MedicalRecordPageState extends State<MedicalRecordPage> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
-    initializeDoctor(user.uid);
-
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: 'Add Medical Records',
-        actions: [
-          IconButton(
-            icon: Icon(Icons.notifications),
-            onPressed: () {
-              print('Notif button clicked');
-            },
-          )
-        ],
-      ),
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).requestFocus(
-              FocusNode()); // Close keyboard when tapping anywhere but the keyboard or the notes text field
-        },
-        child: Container(
-          child: ListView(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      // padding: EdgeInsets.all(5),
-                      child: EditableTitle(
-                        initialText: newTitle,
-                        readOnly: !widget.editable,
-                        onSubmitted: (newValue) {
-                          setState(() {
-                            newTitle = newValue;
-                            editedMedicalRecord.title = newValue;
-                          });
-                        },
+    return WillPopScope(
+      onWillPop: () {
+        widget.refresh();
+        Navigator.pop(context);
+      },
+      child: Scaffold(
+        appBar: CustomAppBar(
+          title: 'Add Medical Records',
+          actions: [
+            IconButton(
+              icon: Icon(Icons.notifications),
+              onPressed: () {
+                print('Notif button clicked');
+              },
+            )
+          ],
+        ),
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(
+                FocusNode()); // Close keyboard when tapping anywhere but the keyboard or the notes text field
+          },
+          child: Container(
+            child: ListView(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        // padding: EdgeInsets.all(5),
+                        child: EditableTitle(
+                          initialText: newTitle,
+                          readOnly: !widget.editable,
+                          onSubmitted: (newValue) {
+                            setState(() {
+                              newTitle = newValue;
+                              editedMedicalRecord.title = newValue;
+                            });
+                          },
+                        ),
                       ),
-                    ),
-                    Divider(
-                      thickness: 2,
-                      height: 30.0,
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 12),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 18),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.blueAccent[100],
+                      Divider(
+                        thickness: 2,
+                        height: 30.0,
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          if (widget.editable)
-                            ElevatedButton(
-                              onPressed: () {
-                                showModalBottomSheet(
-                                    context: context,
-                                    builder: ((builder) => optionView()));
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  primary: Colors.orange[200],
-                                  onPrimary: Colors.black),
-                              child: Text(
-                                'Upload File',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18.0,
-                                  fontFamily: 'ShipporiMincho',
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 12),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 15, horizontal: 18),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.blueAccent[100],
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            if (widget.editable)
+                              ElevatedButton(
+                                onPressed: () {
+                                  showModalBottomSheet(
+                                      context: context,
+                                      builder: ((builder) => optionView()));
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.orange[200],
+                                    onPrimary: Colors.black),
+                                child: Text(
+                                  'Upload File',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18.0,
+                                    fontFamily: 'ShipporiMincho',
+                                  ),
                                 ),
                               ),
-                            ),
-                          Container(
-                            height: 200,
-                            width: 400,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                widget.medicalRecord?.imageUrl == null ||
-                                        widget.medicalRecord.imageUrl.isEmpty
-                                    ? Image(
-                                        image: _imageFile == null
-                                            ? AssetImage('assets/image.png')
-                                            : FileImage(
-                                                File(_imageFile.path),
-                                              ),
-                                      )
-                                    : Image.network(
-                                        widget.medicalRecord.imageUrl)
-                              ],
-                            ),
-                          )
-                        ],
+                            Container(
+                              height: 200,
+                              width: 400,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  widget.medicalRecord?.imageUrl == null ||
+                                          widget.medicalRecord.imageUrl.isEmpty
+                                      ? Image(
+                                          image: _imageFile == null
+                                              ? AssetImage('assets/image.png')
+                                              : FileImage(
+                                                  File(_imageFile.path),
+                                                ),
+                                        )
+                                      : Image.network(
+                                          widget.medicalRecord.imageUrl)
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                    Divider(thickness: 2, height: 30),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            'Notes',
-                            style: TextStyle(
-                                fontFamily: 'ShipporiMincho',
-                                fontSize: 25.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Container(
-                            margin: EdgeInsets.symmetric(vertical: 12),
-                            padding: EdgeInsets.symmetric(
-                                vertical: 15, horizontal: 18),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.blueAccent[100],
-                            ),
-                            constraints: BoxConstraints(
-                              maxWidth: MediaQuery.of(context).size.width * 1,
-                            ),
-                            child: TextField(
-                              key: Key('Notes'),
-                              readOnly: !widget.editable,
-                              controller: noteController,
-                              onChanged: (value) {
-                                setState(() {
-                                  editedMedicalRecord.notes = value;
-                                });
-                              },
-                              keyboardType: TextInputType.multiline,
-                              maxLines: null,
-                              decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  hintText: 'Add notes',
-                                  fillColor: Colors.white,
-                                  filled: true),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          if (widget.editable)
-                            ElevatedButton(
-                              onPressed: () async {
-                                String imageUrl =
-                                    await uploadPhoto(this.context);
-
-                                setState(() {
-                                  updateEditedMedicalRecord(imageUrl);
-                                });
-
-                                if (widget.createNewRecord) {
-                                  database
-                                      .uploadMedicalRecord(editedMedicalRecord);
-                                } else {
-                                  database
-                                      .updateMedicalRecord(editedMedicalRecord);
-                                }
-
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Text('File Uploaded'),
-                                ));
-                              },
-                              child: Text(
-                                'Save',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18.0,
+                      Divider(thickness: 2, height: 30),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              'Notes',
+                              style: TextStyle(
                                   fontFamily: 'ShipporiMincho',
-                                ),
+                                  fontSize: 25.0,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Container(
+                              margin: EdgeInsets.symmetric(vertical: 12),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 15, horizontal: 18),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.blueAccent[100],
+                              ),
+                              constraints: BoxConstraints(
+                                maxWidth: MediaQuery.of(context).size.width * 1,
+                              ),
+                              child: TextField(
+                                key: Key('Notes'),
+                                readOnly: !widget.editable,
+                                controller: noteController,
+                                onChanged: (value) {
+                                  setState(() {
+                                    editedMedicalRecord.notes = value;
+                                  });
+                                },
+                                keyboardType: TextInputType.multiline,
+                                maxLines: null,
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    hintText: 'Add notes',
+                                    fillColor: Colors.white,
+                                    filled: true),
                               ),
                             ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            if (widget.editable)
+                              ElevatedButton(
+                                onPressed: () async {
+                                  String imageUrl =
+                                      await uploadPhoto(this.context);
+
+                                  setState(() {
+                                    updateEditedMedicalRecord(imageUrl);
+                                  });
+
+                                  if (widget.createNewRecord) {
+                                    database.uploadMedicalRecord(
+                                        editedMedicalRecord);
+                                  } else {
+                                    database.updateMedicalRecord(
+                                        editedMedicalRecord);
+                                  }
+
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text('File Uploaded'),
+                                  ));
+                                },
+                                child: Text(
+                                  'Save',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18.0,
+                                    fontFamily: 'ShipporiMincho',
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

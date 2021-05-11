@@ -14,8 +14,8 @@ void main() {
       lastName: 'Abagat',
       middleInitial: 'F',
       workingDays: 'Monday to Friday',
-      clinicStartHour: '7:00 AM',
-      clinicEndHour: '5:00 PM'
+      clinicStart: '7:00 AM',
+      clinicEnd: '5:00 PM'
     );
 
     Patient mockPatient = Patient(
@@ -23,7 +23,7 @@ void main() {
       firstName: 'Veto',
       lastName: 'Bastiero III',
       middleInitial: 'C',
-      contactNo: '09221231123'
+      contactNumber: '09221231123'
     );
 
     testWidgets('Should display details of doctor', (WidgetTester tester) async {

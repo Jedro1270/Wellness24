@@ -179,7 +179,7 @@ class _EmergencyContactInfoState extends State<EmergencyContactInfo> {
                                 firstName: firstName,
                                 middleInitial: middleInitial,
                                 address: address,
-                                contactNo: contactNo,
+                                contactNumber: contactNo,
                                 relationship: relationship));
 
                             Navigator.push(

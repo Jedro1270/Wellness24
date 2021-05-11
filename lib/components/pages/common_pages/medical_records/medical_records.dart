@@ -9,10 +9,11 @@ import 'package:wellness24/models/user.dart';
 import 'package:wellness24/services/database.dart';
 
 class MedicalRecords extends StatefulWidget {
+  final String role;
   final Patient patient;
   final bool editable;
 
-  MedicalRecords({this.patient, this.editable});
+  MedicalRecords({this.patient, this.editable, this.role});
 
   @override
   _MedicalRecordsState createState() => _MedicalRecordsState();
@@ -25,23 +26,8 @@ class _MedicalRecordsState extends State<MedicalRecords> {
 
   bool isDoctor = false;
 
-  @override
-  void initState() {
-    if (widget.patient != null) {
-      healthHistory = widget.patient.medicalHistory.map((title) {
-        return RecordCard(title: title);
-      }).toList();
-    }
-
-    super.initState();
-  }
-
-  _initializeBody(String uid) async {
-    databaseService = DatabaseService(uid: uid);
-
-    String role = await databaseService.getRole();
-
-    if (role == 'Doctor') {
+  void _initializeBody() async {
+    if (widget.role == 'Doctor') {
       if (mounted) {
         setState(() {
           isDoctor = true;
@@ -65,6 +51,7 @@ class _MedicalRecordsState extends State<MedicalRecords> {
                             medicalRecord: medicalRecord,
                             createNewRecord: false,
                             editable: isDoctor,
+                            refresh: refresh,
                           )));
             }))
         .toList();
@@ -76,12 +63,27 @@ class _MedicalRecordsState extends State<MedicalRecords> {
     }
   }
 
+  void refresh() {
+    _initializeBody();
+  }
+
+  @override
+  void initState() {
+    if (widget.patient != null) {
+      healthHistory = widget.patient.medicalHistory.map((title) {
+        return RecordCard(title: title);
+      }).toList();
+    }
+
+    databaseService = DatabaseService();
+
+    _initializeBody();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    User currentUser = Provider.of<User>(context);
-
-    _initializeBody(currentUser.uid);
-
     return Scaffold(
         appBar: CustomAppBar(
           title: 'Medical Records',
@@ -162,6 +164,7 @@ class _MedicalRecordsState extends State<MedicalRecords> {
                                         builder: (context) => MedicalRecordPage(
                                               patient: widget.patient,
                                               createNewRecord: true,
+                                              refresh: refresh,
                                             )));
                               },
                               icon: Icon(Icons.add),

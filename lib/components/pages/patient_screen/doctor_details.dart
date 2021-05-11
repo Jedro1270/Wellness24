@@ -162,7 +162,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                           color: Colors.black)),
                   SizedBox(height: 10.0),
                   Text(
-                      "${doctor.workingDays}: ${doctor.clinicStartHour} - ${doctor.clinicEndHour}",
+                      "${doctor.workingDays}: ${doctor.clinicStart} - ${doctor.clinicEnd}",
                       style: TextStyle(
                           fontSize: 14.0, fontFamily: "ShipporiMincho")),
                   Container(
