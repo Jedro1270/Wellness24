@@ -23,7 +23,7 @@ void main() {
       firstName: 'Veto',
       lastName: 'Bastiero III',
       middleInitial: 'C',
-      contactNo: '09221231123'
+      contactNumber: '09221231123'
     );
 
     testWidgets('Should display details of doctor', (WidgetTester tester) async {

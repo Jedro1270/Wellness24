@@ -18,12 +18,12 @@ void main() {
           firstName: 'Veto',
           lastName: 'Bastiero III',
           middleInitial: 'C',
-          contactNo: '09221231123'),
+          contactNumber: '09221231123'),
       Patient(
           firstName: 'Jedro',
           lastName: 'Pagayonan',
           middleInitial: 'Y',
-          contactNo: '09999999999')
+          contactNumber: '09999999999')
     ];
     testWidgets('Should display list of patients', (WidgetTester tester) async {
       await tester.runAsync(() async {
