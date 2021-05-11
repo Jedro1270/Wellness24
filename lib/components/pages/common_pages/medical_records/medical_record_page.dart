@@ -12,27 +12,31 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart';
 
-class AddMedicalRecord extends StatefulWidget {
-  final String title;
-  final String imageurl;
+class MedicalRecordPage extends StatefulWidget {
   final Patient patient;
+  final MedicalRecord medicalRecord;
+  final bool createNewRecord;
+  final bool editable;
 
-  AddMedicalRecord({this.title = 'Title', this.imageurl, this.patient});
+  MedicalRecordPage(
+      {this.patient,
+      this.medicalRecord,
+      this.createNewRecord,
+      this.editable = true});
 
   @override
-  _AddMedicalRecordState createState() => _AddMedicalRecordState();
+  _MedicalRecordPageState createState() => _MedicalRecordPageState();
 }
 
-class _AddMedicalRecordState extends State<AddMedicalRecord> {
+class _MedicalRecordPageState extends State<MedicalRecordPage> {
   TextEditingController noteController = TextEditingController();
   DatabaseService database;
 
-  bool editable = true;
   Doctor currentDoctor;
   PickedFile _imageFile;
   final ImagePicker _imagePicker = ImagePicker();
 
-  MedicalRecord medicalRecord;
+  MedicalRecord editedMedicalRecord;
 
   String newTitle;
   String imagePath;
@@ -52,9 +56,12 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
 
   @override
   void initState() {
-    newTitle = widget.title;
-    imageUrl = widget.imageurl;
-    medicalRecord = MedicalRecord(patientUid: widget.patient.uid);
+    editedMedicalRecord = MedicalRecord(
+        patientUid: widget.patient.uid, id: widget.medicalRecord?.id);
+
+    noteController.text = widget.medicalRecord?.notes ?? '';
+    newTitle = widget.medicalRecord?.title ?? 'Title';
+    imageUrl = widget.medicalRecord?.imageUrl ?? '';
     super.initState();
   }
 
@@ -84,18 +91,20 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
           child: ListView(
             children: <Widget>[
               Container(
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      padding: EdgeInsets.all(10),
+                      // padding: EdgeInsets.all(5),
                       child: EditableTitle(
                         initialText: newTitle,
+                        readOnly: !widget.editable,
                         onSubmitted: (newValue) {
                           setState(() {
                             newTitle = newValue;
-                            medicalRecord.title = newValue;
+                            editedMedicalRecord.title = newValue;
                           });
                         },
                       ),
@@ -105,25 +114,36 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                       height: 30.0,
                     ),
                     Container(
+                      margin: EdgeInsets.symmetric(vertical: 12),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 15, horizontal: 18),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.blueAccent[100],
+                      ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          ElevatedButton(
-                            onPressed: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: ((builder) => optionView()));
-                            },
-                            child: Text(
-                              'Upload File',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18.0,
-                                fontFamily: 'ShipporiMincho',
+                          if (widget.editable)
+                            ElevatedButton(
+                              onPressed: () {
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: ((builder) => optionView()));
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.orange[200],
+                                  onPrimary: Colors.black),
+                              child: Text(
+                                'Upload File',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18.0,
+                                  fontFamily: 'ShipporiMincho',
+                                ),
                               ),
                             ),
-                          ),
                           Container(
                             height: 200,
                             width: 400,
@@ -131,13 +151,17 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                                Image(
-                                  image: _imageFile == null
-                                      ? AssetImage('assets/image.png')
-                                      : FileImage(
-                                          File(_imageFile.path),
-                                        ),
-                                ),
+                                widget.medicalRecord?.imageUrl == null ||
+                                        widget.medicalRecord.imageUrl.isEmpty
+                                    ? Image(
+                                        image: _imageFile == null
+                                            ? AssetImage('assets/image.png')
+                                            : FileImage(
+                                                File(_imageFile.path),
+                                              ),
+                                      )
+                                    : Image.network(
+                                        widget.medicalRecord.imageUrl)
                               ],
                             ),
                           )
@@ -159,23 +183,32 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                                 fontWeight: FontWeight.bold),
                           ),
                           Container(
+                            margin: EdgeInsets.symmetric(vertical: 12),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 18),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.blueAccent[100],
+                            ),
                             constraints: BoxConstraints(
                               maxWidth: MediaQuery.of(context).size.width * 1,
                             ),
                             child: TextField(
                               key: Key('Notes'),
+                              readOnly: !widget.editable,
                               controller: noteController,
                               onChanged: (value) {
                                 setState(() {
-                                  medicalRecord.notes = value;
+                                  editedMedicalRecord.notes = value;
                                 });
                               },
                               keyboardType: TextInputType.multiline,
                               maxLines: null,
                               decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: 'Add notes',
-                              ),
+                                  border: OutlineInputBorder(),
+                                  hintText: 'Add notes',
+                                  fillColor: Colors.white,
+                                  filled: true),
                             ),
                           ),
                         ],
@@ -186,30 +219,38 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          ElevatedButton(
-                            onPressed: () async {
-                              String imageUrl = await uploadPhoto(this.context);
+                          if (widget.editable)
+                            ElevatedButton(
+                              onPressed: () async {
+                                String imageUrl =
+                                    await uploadPhoto(this.context);
 
-                              setState(() {
-                                medicalRecord.imageUrl = imageUrl;
-                                medicalRecord.lastEdited = DateTime.now();
-                              });
-                              
-                              database.uploadMedicalRecord(medicalRecord);
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text('File Uploaded'),
-                              ));
-                            },
-                            child: Text(
-                              'Save',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18.0,
-                                fontFamily: 'ShipporiMincho',
+                                setState(() {
+                                  updateEditedMedicalRecord(imageUrl);
+                                });
+
+                                if (widget.createNewRecord) {
+                                  database
+                                      .uploadMedicalRecord(editedMedicalRecord);
+                                } else {
+                                  database
+                                      .updateMedicalRecord(editedMedicalRecord);
+                                }
+
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text('File Uploaded'),
+                                ));
+                              },
+                              child: Text(
+                                'Save',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18.0,
+                                  fontFamily: 'ShipporiMincho',
+                                ),
                               ),
                             ),
-                          ),
                         ],
                       ),
                     ),
@@ -286,6 +327,18 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
     );
   }
 
+  void updateEditedMedicalRecord(String imageUrl) {
+    editedMedicalRecord.title = newTitle;
+    if (widget.medicalRecord?.imageUrl == null ||
+        widget.medicalRecord.imageUrl.isEmpty) {
+      editedMedicalRecord.imageUrl = imageUrl;
+    } else {
+      editedMedicalRecord.imageUrl = widget.medicalRecord.imageUrl;
+    }
+    editedMedicalRecord.notes = noteController.text;
+    editedMedicalRecord.lastEdited = DateTime.now();
+  }
+
   void updatePhoto(ImageSource source) async {
     final pickedFile = await _imagePicker.getImage(source: source);
 
@@ -295,17 +348,21 @@ class _AddMedicalRecordState extends State<AddMedicalRecord> {
   }
 
   Future<String> uploadPhoto(BuildContext context) async {
-    String fileName = basename(_imageFile.path);
-    StorageReference firebaseStorageRef =
-        FirebaseStorage.instance.ref().child(fileName);
+    try {
+      String fileName = basename(_imageFile.path);
+      StorageReference firebaseStorageRef =
+          FirebaseStorage.instance.ref().child(fileName);
 
-    //converts pickedFile to file
-    File convertedFile = File(_imageFile.path);
+      //converts pickedFile to file
+      File convertedFile = File(_imageFile.path);
 
-    StorageUploadTask uploadTask = firebaseStorageRef.putFile(convertedFile);
-    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-    String _url = await taskSnapshot.ref.getDownloadURL();
+      StorageUploadTask uploadTask = firebaseStorageRef.putFile(convertedFile);
+      StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+      String _url = await taskSnapshot.ref.getDownloadURL();
 
-    return _url;
+      return _url;
+    } catch (error) {
+      return '';
+    }
   }
 }

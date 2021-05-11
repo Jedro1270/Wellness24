@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness24/components/common/app_bar.dart';
-import 'package:wellness24/components/pages/common_pages/medical_records/add_medical_record.dart';
+import 'package:wellness24/components/pages/common_pages/medical_records/medical_record_page.dart';
 import 'package:wellness24/components/pages/common_pages/medical_records/record_card.dart';
+import 'package:wellness24/models/medical_record.dart';
 import 'package:wellness24/models/patient.dart';
 import 'package:wellness24/models/user.dart';
 import 'package:wellness24/services/database.dart';
@@ -19,7 +20,8 @@ class MedicalRecords extends StatefulWidget {
 
 class _MedicalRecordsState extends State<MedicalRecords> {
   List<RecordCard> healthHistory = [];
-  List<RecordCard> medicalRecords = [];
+  List<RecordCard> medicalRecordCards = [];
+  DatabaseService databaseService;
 
   bool isDoctor = false;
 
@@ -35,7 +37,9 @@ class _MedicalRecordsState extends State<MedicalRecords> {
   }
 
   _initializeBody(String uid) async {
-    String role = await DatabaseService(uid: uid).getRole();
+    databaseService = DatabaseService(uid: uid);
+
+    String role = await databaseService.getRole();
 
     if (role == 'Doctor') {
       if (mounted) {
@@ -45,23 +49,31 @@ class _MedicalRecordsState extends State<MedicalRecords> {
       }
     }
 
-    medicalRecords = [
-      RecordCard(
-        title: 'Blood Test',
-        date: DateTime.now(),
-        onTap: isDoctor
-            ? () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AddMedicalRecord(
-                              title: 'Blood Test',
-                              patient: widget.patient,
-                            )));
-              }
-            : null,
-      ) // TODO: replace placeholder
-    ];
+    List<MedicalRecord> medicalRecords =
+        await databaseService.getMedicalRecords(widget.patient.uid);
+
+    List recordCards = medicalRecords
+        .map((medicalRecord) => RecordCard(
+            title: medicalRecord.title,
+            date: medicalRecord.lastEdited,
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MedicalRecordPage(
+                            patient: widget.patient,
+                            medicalRecord: medicalRecord,
+                            createNewRecord: false,
+                            editable: isDoctor,
+                          )));
+            }))
+        .toList();
+
+    if (mounted) {
+      setState(() {
+        medicalRecordCards = recordCards;
+      });
+    }
   }
 
   @override
@@ -81,18 +93,6 @@ class _MedicalRecordsState extends State<MedicalRecords> {
                 })
           ],
         ),
-        // floatingActionButton: isDoctor
-        //     ? FloatingActionButton(
-        //         child: Icon(Icons.add),
-        //         onPressed: () {
-        //           Navigator.push(
-        //               context,
-        //               MaterialPageRoute(
-        //                   builder: (context) =>
-        //                       AddMedicalRecord(patient: widget.patient)));
-        //         },
-        //       )
-        //     : Container(),
         body: Container(
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             child: Column(children: [
@@ -152,15 +152,16 @@ class _MedicalRecordsState extends State<MedicalRecords> {
                       SizedBox(
                           height: 80,
                           child: ListView(
-                              primary: false, children: medicalRecords)),
+                              primary: false, children: medicalRecordCards)),
                       isDoctor
                           ? ElevatedButton.icon(
                               onPressed: () {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => AddMedicalRecord(
+                                        builder: (context) => MedicalRecordPage(
                                               patient: widget.patient,
+                                              createNewRecord: true,
                                             )));
                               },
                               icon: Icon(Icons.add),
@@ -217,16 +218,15 @@ class _MedicalRecordsState extends State<MedicalRecords> {
                         'Medical Records',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontFamily: "ShipporiMincho",
-                          fontWeight: FontWeight.bold
-                        ),
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontFamily: "ShipporiMincho",
+                            fontWeight: FontWeight.bold),
                       )),
                       SizedBox(
                           height: 150,
                           child: ListView(
-                              primary: false, children: medicalRecords)),
+                              primary: false, children: medicalRecordCards)),
                     ],
                   )));
         });

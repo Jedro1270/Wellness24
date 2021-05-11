@@ -126,7 +126,7 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => DoctorQueueMonitor()));
+                              builder: (context) => DoctorQueueMonitor(this.currentDoctor)));
                     },
                   ),
                   // buildAppointmentList(),

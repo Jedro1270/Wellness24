@@ -14,6 +14,7 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   final AuthService _auth = AuthService(auth: FirebaseAuth.instance);
   String email, password;
+  bool hidePassword = true;
 
   String error = '';
   bool timeout = false;
@@ -58,13 +59,33 @@ class _LoginState extends State<Login> {
                     SizedBox(height: 30.0),
                     SizedBox(
                         height: 60.0,
-                        child: TextFormField(
-                          decoration: InputDecoration(hintText: 'Password'),
-                          keyboardType: TextInputType.visiblePassword,
-                          obscureText: true,
-                          validator: (val) =>
-                              val.isEmpty ? 'This field is required' : null,
-                          onChanged: (val) => setState(() => password = val),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 9,
+                              child: TextFormField(
+                                decoration:
+                                    InputDecoration(hintText: 'Password'),
+                                keyboardType: TextInputType.visiblePassword,
+                                obscureText: hidePassword,
+                                validator: (val) => val.isEmpty
+                                    ? 'This field is required'
+                                    : null,
+                                onChanged: (val) =>
+                                    setState(() => password = val),
+                              ),
+                            ),
+                            Expanded(
+                                child: IconButton(
+                                    icon: Icon(hidePassword
+                                        ? Icons.visibility
+                                        : Icons.visibility_off),
+                                    onPressed: () {
+                                      setState(() {
+                                        hidePassword = !hidePassword;
+                                      });
+                                    }))
+                          ],
                         )),
                     SizedBox(height: 20.0),
                     Container(

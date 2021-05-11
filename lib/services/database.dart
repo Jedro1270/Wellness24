@@ -321,6 +321,35 @@ class DatabaseService {
     });
   }
 
+  Future updateMedicalRecord(MedicalRecord medicalRecord) async {
+    await medicalRecords.document(medicalRecord.id).setData({
+      'patientUid': medicalRecord.patientUid,
+      'title': medicalRecord.title,
+      'notes': medicalRecord.notes,
+      'lastEdited': medicalRecord.lastEdited,
+      'imageUrl': medicalRecord.imageUrl
+    });
+  }
+
+  Future<List<MedicalRecord>> getMedicalRecords(String patientUid) async {
+    QuerySnapshot snapshot =
+        await medicalRecords.orderBy('lastEdited').getDocuments();
+    var result = snapshot.documents
+        .where((document) => document.data['patientUid'] == patientUid)
+        .toList();
+
+    return result
+        .map((document) => MedicalRecord(
+              id: document.documentID,
+              patientUid: document.data['patientUid'],
+              title: document.data['title'],
+              notes: document.data['notes'],
+              lastEdited: document.data['lastEdited'].toDate(),
+              imageUrl: document.data['imageUrl'],
+            ))
+        .toList();
+  }
+
   Future addAppointment(String doctorId, DateTime date) async {
     String dateString = DateFormat('MM-dd-yyyy').format(date);
 
@@ -339,12 +368,21 @@ class DatabaseService {
     });
   }
 
-  // Future<List<MedicalRecord>> getMedicalRecords(String patientUid) async {
-  //   QuerySnapshot snapshot = await medicalRecords.getDocuments();
-  //   var result = snapshot.documents
-  //       .where((document) => document.data['patientUid'] == patientUid)
-  //       .toList();
+  Future<int> getPriorityNum(String doctorId, DateTime date) async {
+    String dateString = DateFormat('MM-dd-yyyy').format(date);
+    DocumentSnapshot patientDoc = await patients.document(uid).get();
+    List appointmentsOnDate = patientDoc.data['appointments'][dateString];
 
-  //   print(result);
-  // }
+    Map appointmentData = appointmentsOnDate.firstWhere((el) {
+      return el['doctorId'] == doctorId;
+    });
+
+    return appointmentData['priorityNum'];
+  }
+
+  Future<int> getAppointmentQueueCap(DateTime date) async {
+    String dateString = DateFormat('MM-dd-yyyy').format(date);
+    DocumentSnapshot document = await doctors.document(uid).get();
+    return document.data['appointments'][dateString];
+  }
 }

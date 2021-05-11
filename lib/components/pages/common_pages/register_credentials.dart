@@ -17,6 +17,8 @@ class _RegisterCredentialsState extends State<RegisterCredentials> {
   NewAccount account;
   _RegisterCredentialsState(this.account);
 
+  bool hidePassword = true;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -59,16 +61,33 @@ class _RegisterCredentialsState extends State<RegisterCredentials> {
                     onChanged: (val) => setState(() => contactNo = val),
                     obscureText: false),
                 SizedBox(height: 30.0),
-                TextFormField(
-                    decoration: InputDecoration(hintText: 'Password'),
-                    validator: (val) => val.isEmpty
-                        ? 'This field is required'
-                        : val.length < 7
-                            ? 'Enter a password 6+ characters long'
-                            : null,
-                    keyboardType: TextInputType.visiblePassword,
-                    onChanged: (val) => setState(() => password = val),
-                    obscureText: true),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 9,
+                      child: TextFormField(
+                          decoration: InputDecoration(hintText: 'Password'),
+                          validator: (val) => val.isEmpty
+                              ? 'This field is required'
+                              : val.length < 7
+                                  ? 'Enter a password 6+ characters long'
+                                  : null,
+                          keyboardType: TextInputType.visiblePassword,
+                          onChanged: (val) => setState(() => password = val),
+                          obscureText: hidePassword),
+                    ),
+                    Expanded(
+                        child: IconButton(
+                            icon: Icon(hidePassword
+                                ? Icons.visibility
+                                : Icons.visibility_off),
+                            onPressed: () {
+                              setState(() {
+                                hidePassword = !hidePassword;
+                              });
+                            }))
+                  ],
+                ),
                 SizedBox(height: 20.0),
                 Container(
                   child: Row(
