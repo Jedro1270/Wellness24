@@ -89,6 +89,7 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
           ? Loading()
           : Container(
               child: ListView(
+                shrinkWrap: true,
                 children: <Widget>[
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
@@ -102,7 +103,6 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
                     ),
                   ),
                   Container(
-                      height: 200,
                       child: MyPatientsList(
                         mockPatients: widget.mockPatients ?? [],
                         doctorDatabaseRef:
