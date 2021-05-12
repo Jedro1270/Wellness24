@@ -52,7 +52,7 @@ class PatientInfo extends StatelessWidget {
                               fontFamily: "ShipporiMincho",
                               fontWeight: FontWeight.bold),
                           textAlign: TextAlign.start),
-                      Text('Contact Number: ${patient.contactNo}',
+                      Text('Contact Number: ${patient.contactNumber}',
                           style: TextStyle(
                               fontSize: 20,
                               fontFamily: "ShipporiMincho",

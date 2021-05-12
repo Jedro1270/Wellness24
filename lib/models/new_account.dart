@@ -1,15 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:wellness24/models/emergency_contact.dart';
 import 'package:wellness24/services/auth_service.dart';
 import 'package:wellness24/models/user.dart';
 import 'package:wellness24/services/database.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'new_account.g.dart';
+
+@JsonSerializable(nullable: false, explicitToJson: true)
 class NewAccount {
   final auth = AuthService();
   String uid,
       role,
       email,
       password,
-      contactNo,
+      contactNumber,
       lastName,
       firstName,
       middleInitial,
@@ -25,7 +30,10 @@ class NewAccount {
       about;
   List<String> keywords;
   List<String> medicalHistory;
+
+  @JsonKey(ignore: true)
   EmergencyContact emergencyContact;
+  
   DateTime birthDate;
 
   NewAccount(this.role);
@@ -59,7 +67,7 @@ class NewAccount {
   void supplyCredentials({String email, String password, String contactNo}) {
     this.email = email;
     this.password = password;
-    this.contactNo = contactNo;
+    this.contactNumber = contactNo;
   }
 
   void supplyPersonalInfo(
@@ -131,4 +139,11 @@ class NewAccount {
 
     return result;
   }
+
+factory NewAccount.fromJson(Map<String, dynamic> json) {
+    json["birthDate"] = ((json["birthDate"] as Timestamp).toDate().toString());
+    return _$NewAccountFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() => _$NewAccountToJson(this);
 }

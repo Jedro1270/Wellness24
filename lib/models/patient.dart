@@ -1,8 +1,13 @@
 import 'package:age/age.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:wellness24/models/blood_pressure.dart';
 import 'package:wellness24/models/blood_sugar_level.dart';
 import 'package:wellness24/models/emergency_contact.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'patient.g.dart';
+
+@JsonSerializable(nullable: true, explicitToJson: true)
 class Patient {
   String uid;
   String firstName;
@@ -11,14 +16,20 @@ class Patient {
   String gender;
   DateTime birthDate;
   String address;
-  String contactNo;
+  String contactNumber;
   double weight;
   double bodyTemperature;
   double height;
   String bloodType;
+
+  @JsonKey(ignore: true)
   BloodPressure bloodPressure;
+  @JsonKey(ignore: true)
   BloodSugarLevel bloodSugarLevel;
+
   List medicalHistory;
+
+  @JsonKey(ignore: true)
   EmergencyContact emergencyContact;
 
   Patient(
@@ -28,7 +39,7 @@ class Patient {
       this.gender,
       this.birthDate,
       this.address,
-      this.contactNo,
+      this.contactNumber,
       this.medicalHistory,
       this.emergencyContact,
       this.bloodPressure,
@@ -56,7 +67,7 @@ class Patient {
       lastName: this.lastName,
       middleInitial: this.middleInitial,
       birthDate: this.birthDate,
-      contactNo: this.contactNo,
+      contactNumber: this.contactNumber,
       address: this.address,
       bloodType: this.bloodType,
       weight: this.weight,
@@ -64,4 +75,10 @@ class Patient {
       medicalHistory: this.medicalHistory
     };
   }
+
+  factory Patient.fromJson(Map<String, dynamic> json, String uid) {
+    return _$PatientFromJson(json)..uid = uid;
+  }
+
+  Map<String, dynamic> toJson() => _$PatientToJson(this);
 }

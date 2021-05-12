@@ -34,9 +34,8 @@ class _SearchedDoctorsListState extends State<SearchedDoctorsList> {
     QuerySnapshot snapshots;
 
     if (widget.searchValue.trim() == '') {
-      snapshots = await widget.doctorDatabaseRef
-          .limit(doctorsLimit)
-          .getDocuments();
+      snapshots =
+          await widget.doctorDatabaseRef.limit(doctorsLimit).getDocuments();
     } else {
       snapshots = await widget.doctorDatabaseRef
           .where('keywords', arrayContains: widget.searchValue.toLowerCase())
@@ -55,17 +54,8 @@ class _SearchedDoctorsListState extends State<SearchedDoctorsList> {
 
     setState(() {
       doctors = filteredDoctors.map<DoctorInfo>((document) {
-        Doctor currentDoctor = Doctor(
-            uid: document.documentID,
-            firstName: document.data['firstName'],
-            middleInitial: document.data['middleInitial'],
-            lastName: document.data['lastName'],
-            specialization: document.data['specialization'],
-            about: document.data['about'],
-            workingDays: document.data['workingDays'],
-            clinicStartHour: document.data['clinicStart'],
-            clinicEndHour: document.data['clinicEnd'],
-            education: document.data['education']);
+        Doctor currentDoctor =
+            Doctor.fromJson(document.data, document.documentID);
 
         return DoctorInfo(
           doctor: currentDoctor,

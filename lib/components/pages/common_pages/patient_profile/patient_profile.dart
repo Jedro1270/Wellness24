@@ -262,9 +262,10 @@ class _PatientProfileState extends State<PatientProfile> {
                         children: <Widget>[
                           Text('Blood Pressure:',
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  fontFamily: 'ShipporiMincho')),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                fontFamily: 'ShipporiMincho',
+                              )),
                           SizedBox(width: 20),
                           editingBloodPressure && widget.editable
                               ? SizedBox(
@@ -294,14 +295,31 @@ class _PatientProfileState extends State<PatientProfile> {
                                     ),
                                   ),
                                 )
-                              : Text(
-                                  newBloodPressure == null
-                                      ? ''
-                                      : newBloodPressure.reading,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15,
-                                      fontFamily: 'ShipporiMincho'),
+                              : RichText(
+                                  text: TextSpan(
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                        color: Colors.black),
+                                    children: [
+                                      TextSpan(
+                                        text: newBloodPressure == null
+                                            ? ''
+                                            : newBloodPressure.reading,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
+                                            fontFamily: 'ShipporiMincho'),
+                                      ),
+                                      WidgetSpan(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 4.0),
+                                          child: Icon(Icons.edit_outlined),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                           SizedBox(height: 10),
                           SizedBox(
@@ -374,14 +392,31 @@ class _PatientProfileState extends State<PatientProfile> {
                                     ),
                                   ),
                                 )
-                              : Text(
-                                  newBloodSugarLevel == null
-                                      ? ''
-                                      : newBloodSugarLevel.reading,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15,
-                                      fontFamily: 'ShipporiMincho'),
+                              : RichText(
+                                  text: TextSpan(
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                        color: Colors.black),
+                                    children: [
+                                      TextSpan(
+                                        text: newBloodSugarLevel == null
+                                            ? ''
+                                            : newBloodSugarLevel.reading,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
+                                            fontFamily: 'ShipporiMincho'),
+                                      ),
+                                      WidgetSpan(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 4.0),
+                                          child: Icon(Icons.edit_outlined),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                           SizedBox(height: 10),
                           SizedBox(

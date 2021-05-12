@@ -83,7 +83,7 @@ void main() {
           email: 'test@gmail.com',
           password: 'test_password01');
 
-      expect(testAcc.contactNo, '09221235212');
+      expect(testAcc.contactNumber, '09221235212');
       expect(testAcc.email, 'test@gmail.com');
       expect(testAcc.password, 'test_password01');
     });
@@ -181,7 +181,7 @@ void main() {
           firstName: 'Mom',
           middleInitial: 'J',
           address: 'Cabatuan, Iloilo',
-          contactNo: '09221321235',
+          contactNumber: '09221321235',
           relationship: 'Mother');
 
       testAcc.addEmergencyContact(contact);
@@ -190,7 +190,7 @@ void main() {
       expect(testAcc.emergencyContact.firstName, 'Mom');
       expect(testAcc.emergencyContact.middleInitial, 'J');
       expect(testAcc.emergencyContact.address, 'Cabatuan, Iloilo');
-      expect(testAcc.emergencyContact.contactNo, '09221321235');
+      expect(testAcc.emergencyContact.contactNumber, '09221321235');
       expect(testAcc.emergencyContact.relationship, 'Mother');
     });
   });

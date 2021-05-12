@@ -34,7 +34,7 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
     DateTime _datePicker = await showDatePicker(
       context: context,
       initialDate: _date,
-      firstDate: DateTime(1921),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2100),
       selectableDayPredicate: (DateTime val) =>
           val.weekday == 6 || val.weekday == 7 ? false : true,
@@ -104,7 +104,7 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                             fontFamily: "ShipporiMincho",
                             color: Colors.black)),
                     Text(
-                        '${widget.doctor.clinicStartHour} - ${widget.doctor.clinicEndHour}',
+                        '${widget.doctor.clinicStart} - ${widget.doctor.clinicEnd}',
                         style: TextStyle(
                             fontSize: 18,
                             fontFamily: "ShipporiMincho",
