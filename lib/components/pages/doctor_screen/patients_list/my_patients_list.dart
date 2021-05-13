@@ -54,6 +54,6 @@ class _MyPatientsListState extends State<MyPatientsList> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(primary: false, children: patients);
+    return ListView(primary: false, children: patients, shrinkWrap: true,);
   }
 }
