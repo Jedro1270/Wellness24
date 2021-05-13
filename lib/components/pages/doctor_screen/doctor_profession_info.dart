@@ -88,7 +88,10 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
     if (time != null) {
       setState(() {
         startTime = time;
-        clinicStart = '${time.hourOfPeriod}:${time.minute} ${time.period.toString().substring(10, 12).toUpperCase()}';
+        clinicStart =
+            '${time.hourOfPeriod}:${time.minute.toString().length < 2 ? (time.minute.toString() + '0') : time.minute} ${time.period.toString().substring(10, 12).toUpperCase()}';
+
+        print(clinicStart);
       });
     }
   }
@@ -104,7 +107,10 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
     if (time != null) {
       setState(() {
         endTime = time;
-        clinicEnd = '${time.hourOfPeriod}:${time.minute} ${time.period.toString().substring(10, 12).toUpperCase()}';
+        clinicEnd =
+            '${time.hourOfPeriod}:${time.minute.toString().length < 2 ? (time.minute.toString() + '0') : time.minute} ${time.period.toString().substring(10, 12).toUpperCase()}';
+
+        print(clinicEnd);
       });
     }
   }
