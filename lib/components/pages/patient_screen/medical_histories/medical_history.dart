@@ -122,46 +122,8 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                                   borderRadius: BorderRadius.circular(30.0),
                                   side: BorderSide(color: Colors.black12)),
                               color: Colors.grey.withOpacity(0.5),
-                              onPressed: () async {
-                                List<String> patientMedHistory = medicalList
-                                    .where((c) => c.value == true)
-                                    .map((e) => e.title)
-                                    .toList();
-
-                                setState(() {
-                                  loading = true;
-                                });
-
-                                User patient = await account
-                                    .registerPatient(patientMedHistory)
-                                    .timeout(Duration(seconds: 120),
-                                        onTimeout: () {
-                                  timeout = true;
-                                  return null;
-                                });
-
-                                final database =
-                                    DatabaseService(uid: patient.uid);
-
-                                await database.insertPatient(account);
-
-                                if (patient == null) {
-                                  setState(() {
-                                    if (timeout) {
-                                      error =
-                                          'The connection has timed out, please try again';
-                                      timeout = false;
-                                    } else {
-                                      error = 'Email is already taken';
-                                    }
-                                    loading = false;
-                                  });
-                                } else {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Login()));
-                                }
+                              onPressed: () {
+                                _showDialog(context);
                               },
                               child: Text("Register",
                                   style: TextStyle(
@@ -182,5 +144,66 @@ class _MedicalHistoryState extends State<MedicalHistory> {
               ),
             ),
           );
+  }
+
+  _showDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              content: Text(
+                  'By clicking yes, you would agree to share your information with your doctor  \n\nWould you like to continue?'),
+              actions: [
+                ElevatedButton(
+                    key: Key('elevatedYes'),
+                    onPressed: () async{
+                     List<String> patientMedHistory = medicalList
+                          .where((c) => c.value == true)
+                          .map((e) => e.title)
+                          .toList();
+
+                      setState(() {
+                        loading = true;
+                      });
+
+                      User patient = await account
+                          .registerPatient(patientMedHistory)
+                          .timeout(Duration(seconds: 120),
+                              onTimeout: () {
+                        timeout = true;
+                        return null;
+                      });
+
+                      final database =
+                          DatabaseService(uid: patient.uid);
+
+                      await database.insertPatient(account);
+
+                      if (patient == null) {
+                        setState(() {
+                          if (timeout) {
+                            error =
+                                'The connection has timed out, please try again';
+                            timeout = false;
+                          } else {
+                            error = 'Email is already taken';
+                          }
+                          loading = false;
+                        });
+                      } else {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Login()));
+                         Navigator.pop(context);
+                      }
+                    },
+                    child: Text('YES')),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('NO'))
+              ],
+            ));
   }
 }
