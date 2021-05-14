@@ -21,6 +21,15 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
   int queueCapacity, currentNumber = 0;
   bool isAcceptingCustomers = true;
 
+  int limitNumber = 5;
+  List<int> limitNumbers = [
+    1,
+    2,
+    3,
+    4,
+    5,
+  ];
+
   void fetchQueueCap() async {
     DatabaseService _database = DatabaseService(uid: widget.currentDoctor.uid);
     int result = await _database.getAppointmentQueueCap(currentDate);
@@ -88,6 +97,35 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
                     fontFamily: "ShipporiMincho",
                     fontWeight: FontWeight.bold,
                     fontSize: 30,
+                  ),
+                ),
+                RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        fontFamily: 'ShipporiMincho',
+                        color: Colors.black),
+                    children: [
+                      TextSpan(text: 'Limit: '),
+                      WidgetSpan(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 2.0),
+                          child: DropdownButton(
+                            value: limitNumber,
+                            items: limitNumbers.map((value) {
+                              return DropdownMenuItem(
+                                  value: value,
+                                  child: Text(value.toString(),
+                                      style: TextStyle(
+                                          fontFamily: 'ShipporiMincho')));
+                            }).toList(),
+                            onChanged: (value) =>
+                                setState(() => limitNumber = value),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Divider(height: 10, color: Colors.transparent),
