@@ -33,7 +33,7 @@ class NewAccount {
 
   @JsonKey(ignore: true)
   EmergencyContact emergencyContact;
-  
+
   DateTime birthDate;
 
   NewAccount(this.role);
@@ -140,10 +140,8 @@ class NewAccount {
     return result;
   }
 
-factory NewAccount.fromJson(Map<String, dynamic> json) {
-    json["birthDate"] = ((json["birthDate"] as Timestamp).toDate().toString());
-    return _$NewAccountFromJson(json);
-  }
+  factory NewAccount.fromJson(Map<String, dynamic> json) =>
+      _$NewAccountFromJson(json);
 
   Map<String, dynamic> toJson() => _$NewAccountToJson(this);
 }
