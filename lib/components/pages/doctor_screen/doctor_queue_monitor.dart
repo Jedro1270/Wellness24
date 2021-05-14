@@ -19,7 +19,16 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
   DateTime currentDate = DateTime.now();
   DateFormat format = DateFormat.yMMMMd('en_US');
   int queueCapacity, currentNumber = 0;
-  // bool isAcceptingCustomers = true;
+  bool isAcceptingCustomers = true;
+
+  int limitNumber = 5;
+  List<int> limitNumbers = [
+    1,
+    2,
+    3,
+    4,
+    5,
+  ];
 
   void fetchQueueCap() async {
     DatabaseService _database = DatabaseService(uid: widget.currentDoctor.uid);
@@ -90,6 +99,35 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
                     fontSize: 30,
                   ),
                 ),
+                RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        fontFamily: 'ShipporiMincho',
+                        color: Colors.black),
+                    children: [
+                      TextSpan(text: 'Limit: '),
+                      WidgetSpan(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 2.0),
+                          child: DropdownButton(
+                            value: limitNumber,
+                            items: limitNumbers.map((value) {
+                              return DropdownMenuItem(
+                                  value: value,
+                                  child: Text(value.toString(),
+                                      style: TextStyle(
+                                          fontFamily: 'ShipporiMincho')));
+                            }).toList(),
+                            onChanged: (value) =>
+                                setState(() => limitNumber = value),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 Divider(height: 10, color: Colors.transparent),
                 Text(
                   'Now Serving',
@@ -135,60 +173,60 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
                     )
                   ],
                 ),
-                // Text(
-                //   isAcceptingCustomers
-                //       ? 'Accepting Appointments'
-                //       : 'Unavailable for Appointments',
-                //   textAlign: TextAlign.center,
-                //   style: TextStyle(
-                //       fontFamily: "ShipporiMincho",
-                //       fontWeight: FontWeight.bold,
-                //       fontSize: 20,
-                //       color: isAcceptingCustomers
-                //           ? Colors.green[700]
-                //           : Colors.red),
-                // ),
-                // Switch(
-                //     value: isAcceptingCustomers,
-                //     onChanged: (bool newValue) {
-                //       if (newValue == false) {
-                //         _showDialog(context);
-                //       } else {
-                //         setState(() {
-                //           isAcceptingCustomers = true;
-                //         });
-                //       }
-                //     }),
+                Text(
+                  isAcceptingCustomers
+                      ? 'Accepting Appointments'
+                      : 'Unavailable for Appointments',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontFamily: "ShipporiMincho",
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: isAcceptingCustomers
+                          ? Colors.green[700]
+                          : Colors.red),
+                ),
+                Switch(
+                    value: isAcceptingCustomers,
+                    onChanged: (bool newValue) {
+                      if (newValue == false) {
+                        _showDialog(context);
+                      } else {
+                        setState(() {
+                          isAcceptingCustomers = true;
+                        });
+                      }
+                    }),
               ],
             ),
           ]),
         ));
   }
 
-  // _showDialog(BuildContext context) {
-  //   showDialog(
-  //       context: context,
-  //       builder: (context) => AlertDialog(
-  //             content: Text(
-  //                 'This will let your patients know that you are no longer available. \n\nWould you like to continue?'),
-  //             actions: [
-  //               ElevatedButton(
-  //                   key: Key('elevatedYes'),
-  //                   onPressed: () {
-  //                     setState(() {
-  //                       isAcceptingCustomers = false;
-  //                     });
-  //                     Navigator.pop(context);
-  //                   },
-  //                   child: Text('YES')),
-  //               ElevatedButton(
-  //                   onPressed: () {
-  //                     Navigator.pop(context);
-  //                   },
-  //                   child: Text('NO'))
-  //             ],
-  //           ));
-  // }
+  _showDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              content: Text(
+                  'This will let your patients know that you are no longer available. \n\nWould you like to continue?'),
+              actions: [
+                ElevatedButton(
+                    key: Key('elevatedYes'),
+                    onPressed: () {
+                      setState(() {
+                        isAcceptingCustomers = false;
+                      });
+                      Navigator.pop(context);
+                    },
+                    child: Text('YES')),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('NO'))
+              ],
+            ));
+  }
 }
 
 class dateWidget extends StatefulWidget {
