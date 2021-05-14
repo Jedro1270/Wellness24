@@ -51,11 +51,34 @@ class DatabaseService {
   }
 
   Future insertDoctor(NewAccount doctorAccount) async {
-    await doctors.document(uid).setData(doctorAccount.toJson());
+    Doctor doctor = Doctor(
+      firstName: doctorAccount.firstName,
+      middleInitial: doctorAccount.middleInitial,
+      lastName: doctorAccount.lastName,
+      specialization: doctorAccount.specialization,
+      about: doctorAccount.about,
+      workingDays: doctorAccount.workingDays,
+      clinicStart: doctorAccount.clinicStart,
+      clinicEnd: doctorAccount.clinicEnd,
+      education: doctorAccount.education,
+    );
+
+    await doctors.document(uid).setData(doctor.toJson());
   }
 
   Future insertPatient(NewAccount patientAccount) async {
-    await patients.document(uid).setData(patientAccount.toJson());
+    Patient patient = Patient(
+      firstName: patientAccount.firstName,
+      middleInitial: patientAccount.middleInitial,
+      lastName: patientAccount.lastName,
+      gender: patientAccount.gender,
+      birthDate: patientAccount.birthDate,
+      address: patientAccount.address,
+      contactNumber: patientAccount.contactNumber,
+      medicalHistory: patientAccount.medicalHistory,
+    );
+
+    await patients.document(uid).setData(patient.toJson());
 
     EmergencyContact emergencyContact = patientAccount.emergencyContact;
 
