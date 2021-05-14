@@ -13,9 +13,8 @@ class Message {
 
   Message({this.content, this.dateCreated, this.receiverUid, this.senderUid});
 
-  factory Message.fromJson(Map<String, dynamic> json) {
-    json["dateCreated"] = ((json["dateCreated"] as Timestamp).toDate().toString());
-    return _$MessageFromJson(json);
-  }
+  factory Message.fromJson(Map<String, dynamic> json) =>
+      _$MessageFromJson(json);
+
   Map<String, dynamic> toJson() => _$MessageToJson(this);
 }

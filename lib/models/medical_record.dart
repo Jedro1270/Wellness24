@@ -20,10 +20,8 @@ class MedicalRecord {
       this.notes,
       this.lastEdited});
 
-  factory MedicalRecord.fromJson(Map<String, dynamic> json) {
-    json["lastEdited"] = ((json["lastEdited"] as Timestamp).toDate().toString());
-    return _$MedicalRecordFromJson(json);
-  }
+  factory MedicalRecord.fromJson(Map<String, dynamic> json) =>
+      _$MedicalRecordFromJson(json);
 
   Map<String, dynamic> toJson() => _$MedicalRecordToJson(this);
 }
