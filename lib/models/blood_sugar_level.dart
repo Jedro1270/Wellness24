@@ -3,15 +3,25 @@ import 'package:clock/clock.dart';
 
 part 'blood_sugar_level.g.dart';
 
-@JsonSerializable(nullable: false, explicitToJson: true)
+@JsonSerializable(nullable: true, explicitToJson: true)
 class BloodSugarLevel {
+  @JsonKey(defaultValue: '')
   String reading;
+
   DateTime lastChecked;
 
   @JsonKey(ignore: true)
   final Clock clock;
 
-  BloodSugarLevel({this.reading, this.lastChecked, this.clock = const Clock()});
+  BloodSugarLevel({
+    this.reading = '',
+    this.lastChecked,
+    this.clock = const Clock(),
+  }) {
+    if (this.lastChecked == null) {
+      this.lastChecked = DateTime.now();
+    }
+  }
 
   String get sinceLastChecked {
     String output;
