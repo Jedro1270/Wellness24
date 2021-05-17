@@ -21,14 +21,9 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
   int queueCapacity, currentNumber = 0;
   bool isAcceptingCustomers = true;
 
-  int limitNumber = 5;
-  List<int> limitNumbers = [
-    1,
-    2,
-    3,
-    4,
-    5,
-  ];
+  int limitNumber = 50;
+
+  List<int> limitNumbers = []; 
 
   void fetchQueueCap() async {
     DatabaseService _database = DatabaseService(uid: widget.currentDoctor.uid);
@@ -38,10 +33,17 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
     });
   }
 
+  setLimitNumber() {
+    for (var index = 1; index < limitNumber + 1; index++) {
+      limitNumbers.add(index);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     fetchQueueCap();
+    setLimitNumber();
   }
 
   @override
