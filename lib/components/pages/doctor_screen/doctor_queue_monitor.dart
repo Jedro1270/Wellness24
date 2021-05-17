@@ -18,12 +18,12 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
   bool _selectDate = true;
   DateTime currentDate = DateTime.now();
   DateFormat format = DateFormat.yMMMMd('en_US');
-  int queueCapacity, currentNumber = 0;
+  int queueCapacity, currentNumber = 1;
   bool isAcceptingCustomers = true;
 
   int limitNumber = 50;
 
-  List<int> limitNumbers = []; 
+  List<int> limitNumbers = [];
 
   void fetchQueueCap() async {
     DatabaseService _database = DatabaseService(uid: widget.currentDoctor.uid);
@@ -145,8 +145,8 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
                     IconButton(
                       onPressed: () {
                         setState(() {
-                          currentNumber <= 0
-                              ? currentNumber = 0
+                          currentNumber <= 1
+                              ? currentNumber = 1
                               : currentNumber--;
                         });
                       },
@@ -167,7 +167,9 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
                     IconButton(
                       onPressed: () {
                         setState(() {
-                          currentNumber++;
+                          currentNumber >= limitNumber
+                              ? currentNumber = limitNumber
+                              : currentNumber++;
                         });
                       },
                       iconSize: 50,
