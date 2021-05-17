@@ -150,59 +150,70 @@ class _MedicalHistoryState extends State<MedicalHistory> {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              content: Text(
-                  'By clicking yes, you would agree to share your information with your doctor  \n\nWould you like to continue?'),
+              title: Text('Do You Consent to Share Your Medical Information?'),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    Text(
+                      'By using this app, you agree to share your medical information.',
+                    ),
+                    Text(
+                      '\nOnly doctors you give consent to can access, append and edit your medical information.',
+                    ),
+                    Text('\nWould you like to continue?'),
+                  ],
+                ),
+              ),
               actions: [
                 ElevatedButton(
-                    key: Key('elevatedYes'),
-                    onPressed: () async{
-                     List<String> patientMedHistory = medicalList
-                          .where((c) => c.value == true)
-                          .map((e) => e.title)
-                          .toList();
-
-                      setState(() {
-                        loading = true;
-                      });
-
-                      User patient = await account
-                          .registerPatient(patientMedHistory)
-                          .timeout(Duration(seconds: 120),
-                              onTimeout: () {
-                        timeout = true;
-                        return null;
-                      });
-
-                      final database =
-                          DatabaseService(uid: patient.uid);
-
-                      await database.insertPatient(account);
-
-                      if (patient == null) {
-                        setState(() {
-                          if (timeout) {
-                            error =
-                                'The connection has timed out, please try again';
-                            timeout = false;
-                          } else {
-                            error = 'Email is already taken';
-                          }
-                          loading = false;
-                        });
-                      } else {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Login()));
-                         Navigator.pop(context);
-                      }
-                    },
-                    child: Text('YES')),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('CANCEL'),
+                ),
                 ElevatedButton(
-                    onPressed: () {
+                  key: Key('elevatedYes'),
+                  onPressed: () async {
+                    Navigator.pop(context);
+                    List<String> patientMedHistory = medicalList
+                        .where((c) => c.value == true)
+                        .map((e) => e.title)
+                        .toList();
+
+                    setState(() {
+                      loading = true;
+                    });
+
+                    User patient = await account
+                        .registerPatient(patientMedHistory)
+                        .timeout(Duration(seconds: 120), onTimeout: () {
+                      timeout = true;
+                      return null;
+                    });
+
+                    final database = DatabaseService(uid: patient.uid);
+
+                    await database.insertPatient(account);
+
+                    if (patient == null) {
+                      setState(() {
+                        if (timeout) {
+                          error =
+                              'The connection has timed out, please try again';
+                          timeout = false;
+                        } else {
+                          error = 'Email is already taken';
+                        }
+                        loading = false;
+                      });
+                    } else {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Login()));
                       Navigator.pop(context);
-                    },
-                    child: Text('NO'))
+                    }
+                  },
+                  child: Text('CONSENT'),
+                ),
               ],
             ));
   }
