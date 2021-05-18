@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:wellness24/components/common/loading_animation.dart';
 import 'package:wellness24/components/pages/doctor_screen/patients_list/patient_info.dart';
 import 'package:wellness24/models/patient.dart';
 import 'package:wellness24/services/database.dart';
@@ -47,13 +48,39 @@ class _MyPatientsListState extends State<MyPatientsList> {
 
   @override
   void initState() {
-    getPatients();
-
     super.initState();
+    getPatients();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView(primary: false, children: patients, shrinkWrap: true,);
+    Widget page = Loading();
+
+    if (patients.isEmpty) {
+      setState(() {
+        page = Container(
+          alignment: Alignment.center,
+          child: Text(
+            'No patients yet',
+            style: TextStyle(
+              color: Colors.grey[600],
+              fontFamily: "ShipporiMincho",
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+          height: 40,
+        );
+      });
+    } else {
+      setState(() {
+        page = ListView(
+          primary: false,
+          children: patients,
+          shrinkWrap: true,
+        );
+      });
+    }
+    return page;
   }
 }
