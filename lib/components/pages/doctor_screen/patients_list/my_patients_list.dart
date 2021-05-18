@@ -29,11 +29,13 @@ class _MyPatientsListState extends State<MyPatientsList> {
       DocumentSnapshot snapshot =
           await widget.doctorDatabaseRef.document(widget.doctorId).get();
 
-      await Future.forEach(snapshot.data['patients'], (patient) async {
-        Patient currentPatient = await database.getPatient(patient['uid']);
+      if (snapshot.data['patients'] != null) {
+        await Future.forEach(snapshot.data['patients'], (patient) async {
+          Patient currentPatient = await database.getPatient(patient['uid']);
 
-        mappedPatients.add(PatientInfo(patient: currentPatient));
-      });
+          mappedPatients.add(PatientInfo(patient: currentPatient));
+        });
+      }
 
       setState(() {
         patients = mappedPatients;
