@@ -36,7 +36,6 @@ class Doctor {
   }
 
   factory Doctor.fromJson(Map<String, dynamic> json, String uid) {
-    print(json['clinicStart']);
     return _$DoctorFromJson(json)..uid = uid;
   }
 

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:wellness24/models/emergency_contact.dart';
 import 'package:wellness24/services/auth_service.dart';
 import 'package:wellness24/models/user.dart';
@@ -7,27 +6,46 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'new_account.g.dart';
 
-@JsonSerializable(nullable: false, explicitToJson: true)
+@JsonSerializable(nullable: true)
 class NewAccount {
   final auth = AuthService();
   String uid,
       role,
       email,
-      password,
       contactNumber,
       lastName,
       firstName,
       middleInitial,
       address,
-      gender,
-      specialization,
-      licenseNo,
-      clinicLocation,
-      clinicStart,
-      clinicEnd,
-      workingDays,
-      education,
-      about;
+      gender;
+
+  @JsonKey(ignore: true)
+  String password;
+
+  @JsonKey(includeIfNull: false)
+  String specialization;
+
+  @JsonKey(includeIfNull: false)
+  String licenseNo;
+
+  @JsonKey(includeIfNull: false)
+  String clinicLocation;
+
+  @JsonKey(includeIfNull: false)
+  String clinicStart;
+
+  @JsonKey(includeIfNull: false)
+  String clinicEnd;
+
+  @JsonKey(includeIfNull: false)
+  String workingDays;
+
+  @JsonKey(includeIfNull: false)
+  String education;
+
+  @JsonKey(includeIfNull: false)
+  String about;
+
   List<String> keywords;
   List<String> medicalHistory;
 

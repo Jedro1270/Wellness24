@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/pages/patient_screen/patient_schedule_page.dart';
 import 'package:wellness24/models/doctor.dart';
 import 'package:wellness24/models/patient.dart';
-import 'package:wellness24/models/user.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:wellness24/services/database.dart';
 
 class DoctorDetails extends StatefulWidget {
@@ -219,18 +218,15 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                         ),
                         onPressed: () {
                           if (requestExists) {
+                            setState(() {
+                              requestExists = !requestExists;
+                            });
                             DatabaseService().cancelRequest(
                                 doctorId: doctor.uid,
                                 patientId: widget.currentPatient.uid);
                           } else {
-                            DatabaseService().sendRequest(
-                                doctorId: doctor.uid,
-                                patientId: widget.currentPatient.uid);
+                            displayConsentDialog(context);
                           }
-
-                          setState(() {
-                            requestExists = !requestExists;
-                          });
                         },
                       ),
               ),
@@ -273,6 +269,70 @@ class _DoctorDetailsState extends State<DoctorDetails> {
         ),
       ),
     );
+  }
+
+  displayConsentDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Are you sure you want to send this request?'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text(
+                    'By sending this request, you agree to let this doctor access and append your medical information.',
+                  ),
+                  Text(
+                    '\nSteps to Verify a Doctor:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text('\n1. Access the website below'),
+                  TextButton(
+                    onPressed: () async {
+                      String verificationSiteUrl =
+                          'https://online1.prc.gov.ph/Verification';
+
+                      await canLaunch(verificationSiteUrl)
+                          ? await launch(verificationSiteUrl)
+                          : throw 'Cannot launch $verificationSiteUrl';
+                    },
+                    child: Text('PRC Online Verification Site'),
+                  ),
+                  Text('\n2. Choose VERIFICATION OF LICENSE (BY NAME)'),
+                  Text('\n3. Enter the details provided below'),
+                  Text(
+                    '\n\  Profession: PHYSICIAN\n\  First Name: ${doctor.firstName.toUpperCase()}\n\  Last Name: ${doctor.lastName.toUpperCase()}',
+                  ),
+                  Text('\n4. Tap Verify'),
+                  Text(
+                      '\nDo you consent for this doctor to access, append and edit your medical information?'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      requestExists = false;
+                    });
+                    Navigator.pop(context);
+                  },
+                  child: Text('Cancel')),
+              ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      requestExists = true;
+                    });
+                    Navigator.pop(context);
+                    DatabaseService().sendRequest(
+                        doctorId: doctor.uid,
+                        patientId: widget.currentPatient.uid);
+                  },
+                  child: Text('Consent')),
+            ],
+          );
+        });
   }
 }
 

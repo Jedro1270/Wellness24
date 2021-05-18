@@ -1,5 +1,4 @@
 import 'package:age/age.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:wellness24/models/blood_pressure.dart';
 import 'package:wellness24/models/blood_sugar_level.dart';
 import 'package:wellness24/models/emergency_contact.dart';

@@ -3,15 +3,25 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'blood_pressure.g.dart';
 
-@JsonSerializable(nullable: false, explicitToJson: true)
+@JsonSerializable(nullable: true, explicitToJson: true)
 class BloodPressure {
+  @JsonKey(defaultValue: '')
   String reading;
+
   DateTime lastChecked;
 
   @JsonKey(ignore: true)
   final Clock clock;
 
-  BloodPressure({this.reading, this.lastChecked, this.clock = const Clock()});
+  BloodPressure({
+    this.reading = '',
+    this.lastChecked,
+    this.clock = const Clock(),
+  }) {
+    if (this.lastChecked == null) {
+      this.lastChecked = DateTime.now();
+    }
+  }
 
   String get sinceLastChecked {
     String output;
