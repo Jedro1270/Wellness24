@@ -94,14 +94,14 @@ class DatabaseService {
     Patient patient =
         Patient.fromJson(snapshotPatient.data, snapshotPatient.documentID);
 
-    if (snapshotBloodPressure != null) {
+    if (snapshotBloodPressure.data != null) {
       patient.bloodPressure =
           BloodPressure.fromJson(snapshotBloodPressure.data);
     } else {
       patient.bloodPressure = BloodPressure();
     }
 
-    if (snapshotBloodSugarLevel != null) {
+    if (snapshotBloodSugarLevel.data != null) {
       patient.bloodSugarLevel =
           BloodSugarLevel.fromJson(snapshotBloodSugarLevel.data);
     } else {
