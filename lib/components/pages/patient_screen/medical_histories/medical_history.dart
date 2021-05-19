@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
-import 'package:wellness24/components/pages/common_pages/home_page.dart';
 import 'package:wellness24/components/pages/common_pages/login_page.dart';
 import 'package:wellness24/components/pages/patient_screen/medical_histories/medical_history_tile.dart';
 import 'package:wellness24/models/medical_history_entry.dart';
