@@ -24,9 +24,10 @@ class PatientHomePage extends StatefulWidget {
 class _PatientHomePageState extends State<PatientHomePage> {
   Patient currentPatient;
 
-  initializePatient(String uid) async {
-    DatabaseService database = DatabaseService();
-    Patient patient = await database.getPatient(uid);
+  initializePatient() async {
+    User user = Provider.of<User>(context, listen: false);
+    DatabaseService database = DatabaseService(uid: user.uid);
+    Patient patient = await database.getPatient(user.uid);
 
     if (mounted) {
       setState(() {
@@ -36,15 +37,18 @@ class _PatientHomePageState extends State<PatientHomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    initializePatient();
+  }
+
+  @override
   Widget build(BuildContext context) {
     User currentUser = Provider.of<User>(context);
-    // Patient currentPatient = Provider.of<Patient>(context);
 
     if (currentUser == null) {
       return Login();
     }
-
-    initializePatient(currentUser.uid);
 
     return Scaffold(
       drawer: NavBar(
