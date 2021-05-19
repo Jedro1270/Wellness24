@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
+import 'package:wellness24/components/pages/common_pages/home_page.dart';
 import 'package:wellness24/components/pages/common_pages/login_page.dart';
 import 'package:wellness24/components/pages/patient_screen/medical_histories/medical_history_tile.dart';
 import 'package:wellness24/models/medical_history_entry.dart';
@@ -175,14 +176,14 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                   key: Key('elevatedYes'),
                   onPressed: () async {
                     Navigator.pop(context);
+                    setState(() {
+                      loading = true;
+                    });
+
                     List<String> patientMedHistory = medicalList
                         .where((c) => c.value == true)
                         .map((e) => e.title)
                         .toList();
-
-                    setState(() {
-                      loading = true;
-                    });
 
                     User patient = await account
                         .registerPatient(patientMedHistory)
@@ -192,7 +193,6 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                     });
 
                     final database = DatabaseService(uid: patient.uid);
-
                     await database.insertPatient(account);
 
                     if (patient == null) {
