@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:wellness24/components/common/loading_animation.dart';
 import 'package:wellness24/components/pages/patient_screen/doctor_search_page/doctor_info.dart';
 import 'package:wellness24/models/doctor.dart';
 import 'package:wellness24/models/patient.dart';
@@ -53,6 +54,33 @@ class _MyDoctorsListState extends State<MyDoctorsList> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(primary: false, children: doctors);
+    Widget page = Loading();
+
+    if (doctors.isEmpty) {
+      setState(() {
+        page = Container(
+          alignment: Alignment.center,
+          child: Text(
+            'No doctors yet',
+            style: TextStyle(
+              color: Colors.grey[600],
+              fontFamily: "ShipporiMincho",
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+          height: 80,
+        );
+      });
+    } else {
+      setState(() {
+        page = ListView(
+          primary: false,
+          children: doctors,
+          shrinkWrap: true,
+        );
+      });
+    }
+    return page;
   }
 }
