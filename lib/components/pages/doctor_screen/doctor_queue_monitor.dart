@@ -21,7 +21,8 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
   int queueCapacity, currentNumber = 1;
   bool isAcceptingCustomers = true;
 
-  int limitNumber = 50;
+  int maxNumber = 50;
+  int limitNumber = 10;
 
   List<int> limitNumbers = [];
 
@@ -34,7 +35,7 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
   }
 
   setLimitNumber() {
-    for (var index = 1; index < limitNumber + 1; index++) {
+    for (var index = 1; index < maxNumber + 1; index++) {
       limitNumbers.add(index);
     }
   }
@@ -101,34 +102,31 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
                     fontSize: 30,
                   ),
                 ),
-                RichText(
-                  text: TextSpan(
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        fontFamily: 'ShipporiMincho',
-                        color: Colors.black),
-                    children: [
-                      TextSpan(text: 'Limit: '),
-                      WidgetSpan(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 2.0),
-                          child: DropdownButton(
-                            value: limitNumber,
-                            items: limitNumbers.map((value) {
-                              return DropdownMenuItem(
-                                  value: value,
-                                  child: Text(value.toString(),
-                                      style: TextStyle(
-                                          fontFamily: 'ShipporiMincho')));
-                            }).toList(),
-                            onChanged: (value) =>
-                                setState(() => limitNumber = value),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      'Limit: ',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          fontFamily: 'ShipporiMincho',
+                          color: Colors.black),
+                    ),
+                    SizedBox(width: 10),
+                    DropdownButton(
+                      value: limitNumber,
+                      items: limitNumbers.map((value) {
+                        return DropdownMenuItem(
+                            value: value,
+                            child: Text(value.toString(),
+                                style:
+                                    TextStyle(fontFamily: 'ShipporiMincho')));
+                      }).toList(),
+                      onChanged: (value) => setState(() => limitNumber = value),
+                    )
+                  ],
                 ),
                 Divider(height: 10, color: Colors.transparent),
                 Text(
