@@ -77,6 +77,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
           ? Loading()
           : Container(
               child: ListView(
+                shrinkWrap: true,
                 children: [
                   LargeButton(
                       content: 'Search For Doctor',
@@ -115,7 +116,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
                     ),
                   ),
                   Container(
-                    height: 200,
                     child: MyDoctorsList(
                       patientDatabaseRef:
                           DatabaseService(uid: currentUser.uid).patients,
