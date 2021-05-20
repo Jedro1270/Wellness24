@@ -174,7 +174,6 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                 ElevatedButton(
                   key: Key('elevatedYes'),
                   onPressed: () async {
-                    Navigator.pop(context);
                     setState(() {
                       loading = true;
                     });
@@ -206,9 +205,9 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                         loading = false;
                       });
                     } else {
+                      Navigator.pop(context);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => Login()));
-                      Navigator.pop(context);
                     }
                   },
                   child: Text('CONSENT'),
