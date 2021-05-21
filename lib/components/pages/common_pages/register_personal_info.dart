@@ -27,7 +27,7 @@ class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
         context: context,
         initialDate: _date,
         firstDate: DateTime(1900),
-        lastDate: DateTime(2100));
+        lastDate: _date);
 
     if (_datePicker != null && _datePicker != _date) {
       setState(() {
