@@ -62,7 +62,7 @@ Map<String, dynamic> _$NewAccountToJson(NewAccount instance) {
   writeNotNull('education', instance.education);
   writeNotNull('about', instance.about);
   val['keywords'] = instance.keywords;
-  val['medicalHistory'] = instance.medicalHistory;
+  writeNotNull('medicalHistory', instance.medicalHistory);
   val['birthDate'] = instance.birthDate?.toIso8601String();
   return val;
 }

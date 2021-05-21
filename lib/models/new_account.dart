@@ -47,6 +47,8 @@ class NewAccount {
   String about;
 
   List<String> keywords;
+
+  @JsonKey(includeIfNull: false)
   List<String> medicalHistory;
 
   @JsonKey(ignore: true)
