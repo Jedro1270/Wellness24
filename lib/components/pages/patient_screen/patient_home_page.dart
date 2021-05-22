@@ -92,18 +92,18 @@ class _PatientHomePageState extends State<PatientHomePage> {
                                     doctorDatabaseRef:
                                         DatabaseService().doctors)));
                       }),
-                  LargeButton(
-                      content: 'EMERGENCY',
-                      key: Key('emergencyBtn'),
-                      backgroundColor: Colors.redAccent[700],
-                      fontColor: Colors.white,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    EmergencyPage(patient: currentPatient)));
-                      }),
+                  // LargeButton(
+                  //     content: 'EMERGENCY',
+                  //     key: Key('emergencyBtn'),
+                  //     backgroundColor: Colors.redAccent[700],
+                  //     fontColor: Colors.white,
+                  //     onPressed: () {
+                  //       Navigator.push(
+                  //           context,
+                  //           MaterialPageRoute(
+                  //               builder: (context) =>
+                  //                   EmergencyPage(patient: currentPatient)));
+                  //     }),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30),
                     child: Text(
@@ -123,18 +123,22 @@ class _PatientHomePageState extends State<PatientHomePage> {
                       currentPatient: currentPatient,
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30),
-                    child: Text(
-                      'My Appointments',
-                      style: TextStyle(
-                        fontFamily: "ShipporiMincho",
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                  buildAppointmentList(), // Replace with calendar
+                  // Padding(
+                  //   padding: EdgeInsets.symmetric(horizontal: 30),
+                  //   child: Text(
+                  //     'My Appointments',
+                  //     style: TextStyle(
+                  //       fontFamily: "ShipporiMincho",
+                  //       fontWeight: FontWeight.bold,
+                  //       fontSize: 20,
+                  //     ),
+                  //   ),
+                  // ),
+                  //buildAppointmentList(), // Replace with calendar
+                  // TableCalendar(
+                  //   calendarController: _controller,
+                  //   initialCalendarFormat: CalendarFormat.twoWeeks,
+                  // ), 
                   Divider(height: 20, color: Colors.transparent),
                   LargeButton(
                     content: 'My Current Conditions',
@@ -161,15 +165,15 @@ class _PatientHomePageState extends State<PatientHomePage> {
   }
 }
 
-buildAppointmentList() {
-  return Padding(
-    padding: EdgeInsets.symmetric(horizontal: 30),
-    child: Column(
-      children: <Widget>[
-        ScheduleCard('12', 'Jan', 'Consultation', 'Sunday 9am - 11am'),
-        SizedBox(height: 20),
-        ScheduleCard('15', 'Oct', 'Consultation', 'Monday 1pm - 3pm')
-      ],
-    ),
-  );
-}
+// buildAppointmentList() {
+//   return Padding(
+//     padding: EdgeInsets.symmetric(horizontal: 30),
+//     child: Column(
+//       children: <Widget>[
+//         ScheduleCard('12', 'Jan', 'Consultation', 'Sunday 9am - 11am'),
+//         SizedBox(height: 20),
+//         ScheduleCard('15', 'Oct', 'Consultation', 'Monday 1pm - 3pm')
+//       ],
+//     ),
+//   );
+// }
