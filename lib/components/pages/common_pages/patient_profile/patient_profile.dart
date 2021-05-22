@@ -1,5 +1,6 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -154,7 +155,7 @@ class _PatientProfileState extends State<PatientProfile> {
                     icon: Image(image: AssetImage('assets/body-temp.png')),
                     content: widget.patient.bodyTemperature.toString(),
                     title: 'Body Temperature',
-                    inputFormat: "[0-9]",
+                    inputFormat: "[0-9.]",
                     onChanged: (newContent) async {
                       setState(() {
                         loading = true;
@@ -176,7 +177,7 @@ class _PatientProfileState extends State<PatientProfile> {
                     icon: Image(image: AssetImage('assets/weight.png')),
                     content: widget.patient.weight.toString(),
                     title: 'Weight',
-                    inputFormat: "[0-9]",
+                    inputFormat: "[0-9.]",
                     onChanged: (newContent) async {
                       setState(() {
                         loading = true;
@@ -197,7 +198,7 @@ class _PatientProfileState extends State<PatientProfile> {
                     icon: Image(image: AssetImage('assets/height.png')),
                     content: widget.patient.height.toString(),
                     title: 'Height',
-                    inputFormat: "[0-9]",
+                    inputFormat: "[0-9.]",
                     onChanged: (newContent) async {
                       setState(() {
                         loading = true;
@@ -240,7 +241,7 @@ class _PatientProfileState extends State<PatientProfile> {
                   PatientCondition(
                       editable: false,
                       loading: loading,
-                      inputFormat: "[0-9]",
+                      inputFormat: "[0-9.]",
                       icon: Icon(
                         Icons.cake_outlined,
                         size: 30,
@@ -278,6 +279,9 @@ class _PatientProfileState extends State<PatientProfile> {
                                       borderRadius: BorderRadius.circular(5.0),
                                     ),
                                     child: TextField(
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.allow(RegExp('[0-9/]'))
+                                      ],
                                       onSubmitted: (newValue) {
                                         setState(() {
                                           newBloodPressure = BloodPressure(
@@ -375,6 +379,9 @@ class _PatientProfileState extends State<PatientProfile> {
                                       borderRadius: BorderRadius.circular(5.0),
                                     ),
                                     child: TextField(
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
                                       onSubmitted: (newValue) {
                                         setState(() {
                                           newBloodSugarLevel = BloodSugarLevel(
