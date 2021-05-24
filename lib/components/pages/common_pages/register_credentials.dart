@@ -22,6 +22,8 @@ class _RegisterCredentialsState extends State<RegisterCredentials> {
   bool hidePassword = true;
 
   Future checkTakenEmail() async {
+    if (email == null) return;
+
     FirebaseAuth auth = AuthService().auth;
     List<String> availableMethods =
         await auth.fetchSignInMethodsForEmail(email: email);
