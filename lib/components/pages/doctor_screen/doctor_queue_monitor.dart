@@ -21,10 +21,7 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
   int queueCapacity, currentNumber = 1;
   bool isAcceptingCustomers = true;
 
-  int maxNumber = 50;
-  int limitNumber = 10;
-
-  List<int> limitNumbers = [];
+  int limitNumber = 50;
 
   void fetchQueueCap() async {
     DatabaseService _database = DatabaseService(uid: widget.currentDoctor.uid);
@@ -34,17 +31,10 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
     });
   }
 
-  setLimitNumber() {
-    for (var index = 1; index < maxNumber + 1; index++) {
-      limitNumbers.add(index);
-    }
-  }
-
   @override
   void initState() {
     super.initState();
     fetchQueueCap();
-    setLimitNumber();
   }
 
   @override
@@ -102,7 +92,6 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
                     fontSize: 30,
                   ),
                 ),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -114,18 +103,19 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
                           fontFamily: 'ShipporiMincho',
                           color: Colors.black),
                     ),
-                    SizedBox(width: 10),
-                    DropdownButton(
-                      value: limitNumber,
-                      items: limitNumbers.map((value) {
-                        return DropdownMenuItem(
-                            value: value,
-                            child: Text(value.toString(),
-                                style:
-                                    TextStyle(fontFamily: 'ShipporiMincho')));
-                      }).toList(),
-                      onChanged: (value) => setState(() => limitNumber = value),
-                    )
+                    SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: TextField(
+                        keyboardType: TextInputType.number,
+                        onSubmitted: (newLimit) {
+                          setState(() {
+                            int newIntLimit = int.parse(newLimit);
+                            limitNumber = newIntLimit;
+                          });
+                        },
+                      ),
+                    ),
                   ],
                 ),
                 Divider(height: 10, color: Colors.transparent),
@@ -175,60 +165,11 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
                     )
                   ],
                 ),
-                // Text(
-                //   isAcceptingCustomers
-                //       ? 'Accepting Appointments'
-                //       : 'Unavailable for Appointments',
-                //   textAlign: TextAlign.center,
-                //   style: TextStyle(
-                //       fontFamily: "ShipporiMincho",
-                //       fontWeight: FontWeight.bold,
-                //       fontSize: 20,
-                //       color: isAcceptingCustomers
-                //           ? Colors.green[700]
-                //           : Colors.red),
-                // ),
-                // Switch(
-                //     value: isAcceptingCustomers,
-                //     onChanged: (bool newValue) {
-                //       if (newValue == false) {
-                //         _showDialog(context);
-                //       } else {
-                //         setState(() {
-                //           isAcceptingCustomers = true;
-                //         });
-                //       }
-                //     }),
               ],
             ),
           ]),
         ));
   }
-
-  // _showDialog(BuildContext context) {
-  //   showDialog(
-  //       context: context,
-  //       builder: (context) => AlertDialog(
-  //             content: Text(
-  //                 'This will let your patients know that you are no longer available. \n\nWould you like to continue?'),
-  //             actions: [
-  //               ElevatedButton(
-  //                   key: Key('elevatedYes'),
-  //                   onPressed: () {
-  //                     setState(() {
-  //                       isAcceptingCustomers = false;
-  //                     });
-  //                     Navigator.pop(context);
-  //                   },
-  //                   child: Text('YES')),
-  //               ElevatedButton(
-  //                   onPressed: () {
-  //                     Navigator.pop(context);
-  //                   },
-  //                   child: Text('NO'))
-  //             ],
-  //           ));
-  // }
 }
 
 class dateWidget extends StatefulWidget {
