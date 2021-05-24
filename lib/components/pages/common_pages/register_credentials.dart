@@ -18,7 +18,7 @@ class _RegisterCredentialsState extends State<RegisterCredentials> {
   String email, password, contactNo;
   NewAccount account;
   _RegisterCredentialsState(this.account);
-  String takenEmailMsg = null;
+  String takenEmailMsg;
   bool hidePassword = true;
 
   Future checkTakenEmail() async {
