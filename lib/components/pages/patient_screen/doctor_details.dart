@@ -56,30 +56,17 @@ class _DoctorDetailsState extends State<DoctorDetails> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              height: 300.0,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/doctor.png"),
-                ),
-              ),
-              child: Stack(
-                children: [
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      width: double.infinity,
-                      height: 50.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(25.0),
-                          topRight: Radius.circular(25.0),
-                        ),
-                        color: Colors.white,
+            ClipOval(
+              child: Container(
+                padding: EdgeInsets.all(10),
+                height: 250,
+                width: 250,
+                child: widget.doctor.profilePictureUrl == null
+                    ? AssetImage('assets/logo.jpg')
+                    : Image.network(
+                        widget.doctor.profilePictureUrl,
+                        fit: BoxFit.fill,
                       ),
-                    ),
-                  )
-                ],
               ),
             ),
             Container(

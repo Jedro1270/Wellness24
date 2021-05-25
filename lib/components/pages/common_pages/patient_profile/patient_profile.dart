@@ -32,8 +32,6 @@ class _PatientProfileState extends State<PatientProfile> {
   BloodPressure newBloodPressure;
   BloodSugarLevel newBloodSugarLevel;
 
-  PickedFile _imageFile;
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -87,14 +85,18 @@ class _PatientProfileState extends State<PatientProfile> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         ClipOval(
-                          child: Image(
-                            image: _imageFile == null
-                                ? AssetImage(
-                                    'assets/sample-patient.jpg') // TODO: Change to patient profile pic
-                                : FileImage(File(_imageFile.path)),
-                            width: 180,
-                            height: 180,
-                            fit: BoxFit.cover,
+                          child: Container(
+                            height: 250,
+                            width: 250,
+                            child: widget.patient.profilePictureUrl == null
+                                ? Image(
+                                    image: AssetImage('assets/logo.jpg'),
+                                    fit: BoxFit.fill,
+                                  )
+                                : Image.network(
+                                    widget.patient.profilePictureUrl,
+                                    fit: BoxFit.fill,
+                                  ),
                           ),
                         ),
                       ],
@@ -306,7 +308,9 @@ class _PatientProfileState extends State<PatientProfile> {
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 4.0),
-                                          child: Icon(Icons.edit_outlined),
+                                          child: widget.editable
+                                              ? Icon(Icons.edit_outlined)
+                                              : SizedBox.shrink(),
                                         ),
                                       ),
                                     ],
@@ -406,7 +410,9 @@ class _PatientProfileState extends State<PatientProfile> {
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 4.0),
-                                          child: Icon(Icons.edit_outlined),
+                                          child: widget.editable
+                                              ? Icon(Icons.edit_outlined)
+                                              : SizedBox.shrink(),
                                         ),
                                       ),
                                     ],
