@@ -52,8 +52,11 @@ class _PatientHomePageState extends State<PatientHomePage> {
 
     return Scaffold(
       drawer: NavBar(
-          name: currentPatient == null ? '' : currentPatient.fullName,
-          email: currentUser.email),
+        name: currentPatient == null ? '' : currentPatient.fullName,
+        email: currentUser.email,
+        uid: currentPatient?.uid,
+        profilePictureUrl: currentPatient?.profilePictureUrl,
+      ),
       appBar: CustomAppBar(
         title: 'Home Page',
         actions: [
@@ -138,7 +141,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                   // TableCalendar(
                   //   calendarController: _controller,
                   //   initialCalendarFormat: CalendarFormat.twoWeeks,
-                  // ), 
+                  // ),
                   Divider(height: 20, color: Colors.transparent),
                   LargeButton(
                     content: 'My Current Conditions',
