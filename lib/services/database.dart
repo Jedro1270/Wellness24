@@ -283,4 +283,21 @@ class DatabaseService {
     DocumentSnapshot document = await doctors.document(uid).get();
     return document.data['appointments'][dateString];
   }
+
+  Future updateProfilePicture(String profilePictureUrl) async {
+    String role = await getRole();
+
+    print(profilePictureUrl);
+
+    if (role == 'Doctor') {
+      doctors
+          .document(this.uid)
+          .updateData({'profilePictureUrl': profilePictureUrl});
+    } else {
+      print('patient');
+      patients
+          .document(this.uid)
+          .updateData({'profilePictureUrl': profilePictureUrl});
+    }
+  }
 }
