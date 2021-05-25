@@ -155,6 +155,7 @@ class _PatientProfileState extends State<PatientProfile> {
                     icon: Image(image: AssetImage('assets/body-temp.png')),
                     content: widget.patient.bodyTemperature.toString(),
                     title: 'Body Temperature',
+                    unit: 'celsius',
                     inputFormat: "[0-9.]",
                     onChanged: (newContent) async {
                       setState(() {
@@ -177,6 +178,7 @@ class _PatientProfileState extends State<PatientProfile> {
                     icon: Image(image: AssetImage('assets/weight.png')),
                     content: widget.patient.weight.toString(),
                     title: 'Weight',
+                    unit: 'kg',
                     inputFormat: "[0-9.]",
                     onChanged: (newContent) async {
                       setState(() {
@@ -198,6 +200,7 @@ class _PatientProfileState extends State<PatientProfile> {
                     icon: Image(image: AssetImage('assets/height.png')),
                     content: widget.patient.height.toString(),
                     title: 'Height',
+                    unit: 'cm',
                     inputFormat: "[0-9.]",
                     onChanged: (newContent) async {
                       setState(() {
@@ -218,6 +221,7 @@ class _PatientProfileState extends State<PatientProfile> {
                       icon: Image(image: AssetImage('assets/droplet.png')),
                       content: widget.patient.bloodType,
                       title: 'Blood Type',
+                      unit: '',
                       inputFormat: "[A,O,B,a,b,o,+,-]",
                       onChanged: (newContent) async {
                         setState(() {
@@ -236,11 +240,13 @@ class _PatientProfileState extends State<PatientProfile> {
                       loading: loading,
                       icon:
                           Image(image: AssetImage('assets/double-person.png')),
-                      content: '${widget.patient.age} y.o',
+                      content: '${widget.patient.age} ',
+                      unit: 'y.o',
                       title: 'Age'),
                   PatientCondition(
                       editable: false,
                       loading: loading,
+                      unit: '',
                       inputFormat: "[0-9.]",
                       icon: Icon(
                         Icons.cake_outlined,

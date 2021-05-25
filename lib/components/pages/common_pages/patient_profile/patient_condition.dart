@@ -11,6 +11,7 @@ class PatientCondition extends StatefulWidget {
   final Function onChanged;
   final bool loading;
   final String inputFormat;
+  final String unit;
 
   PatientCondition(
       {this.editable,
@@ -20,6 +21,7 @@ class PatientCondition extends StatefulWidget {
       this.onChanged,
       this.loading = false,
       this.inputFormat,
+      this.unit,
       this.key});
 
   @override
@@ -71,36 +73,8 @@ class _PatientConditionState extends State<PatientCondition> {
                     Container(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          editing && widget.editable
-                              ? SizedBox(
-                                  height: 50,
-                                  width: 100,
-                                  child: TextField(
-                                    inputFormatters: [
-                                      FilteringTextInputFormatter.allow(
-                                          RegExp(widget.inputFormat))
-                                    ],
-                                    onSubmitted: (newValue) {
-                                      setState(() {
-                                        newContent = newValue;
-                                        editing = false;
-                                        widget.onChanged(newContent);
-                                      });
-                                    },
-                                    autofocus: true,
-                                    controller: controller,
-                                  ),
-                                )
-                              : Text(
-                                  newContent == ''
-                                      ? 'Set ${widget.title}'
-                                      : newContent,
-                                  style: TextStyle(
-                                      fontFamily: 'ShipporiMincho',
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                                ),
                           Text(
                             widget.title,
                             style: TextStyle(
@@ -108,6 +82,45 @@ class _PatientConditionState extends State<PatientCondition> {
                               fontSize: 15,
                               fontWeight: FontWeight.normal,
                             ),
+                          ),
+                          Row(
+                            children: <Widget>[
+                              editing && widget.editable
+                                  ? SizedBox(
+                                      height: 50,
+                                      width: 100,
+                                      child: TextField(
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(
+                                              RegExp(widget.inputFormat))
+                                        ],
+                                        onSubmitted: (newValue) {
+                                          setState(() {
+                                            newContent = newValue;
+                                            editing = false;
+                                            widget.onChanged(newContent);
+                                          });
+                                        },
+                                        autofocus: true,
+                                        controller: controller,
+                                      ),
+                                    )
+                                  : Text(
+                                      newContent == ''
+                                          ? 'Set ${widget.title}'
+                                          : newContent,
+                                      style: TextStyle(
+                                          fontFamily: 'ShipporiMincho',
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                              SizedBox(width: 5),
+                              Text(widget.unit,
+                                  style: TextStyle(
+                                      fontFamily: 'ShipporiMincho',
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold))
+                            ],
                           ),
                         ],
                       ),
