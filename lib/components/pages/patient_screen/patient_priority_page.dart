@@ -41,7 +41,7 @@ class _PatientPriorityNumberState extends State<PatientPriorityNumber> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppBar(
-          title: '',
+          title: 'Appointment',
           leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
