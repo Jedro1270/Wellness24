@@ -280,7 +280,8 @@ class _PatientProfileState extends State<PatientProfile> {
                                     ),
                                     child: TextField(
                                       inputFormatters: [
-                                        FilteringTextInputFormatter.allow(RegExp('[0-9/]'))
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp('[0-9/]'))
                                       ],
                                       onSubmitted: (newValue) {
                                         setState(() {
@@ -310,6 +311,13 @@ class _PatientProfileState extends State<PatientProfile> {
                                         text: newBloodPressure == null
                                             ? ''
                                             : newBloodPressure.reading,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
+                                            fontFamily: 'ShipporiMincho'),
+                                      ),
+                                      TextSpan(
+                                        text: ' mmHg',
                                         style: TextStyle(
                                             fontWeight: FontWeight.normal,
                                             fontSize: 15,
@@ -410,6 +418,13 @@ class _PatientProfileState extends State<PatientProfile> {
                                         text: newBloodSugarLevel == null
                                             ? ''
                                             : newBloodSugarLevel.reading,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
+                                            fontFamily: 'ShipporiMincho'),
+                                      ),
+                                      TextSpan(
+                                        text: ' mmol/L',
                                         style: TextStyle(
                                             fontWeight: FontWeight.normal,
                                             fontSize: 15,
