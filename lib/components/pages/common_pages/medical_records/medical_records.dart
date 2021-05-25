@@ -123,7 +123,7 @@ class _MedicalRecordsState extends State<MedicalRecords> {
                       ),
                       TextButton(
                           onPressed: () {
-                            modalListHistory(context);
+                            modalList(context, healthHistory);
                           },
                           child: Text(
                             'View all',
@@ -177,14 +177,7 @@ class _MedicalRecordsState extends State<MedicalRecords> {
                           : Container(),
                       TextButton(
                           onPressed: () {
-                            isDoctor
-                                ? modalListRecords(context)
-                                : showDialog(
-                                    context: context,
-                                    builder: (context) => AlertDialog(
-                                        title: Text('Notice'),
-                                        content: Text(
-                                            'Patients are Prohibited to view Medical Records')));
+                            modalList(context, medicalRecordCards);
                           },
                           child: Text(
                             'View all',
@@ -199,112 +192,49 @@ class _MedicalRecordsState extends State<MedicalRecords> {
             ])));
   }
 
-  modalListHistory(context) {
+  modalList(context, content) {
     return showGeneralDialog(
         context: context,
         transitionDuration: Duration(microseconds: 1000),
         pageBuilder: (BuildContext context, Animation first, Animation second) {
           return Scaffold(
-              body: Container(
-                  margin: EdgeInsets.all(30),
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.blueAccent[100],
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Align(
+            body: Container(
+              margin: EdgeInsets.all(30),
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.blueAccent[100],
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: IconButton(
                         alignment: Alignment.topRight,
-                        child: IconButton(
-                            alignment: Alignment.topRight,
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: Icon(Icons.close)),
-                      ),
-                      Container(
-                          child: Text(
-                        'Medical Records',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontFamily: "ShipporiMincho",
-                            fontWeight: FontWeight.bold),
-                      )),
-                      Expanded(
-                        flex: 8,
-                        child:
-                            ListView(primary: false, children: healthHistory),
-                      ),
-                    ],
-                  )));
-        });
-  }
-
-  modalListRecords(context) {
-    return showGeneralDialog(
-        context: context,
-        transitionDuration: Duration(microseconds: 1000),
-        pageBuilder: (BuildContext context, Animation first, Animation second) {
-          return Scaffold(
-              body: Container(
-                  margin: EdgeInsets.all(30),
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.blueAccent[100],
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(Icons.close)),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: IconButton(
-                            alignment: Alignment.topRight,
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: Icon(Icons.close)),
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            'Medical Records',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontFamily: "ShipporiMincho",
-                                fontWeight: FontWeight.bold),
-                          ),
-                          ElevatedButton.icon(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => MedicalRecordPage(
-                                            patient: widget.patient,
-                                            createNewRecord: true,
-                                            refresh: refresh,
-                                          )));
-                            },
-                            icon: Icon(Icons.add),
-                            label: Text('Add Medical Record'),
-                            style: ElevatedButton.styleFrom(
-                                primary: Colors.orange[200],
-                                onPrimary: Colors.black),
-                          ),
-                          SizedBox(
-                              height: 150,
-                              child: ListView(
-                                  primary: false, children: medicalRecordCards))
-                        ],
-                      )
-                    ],
-                  )));
+                  Container(
+                      child: Text(
+                    'Medical Records',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontFamily: "ShipporiMincho",
+                        fontWeight: FontWeight.bold),
+                  )),
+                  Expanded(
+                    flex: 8,
+                    child: ListView(primary: false, children: content),
+                  ),
+                ],
+              ),
+            ),
+          );
         });
   }
 }
