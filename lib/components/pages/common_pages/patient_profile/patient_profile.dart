@@ -319,7 +319,7 @@ class _PatientProfileState extends State<PatientProfile> {
                                             : newBloodPressure.reading,
                                         style: TextStyle(
                                             fontWeight: FontWeight.normal,
-                                            fontSize: 15,
+                                            fontSize: 20,
                                             fontFamily: 'ShipporiMincho'),
                                       ),
                                       TextSpan(
@@ -426,7 +426,7 @@ class _PatientProfileState extends State<PatientProfile> {
                                             : newBloodSugarLevel.reading,
                                         style: TextStyle(
                                             fontWeight: FontWeight.normal,
-                                            fontSize: 15,
+                                            fontSize: 20,
                                             fontFamily: 'ShipporiMincho'),
                                       ),
                                       TextSpan(
