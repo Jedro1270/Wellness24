@@ -16,6 +16,7 @@ class Doctor {
   String clinicDayStart;
   String clinicDayEnd;
   String education;
+  String profilePictureUrl;
 
   Doctor(
       {this.uid,
