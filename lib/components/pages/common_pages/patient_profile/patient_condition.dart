@@ -32,7 +32,6 @@ class _PatientConditionState extends State<PatientCondition> {
   String newContent;
   bool editing = false;
   TextEditingController controller;
-  String bloodType = '';
 
   @override
   void initState() {
@@ -92,7 +91,7 @@ class _PatientConditionState extends State<PatientCondition> {
                                       width: 100,
                                       child: widget.title == 'Blood Type'
                                           ? DropdownButton<String>(
-                                              value: bloodType,
+                                              value: newContent,
                                               items: <String>[
                                                 'A+',
                                                 'A-',
@@ -101,8 +100,7 @@ class _PatientConditionState extends State<PatientCondition> {
                                                 'O+',
                                                 'O-',
                                                 'AB+',
-                                                'AB-',
-                                                ''
+                                                'AB-'
                                               ].map<DropdownMenuItem<String>>(
                                                   (String value) {
                                                 return DropdownMenuItem<String>(
@@ -112,7 +110,9 @@ class _PatientConditionState extends State<PatientCondition> {
                                               }).toList(),
                                               onChanged: (String newValue) {
                                                 setState(() {
-                                                  bloodType = newValue;
+                                                  newContent = newValue;
+                                                  editing = false;
+                                                  widget.onChanged(newContent);
                                                 });
                                               },
                                             )
