@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness24/components/common/app_bar.dart';
-import 'package:wellness24/components/pages/common_pages/chat/messages.dart';
+import 'package:wellness24/components/pages/common_pages/chat/chat_room.dart';
 import 'package:wellness24/components/pages/patient_screen/patient_schedule_page.dart';
 import 'package:wellness24/models/doctor.dart';
 import 'package:wellness24/models/patient.dart';
@@ -68,7 +67,10 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                 height: 250,
                 width: 250,
                 child: widget.doctor.profilePictureUrl == null
-                    ? AssetImage('assets/logo.jpg')
+                    ? Image(
+                        image: AssetImage('assets/logo.jpg'),
+                        fit: BoxFit.fill,
+                      )
                     : Image.network(
                         widget.doctor.profilePictureUrl,
                         fit: BoxFit.fill,
@@ -119,7 +121,13 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Messages(currentUser: currentPatient)));
+                                    builder: (context) => ChatRoom(
+                                      title: widget.doctor.fullName,
+                                      currentUid: widget.currentPatient.uid,
+                                      partnerUid: widget.doctor.uid,
+                                    ),
+                                  ),
+                                );
                               },
                             ),
                           ),
