@@ -32,6 +32,7 @@ class _PatientConditionState extends State<PatientCondition> {
   String newContent;
   bool editing = false;
   TextEditingController controller;
+  String bloodType = '';
 
   @override
   void initState() {
@@ -89,21 +90,48 @@ class _PatientConditionState extends State<PatientCondition> {
                                   ? SizedBox(
                                       height: 50,
                                       width: 100,
-                                      child: TextField(
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter.allow(
-                                              RegExp(widget.inputFormat))
-                                        ],
-                                        onSubmitted: (newValue) {
-                                          setState(() {
-                                            newContent = newValue;
-                                            editing = false;
-                                            widget.onChanged(newContent);
-                                          });
-                                        },
-                                        autofocus: true,
-                                        controller: controller,
-                                      ),
+                                      child: widget.title == 'Blood Type'
+                                          ? DropdownButton<String>(
+                                              value: bloodType,
+                                              items: <String>[
+                                                'A+',
+                                                'A-',
+                                                'B+',
+                                                'B-',
+                                                'O+',
+                                                'O-',
+                                                'AB+',
+                                                'AB-',
+                                                ''
+                                              ].map<DropdownMenuItem<String>>(
+                                                  (String value) {
+                                                return DropdownMenuItem<String>(
+                                                  value: value,
+                                                  child: Text(value),
+                                                );
+                                              }).toList(),
+                                              onChanged: (String newValue) {
+                                                setState(() {
+                                                  bloodType = newValue;
+                                                });
+                                              },
+                                            )
+                                          : TextField(
+                                              inputFormatters: [
+                                                FilteringTextInputFormatter
+                                                    .allow(RegExp(
+                                                        widget.inputFormat))
+                                              ],
+                                              onSubmitted: (newValue) {
+                                                setState(() {
+                                                  newContent = newValue;
+                                                  editing = false;
+                                                  widget.onChanged(newContent);
+                                                });
+                                              },
+                                              autofocus: true,
+                                              controller: controller,
+                                            ),
                                     )
                                   : Text(
                                       newContent == ''
