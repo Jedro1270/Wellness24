@@ -20,7 +20,7 @@ Doctor _$DoctorFromJson(Map<String, dynamic> json) {
     clinicDayEnd: json['clinicDayEnd'] as String,
     clinicDayStart: json['clinicDayStart'] as String,
     education: json['education'] as String,
-  );
+  )..profilePictureUrl = json['profilePictureUrl'] as String;
 }
 
 Map<String, dynamic> _$DoctorToJson(Doctor instance) => <String, dynamic>{
@@ -36,4 +36,5 @@ Map<String, dynamic> _$DoctorToJson(Doctor instance) => <String, dynamic>{
       'clinicDayStart': instance.clinicDayStart,
       'clinicDayEnd': instance.clinicDayEnd,
       'education': instance.education,
+      'profilePictureUrl': instance.profilePictureUrl,
     };

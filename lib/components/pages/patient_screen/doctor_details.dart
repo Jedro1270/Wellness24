@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wellness24/components/common/app_bar.dart';
+import 'package:wellness24/components/pages/common_pages/chat/chat_room.dart';
 import 'package:wellness24/components/pages/patient_screen/patient_schedule_page.dart';
 import 'package:wellness24/models/doctor.dart';
 import 'package:wellness24/models/patient.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:wellness24/models/user.dart';
 import 'package:wellness24/services/database.dart';
 
 class DoctorDetails extends StatefulWidget {
@@ -49,6 +52,8 @@ class _DoctorDetailsState extends State<DoctorDetails> {
 
   @override
   Widget build(BuildContext context) {
+    User currentUser = Provider.of<User>(context);
+
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Doctor',
@@ -56,78 +61,82 @@ class _DoctorDetailsState extends State<DoctorDetails> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              height: 300.0,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/doctor.png"),
-                ),
-              ),
-              child: Stack(
-                children: [
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      width: double.infinity,
-                      height: 50.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(25.0),
-                          topRight: Radius.circular(25.0),
-                        ),
-                        color: Colors.white,
+            ClipOval(
+              child: Container(
+                padding: EdgeInsets.all(10),
+                height: 250,
+                width: 250,
+                child: widget.doctor.profilePictureUrl == null
+                    ? Image(
+                        image: AssetImage('assets/logo.jpg'),
+                        fit: BoxFit.fill,
+                      )
+                    : Image.network(
+                        widget.doctor.profilePictureUrl,
+                        fit: BoxFit.fill,
                       ),
-                    ),
-                  )
-                ],
               ),
             ),
+            SizedBox(height: 20),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 18.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text.rich(
-                          TextSpan(
-                            children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text.rich(
                               TextSpan(
-                                text: '${doctor.fullName}\n',
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontFamily: "ShipporiMincho",
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black),
+                                children: [
+                                  TextSpan(
+                                    text: '${doctor.fullName}\n',
+                                    style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontFamily: "ShipporiMincho",
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black),
+                                  ),
+                                  TextSpan(
+                                      text: "${doctor.specialization}",
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontFamily: "ShipporiMincho",
+                                          color: Colors.black)),
+                                ],
                               ),
-                              TextSpan(
-                                  text: "${doctor.specialization}",
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontFamily: "ShipporiMincho",
-                                      color: Colors.black)),
-                            ],
+                            ),
                           ),
-                        ),
-                      )
+                          Container(
+                            alignment: Alignment.centerRight,
+                            child: MaterialButton(
+                              child: ButtonAction(
+                                color: Color(0xFFFFB755),
+                                icon: Icons.mail,
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ChatRoom(
+                                      title: widget.doctor.fullName,
+                                      currentUid: widget.currentPatient.uid,
+                                      partnerUid: widget.doctor.uid,
+                                      partnerName: widget.doctor.fullName,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          ButtonAction(
-                            color: Color(0xFFFFB755),
-                            icon: Icons.mail,
-                          ),
-                          ButtonAction(
-                            color: Color(0xFF58c697),
-                            icon: Icons.phone,
-                          )
-                        ]),
-                  ),
+                  SizedBox(height: 20.0),
                   Divider(color: Color(0xFFA9A8A8)),
                   Text("About",
                       style: TextStyle(
@@ -164,31 +173,6 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                       "${doctor.workingDays}: ${doctor.clinicStart} - ${doctor.clinicEnd}",
                       style: TextStyle(
                           fontSize: 14.0, fontFamily: "ShipporiMincho")),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 10),
-                    child: Center(
-                      child: SizedBox(
-                        width: 90.0,
-                        height: 35.0,
-                        child: RaisedButton(
-                          onPressed: () {},
-                          color: Color(0xFFDBF3E8),
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(7.0),
-                          ),
-                          child: Text(
-                            "Open",
-                            style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontFamily: "ShipporiMincho",
-                                    color: Colors.white)
-                                .copyWith(color: Color(0xFF58c697)),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -231,7 +215,6 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                       ),
               ),
             ),
-            SizedBox(height: 20.0),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18.0),
               child: SizedBox(

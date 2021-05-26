@@ -20,6 +20,7 @@ class Patient {
   double bodyTemperature;
   double height;
   String bloodType;
+  String profilePictureUrl;
 
   @JsonKey(ignore: true)
   BloodPressure bloodPressure;
