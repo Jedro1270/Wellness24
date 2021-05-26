@@ -52,7 +52,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
 
   @override
   Widget build(BuildContext context) {
-    User currentPatient = Provider.of<User>(context);
+    User currentUser = Provider.of<User>(context);
 
     return Scaffold(
       appBar: CustomAppBar(
