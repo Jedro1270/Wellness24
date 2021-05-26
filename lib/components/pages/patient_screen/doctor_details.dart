@@ -125,6 +125,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                                       title: widget.doctor.fullName,
                                       currentUid: widget.currentPatient.uid,
                                       partnerUid: widget.doctor.uid,
+                                      partnerName: widget.doctor.fullName,
                                     ),
                                   ),
                                 );
