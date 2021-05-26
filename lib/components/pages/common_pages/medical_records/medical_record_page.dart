@@ -65,7 +65,7 @@ class _MedicalRecordPageState extends State<MedicalRecordPage> {
       },
       child: Scaffold(
         appBar: CustomAppBar(
-          title: 'Add Medical Records',
+          title: '',
           actions: [
             IconButton(
               icon: Icon(Icons.notifications),

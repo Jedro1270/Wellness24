@@ -52,8 +52,11 @@ class _PatientHomePageState extends State<PatientHomePage> {
 
     return Scaffold(
       drawer: NavBar(
-          name: currentPatient == null ? '' : currentPatient.fullName,
-          email: currentUser.email),
+        name: currentPatient == null ? '' : currentPatient.fullName,
+        email: currentUser.email,
+        uid: currentPatient?.uid,
+        profilePictureUrl: currentPatient?.profilePictureUrl,
+      ),
       appBar: CustomAppBar(
         title: 'Home Page',
         actions: [

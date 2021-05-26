@@ -23,7 +23,7 @@ Patient _$PatientFromJson(Map<String, dynamic> json) {
     height: (json['height'] as num)?.toDouble(),
     bodyTemperature: (json['bodyTemperature'] as num)?.toDouble(),
     uid: json['uid'] as String,
-  );
+  )..profilePictureUrl = json['profilePictureUrl'] as String;
 }
 
 Map<String, dynamic> _$PatientToJson(Patient instance) => <String, dynamic>{
@@ -39,5 +39,6 @@ Map<String, dynamic> _$PatientToJson(Patient instance) => <String, dynamic>{
       'bodyTemperature': instance.bodyTemperature,
       'height': instance.height,
       'bloodType': instance.bloodType,
+      'profilePictureUrl': instance.profilePictureUrl,
       'medicalHistory': instance.medicalHistory,
     };
