@@ -53,7 +53,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
 
   @override
   Widget build(BuildContext context) {
-    User currentPatient = Provider.of<User>(context);
+    User currentUser = Provider.of<User>(context);
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -115,7 +115,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Messages(currentUser: currentPatient)));
+                                      builder: (context) => Messages(currentUser: currentUser)));
                               },
                             ),
                           ),
