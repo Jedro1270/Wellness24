@@ -88,6 +88,7 @@ class _ChatRoomState extends State<ChatRoom> {
               }
 
               return Container(
+                padding: EdgeInsets.all(10),
                 child: Column(
                   children: <Widget>[
                     loadMore,
