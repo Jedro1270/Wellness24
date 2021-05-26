@@ -11,9 +11,10 @@ import 'package:wellness24/services/database.dart';
 class ChatRoom extends StatefulWidget {
   final String title;
   final String partnerUid;
+  final String partnerName;
   final String currentUid;
 
-  ChatRoom({this.title, this.partnerUid, this.currentUid});
+  ChatRoom({this.title, this.partnerUid, this.currentUid, this.partnerName});
 
   @override
   _ChatRoomState createState() => _ChatRoomState();
@@ -29,6 +30,8 @@ class _ChatRoomState extends State<ChatRoom> {
 
   int messagesLimit = 20;
   bool screenInitialized = false;
+
+  List items = [];
 
   @override
   void initState() {
@@ -61,6 +64,16 @@ class _ChatRoomState extends State<ChatRoom> {
     super.initState();
   }
 
+  bool isReciever(DocumentSnapshot message) {
+    return message.data['receiverUid'] == widget.currentUid &&
+        message.data['senderUid'] == widget.partnerUid;
+  }
+
+  bool isSender(DocumentSnapshot message) {
+    return message.data['receiverUid'] == widget.partnerUid &&
+        message.data['senderUid'] == widget.currentUid;
+  }
+
   @override
   Widget build(BuildContext context) {
     if (screenInitialized == false) {
@@ -72,16 +85,6 @@ class _ChatRoomState extends State<ChatRoom> {
       setState(() {
         screenInitialized = true;
       });
-    }
-
-    bool isReciever(DocumentSnapshot message) {
-      return message.data['receiverUid'] == widget.currentUid &&
-          message.data['senderUid'] == widget.partnerUid;
-    }
-
-    bool isSender(DocumentSnapshot message) {
-      return message.data['receiverUid'] == widget.partnerUid &&
-          message.data['senderUid'] == widget.currentUid;
     }
 
     return Scaffold(
@@ -97,34 +100,40 @@ class _ChatRoomState extends State<ChatRoom> {
                 return Loading();
               }
 
+              items = snapshot.data.documents
+                  .where((message) => isSender(message) || isReciever(message))
+                  .map((message) {
+                    Message currentMessage = Message(
+                        content: message.data['content'],
+                        dateCreated: message.data['dateCreated'].toDate(),
+                        receiverUid: message.data['receiverUid'],
+                        senderUid: message.data['senderUid']);
+
+                    return ChatBubble(
+                        isMe: currentMessage.senderUid == widget.currentUid,
+                        message: currentMessage);
+                  })
+                  .toList()
+                  .reversed
+                  .toList();
+
               return Container(
                 padding: EdgeInsets.all(10),
                 child: Column(
                   children: <Widget>[
                     loadMore,
                     Expanded(
-                      child: ListView(
-                          key: Key('Message'),
-                          controller: _scrollController,
-                          children: snapshot.data.documents
-                              .where((message) =>
-                                  isSender(message) || isReciever(message))
-                              .map((message) {
-                                Message currentMessage = Message(
-                                    content: message.data['content'],
-                                    dateCreated:
-                                        message.data['dateCreated'].toDate(),
-                                    receiverUid: message.data['receiverUid'],
-                                    senderUid: message.data['senderUid']);
-
-                                return ChatBubble(
-                                    isMe: currentMessage.senderUid ==
-                                        widget.currentUid,
-                                    message: currentMessage);
-                              })
-                              .toList()
-                              .reversed
-                              .toList()),
+                      child: items.isEmpty
+                          ? Center(
+                              child: Text(
+                                'Start a conversation with ${widget.partnerName}!',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            )
+                          : ListView(
+                              key: Key('Message'),
+                              controller: _scrollController,
+                              children: items),
                     ),
                     Divider(
                       thickness: 2,
