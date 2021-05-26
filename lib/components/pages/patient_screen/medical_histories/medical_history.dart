@@ -177,6 +177,7 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                     setState(() {
                       loading = true;
                     });
+                    Navigator.pop(context);
 
                     List<String> patientMedHistory = medicalList
                         .where((c) => c.value == true)
@@ -205,7 +206,6 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                         loading = false;
                       });
                     } else {
-                      Navigator.pop(context);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => Login()));
                     }
