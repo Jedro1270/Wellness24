@@ -79,19 +79,52 @@ class _PatientHomePageState extends State<PatientHomePage> {
               child: ListView(
                 shrinkWrap: true,
                 children: [
-                  LargeButton(
-                      content: 'Search For Doctor',
-                      backgroundColor: Colors.lightBlueAccent[100],
-                      fontColor: Colors.black,
+                  SizedBox(
+                    height: 60,
+                    // width: 100,
+                    child: ElevatedButton(
                       onPressed: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => DoctorSearchPage(
-                                    currentPatient: currentPatient,
-                                    doctorDatabaseRef:
-                                        DatabaseService().doctors)));
-                      }),
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DoctorSearchPage(
+                                currentPatient: currentPatient,
+                                doctorDatabaseRef: DatabaseService().doctors),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Search For Doctor',
+                        style: TextStyle(
+                            fontFamily: 'ShipporiMincho', fontSize: 20),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        onPrimary: Colors.black,
+                        primary: Colors.lightBlueAccent[100],
+                        minimumSize: Size(88, 36),
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  Padding(padding: EdgeInsets.only(top: 40)),
+
+                  // LargeButton(
+                  //     content: 'Search For Doctor',
+                  //     backgroundColor: Colors.lightBlueAccent[100],
+                  //     fontColor: Colors.black,
+                  //     onPressed: () {
+                  //       Navigator.push(
+                  //           context,
+                  //           MaterialPageRoute(
+                  //               builder: (context) => DoctorSearchPage(
+                  //                   currentPatient: currentPatient,
+                  //                   doctorDatabaseRef:
+                  //                       DatabaseService().doctors)));
+                  //     }),
                   // LargeButton(
                   //     content: 'EMERGENCY',
                   //     key: Key('emergencyBtn'),
@@ -138,25 +171,58 @@ class _PatientHomePageState extends State<PatientHomePage> {
                   // TableCalendar(
                   //   calendarController: _controller,
                   //   initialCalendarFormat: CalendarFormat.twoWeeks,
-                  // ), 
+                  // ),
                   Divider(height: 20, color: Colors.transparent),
-                  LargeButton(
-                    content: 'My Current Conditions',
-                    key: Key('myCurrentConditionBtn'),
-                    backgroundColor: Colors.lightBlueAccent[100],
-                    fontColor: Colors.black,
-                    onPressed: () {
-                      Navigator.push(
+                  SizedBox(
+                    height: 60,
+                    // width: 100,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => PatientProfile(
-                                    editable: true,
-                                    patient: currentPatient,
-                                    database:
-                                        DatabaseService(uid: currentUser.uid),
-                                  )));
-                    },
+                            builder: (context) => PatientProfile(
+                              editable: true,
+                              patient: currentPatient,
+                              database: DatabaseService(uid: currentUser.uid),
+                            ),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'My Current Conditions',
+                        style: TextStyle(
+                            fontFamily: 'ShipporiMincho', fontSize: 20),
+                      ),
+                      key: Key('myCurrentConditionBtn'),
+                      style: ElevatedButton.styleFrom(
+                        onPrimary: Colors.black,
+                        primary: Colors.lightBlueAccent[100],
+                        minimumSize: Size(88, 36),
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                        ),
+                      ),
+                    ),
                   ),
+                  // LargeButton(
+                  //   content: 'My Current Conditions',
+                  //   key: Key('myCurrentConditionBtn'),
+                  //   backgroundColor: Colors.lightBlueAccent[100],
+                  //   fontColor: Colors.black,
+                  //   onPressed: () {
+                  //     Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //             builder: (context) => PatientProfile(
+                  //                   editable: true,
+                  //                   patient: currentPatient,
+                  //                   database:
+                  //                       DatabaseService(uid: currentUser.uid),
+                  //                 )));
+                  //   },
+                  // ),
                   Divider(height: 20, color: Colors.transparent),
                 ],
               ),
