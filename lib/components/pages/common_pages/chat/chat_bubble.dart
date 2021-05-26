@@ -47,7 +47,9 @@ class ChatBubble extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                DateFormat.yMd().add_jm().format(message.dateCreated),
+                                DateFormat.yMd()
+                                    .add_jm()
+                                    .format(message.dateCreated),
                                 style: TextStyle(fontSize: 10),
                               )
                             ],
@@ -57,37 +59,37 @@ class ChatBubble extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(width: 5.0),
-                CircleAvatar(
-                  radius: 25.0,
-                  backgroundColor: Colors.grey,
-                  child: ClipOval(
-                    child: SizedBox(
-                        width: 100.0,
-                        height: 100.0,
-                        child: Image(
-                            image: AssetImage('assets/doctor_sample.png'))),
-                  ),
-                ),
+                // SizedBox(width: 5.0),
+                // CircleAvatar(
+                //   radius: 25.0,
+                //   backgroundColor: Colors.grey,
+                //   child: ClipOval(
+                //     child: SizedBox(
+                //         width: 100.0,
+                //         height: 100.0,
+                //         child: Image(
+                //             image: AssetImage('assets/doctor_sample.png'))),
+                //   ),
+                // ),
               ],
             )
           : Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(width: 5.0),
-                CircleAvatar(
-                  radius: 25.0,
-                  backgroundColor: Colors.grey,
-                  child: ClipOval(
-                    child: SizedBox(
-                        width: 100.0,
-                        height: 100.0,
-                        child: Image(
-                            image: AssetImage('assets/sample-patient.jpg'))),
-                  ),
-                ),
-                SizedBox(width: 5.0),
+                // SizedBox(width: 5.0),
+                // CircleAvatar(
+                //   radius: 25.0,
+                //   backgroundColor: Colors.grey,
+                //   child: ClipOval(
+                //     child: SizedBox(
+                //         width: 100.0,
+                //         height: 100.0,
+                //         child: Image(
+                //             image: AssetImage('assets/sample-patient.jpg'))),
+                //   ),
+                // ),
+                SizedBox(width: 3.0),
                 Container(
                   alignment: Alignment.topLeft,
                   child: Column(
@@ -109,14 +111,12 @@ class ChatBubble extends StatelessWidget {
                             ),
                           ],
                         ),
-                        child: Text(
-                          message.content
-                        ),
+                        child: Text(message.content),
                       ),
                       Text(
                         DateFormat.yMd().add_jm().format(message.dateCreated),
                         style: TextStyle(fontSize: 10),
-                      )
+                      ),
                     ],
                   ),
                 ),
