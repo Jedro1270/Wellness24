@@ -74,6 +74,16 @@ class _ChatRoomState extends State<ChatRoom> {
       });
     }
 
+    bool isReciever(DocumentSnapshot message) {
+      return message.data['receiverUid'] == widget.currentUid &&
+          message.data['senderUid'] == widget.partnerUid;
+    }
+
+    bool isSender(DocumentSnapshot message) {
+      return message.data['receiverUid'] == widget.partnerUid &&
+          message.data['senderUid'] == widget.currentUid;
+    }
+
     return Scaffold(
         appBar: CustomAppBar(title: widget.title),
         body: StreamBuilder(
@@ -94,18 +104,11 @@ class _ChatRoomState extends State<ChatRoom> {
                     loadMore,
                     Expanded(
                       child: ListView(
-                        key: Key('Message'),
+                          key: Key('Message'),
                           controller: _scrollController,
                           children: snapshot.data.documents
                               .where((message) =>
-                                  message.data['recieverUid'] ==
-                                      widget.currentUid ||
-                                  message.data['recieverUid'] ==
-                                      widget.partnerUid ||
-                                  message.data['senderUid'] ==
-                                      widget.currentUid ||
-                                  message.data['senderUid'] ==
-                                      widget.partnerUid)
+                                  isSender(message) || isReciever(message))
                               .map((message) {
                                 Message currentMessage = Message(
                                     content: message.data['content'],
@@ -156,7 +159,7 @@ class _ChatRoomState extends State<ChatRoom> {
                             ),
                           ),
                           IconButton(
-                            key: Key('SendBtn'),
+                              key: Key('SendBtn'),
                               icon: Icon(Icons.send),
                               onPressed: () {
                                 setState(() {
