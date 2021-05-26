@@ -54,7 +54,7 @@ class PatientInfo extends StatelessWidget {
                           textAlign: TextAlign.start),
                       Text('Contact Number: ${patient.contactNumber}',
                           style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 15,
                               fontFamily: "ShipporiMincho",
                               fontWeight: FontWeight.normal),
                           textAlign: TextAlign.start)
