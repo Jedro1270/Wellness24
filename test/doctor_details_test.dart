@@ -8,7 +8,7 @@
 // import 'package:wellness24/models/patient.dart';
 // import 'package:wellness24/services/database.dart';
 
-// void main() {
+void main() {
 //   Future<Doctor> mockGetDoctor(String uid, database) async {
 //     var snapshotDoctor = await database.doctors.document(uid).get();
 
@@ -123,5 +123,5 @@
 //         // expect(workingDaysAndHoursFinder, findsOneWidget);
 //       });
 //     });
-//   });
-// }
+  // });
+}
