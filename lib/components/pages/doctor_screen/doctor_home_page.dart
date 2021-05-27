@@ -60,8 +60,11 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
 
     return Scaffold(
       drawer: NavBar(
-          name: currentDoctor == null ? '' : currentDoctor.fullName,
-          email: user.email),
+        name: currentDoctor == null ? '' : currentDoctor.fullName,
+        email: user.email,
+        uid: currentDoctor?.uid,
+        profilePictureUrl: currentDoctor?.profilePictureUrl,
+      ),
       appBar: CustomAppBar(
         title: 'Home Page',
         actions: [
@@ -104,11 +107,10 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
                   ),
                   Container(
                       child: MyPatientsList(
-                        mockPatients: widget.mockPatients ?? [],
-                        doctorDatabaseRef:
-                            DatabaseService(uid: user.uid).doctors,
-                        doctorId: user.uid,
-                      )),
+                    mockPatients: widget.mockPatients ?? [],
+                    doctorDatabaseRef: DatabaseService(uid: user.uid).doctors,
+                    doctorId: user.uid,
+                  )),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
                     child: Text(
@@ -126,7 +128,8 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => DoctorQueueMonitor(this.currentDoctor)));
+                              builder: (context) =>
+                                  DoctorQueueMonitor(this.currentDoctor)));
                     },
                   ),
                   // buildAppointmentList(),

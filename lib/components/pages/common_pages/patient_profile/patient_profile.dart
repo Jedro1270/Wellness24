@@ -1,11 +1,8 @@
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
@@ -34,10 +31,6 @@ class _PatientProfileState extends State<PatientProfile> {
   bool editingBloodSugarLevel = false;
   BloodPressure newBloodPressure;
   BloodSugarLevel newBloodSugarLevel;
-
-  PickedFile _imageFile;
-  final ImagePicker _imagePicker = ImagePicker();
-  String imagePath;
 
   @override
   void didChangeDependencies() {
@@ -87,28 +80,23 @@ class _PatientProfileState extends State<PatientProfile> {
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
               child: ListView(
                 children: <Widget>[
-                  Align(
-                      alignment: Alignment.topRight,
-                      child: InkWell(
-                        child: Icon(Icons.more_vert),
-                        onTap: () {
-                          showModalBottomSheet(
-                              context: context,
-                              builder: ((builder) => optionView()));
-                        },
-                      )),
                   Container(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         ClipOval(
-                          child: Image(
-                            image: _imageFile == null
-                                ? AssetImage('assets/sample-patient.jpg')
-                                : FileImage(File(_imageFile.path)),
-                            width: 180,
-                            height: 180,
-                            fit: BoxFit.cover,
+                          child: Container(
+                            height: 250,
+                            width: 250,
+                            child: widget.patient.profilePictureUrl == null
+                                ? Image(
+                                    image: AssetImage('assets/logo.jpg'),
+                                    fit: BoxFit.fill,
+                                  )
+                                : Image.network(
+                                    widget.patient.profilePictureUrl,
+                                    fit: BoxFit.fill,
+                                  ),
                           ),
                         ),
                       ],
@@ -333,7 +321,9 @@ class _PatientProfileState extends State<PatientProfile> {
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 4.0),
-                                          child: Icon(Icons.edit_outlined),
+                                          child: widget.editable
+                                              ? Icon(Icons.edit_outlined)
+                                              : SizedBox.shrink(),
                                         ),
                                       ),
                                     ],
@@ -440,7 +430,9 @@ class _PatientProfileState extends State<PatientProfile> {
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 4.0),
-                                          child: Icon(Icons.edit_outlined),
+                                          child: widget.editable
+                                              ? Icon(Icons.edit_outlined)
+                                              : SizedBox.shrink(),
                                         ),
                                       ),
                                     ],
@@ -508,97 +500,5 @@ class _PatientProfileState extends State<PatientProfile> {
               ),
             ),
     );
-  }
-
-  Widget optionView() {
-    return Container(
-      margin: EdgeInsets.all(15.0),
-      height: 200,
-      child: Column(children: [
-        Text(
-          'Choose your Profile',
-          style: TextStyle(
-            fontFamily: "ShipporiMincho",
-            fontWeight: FontWeight.bold,
-            fontSize: 21,
-          ),
-        ),
-        Divider(height: 40, color: Colors.transparent),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            MaterialButton(
-                onPressed: () {
-                  print('open camera');
-                  updatePhoto(ImageSource.camera);
-                },
-                child: Column(
-                  children: [
-                    Icon(Icons.camera_alt_sharp),
-                    Text('Camera',
-                        style: TextStyle(
-                          fontFamily: "ShipporiMincho",
-                          fontSize: 18,
-                        )),
-                  ],
-                )),
-            SizedBox(width: 50),
-            MaterialButton(
-                onPressed: () {
-                  print('open gallery');
-                  updatePhoto(ImageSource.gallery);
-                },
-                child: Column(
-                  children: [
-                    Icon(Icons.image),
-                    Text('Gallery',
-                        style: TextStyle(
-                          fontFamily: "ShipporiMincho",
-                          fontSize: 18,
-                        )),
-                  ],
-                )),
-          ],
-        ),
-        Divider(height: 25, color: Colors.transparent),
-        MaterialButton(
-          onPressed: () {
-            print('Save Photo');
-            uploadPhoto(this.context);
-          },
-          child: Text('Save Photo', style: TextStyle()),
-          color: Colors.blueAccent[400],
-          textColor: Colors.black,
-        )
-      ]),
-    );
-  }
-
-  void updatePhoto(ImageSource source) async {
-    final pickedFile = await _imagePicker.getImage(source: source);
-
-    setState(() {
-      _imageFile = pickedFile;
-      print(_imageFile.path);
-    });
-  }
-
-  void uploadPhoto(BuildContext context) async {
-    String fileName = basename(_imageFile.path);
-    StorageReference firebaseStorageRef =
-        FirebaseStorage.instance.ref().child(fileName);
-
-    //converts pickedFile to file
-    File convertedFile = File(_imageFile.path);
-
-    StorageUploadTask uploadTask = firebaseStorageRef.putFile(convertedFile);
-    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-
-    setState(() {
-      print("Profile Picture Uploaded");
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Profile Picture Uploaded'),
-      ));
-    });
   }
 }
