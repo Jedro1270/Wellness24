@@ -95,6 +95,7 @@ class _LoginState extends State<Login> {
                           SizedBox(
                             width: 150.0,
                             child: MaterialButton(
+                              key: Key('loginButton'),
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30.0),
                                     side: BorderSide(color: Colors.black12)),
