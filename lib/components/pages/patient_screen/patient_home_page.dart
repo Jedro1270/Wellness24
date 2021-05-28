@@ -68,6 +68,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        key: Key('chatButton'),
         child: Icon(Icons.message),
         onPressed: () {
           Navigator.push(
@@ -83,6 +84,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                 shrinkWrap: true,
                 children: [
                   LargeButton(
+                      key: Key('doctorSearchPageButton'),
                       content: 'Search For Doctor',
                       backgroundColor: Colors.lightBlueAccent[100],
                       fontColor: Colors.black,

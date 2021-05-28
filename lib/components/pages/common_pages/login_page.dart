@@ -49,6 +49,7 @@ class _LoginState extends State<Login> {
                     SizedBox(
                         height: 60.0,
                         child: TextFormField(
+                          key: Key('emailField'),
                           decoration: InputDecoration(hintText: 'Email'),
                           keyboardType: TextInputType.emailAddress,
                           obscureText: false,
@@ -64,6 +65,7 @@ class _LoginState extends State<Login> {
                             Expanded(
                               flex: 9,
                               child: TextFormField(
+                                key: Key('passwordField'),
                                 decoration:
                                     InputDecoration(hintText: 'Password'),
                                 keyboardType: TextInputType.visiblePassword,
@@ -95,7 +97,7 @@ class _LoginState extends State<Login> {
                           SizedBox(
                             width: 150.0,
                             child: MaterialButton(
-                              key: Key('loginButton'),
+                                key: Key('loginButton'),
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30.0),
                                     side: BorderSide(color: Colors.black12)),

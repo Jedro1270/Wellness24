@@ -43,6 +43,7 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
         appBar: CustomAppBar(
           title: '',
           leading: IconButton(
+              key: Key('backButton'),
               icon: Icon(Icons.arrow_back),
               onPressed: () {
                 Navigator.pop(context);

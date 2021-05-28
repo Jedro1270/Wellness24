@@ -80,6 +80,7 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        key: Key('chatButton'),
         child: Icon(Icons.message),
         onPressed: () {
           Navigator.push(
@@ -123,6 +124,7 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
                     ),
                   ),
                   LargeButton(
+                    key: Key('priorityNumbersPageButton'),
                     content: 'View Priority Numbers',
                     onPressed: () {
                       Navigator.push(

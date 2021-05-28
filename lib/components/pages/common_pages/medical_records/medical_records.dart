@@ -158,6 +158,7 @@ class _MedicalRecordsState extends State<MedicalRecords> {
                               primary: false, children: medicalRecordCards)),
                       isDoctor
                           ? ElevatedButton.icon(
+                              key: Key('addMedicalRecordButton'),
                               onPressed: () {
                                 Navigator.push(
                                     context,
