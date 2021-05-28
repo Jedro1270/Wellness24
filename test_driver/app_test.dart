@@ -215,7 +215,7 @@ void main() {
 
         // TODO: Add deeper chat page
 
-        test('Prority Numbers Page.', () async {
+        test('Priority Numbers Page.', () async {
           final priorityNumbersPageButtonFinder =
               find.byValueKey('priorityNumbersPageButton');
           await driver.tap(priorityNumbersPageButtonFinder);
