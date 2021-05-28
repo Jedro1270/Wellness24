@@ -13,7 +13,7 @@ void main() {
           home: Login(),
         ));
 
-        final loginBtnFinder = find.byType(MaterialButton);
+        final loginBtnFinder = find.byKey(Key('loginButton'));
 
         await tester.tap(loginBtnFinder);
         await tester.pump();
