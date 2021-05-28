@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wellness24/components/pages/common_pages/register_personal_info.dart';
@@ -18,22 +19,29 @@ class _RegisterCredentialsState extends State<RegisterCredentials> {
   String email, password, contactNo;
   NewAccount account;
   _RegisterCredentialsState(this.account);
-  String takenEmailMsg;
+  String emailErrorMsg;
   bool hidePassword = true;
 
-  Future checkTakenEmail() async {
+  Future validateEmail() async {
     if (email == null) return;
+
+    if (!EmailValidator.validate(email)) {
+      setState(() {
+        emailErrorMsg = 'Please enter a valid format';
+      });
+      return;
+    }
 
     FirebaseAuth auth = AuthService().auth;
     List<String> availableMethods =
         await auth.fetchSignInMethodsForEmail(email: email);
     if (availableMethods.isNotEmpty) {
       setState(() {
-        takenEmailMsg = 'Email is already in use';
+        emailErrorMsg = 'Email is already in use';
       });
     } else {
       setState(() {
-        takenEmailMsg = null;
+        emailErrorMsg = null;
       });
     }
   }
@@ -66,7 +74,7 @@ class _RegisterCredentialsState extends State<RegisterCredentials> {
                 TextFormField(
                   decoration: InputDecoration(hintText: 'Email'),
                   validator: (val) =>
-                      val.isEmpty ? 'This field is required' : takenEmailMsg,
+                      val.isEmpty ? 'This field is required' : emailErrorMsg,
                   keyboardType: TextInputType.emailAddress,
                   obscureText: false,
                   onChanged: (val) => setState(() => email = val),
@@ -123,7 +131,7 @@ class _RegisterCredentialsState extends State<RegisterCredentials> {
                             padding:
                                 EdgeInsets.fromLTRB(18.0, 15.0, 18.0, 15.0),
                             onPressed: () async {
-                              await checkTakenEmail();
+                              await validateEmail();
 
                               if (_formKey.currentState.validate()) {
                                 account.supplyCredentials(
