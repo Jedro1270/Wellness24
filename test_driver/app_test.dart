@@ -223,8 +223,7 @@ void main() {
           final priorityNumbersPageFinder = find.byType('DoctorQueueMonitor');
           await driver.waitFor(priorityNumbersPageFinder);
 
-          final backButtonFinder = find.byValueKey('backButton');
-          await driver.tap(backButtonFinder);
+          await driver.tap(find.pageBack());
 
           await driver.waitFor(doctorHomePageFinder);
         });
