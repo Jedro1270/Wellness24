@@ -117,15 +117,15 @@ void main() {
                     .toPlainText()
                     .startsWith('Jedro Vienne Deo E. Pagayonan'));
 
-        // final aboutFinder = find.text('Lorem ipsum dolor sit amet');
-        // final educationFinder = find.text('Doctorate');
-        // final workingDaysAndHoursFinder =
-        //     find.text('Monday to Friday: 8:30 AM - 5:30 PM');
+        final aboutFinder = find.text('Lorem ipsum dolor sit amet');
+        final educationFinder = find.text('Doctorate');
+        final workingDaysAndHoursFinder =
+            find.text('Monday to Friday: 8:30 AM - 5:30 PM');
 
         expect(fullNameFinder, findsOneWidget);
-        // expect(aboutFinder, findsOneWidget);
-        // expect(educationFinder, findsOneWidget);
-        // expect(workingDaysAndHoursFinder, findsOneWidget);
+        expect(aboutFinder, findsOneWidget);
+        expect(educationFinder, findsOneWidget);
+        expect(workingDaysAndHoursFinder, findsOneWidget);
       });
     });
   });
