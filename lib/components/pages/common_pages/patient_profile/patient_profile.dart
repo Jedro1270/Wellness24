@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'dart:io';
-import 'package:image_picker/image_picker.dart';
 
 import 'package:wellness24/components/common/app_bar.dart';
+import 'package:wellness24/components/common/large_button.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
 import 'package:wellness24/components/pages/common_pages/medical_records/medical_records.dart';
 import 'package:wellness24/components/pages/common_pages/patient_profile/patient_condition.dart';
@@ -107,12 +106,15 @@ class _PatientProfileState extends State<PatientProfile> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text(
-                          widget.patient.fullName,
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontFamily: 'ShipporiMincho',
-                              fontWeight: FontWeight.bold),
+                        Expanded(
+                          child: Text(
+                            widget.patient.fullName,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: 'ShipporiMincho',
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ],
                     ),
@@ -464,37 +466,21 @@ class _PatientProfileState extends State<PatientProfile> {
                       ),
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.all(10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        ElevatedButton(
-                          key: Key('medicalRecordsBtn'),
-                          child: Text("Medical Records",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontFamily: "ShipporiMincho",
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black)),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MedicalRecords(
-                                          patient: widget.patient,
-                                          role: widget.editable
-                                              ? 'Patient'
-                                              : 'Doctor',
-                                        )));
-                          },
-                          style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 80, vertical: 20),
-                              primary: Colors.lightBlueAccent[100]),
-                        )
-                      ],
-                    ),
+                  LargeButton(
+                    content: 'Medical Records',
+                    key: Key('medicalRecordsBtn'),
+                    backgroundColor: Colors.lightBlueAccent[100],
+                    fontColor: Colors.black,
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MedicalRecords(
+                                    patient: widget.patient,
+                                    role:
+                                        widget.editable ? 'Patient' : 'Doctor',
+                                  )));
+                    },
                   ),
                 ],
               ),

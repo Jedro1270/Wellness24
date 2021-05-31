@@ -125,6 +125,8 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
                   ),
                   LargeButton(
                     key: Key('priorityNumbersPageButton'),
+                    backgroundColor: Colors.lightBlueAccent[100],
+                    fontColor: Colors.black,
                     content: 'View Priority Numbers',
                     onPressed: () {
                       Navigator.push(

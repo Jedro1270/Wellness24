@@ -49,7 +49,7 @@ class _PatientPriorityNumberState extends State<PatientPriorityNumber> {
               }),
         ),
         body: Container(
-          padding: EdgeInsets.symmetric(vertical: 20),
+          padding: EdgeInsets.symmetric(vertical: 10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -93,11 +93,11 @@ class _PatientPriorityNumberState extends State<PatientPriorityNumber> {
                 ),
               ),
               Text(
-                '$priorityNum',
+                '${priorityNum ?? ""}',
                 style: TextStyle(
                   fontFamily: "ShipporiMincho",
                   fontWeight: FontWeight.bold,
-                  fontSize: 150,
+                  fontSize: 75,
                 ),
               ),
               Text(
