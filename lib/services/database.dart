@@ -145,7 +145,7 @@ class DatabaseService {
 
   Future<bool> requestExists({String doctorId, String patientId}) async {
     DocumentSnapshot document = await patientRequests.document(doctorId).get();
-    if (document.data['requests'] == null) {
+    if (document.data == null) {
       return false;
     }
 
