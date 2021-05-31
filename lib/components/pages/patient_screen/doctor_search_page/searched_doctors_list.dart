@@ -110,7 +110,7 @@ class _SearchedDoctorsListState extends State<SearchedDoctorsList> {
                       Container(
                           margin: EdgeInsets.all(30),
                           child: Text(
-                            'No Search Results. Please try a different keyword',
+                            'No Search Results. Please try a different keyword.',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontFamily: 'ShipporiMincho',
