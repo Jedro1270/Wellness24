@@ -70,9 +70,11 @@ class _SearchedDoctorsListState extends State<SearchedDoctorsList> {
     getDoctors();
 
     _scrollController.addListener(() {
-      double currentScroll = _scrollController.position.pixels;
+      bool hasReachedBottom = _scrollController.offset >=
+              _scrollController.position.maxScrollExtent &&
+          !_scrollController.position.outOfRange;
 
-      if (currentScroll == 0) {
+      if (hasReachedBottom) {
         setState(() {
           loadMore = InkWell(
             onTap: () {
