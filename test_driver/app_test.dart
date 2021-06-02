@@ -29,17 +29,17 @@ import 'package:flutter_driver/flutter_driver.dart';
 // }
 
 void main() {
+  FlutterDriver driver;
+
+  setUpAll(() async {
+    driver = await FlutterDriver.connect();
+  });
+
+  tearDownAll(() async {
+    driver.close();
+  });
+  
   group('Main Pages:', () {
-    FlutterDriver driver;
-
-    setUpAll(() async {
-      driver = await FlutterDriver.connect();
-    });
-
-    tearDownAll(() async {
-      driver.close();
-    });
-
     group('As a Patient', () {
       final patientHomePageFinder = find.byType('PatientHomePage');
       test('I can Log In.', () async {
