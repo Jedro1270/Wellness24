@@ -178,7 +178,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
             ),
             SizedBox(height: 20.0),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18.0),
+              padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
               child: SizedBox(
                 width: double.infinity,
                 height: 55.0,
@@ -216,7 +216,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18.0),
+              padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
               child: SizedBox(
                 width: double.infinity,
                 height: 55.0,

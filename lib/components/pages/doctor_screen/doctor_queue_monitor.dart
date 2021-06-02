@@ -42,11 +42,6 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
     return Scaffold(
         appBar: CustomAppBar(
           title: '',
-          leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pop(context);
-              }),
         ),
         body: SingleChildScrollView(
           child: Column(children: <Widget>[

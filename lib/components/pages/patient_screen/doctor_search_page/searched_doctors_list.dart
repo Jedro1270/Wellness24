@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:wellness24/components/common/loading_animation.dart';
 import 'package:wellness24/components/pages/patient_screen/doctor_search_page/doctor_info.dart';
 import 'package:wellness24/models/doctor.dart';
 import 'package:wellness24/models/patient.dart';
@@ -24,6 +25,7 @@ class SearchedDoctorsList extends StatefulWidget {
 
 class _SearchedDoctorsListState extends State<SearchedDoctorsList> {
   List<DoctorInfo> doctors = [];
+  bool hasContent = true;
 
   ScrollController _scrollController = ScrollController();
   Widget loadMore = Container();
@@ -62,6 +64,9 @@ class _SearchedDoctorsListState extends State<SearchedDoctorsList> {
           currentPatient: widget.currentPatient,
         );
       }).toList();
+
+      hasContent = doctors.isNotEmpty;
+      print(hasContent);
     });
   }
 
@@ -70,9 +75,11 @@ class _SearchedDoctorsListState extends State<SearchedDoctorsList> {
     getDoctors();
 
     _scrollController.addListener(() {
-      double currentScroll = _scrollController.position.pixels;
+      bool hasReachedBottom = _scrollController.offset >=
+              _scrollController.position.maxScrollExtent &&
+          !_scrollController.position.outOfRange;
 
-      if (currentScroll == 0) {
+      if (hasReachedBottom) {
         setState(() {
           loadMore = InkWell(
             onTap: () {
@@ -97,28 +104,29 @@ class _SearchedDoctorsListState extends State<SearchedDoctorsList> {
 
   @override
   Widget build(BuildContext context) {
-    //return ListView(children: doctors, controller: _scrollController,);
     return Container(
       child: Column(
         children: <Widget>[
           Expanded(
-            child: ListView(
-              controller: _scrollController,
-              children: doctors.isNotEmpty
-                  ? doctors
-                  : [
-                      Container(
-                          margin: EdgeInsets.all(30),
-                          child: Text(
-                            'No Search Results. Please try a different keyword',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontFamily: 'ShipporiMincho',
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                          )),
-                    ],
-            ),
+            child: doctors.length > 0 || !hasContent
+                ? ListView(
+                    controller: _scrollController,
+                    children: hasContent
+                        ? doctors
+                        : [
+                            Container(
+                                margin: EdgeInsets.all(30),
+                                child: Text(
+                                  'No Search Results. Please try a different keyword.',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily: 'ShipporiMincho',
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                          ],
+                  )
+                : Loading(),
           ),
           loadMore
         ],

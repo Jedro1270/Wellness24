@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
+import 'package:wellness24/components/functions/format_time.dart';
 import 'package:wellness24/components/pages/common_pages/login_page.dart';
 import 'package:wellness24/models/new_account.dart';
 import 'package:wellness24/models/user.dart';
@@ -88,10 +89,7 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
     if (time != null) {
       setState(() {
         startTime = time;
-        clinicStart =
-            '${time.hourOfPeriod}:${time.minute.toString().length < 2 ? (time.minute.toString() + '0') : time.minute} ${time.period.toString().substring(10, 12).toUpperCase()}';
-
-        print(clinicStart);
+        clinicStart = formatTime(time);
       });
     }
   }
@@ -107,10 +105,7 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
     if (time != null) {
       setState(() {
         endTime = time;
-        clinicEnd =
-            '${time.hourOfPeriod}:${time.minute.toString().length < 2 ? (time.minute.toString() + '0') : time.minute} ${time.period.toString().substring(10, 12).toUpperCase()}';
-
-        print(clinicEnd);
+        clinicEnd = formatTime(time);
       });
     }
   }

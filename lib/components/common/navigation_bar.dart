@@ -88,6 +88,7 @@ class _NavBarState extends State<NavBar> {
                   ),
                   Divider(),
                   ListTile(
+                    key: Key('logOutButton'),
                     leading: Icon(Icons.logout, color: Colors.blueAccent),
                     title: Text('Log out'),
                     onTap: () async {
