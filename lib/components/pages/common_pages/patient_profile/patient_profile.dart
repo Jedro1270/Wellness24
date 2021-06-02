@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'dart:io';
-import 'package:image_picker/image_picker.dart';
 
 import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
@@ -210,7 +208,6 @@ class _PatientProfileState extends State<PatientProfile> {
                       content: widget.patient.bloodType,
                       title: 'Blood Type',
                       unit: '',
-                      inputFormat: "[A,O,B,a,b,o,+,-]",
                       onChanged: (newContent) async {
                         setState(() {
                           loading = true;

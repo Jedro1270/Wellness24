@@ -64,7 +64,9 @@ class _EmergencyContactInfoState extends State<EmergencyContactInfo> {
                 SizedBox(height: 5),
                 TextFormField(
                     key: Key('lastNameField'),
-                    inputFormatters: [FilteringTextInputFormatter.deny(RegExp("[0-9]"))],
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(RegExp("[0-9]"))
+                    ],
                     obscureText: false,
                     onChanged: (val) => setState(() => lastName = val),
                     validator: (val) =>
@@ -84,7 +86,9 @@ class _EmergencyContactInfoState extends State<EmergencyContactInfo> {
                 SizedBox(height: 5),
                 TextFormField(
                     key: Key('firstNameField'),
-                    inputFormatters: [FilteringTextInputFormatter.deny(RegExp("[0-9]"))],
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(RegExp("[0-9]"))
+                    ],
                     obscureText: false,
                     onChanged: (val) => setState(() => firstName = val),
                     validator: (val) =>
@@ -104,7 +108,9 @@ class _EmergencyContactInfoState extends State<EmergencyContactInfo> {
                 SizedBox(height: 5),
                 TextFormField(
                     key: Key('middleInitialField'),
-                    inputFormatters: [FilteringTextInputFormatter.deny(RegExp("[0-9]"))],
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(RegExp("[0-9]"))
+                    ],
                     obscureText: false,
                     onChanged: (val) => setState(() => middleInitial = val),
                     validator: (val) => val.isEmpty
@@ -143,6 +149,10 @@ class _EmergencyContactInfoState extends State<EmergencyContactInfo> {
                 TextFormField(
                     key: Key('contactNumField'),
                     obscureText: false,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp("[0-9]"))
+                    ],
                     onChanged: (val) => setState(() => contactNo = val),
                     validator: (val) =>
                         val.isEmpty ? 'This field is required' : null),
@@ -159,7 +169,9 @@ class _EmergencyContactInfoState extends State<EmergencyContactInfo> {
                 SizedBox(height: 5),
                 TextFormField(
                     key: Key('relationshipField'),
-                    inputFormatters: [FilteringTextInputFormatter.deny(RegExp("[0-9]"))],
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(RegExp("[0-9]"))
+                    ],
                     obscureText: false,
                     onChanged: (val) => setState(() => relationship = val),
                     validator: (val) =>
