@@ -40,6 +40,78 @@ void main() {
       driver.close();
     });
 
+    group('As a User', () {
+      test('I can sign up', () async {
+        final signUpBtn = find.byValueKey('signup');
+        final signupFinder = find.byType('SignupOption');
+
+        await driver.tap(signUpBtn);
+        await driver.waitFor(signupFinder);
+      });
+
+      group('I can register as a patient', () {
+        test('Register credentials', () async {
+          final registerCredFinder = find.byType('RegisterCredentials');
+          final patientBtn = find.byValueKey('Patient');
+
+          await driver.tap(patientBtn);
+          await driver.waitFor(registerCredFinder);
+
+          final emailFinder = find.byValueKey('email');
+          final contactNumberFinder = find.byValueKey('contactNumber');
+          final passwordFinder = find.byValueKey('password');
+          final registerFinder = find.byValueKey('register');
+          final registerPersonalInfo = find.byType('RegisterPersonalInfo');
+
+          await driver.tap(emailFinder);
+          await driver
+              .enterText('temporarytest@gmail.com');
+
+          await driver.tap(contactNumberFinder);
+          await driver
+              .enterText('09291294923');
+
+          await driver.tap(passwordFinder);
+          await driver
+              .enterText('password');
+
+          await driver.tap(registerFinder);
+          await driver.waitFor(registerPersonalInfo);
+        });
+
+        test('Personal Infomation Form', () async {
+          final lastNameFinder = find.byValueKey('lastNameField');
+          final firstNameFinder = find.byValueKey('firstNameField');
+          final middleInitialFinder = find.byValueKey('middleInitialField');
+          final genderFinder = find.byValueKey('male');
+          final addressFinder = find.byValueKey('addressField');
+          final arrowBtnFinder = find.byValueKey('arrowBtn');
+          final emergencyContactInfo = find.byType('EmergencyContactInfo');
+
+          await driver.tap(lastNameFinder);
+          await driver
+              .enterText('Cruz');
+
+          await driver.tap(firstNameFinder);
+          await driver
+              .enterText('Joshua');
+
+          await driver.tap(middleInitialFinder);
+          await driver
+              .enterText('C');
+
+          await driver.tap(genderFinder);
+
+          await driver.tap(addressFinder);
+          await driver
+              .enterText('Iloilo City');
+
+          await driver.tap(arrowBtnFinder);
+          await driver.waitFor(emergencyContactInfo);
+        });
+      });
+    });
+
     group('As a Patient', () {
       final patientHomePageFinder = find.byType('PatientHomePage');
       test('I can Log In.', () async {
