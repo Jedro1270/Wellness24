@@ -9,7 +9,7 @@ void main() {
   final lastNameField = find.byKey(Key('lastNameField'));
   final middleInitialField = find.byKey(Key('middleInitialField'));
   final addressField = find.byKey(Key('addressField'), skipOffstage: false);
-  final birthField = find.byType(MaterialButton);
+  // final birthField = find.byType(MaterialButton);
   final proceedBtn = find.byType(IconButton, skipOffstage: false);
   group("Register personal info page test", () {
     testWidgets(
@@ -24,7 +24,7 @@ void main() {
       expect(lastNameField, findsOneWidget);
       expect(middleInitialField, findsOneWidget);
       expect(addressField, findsOneWidget);
-      expect(birthField, findsOneWidget);
+      //expect(birthField, findsOneWidget);
       expect(proceedBtn, findsOneWidget);
       });
     });
