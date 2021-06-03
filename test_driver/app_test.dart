@@ -122,6 +122,16 @@ void main() {
           final messagesPageFinder = find.byType('Messages');
           await driver.waitFor(messagesPageFinder);
 
+          final userChatFinder = find.byType('UserTile');
+          await driver.tap(userChatFinder);
+
+          final chatRoomFinder = find.byType('ChatRoom');
+          await driver.waitFor(chatRoomFinder);
+
+          await driver.tap(find.pageBack());
+          
+          await driver.waitFor(messagesPageFinder);
+
           await driver.tap(find.pageBack());
 
           await driver.waitFor(patientHomePageFinder);
@@ -206,6 +216,16 @@ void main() {
           await driver.tap(chatButtonFinder);
 
           final messagesPageFinder = find.byType('Messages');
+          await driver.waitFor(messagesPageFinder);
+
+          final userChatFinder = find.byType('UserTile');
+          await driver.tap(userChatFinder);
+
+          final chatRoomFinder = find.byType('ChatRoom');
+          await driver.waitFor(chatRoomFinder);
+
+          await driver.tap(find.pageBack());
+          
           await driver.waitFor(messagesPageFinder);
 
           await driver.tap(find.pageBack());
