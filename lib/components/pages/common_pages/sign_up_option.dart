@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/pages/common_pages/register_credentials.dart';
 import 'package:wellness24/models/new_account.dart';
 
@@ -15,6 +16,9 @@ class _SignupOptionState extends State<SignupOption> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        appBar: CustomAppBar(
+          title: 'Register',
+        ),
         backgroundColor: Colors.white,
         body: Container(
           padding: EdgeInsets.symmetric(vertical: 125.0, horizontal: 35.0),
