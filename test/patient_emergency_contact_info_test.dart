@@ -10,7 +10,7 @@ void main() {
   final middleInitialField = find.byKey(Key('middleInitialField'));
   final addressField = find.byKey(Key('lastNameField'));
   final relationshipField = find.byKey(Key('lastNameField'));
-  final contactNumField = find.byKey(Key('contactNumField'));
+  final contactNumField = find.byKey(Key('contactNumField'), skipOffstage: false);
   final arrowBtn = find.byType(IconButton, skipOffstage: false);
 
   group("Patient emergency contact info page test", () {
