@@ -71,10 +71,13 @@ class _PatientHomePageState extends State<PatientHomePage> {
         key: Key('chatButton'),
         child: Icon(Icons.message),
         onPressed: () {
+          // generateError(); // For testing catcher
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => Messages(currentUser: currentUser)));
+            context,
+            MaterialPageRoute(
+              builder: (context) => Messages(currentUser: currentUser),
+            ),
+          );
         },
       ),
       body: currentPatient == null
@@ -167,6 +170,10 @@ class _PatientHomePageState extends State<PatientHomePage> {
               ),
             ),
     );
+  }
+
+  generateError() async {
+    throw "Test exception";
   }
 }
 
