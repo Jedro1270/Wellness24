@@ -140,18 +140,32 @@ void main() {
 
       // TODO: Add deeper chat page
       group('I can search for a doctor', () {
+        final searchBar = find.byValueKey('doctorSearchBar');
+        final searchBtn = find.byValueKey('searchBtn');
         test('I can search by entering a keyword', () async {
-          final searchButton = find.byValueKey('doctorSearchPageButton');
-          await driver.tap(searchButton);
-
+          final searchPageButton = find.byValueKey('doctorSearchPageButton');
+          await driver.tap(searchPageButton);
           final doctorSearchPageFinder = find.byType('DoctorSearchPage');
           await driver.waitFor(doctorSearchPageFinder);
-          final searchBar = find.byValueKey('doctorSearchBar');
+
           await driver.tap(searchBar);
           await driver.enterText('jedro');
+          await driver.tap(searchBtn);
+
           final doctorResult = find.byType('DoctorInfo');
           await driver.waitFor(doctorResult);
         });
+        test('Shows "no results" if search value has no match', () async {
+          await driver.tap(searchBar);
+          await driver.enterText('oisefhjasdknvadg');
+          await driver.tap(searchBtn);
+
+          final emptyResults = find.byValueKey('emptySearchResults');
+          await driver.waitFor(emptyResults);
+
+          await driver.tap(find.pageBack());
+          await driver.waitFor(patientHomePageFinder);
+        });
       });
 
       test('I can Log Out', () async {
@@ -166,124 +180,125 @@ void main() {
       });
     });
 
-    group('As a Doctor', () {
-      final doctorHomePageFinder = find.byType('DoctorHomePage');
-      test('I can Log In.', () async {
-        final signInButtonFinder = find.byValueKey('loginButton');
+    //   group('As a Doctor', () {
+    //     final doctorHomePageFinder = find.byType('DoctorHomePage');
+    //     test('I can Log In.', () async {
+    //       final signInButtonFinder = find.byValueKey('loginButton');
 
-        final emailFieldFinder = find.byValueKey('emailField');
-        final passwordFieldFinder = find.byValueKey('passwordField');
+    //       final emailFieldFinder = find.byValueKey('emailField');
+    //       final passwordFieldFinder = find.byValueKey('passwordField');
 
-        await driver.tap(emailFieldFinder);
-        await driver
-            .enterText('jedro1270@gmail.com'); // TODO: Change to test account
+    //       await driver.tap(emailFieldFinder);
+    //       await driver
+    //           .enterText('jedro1270@gmail.com'); // TODO: Change to test account
 
-        await driver.tap(passwordFieldFinder);
-        await driver.enterText('Jedro1270'); // TODO: Change to test account
+    //       await driver.tap(passwordFieldFinder);
+    //       await driver.enterText('Jedro1270'); // TODO: Change to test account
 
-        await driver.tap(signInButtonFinder);
+    //       await driver.tap(signInButtonFinder);
 
-        await driver.waitFor(doctorHomePageFinder,
-            timeout: Duration(minutes: 5));
-      });
+    //       await driver.waitFor(doctorHomePageFinder,
+    //           timeout: Duration(minutes: 5));
+    //     });
 
-      group('I can navigate to', () {
-        test('Patient Profile.', () async {
-          final patientInfoFinder = find.byType('PatientInfo');
-          await driver.waitFor(patientInfoFinder);
-          await driver.tap(patientInfoFinder);
+    //     group('I can navigate to', () {
+    //       test('Patient Profile.', () async {
+    //         final patientInfoFinder = find.byType('PatientInfo');
+    //         await driver.waitFor(patientInfoFinder);
+    //         await driver.tap(patientInfoFinder);
 
-          final patientProfileFinder = find.byType('PatientProfile');
-          await driver.waitFor(patientProfileFinder);
-        });
+    //         final patientProfileFinder = find.byType('PatientProfile');
+    //         await driver.waitFor(patientProfileFinder);
+    //       });
 
-        test('Medical Records.', () async {
-          final medicalRecordsButtonFinder =
-              find.byValueKey('medicalRecordsBtn');
-          final listViewFinder = find.byType('ListView');
+    //       test('Medical Records.', () async {
+    //         final medicalRecordsButtonFinder =
+    //             find.byValueKey('medicalRecordsBtn');
+    //         final listViewFinder = find.byType('ListView');
 
-          await driver.scrollUntilVisible(
-              listViewFinder, medicalRecordsButtonFinder,
-              dyScroll: -250);
-          await driver.tap(medicalRecordsButtonFinder);
+    //         await driver.scrollUntilVisible(
+    //             listViewFinder, medicalRecordsButtonFinder,
+    //             dyScroll: -250);
+    //         await driver.tap(medicalRecordsButtonFinder);
 
-          final medicalRecordsPageFinder = find.byType('MedicalRecords');
-          await driver.waitFor(medicalRecordsPageFinder);
+    //         final medicalRecordsPageFinder = find.byType('MedicalRecords');
+    //         await driver.waitFor(medicalRecordsPageFinder);
 
-          final addMedicalRecordButton =
-              find.byValueKey('addMedicalRecordButton');
-          await driver.waitFor(addMedicalRecordButton);
-          await driver.tap(addMedicalRecordButton);
-        });
+    //         final addMedicalRecordButton =
+    //             find.byValueKey('addMedicalRecordButton');
+    //         await driver.waitFor(addMedicalRecordButton);
+    //         await driver.tap(addMedicalRecordButton);
+    //       });
 
-        test('Medical Record Page.', () async {
-          final medicalRecordPageFinder = find.byType('MedicalRecordPage');
-          await driver.waitFor(medicalRecordPageFinder);
+    //       test('Medical Record Page.', () async {
+    //         final medicalRecordPageFinder = find.byType('MedicalRecordPage');
+    //         await driver.waitFor(medicalRecordPageFinder);
 
-          await driver.tap(find.pageBack()); // Back to Medical Records
-          await driver.tap(find.pageBack()); // Back to Patient Profile
-          await driver.tap(find.pageBack()); // Back to Home Page
-        });
+    //         await driver.tap(find.pageBack()); // Back to Medical Records
+    //         await driver.tap(find.pageBack()); // Back to Patient Profile
+    //         await driver.tap(find.pageBack()); // Back to Home Page
+    //       });
 
-        test('Chat.', () async {
-          final chatButtonFinder = find.byValueKey('chatButton');
-          await driver.tap(chatButtonFinder);
+    //       test('Chat.', () async {
+    //         final chatButtonFinder = find.byValueKey('chatButton');
+    //         await driver.tap(chatButtonFinder);
 
-          final messagesPageFinder = find.byType('Messages');
-          await driver.waitFor(messagesPageFinder);
+    //         final messagesPageFinder = find.byType('Messages');
+    //         await driver.waitFor(messagesPageFinder);
 
-          final userChatFinder = find.byType('UserTile');
-          await driver.tap(userChatFinder);
+    //         final userChatFinder = find.byType('UserTile');
+    //         await driver.tap(userChatFinder);
 
-          final chatRoomFinder = find.byType('ChatRoom');
-          await driver.waitFor(chatRoomFinder);
+    //         final chatRoomFinder = find.byType('ChatRoom');
+    //         await driver.waitFor(chatRoomFinder);
 
-          await driver.tap(find.pageBack());
+    //         await driver.tap(find.pageBack());
 
-          await driver.waitFor(messagesPageFinder);
+    //         await driver.waitFor(messagesPageFinder);
 
-          await driver.tap(find.pageBack());
+    //         await driver.tap(find.pageBack());
 
-          await driver.waitFor(doctorHomePageFinder);
-        });
+    //         await driver.waitFor(doctorHomePageFinder);
+    //       });
 
-        test('I can check notification', () async {
-          final notificationIconFinder = find.byValueKey('notifications');
-          await driver.tap(notificationIconFinder);
+    //       test('I can check notification', () async {
+    //         final notificationIconFinder = find.byValueKey('notifications');
+    //         await driver.tap(notificationIconFinder);
 
-          final notificationPageFinder = find.byType('NotificationPage');
-          await driver.waitFor(notificationPageFinder);
+    //         final notificationPageFinder = find.byType('NotificationPage');
+    //         await driver.waitFor(notificationPageFinder);
 
-          final pageBackButton = find.byValueKey('pageBack');
-          await driver.tap(pageBackButton);
+    //         final pageBackButton = find.byValueKey('pageBack');
+    //         await driver.tap(pageBackButton);
 
-          await driver.waitFor(doctorHomePageFinder);
-        });
+    //         await driver.waitFor(doctorHomePageFinder);
+    //       });
 
-        test('Priority Numbers Page.', () async {
-          final priorityNumbersPageButtonFinder =
-              find.byValueKey('priorityNumbersPageButton');
-          await driver.tap(priorityNumbersPageButtonFinder);
+    //       test('Priority Numbers Page.', () async {
+    //         final priorityNumbersPageButtonFinder =
+    //             find.byValueKey('priorityNumbersPageButton');
+    //         await driver.tap(priorityNumbersPageButtonFinder);
 
-          final priorityNumbersPageFinder = find.byType('DoctorQueueMonitor');
-          await driver.waitFor(priorityNumbersPageFinder);
+    //         final priorityNumbersPageFinder = find.byType('DoctorQueueMonitor');
+    //         await driver.waitFor(priorityNumbersPageFinder);
 
-          await driver.tap(find.pageBack());
+    //         await driver.tap(find.pageBack());
 
-          await driver.waitFor(doctorHomePageFinder);
-        });
-      });
+    //         await driver.waitFor(doctorHomePageFinder);
+    //       });
+    //     });
 
-      test('I can Log Out', () async {
-        final drawerFinder = find.byTooltip('Open navigation menu');
-        await driver.tap(drawerFinder);
+    //     test('I can Log Out', () async {
+    //       final drawerFinder = find.byTooltip('Open navigation menu');
+    //       await driver.tap(drawerFinder);
 
-        final logOutButtonFinder = find.byValueKey('logOutButton');
-        await driver.tap(logOutButtonFinder);
+    //       final logOutButtonFinder = find.byValueKey('logOutButton');
+    //       await driver.tap(logOutButtonFinder);
 
-        final loginPageFinder = find.byType('Login');
-        await driver.waitFor(loginPageFinder);
-      });
-    });
+    //       final loginPageFinder = find.byType('Login');
+    //       await driver.waitFor(loginPageFinder);
+    //     });
+    //   });
+    // });
   });
 }
