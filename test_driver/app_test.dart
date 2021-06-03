@@ -114,7 +114,7 @@ void main() {
 
           await driver.waitFor(patientHomePageFinder);
         });
-
+        
         test('Chat.', () async {
           final chatButtonFinder = find.byValueKey('chatButton');
           await driver.tap(chatButtonFinder);
@@ -233,7 +233,19 @@ void main() {
           await driver.waitFor(doctorHomePageFinder);
         });
 
-        // TODO: Add deeper chat page
+        test('I can check notification', () async {
+        final notificationIconFinder = find.byValueKey('notifications');
+        await driver.tap(notificationIconFinder);
+
+        final notificationPageFinder = find.byType('NotificationPage');
+        await driver.waitFor(notificationPageFinder);
+
+        final pageBackButton = find.byValueKey('pageBack');
+        await driver.tap(pageBackButton);
+        
+        await driver.waitFor(doctorHomePageFinder);
+
+      });
 
         test('Priority Numbers Page.', () async {
           final priorityNumbersPageButtonFinder =
