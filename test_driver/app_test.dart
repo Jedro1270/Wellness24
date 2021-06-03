@@ -40,77 +40,146 @@ void main() {
       driver.close();
     });
 
-    group('As a User', () {
-      test('I can sign up', () async {
-        final signUpBtn = find.byValueKey('signup');
-        final signupFinder = find.byType('SignupOption');
+    // group('I can register as patient', () {
+    //   test('Sign up page', () async {
+    //     final signUpBtn = find.byValueKey('signup');
+    //     final signupFinder = find.byType('SignupOption');
 
-        await driver.tap(signUpBtn);
-        await driver.waitFor(signupFinder);
-      });
+    //     await driver.tap(signUpBtn);
+    //     await driver.waitFor(signupFinder);
+    //   });
 
-      group('I can register as a patient', () {
-        test('Register credentials', () async {
-          final registerCredFinder = find.byType('RegisterCredentials');
-          final patientBtn = find.byValueKey('Patient');
+    //   test('Register as patient', () async {
+    //     final registerCredFinder = find.byType('RegisterCredentials');
+    //     final patientBtn = find.byValueKey('Patient');
 
-          await driver.tap(patientBtn);
-          await driver.waitFor(registerCredFinder);
+    //     await driver.tap(patientBtn);
+    //     await driver.waitFor(registerCredFinder);
+    //   });
 
-          final emailFinder = find.byValueKey('email');
-          final contactNumberFinder = find.byValueKey('contactNumber');
-          final passwordFinder = find.byValueKey('password');
-          final registerFinder = find.byValueKey('register');
-          final registerPersonalInfo = find.byType('RegisterPersonalInfo');
+    //   test('Register credentials', () async {
+    //     final emailFinder = find.byValueKey('email');
+    //     final contactNumberFinder = find.byValueKey('contactNumber');
+    //     final passwordFinder = find.byValueKey('password');
+    //     final registerFinder = find.byValueKey('register');
+    //     final registerPersonalInfo = find.byType('RegisterPersonalInfo');
 
-          await driver.tap(emailFinder);
-          await driver
-              .enterText('temporarytest@gmail.com');
+    //     await driver.tap(emailFinder);
+    //     await driver
+    //         .enterText('temporarytest@gmail.com');
 
-          await driver.tap(contactNumberFinder);
-          await driver
-              .enterText('09291294923');
+    //     await driver.tap(contactNumberFinder);
+    //     await driver
+    //         .enterText('09291294923');
 
-          await driver.tap(passwordFinder);
-          await driver
-              .enterText('password');
+    //     await driver.tap(passwordFinder);
+    //     await driver
+    //         .enterText('password');
 
-          await driver.tap(registerFinder);
-          await driver.waitFor(registerPersonalInfo);
-        });
+    //     await driver.tap(registerFinder);
+    //     await driver.waitFor(registerPersonalInfo);
+    //   });
 
-        test('Personal Infomation Form', () async {
-          final lastNameFinder = find.byValueKey('lastNameField');
-          final firstNameFinder = find.byValueKey('firstNameField');
-          final middleInitialFinder = find.byValueKey('middleInitialField');
-          final genderFinder = find.byValueKey('male');
-          final addressFinder = find.byValueKey('addressField');
-          final arrowBtnFinder = find.byValueKey('arrowBtn');
-          final emergencyContactInfo = find.byType('EmergencyContactInfo');
+    //   test('Register Personal Information', () async {
+    //     final lastNameFinder = find.byValueKey('lastNameField');
+    //     final firstNameFinder = find.byValueKey('firstNameField');
+    //     final middleInitialFinder = find.byValueKey('middleInitialField');
+    //     final genderFinder = find.byValueKey('male');
+    //     final addressFinder = find.byValueKey('addressField');
+    //     final arrowBtnFinder = find.byValueKey('arrowBtn');
+    //     final emergencyContactInfo = find.byType('EmergencyContactInfo');
+    //     final listViewFinder = find.byType('ListView');
 
-          await driver.tap(lastNameFinder);
-          await driver
-              .enterText('Cruz');
+    //     await driver.tap(lastNameFinder);
+    //     await driver
+    //         .enterText('Cruz');
 
-          await driver.tap(firstNameFinder);
-          await driver
-              .enterText('Joshua');
+    //     await driver.tap(firstNameFinder);
+    //     await driver
+    //         .enterText('Joshua');
 
-          await driver.tap(middleInitialFinder);
-          await driver
-              .enterText('C');
+    //     await driver.tap(middleInitialFinder);
+    //     await driver
+    //         .enterText('C');
 
-          await driver.tap(genderFinder);
+    //     await driver.tap(genderFinder);
 
-          await driver.tap(addressFinder);
-          await driver
-              .enterText('Iloilo City');
+    //     await driver.scrollUntilVisible(
+    //           listViewFinder, arrowBtnFinder,
+    //           dyScroll: -250);
 
-          await driver.tap(arrowBtnFinder);
-          await driver.waitFor(emergencyContactInfo);
-        });
-      });
-    });
+    //     await driver.tap(addressFinder);
+    //     await driver
+    //         .enterText('Iloilo City');
+
+    //     await driver.tap(arrowBtnFinder);
+    //     await driver.waitFor(emergencyContactInfo);
+    //   });
+
+    //   test('Register Personal Information', () async {
+    //     final lastNameFinder = find.byValueKey('lastNameField');
+    //     final firstNameFinder = find.byValueKey('firstNameField');
+    //     final middleInitialFinder = find.byValueKey('middleInitialField');
+    //     final addressFinder = find.byValueKey('addressField');
+    //     final contactNumFinder = find.byValueKey('contactNumField');
+    //     final relationshipFinder = find.byValueKey('relationshipField');
+    //     final arrowBtnFinder = find.byValueKey('arrowBtn');
+    //     final medicalHistory = find.byType('MedicalHistory');
+    //     final listViewFinder = find.byType('ListView');
+
+    //     await driver.tap(lastNameFinder);
+    //     await driver
+    //         .enterText('Cruz');
+
+    //     await driver.tap(firstNameFinder);
+    //     await driver
+    //         .enterText('Kyle');
+
+    //     await driver.tap(middleInitialFinder);
+    //     await driver
+    //         .enterText('C');
+
+    //     await driver.tap(addressFinder);
+    //     await driver
+    //         .enterText('Iloilo City');
+
+    //     await driver.scrollUntilVisible(
+    //           listViewFinder, arrowBtnFinder,
+    //           dyScroll: -250);
+
+    //     await driver.tap(contactNumFinder);
+    //     await driver
+    //         .enterText('09231934969');
+
+    //     await driver.tap(relationshipFinder);
+    //     await driver
+    //         .enterText('Brother');
+
+    //     await driver.tap(arrowBtnFinder);
+    //     await driver.waitFor(medicalHistory);
+    //   });
+
+    //   test('Medical history', () async {
+    //     final inputFinder = find.byValueKey('otherField');
+    //     final addFinder = find.byValueKey('addBtn');
+
+    //     await driver.tap(inputFinder);
+    //     await driver
+    //         .enterText('Brother');
+
+    //     await driver.tap(addFinder);
+
+    //     await driver.tap(find.pageBack()); // Back to Emergency Contact Information
+    //     await driver.tap(find.pageBack()); // Back to Personal Information
+    //     await driver.tap(find.pageBack()); // Back to Sign Up
+
+    //     final loginFinder = find.byValueKey('logInBtn');
+    //     await driver.tap(loginFinder);    //Back to register credentials
+
+    //     final loginPage = find.byType('Login');
+    //     await driver.waitFor(loginPage);
+    //   });
+    // });
 
     group('As a Patient', () {
       final patientHomePageFinder = find.byType('PatientHomePage');
@@ -186,7 +255,7 @@ void main() {
 
           await driver.waitFor(patientHomePageFinder);
         });
-        
+
         test('Chat.', () async {
           final chatButtonFinder = find.byValueKey('chatButton');
           await driver.tap(chatButtonFinder);
@@ -201,7 +270,7 @@ void main() {
           await driver.waitFor(chatRoomFinder);
 
           await driver.tap(find.pageBack());
-          
+
           await driver.waitFor(messagesPageFinder);
 
           await driver.tap(find.pageBack());
@@ -297,7 +366,7 @@ void main() {
           await driver.waitFor(chatRoomFinder);
 
           await driver.tap(find.pageBack());
-          
+
           await driver.waitFor(messagesPageFinder);
 
           await driver.tap(find.pageBack());
@@ -314,7 +383,7 @@ void main() {
 
         final pageBackButton = find.byValueKey('pageBack');
         await driver.tap(pageBackButton);
-        
+
         await driver.waitFor(doctorHomePageFinder);
 
       });
