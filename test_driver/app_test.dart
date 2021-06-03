@@ -114,7 +114,7 @@ void main() {
 
           await driver.waitFor(patientHomePageFinder);
         });
-        
+
         test('Chat.', () async {
           final chatButtonFinder = find.byValueKey('chatButton');
           await driver.tap(chatButtonFinder);
@@ -129,7 +129,7 @@ void main() {
           await driver.waitFor(chatRoomFinder);
 
           await driver.tap(find.pageBack());
-          
+
           await driver.waitFor(messagesPageFinder);
 
           await driver.tap(find.pageBack());
@@ -139,6 +139,20 @@ void main() {
       });
 
       // TODO: Add deeper chat page
+      group('I can search for a doctor', () {
+        test('I can search by entering a keyword', () async {
+          final searchButton = find.byValueKey('doctorSearchPageButton');
+          await driver.tap(searchButton);
+
+          final doctorSearchPageFinder = find.byType('DoctorSearchPage');
+          await driver.waitFor(doctorSearchPageFinder);
+          final searchBar = find.byValueKey('doctorSearchBar');
+          await driver.tap(searchBar);
+          await driver.enterText('jedro');
+          final doctorResult = find.byType('DoctorInfo');
+          await driver.waitFor(doctorResult);
+        });
+      });
 
       test('I can Log Out', () async {
         final drawerFinder = find.byTooltip('Open navigation menu');
@@ -225,7 +239,7 @@ void main() {
           await driver.waitFor(chatRoomFinder);
 
           await driver.tap(find.pageBack());
-          
+
           await driver.waitFor(messagesPageFinder);
 
           await driver.tap(find.pageBack());
@@ -234,18 +248,17 @@ void main() {
         });
 
         test('I can check notification', () async {
-        final notificationIconFinder = find.byValueKey('notifications');
-        await driver.tap(notificationIconFinder);
+          final notificationIconFinder = find.byValueKey('notifications');
+          await driver.tap(notificationIconFinder);
 
-        final notificationPageFinder = find.byType('NotificationPage');
-        await driver.waitFor(notificationPageFinder);
+          final notificationPageFinder = find.byType('NotificationPage');
+          await driver.waitFor(notificationPageFinder);
 
-        final pageBackButton = find.byValueKey('pageBack');
-        await driver.tap(pageBackButton);
-        
-        await driver.waitFor(doctorHomePageFinder);
+          final pageBackButton = find.byValueKey('pageBack');
+          await driver.tap(pageBackButton);
 
-      });
+          await driver.waitFor(doctorHomePageFinder);
+        });
 
         test('Priority Numbers Page.', () async {
           final priorityNumbersPageButtonFinder =
