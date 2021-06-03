@@ -69,6 +69,37 @@ void main() {
           final doctorSearchPageFinder = find.byType('DoctorSearchPage');
           await driver.waitFor(doctorSearchPageFinder);
 
+          final findDoctor = find.text('Gastroenterologist');
+          await driver.tap(findDoctor);
+
+          final doctorsProfile = find.byType('DoctorDetails');
+          await driver.waitFor(doctorsProfile);          
+
+          final singleChildScrollFinder = find.byValueKey('doctorDetailsSingleChildScrollView');
+          final sendRequestFinder = find.text('Send Request');
+          
+          await driver.scrollUntilVisible(
+              singleChildScrollFinder, sendRequestFinder,
+              dyScroll: -250);
+          await driver.tap(sendRequestFinder);
+
+          final consentDialogFinder = find.byType('AlertDialog');
+          await driver.waitFor(consentDialogFinder);
+
+          final consentBtnFinder = find.byValueKey('ConsentBtn');
+          await driver.tap(consentBtnFinder);
+
+          await driver.waitFor(doctorsProfile);
+
+          final cancelRequestFinder = find.text('Cancel Request');
+          await driver.tap(cancelRequestFinder);
+
+          await driver.waitFor(sendRequestFinder);
+
+          await driver.tap(find.pageBack());
+          
+          await driver.waitFor(doctorSearchPageFinder);
+
           await driver.tap(find.pageBack());
 
           await driver.waitFor(patientHomePageFinder);
