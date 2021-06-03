@@ -210,6 +210,37 @@ void main() {
           final doctorSearchPageFinder = find.byType('DoctorSearchPage');
           await driver.waitFor(doctorSearchPageFinder);
 
+          final findDoctor = find.text('Gastroenterologist');
+          await driver.tap(findDoctor);
+
+          final doctorsProfile = find.byType('DoctorDetails');
+          await driver.waitFor(doctorsProfile);
+
+          final singleChildScrollFinder = find.byValueKey('doctorDetailsSingleChildScrollView');
+          final sendRequestFinder = find.text('Send Request');
+
+          await driver.scrollUntilVisible(
+              singleChildScrollFinder, sendRequestFinder,
+              dyScroll: -250);
+          await driver.tap(sendRequestFinder);
+
+          final consentDialogFinder = find.byType('AlertDialog');
+          await driver.waitFor(consentDialogFinder);
+
+          final consentBtnFinder = find.byValueKey('ConsentBtn');
+          await driver.tap(consentBtnFinder);
+
+          await driver.waitFor(doctorsProfile);
+
+          final cancelRequestFinder = find.text('Cancel Request');
+          await driver.tap(cancelRequestFinder);
+
+          await driver.waitFor(sendRequestFinder);
+
+          await driver.tap(find.pageBack());
+
+          await driver.waitFor(doctorSearchPageFinder);
+
           await driver.tap(find.pageBack());
 
           await driver.waitFor(patientHomePageFinder);
@@ -280,6 +311,34 @@ void main() {
       });
 
       // TODO: Add deeper chat page
+      group('I can search for a doctor', () {
+        final searchBar = find.byValueKey('doctorSearchBar');
+        final searchBtn = find.byValueKey('searchBtn');
+        test('I can search by entering a keyword', () async {
+          final searchPageButton = find.byValueKey('doctorSearchPageButton');
+          await driver.tap(searchPageButton);
+          final doctorSearchPageFinder = find.byType('DoctorSearchPage');
+          await driver.waitFor(doctorSearchPageFinder);
+
+          await driver.tap(searchBar);
+          await driver.enterText('jedro');
+          await driver.tap(searchBtn);
+
+          final doctorResult = find.byType('DoctorInfo');
+          await driver.waitFor(doctorResult);
+        });
+        test('Shows "no results" if search value has no match', () async {
+          await driver.tap(searchBar);
+          await driver.enterText('oisefhjasdknvadg');
+          await driver.tap(searchBtn);
+
+          final emptyResults = find.byValueKey('emptySearchResults');
+          await driver.waitFor(emptyResults);
+
+          await driver.tap(find.pageBack());
+          await driver.waitFor(patientHomePageFinder);
+        });
+      });
 
       test('I can Log Out', () async {
         final drawerFinder = find.byTooltip('Open navigation menu');
@@ -375,18 +434,17 @@ void main() {
         });
 
         test('I can check notification', () async {
-        final notificationIconFinder = find.byValueKey('notifications');
-        await driver.tap(notificationIconFinder);
+          final notificationIconFinder = find.byValueKey('notifications');
+          await driver.tap(notificationIconFinder);
 
-        final notificationPageFinder = find.byType('NotificationPage');
-        await driver.waitFor(notificationPageFinder);
+          final notificationPageFinder = find.byType('NotificationPage');
+          await driver.waitFor(notificationPageFinder);
 
-        final pageBackButton = find.byValueKey('pageBack');
-        await driver.tap(pageBackButton);
+          final pageBackButton = find.byValueKey('pageBack');
+          await driver.tap(pageBackButton);
 
-        await driver.waitFor(doctorHomePageFinder);
-
-      });
+          await driver.waitFor(doctorHomePageFinder);
+        });
 
         test('Priority Numbers Page.', () async {
           final priorityNumbersPageButtonFinder =
