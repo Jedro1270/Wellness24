@@ -118,6 +118,7 @@ class _SearchedDoctorsListState extends State<SearchedDoctorsList> {
                                 margin: EdgeInsets.all(30),
                                 child: Text(
                                   'No Search Results. Please try a different keyword.',
+                                  key: Key('emptySearchResults'),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontFamily: 'ShipporiMincho',

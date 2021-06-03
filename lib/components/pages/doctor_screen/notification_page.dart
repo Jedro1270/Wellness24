@@ -26,6 +26,7 @@ class _NotificationPageState extends State<NotificationPage> {
         drawer: NavBar(),
         appBar: CustomAppBar(
           leading: IconButton(
+            key: Key('pageBack'),
               icon: Icon(Icons.arrow_back),
               onPressed: () {
                 Navigator.push(context,

@@ -69,6 +69,7 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
         title: 'Home Page',
         actions: [
           IconButton(
+            key: Key('notifications'),
               icon: Icon(Icons.notifications),
               onPressed: () {
                 Navigator.push(

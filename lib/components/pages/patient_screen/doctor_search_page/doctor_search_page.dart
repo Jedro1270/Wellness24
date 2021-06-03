@@ -82,6 +82,7 @@ class _DoctorSearchPageState extends State<DoctorSearchPage> {
                       color: Color(0xffF2F2F2),
                       borderRadius: BorderRadius.circular(30)),
                   child: TextField(
+                    key: Key('doctorSearchBar'),
                     onChanged: (val) {
                       temporarySearchValue = val;
                       
@@ -97,9 +98,9 @@ class _DoctorSearchPageState extends State<DoctorSearchPage> {
                   ),
                 ),
                 Align(
-                  key: Key('searchBtn'),
                   alignment: Alignment.centerRight,
                   child: MaterialButton(
+                    key: Key('searchBtn'),
                     onPressed: () {
                       setState(() {
                         searchValue = temporarySearchValue;

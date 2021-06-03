@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/pages/common_pages/register_next_step.dart';
 import 'package:wellness24/models/new_account.dart';
 
@@ -45,6 +46,9 @@ class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(
+        title: 'Register Personal Information',
+      ),
       backgroundColor: Colors.white,
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 60.0, horizontal: 25.0),
@@ -152,6 +156,7 @@ class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
                 Container(
                   child: Row(children: <Widget>[
                     Radio(
+                      key: Key('male'),
                       value: 'Male',
                       groupValue: selectedRadio,
                       activeColor: Colors.blueAccent,
@@ -239,6 +244,7 @@ class _RegisterPersonalInfoState extends State<RegisterPersonalInfo> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       IconButton(
+                        key: Key('arrowBtn'),
                         icon: Icon(Icons.arrow_forward_sharp, size: 45),
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
