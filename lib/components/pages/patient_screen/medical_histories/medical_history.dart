@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/common/loading_animation.dart';
 import 'package:wellness24/components/pages/common_pages/login_page.dart';
 import 'package:wellness24/components/pages/patient_screen/medical_histories/medical_history_tile.dart';
@@ -38,6 +39,9 @@ class _MedicalHistoryState extends State<MedicalHistory> {
     return loading
         ? Loading()
         : Scaffold(
+            appBar: CustomAppBar(
+              title: ('Register Medical Records'),
+            ),
             backgroundColor: Colors.white,
             body: Container(
               padding: EdgeInsets.symmetric(vertical: 35.0, horizontal: 25.0),
@@ -88,6 +92,7 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                                 fontFamily: "ShipporiMincho",
                                 fontWeight: FontWeight.normal)),
                         InkWell(
+                            key: Key('addBtn'),
                             onTap: () {
                               setState(() {
                                 if (additional.length > 1) {
@@ -106,6 +111,7 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                       height: 50.0,
                       width: 30.0,
                       child: TextFormField(
+                          key: Key('otherField'),
                           obscureText: false,
                           onChanged: (val) =>
                               setState(() => additional = val))),
@@ -118,6 +124,7 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                           height: 55.0,
                           width: 150.0,
                           child: MaterialButton(
+                              key: Key('register'),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30.0),
                                   side: BorderSide(color: Colors.black12)),
