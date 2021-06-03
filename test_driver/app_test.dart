@@ -186,12 +186,22 @@ void main() {
 
           await driver.waitFor(patientHomePageFinder);
         });
-
+        
         test('Chat.', () async {
           final chatButtonFinder = find.byValueKey('chatButton');
           await driver.tap(chatButtonFinder);
 
           final messagesPageFinder = find.byType('Messages');
+          await driver.waitFor(messagesPageFinder);
+
+          final userChatFinder = find.byType('UserTile');
+          await driver.tap(userChatFinder);
+
+          final chatRoomFinder = find.byType('ChatRoom');
+          await driver.waitFor(chatRoomFinder);
+
+          await driver.tap(find.pageBack());
+          
           await driver.waitFor(messagesPageFinder);
 
           await driver.tap(find.pageBack());
@@ -280,12 +290,34 @@ void main() {
           final messagesPageFinder = find.byType('Messages');
           await driver.waitFor(messagesPageFinder);
 
+          final userChatFinder = find.byType('UserTile');
+          await driver.tap(userChatFinder);
+
+          final chatRoomFinder = find.byType('ChatRoom');
+          await driver.waitFor(chatRoomFinder);
+
+          await driver.tap(find.pageBack());
+          
+          await driver.waitFor(messagesPageFinder);
+
           await driver.tap(find.pageBack());
 
           await driver.waitFor(doctorHomePageFinder);
         });
 
-        // TODO: Add deeper chat page
+        test('I can check notification', () async {
+        final notificationIconFinder = find.byValueKey('notifications');
+        await driver.tap(notificationIconFinder);
+
+        final notificationPageFinder = find.byType('NotificationPage');
+        await driver.waitFor(notificationPageFinder);
+
+        final pageBackButton = find.byValueKey('pageBack');
+        await driver.tap(pageBackButton);
+        
+        await driver.waitFor(doctorHomePageFinder);
+
+      });
 
         test('Priority Numbers Page.', () async {
           final priorityNumbersPageButtonFinder =
