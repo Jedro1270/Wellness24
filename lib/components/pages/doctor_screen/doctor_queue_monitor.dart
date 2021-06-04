@@ -20,20 +20,25 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
   DateFormat format = DateFormat.yMMMMd('en_US');
   int queueCapacity, currentNumber = 1;
   bool isAcceptingCustomers = true;
+  TextEditingController queueController;
+
+  DatabaseService _database;
 
   int limitNumber = 50;
 
   void fetchQueueCap() async {
-    DatabaseService _database = DatabaseService(uid: widget.currentDoctor.uid);
+    _database = DatabaseService(uid: widget.currentDoctor.uid);
     int result = await _database.getAppointmentQueueCap(currentDate);
     setState(() {
-      queueCapacity = result;
+      queueCapacity = result ?? 0;
+      queueController.text = '$queueCapacity';
     });
   }
 
   @override
   void initState() {
     super.initState();
+    queueController = TextEditingController();
     fetchQueueCap();
   }
 
@@ -101,12 +106,15 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
                     SizedBox(
                       width: 50,
                       height: 50,
-                      child: TextField(
+                      child: TextFormField(
+                        controller: queueController,
                         keyboardType: TextInputType.number,
-                        onSubmitted: (newLimit) {
+                        onFieldSubmitted: (newLimit) {
                           setState(() {
                             int newIntLimit = int.parse(newLimit);
                             limitNumber = newIntLimit;
+                            _database.updateAppointmentQueueCap(
+                                int.parse(newLimit), DateTime.now());
                           });
                         },
                       ),
