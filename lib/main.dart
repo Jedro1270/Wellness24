@@ -7,7 +7,10 @@ import 'package:wellness24/services/auth_service.dart';
 import 'package:wellness24/models/user.dart';
 
 void main() {
-  CatcherOptions catcherOptions = CatcherOptions(
+  CatcherOptions debugConfig =
+      CatcherOptions(DialogReportMode(), [ConsoleHandler()]);
+
+  CatcherOptions defaultOptions = CatcherOptions(
     DialogReportMode(),
     [
       EmailManualHandler(
@@ -20,9 +23,9 @@ void main() {
 
   Catcher(
     MyApp(),
-    debugConfig: catcherOptions,
-    releaseConfig: catcherOptions,
-    profileConfig: catcherOptions,
+    debugConfig: debugConfig,
+    releaseConfig: defaultOptions,
+    profileConfig: defaultOptions,
   );
 }
 
