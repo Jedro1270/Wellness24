@@ -14,7 +14,7 @@ void main() {
     DialogReportMode(),
     [
       EmailManualHandler(
-        ['jedro1270@gmail.com'],
+        ['wellness24@gmail.com'],
         emailHeader: 'Unexpected Error',
         emailTitle: 'Error Report Wellness24',
       )
