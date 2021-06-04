@@ -565,11 +565,12 @@ void main() {
       await database.doctors.document(doctorId).setData({
         'firstName': 'Veto',
         'lastName': 'Bastiero',
-        'appointments': {'01-01-2021': 22}
+        'appointments': {'01-01-2021': 22},
+        'appointmentLimits': {'01-01-2021': 30}
       });
 
       int result = await database.getAppointmentQueueCap(DateTime(2021, 1, 1));
-      expect(result, 22);
+      expect(result, 30);
     });
   });
 }
