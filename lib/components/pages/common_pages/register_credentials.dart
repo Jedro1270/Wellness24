@@ -72,6 +72,7 @@ class _RegisterCredentialsState extends State<RegisterCredentials> {
                 ),
                 SizedBox(height: 50.0),
                 TextFormField(
+                  key: Key('email'),
                   decoration: InputDecoration(hintText: 'Email'),
                   validator: (val) =>
                       val.isEmpty ? 'This field is required' : emailErrorMsg,
@@ -81,6 +82,7 @@ class _RegisterCredentialsState extends State<RegisterCredentials> {
                 ),
                 SizedBox(height: 30.0),
                 TextFormField(
+                    key: Key('contactNumber'),
                     decoration: InputDecoration(hintText: 'Contact Number'),
                     validator: (val) =>
                         val.isEmpty ? 'This field is required' : null,
@@ -93,6 +95,7 @@ class _RegisterCredentialsState extends State<RegisterCredentials> {
                     Expanded(
                       flex: 9,
                       child: TextFormField(
+                          key: Key('password'),
                           decoration: InputDecoration(hintText: 'Password'),
                           validator: (val) => val.isEmpty
                               ? 'This field is required'
@@ -123,6 +126,7 @@ class _RegisterCredentialsState extends State<RegisterCredentials> {
                       SizedBox(
                         width: 250.0,
                         child: MaterialButton(
+                            key: Key('register'),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30.0),
                                 side: BorderSide(color: Colors.black12)),

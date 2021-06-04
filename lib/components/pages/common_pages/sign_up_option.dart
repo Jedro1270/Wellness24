@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:wellness24/components/common/app_bar.dart';
+import 'package:wellness24/components/pages/common_pages/login_page.dart';
 import 'package:wellness24/components/pages/common_pages/register_credentials.dart';
 import 'package:wellness24/models/new_account.dart';
 
@@ -48,7 +50,7 @@ class _SignupOptionState extends State<SignupOption> {
                   ),
                   SizedBox(width: 10),
                   InkWell(
-                    key: Key('Doctor'),
+                      key: Key('Doctor'),
                       child: Text("Doctor",
                           style: TextStyle(
                               color: Colors.black87,
@@ -98,6 +100,36 @@ class _SignupOptionState extends State<SignupOption> {
               ),
             ),
             SizedBox(height: 20.0),
+            Container(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "Already have an account?",
+                    style: TextStyle(
+                        color: Colors.black87,
+                        fontFamily: "ShipporiMincho",
+                        fontWeight: FontWeight.normal),
+                  ),
+                  SizedBox(width: 5),
+                  InkWell(
+                    key: Key('logInBtn'),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Login()));
+                    },
+                    child: Text(
+                      "Login.",
+                      style: TextStyle(
+                          color: Colors.blueAccent,
+                          fontFamily: "ShipporiMincho",
+                          fontWeight: FontWeight.normal),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ]),
         ),
       ),

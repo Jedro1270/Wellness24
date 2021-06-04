@@ -59,6 +59,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
         title: 'Doctor',
       ),
       body: SingleChildScrollView(
+        key: Key('doctorDetailsSingleChildScrollView'),
         child: Column(
           children: [
             ClipOval(
@@ -261,6 +262,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
           return AlertDialog(
             title: Text('Are you sure you want to send this request?'),
             content: SingleChildScrollView(
+              key: Key('displayDialogSingleScrollView'),
               child: ListBody(
                 children: <Widget>[
                   Text(
@@ -301,7 +303,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                     });
                     Navigator.pop(context);
                   },
-                  child: Text('Cancel')),
+                  child: Text('Cancel', key: Key('CancelBtn'),)),
               ElevatedButton(
                   onPressed: () {
                     setState(() {
@@ -312,7 +314,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                         doctorId: doctor.uid,
                         patientId: widget.currentPatient.uid);
                   },
-                  child: Text('Consent')),
+                  child: Text('Consent'), key: Key('ConsentBtn'),),
             ],
           );
         });
