@@ -251,19 +251,29 @@ class DatabaseService {
   Future addAppointment(String doctorId, DateTime date) async {
     String dateString = DateFormat('MM-dd-yyyy').format(date);
 
-    await doctors.document(doctorId).updateData({
-      'appointments.$dateString':
-          FieldValue == null ? 1 : FieldValue.increment(1)
-    });
+    int limit = await getAppointmentQueueCap(date, doctorId: doctorId);
+    int priorityNum = await doctors
+        .document(doctorId)
+        .get()
+        .then((value) => value['appointments'][dateString] + 1);
 
-    DocumentSnapshot updatedDoc = await doctors.document(doctorId).get();
-    dynamic priorityNum = updatedDoc.data['appointments'][dateString];
+    if (priorityNum <= limit) {
+      await doctors.document(doctorId).updateData({
+        'appointments.$dateString':
+            FieldValue == null ? 1 : FieldValue.increment(1)
+      });
 
-    await patients.document(uid).updateData({
-      'appointments.$dateString': FieldValue.arrayUnion([
-        {'doctorId': doctorId, 'priorityNum': priorityNum}
-      ])
-    });
+      DocumentSnapshot updatedDoc = await doctors.document(doctorId).get();
+      dynamic priorityNum = updatedDoc.data['appointments'][dateString];
+
+      await patients.document(uid).updateData({
+        'appointments.$dateString': FieldValue.arrayUnion([
+          {'doctorId': doctorId, 'priorityNum': priorityNum}
+        ])
+      });
+    } else {
+      return 'Limit reached';
+    }
   }
 
   Future<int> getPriorityNum(String doctorId, DateTime date) async {
@@ -278,10 +288,23 @@ class DatabaseService {
     return appointmentData['priorityNum'];
   }
 
-  Future<int> getAppointmentQueueCap(DateTime date) async {
+  Future<void> updateAppointmentQueueCap(int newLimit, DateTime date) async {
     String dateString = DateFormat('MM-dd-yyyy').format(date);
-    DocumentSnapshot document = await doctors.document(uid).get();
-    return document.data['appointments'][dateString];
+
+    return await doctors
+        .document(uid)
+        .updateData({'appointmentsLimits.$dateString': newLimit});
+  }
+
+  Future<int> getAppointmentQueueCap(DateTime date, {String doctorId}) async {
+    String dateString = DateFormat('MM-dd-yyyy').format(date);
+    DocumentSnapshot document = await doctors.document(doctorId ?? uid).get();
+
+    int output = document.data['appointmentsLimits'] == null
+        ? 15
+        : document.data['appointmentsLimits'][dateString];
+
+    return output;
   }
 
   Future updateProfilePicture(String profilePictureUrl) async {
