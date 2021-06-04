@@ -293,16 +293,16 @@ class DatabaseService {
 
     return await doctors
         .document(uid)
-        .updateData({'appointmentsLimits.$dateString': newLimit});
+        .updateData({'appointmentLimits.$dateString': newLimit});
   }
 
   Future<int> getAppointmentQueueCap(DateTime date, {String doctorId}) async {
     String dateString = DateFormat('MM-dd-yyyy').format(date);
     DocumentSnapshot document = await doctors.document(doctorId ?? uid).get();
 
-    int output = document.data['appointmentsLimits'] == null
+    int output = document.data['appointmentLimits'] == null
         ? 15
-        : document.data['appointmentsLimits'][dateString];
+        : document.data['appointmentLimits'][dateString];
 
     return output;
   }
