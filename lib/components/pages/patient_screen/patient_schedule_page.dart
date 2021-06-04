@@ -208,44 +208,83 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
 
   _showDialog(BuildContext context) {
     showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              content:
-                  Text('Are you sure you want to schedule an appointment?'),
-              actions: [
-                ElevatedButton(
-                    onPressed: () async {
-                      Navigator.pop(context);
+      context: context,
+      builder: (context) => AlertDialog(
+        content: Text('Are you sure you want to schedule an appointment?'),
+        actions: [
+          ElevatedButton(
+              onPressed: () async {
+                Navigator.pop(context);
 
-                      setState(() {
-                        loading = true;
-                      });
+                setState(() {
+                  loading = true;
+                });
 
-                      DatabaseService database =
-                          DatabaseService(uid: widget.currentPatient.uid);
-                      await database.addAppointment(widget.doctor.uid, _date);
+                DatabaseService database =
+                    DatabaseService(uid: widget.currentPatient.uid);
 
-                      setState(() {
-                        loading = false;
-                        isScheduled = true;
-                      });
+                String result =
+                    await database.addAppointment(widget.doctor.uid, _date);
 
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PatientPriorityNumber(
-                                    doctor: widget.doctor,
-                                    date: _date,
-                                    currentPatient: widget.currentPatient,
-                                  )));
-                    },
-                    child: Text('YES')),
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text('NO'))
+                if (result == null) {
+                  setState(() {
+                    loading = false;
+                    isScheduled = true;
+                  });
+
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PatientPriorityNumber(
+                                doctor: widget.doctor,
+                                date: _date,
+                                currentPatient: widget.currentPatient,
+                              )));
+                } else {
+                  setState(() {
+                    loading = false;
+                  });
+                  
+                  _showLimitReachedDialog();
+                }
+              },
+              child: Text('YES')),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('NO'))
+        ],
+      ),
+    );
+  }
+
+  _showLimitReachedDialog() {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Capacity Reached!'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                  'The number of appointments for this day has been reached, please reschedule for another day.',
+                ),
               ],
-            ));
+            ),
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'Close',
+                )),
+          ],
+        );
+      },
+    );
   }
 }
