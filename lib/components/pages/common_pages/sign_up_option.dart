@@ -17,6 +17,16 @@ class _SignupOptionState extends State<SignupOption> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        appBar: CustomAppBar(
+          title: '',
+          leading: IconButton(
+            key: Key('backButton'),
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
         backgroundColor: Colors.white,
         body: Container(
           padding: EdgeInsets.symmetric(vertical: 125.0, horizontal: 35.0),

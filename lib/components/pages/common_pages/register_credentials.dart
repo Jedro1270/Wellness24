@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:wellness24/components/common/app_bar.dart';
 import 'package:wellness24/components/pages/common_pages/register_personal_info.dart';
 import 'package:wellness24/components/pages/common_pages/login_page.dart';
 import 'package:wellness24/models/new_account.dart';
@@ -51,6 +52,16 @@ class _RegisterCredentialsState extends State<RegisterCredentials> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        appBar: CustomAppBar(
+          title: 'Register Personal Information',
+          leading: IconButton(
+            key: Key('backButton'),
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
         backgroundColor: Colors.white,
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 35.0),
