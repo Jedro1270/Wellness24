@@ -111,10 +111,9 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
                         keyboardType: TextInputType.number,
                         onFieldSubmitted: (newLimit) {
                           setState(() {
-                            int newIntLimit = int.parse(newLimit);
-                            limitNumber = newIntLimit;
                             _database.updateAppointmentQueueCap(
                                 int.parse(newLimit), DateTime.now());
+                            queueCapacity =  int.parse(newLimit);
                           });
                         },
                       ),
@@ -158,8 +157,8 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
                     IconButton(
                       onPressed: () {
                         setState(() {
-                          currentNumber >= limitNumber
-                              ? currentNumber = limitNumber
+                          currentNumber >= queueCapacity
+                              ? currentNumber = queueCapacity
                               : currentNumber++;
                         });
                       },

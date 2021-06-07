@@ -212,7 +212,6 @@ class _PatientProfileState extends State<PatientProfile> {
                       content: widget.patient.bloodType,
                       title: 'Blood Type',
                       unit: '',
-                      inputFormat: "[A,O,B,a,b,o,+,-]",
                       onChanged: (newContent) async {
                         setState(() {
                           loading = true;
