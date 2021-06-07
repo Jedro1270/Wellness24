@@ -55,11 +55,19 @@ class _PatientPriorityNumberState extends State<PatientPriorityNumber> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ClipOval(
-                child: Image(
-                  image: AssetImage('assets/sample-patient.jpg'),
-                  width: 150,
-                  height: 150,
-                  fit: BoxFit.cover,
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  height: 250,
+                  width: 250,
+                  child: widget.doctor.profilePictureUrl == null
+                      ? Image(
+                          image: AssetImage('assets/logo.jpg'),
+                          fit: BoxFit.fill,
+                        )
+                      : Image.network(
+                          widget.doctor.profilePictureUrl,
+                          fit: BoxFit.fill,
+                        ),
                 ),
               ),
               Divider(height: 20, color: Colors.transparent),

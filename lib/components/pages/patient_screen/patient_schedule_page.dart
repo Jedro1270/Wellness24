@@ -78,11 +78,19 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ClipOval(
-                          child: Image(
-                            image: AssetImage('assets/sample-patient.jpg'),
-                            width: 120,
-                            height: 120,
-                            fit: BoxFit.cover,
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            height: 250,
+                            width: 250,
+                            child: widget.doctor.profilePictureUrl == null
+                                ? Image(
+                                    image: AssetImage('assets/logo.jpg'),
+                                    fit: BoxFit.fill,
+                                  )
+                                : Image.network(
+                                    widget.doctor.profilePictureUrl,
+                                    fit: BoxFit.fill,
+                                  ),
                           ),
                         ),
                         Divider(height: 30, color: Colors.transparent),
@@ -235,7 +243,7 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                   setState(() {
                     loading = false;
                   });
-                  
+
                   _showLimitReachedDialog();
                 }
               },
