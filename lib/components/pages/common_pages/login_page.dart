@@ -128,12 +128,6 @@ class _LoginState extends State<Login> {
                                         }
                                         loading = false;
                                       });
-                                    } else {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  HomePage()));
                                     }
                                   }
                                 },
