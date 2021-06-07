@@ -76,7 +76,7 @@ class _ChatRoomState extends State<ChatRoom> {
 
   @override
   Widget build(BuildContext context) {
-    if (screenInitialized == false) {
+    if (screenInitialized == false && _scrollController.positions.length > 0) {
       Timer(Duration(milliseconds: 500), () {
         _scrollController.animateTo(_scrollController.position.maxScrollExtent,
             curve: Curves.easeOut, duration: const Duration(milliseconds: 250));
