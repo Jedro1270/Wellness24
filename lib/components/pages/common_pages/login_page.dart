@@ -33,17 +33,25 @@ class _LoginState extends State<Login> {
                 key: _formKey,
                 child: ListView(
                   children: <Widget>[
+                    SizedBox(height: 60.0),
                     Container(
-                      padding: EdgeInsets.only(top: 120),
-                      child: Text(
-                        "Login",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 40,
-                            fontFamily: "ShipporiMincho",
-                            fontWeight: FontWeight.bold),
+                      padding: EdgeInsets.only(top: 120.0),
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/wellness24logo.jpg'),
+                          alignment: Alignment.center
+                        )
                       ),
+                      // child: Text(
+                      //   "Login",
+                      //   textAlign: TextAlign.center,
+                      //   style: TextStyle(
+                      //       color: Colors.black,
+                      //       fontSize: 40,
+                      //       fontFamily: "ShipporiMincho",
+                      //       fontWeight: FontWeight.bold),
+                      // ),
                     ),
                     SizedBox(height: 50.0),
                     SizedBox(
