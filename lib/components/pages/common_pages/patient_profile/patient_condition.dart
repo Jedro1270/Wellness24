@@ -58,6 +58,10 @@ class _PatientConditionState extends State<PatientCondition> {
       onTap: () {
         setState(() {
           editing = true;
+
+          if (widget.title == 'Blood Type' && newContent.isEmpty) {
+            newContent = 'A+';
+          }
         });
       },
       child: Container(
@@ -100,7 +104,7 @@ class _PatientConditionState extends State<PatientCondition> {
                                                 'O+',
                                                 'O-',
                                                 'AB+',
-                                                'AB-'
+                                                'AB-',
                                               ].map<DropdownMenuItem<String>>(
                                                   (String value) {
                                                 return DropdownMenuItem<String>(
