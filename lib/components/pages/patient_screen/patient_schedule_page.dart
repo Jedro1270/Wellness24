@@ -164,6 +164,7 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                   Divider(height: 30, color: Colors.transparent),
                   isAvailable
                       ? MaterialButton(
+                          key: Key('appointmentBtn'),
                           minWidth: 200,
                           padding:
                               EdgeInsets.symmetric(horizontal: 10, vertical: 8),
