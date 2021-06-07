@@ -53,7 +53,7 @@ class _RegisterCredentialsState extends State<RegisterCredentials> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: CustomAppBar(
-          title: 'Register Personal Information',
+          title: 'Register Credentials',
           leading: IconButton(
             key: Key('backButton'),
             icon: Icon(Icons.arrow_back),
