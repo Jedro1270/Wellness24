@@ -252,12 +252,17 @@ class DatabaseService {
     String dateString = DateFormat('MM-dd-yyyy').format(date);
 
     int limit = await getAppointmentQueueCap(date, doctorId: doctorId);
-    int priorityNum = await doctors
-        .document(doctorId)
-        .get()
-        .then((value) => value['appointments'][dateString] + 1);
+    int priorityNum = await doctors.document(doctorId).get().then((value) {
+      int result;
 
-    if (priorityNum <= limit) {
+      if (value['appointments'][dateString] != null) {
+        result = value['appointments'][dateString] + 1;
+      }
+
+      return result;
+    });
+
+    if (priorityNum == null || priorityNum <= limit) {
       await doctors.document(doctorId).updateData({
         'appointments.$dateString':
             FieldValue == null ? 1 : FieldValue.increment(1)
