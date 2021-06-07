@@ -55,7 +55,7 @@ void main() {
               doctor: mockDoctor, currentPatient: mockPatient),
         )));
 
-        final appointmentBtn = find.byType(MaterialButton);
+        final appointmentBtn = find.byKey(Key('appointmentBtn'));
 
         await tester.tap(appointmentBtn);
         await tester.pump();
