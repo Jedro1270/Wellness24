@@ -231,15 +231,6 @@ class _PatientAppointmentState extends State<PatientAppointmentPage> {
                     loading = false;
                     isScheduled = true;
                   });
-
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PatientPriorityNumber(
-                                doctor: widget.doctor,
-                                date: _date,
-                                currentPatient: widget.currentPatient,
-                              )));
                 } else {
                   setState(() {
                     loading = false;
