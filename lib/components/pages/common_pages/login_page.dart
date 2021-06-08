@@ -38,11 +38,9 @@ class _LoginState extends State<Login> {
                       padding: EdgeInsets.only(top: 120.0),
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/wellness24logo.jpg'),
-                          alignment: Alignment.center
-                        )
-                      ),
+                          image: DecorationImage(
+                              image: AssetImage('assets/wellness24logo.jpg'),
+                              alignment: Alignment.center)),
                       // child: Text(
                       //   "Login",
                       //   textAlign: TextAlign.center,
@@ -136,6 +134,17 @@ class _LoginState extends State<Login> {
                                         }
                                         loading = false;
                                       });
+                                    } else {
+                                      if (mounted) {
+                                        setState(() {
+                                          loading = false;
+                                        });
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    HomePage()));
+                                      }
                                     }
                                   }
                                 },
