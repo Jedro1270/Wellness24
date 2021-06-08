@@ -414,11 +414,6 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                                       return null;
                                     });
 
-                                    final database =
-                                        DatabaseService(uid: doctor.uid);
-
-                                    await database.insertDoctor(account);
-
                                     if (doctor == null) {
                                       setState(() {
                                         if (timeout) {

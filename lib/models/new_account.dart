@@ -132,11 +132,10 @@ class NewAccount {
     User result =
         await auth.registerWithEmailAndPassword(this.email, this.password);
 
-    this.uid = result.uid;
-    await DatabaseService(uid: this.uid).insertRole(this.role);
-
     if (result != null) {
       this.uid = result.uid;
+      await DatabaseService(uid: this.uid).insertDoctor(this);
+      await DatabaseService(uid: this.uid).insertRole(this.role);
     }
 
     return result;
@@ -152,8 +151,8 @@ class NewAccount {
 
     if (result != null) {
       this.uid = result.uid;
-      await DatabaseService(uid: this.uid).insertRole(this.role);
       await DatabaseService(uid: this.uid).insertPatient(this);
+      await DatabaseService(uid: this.uid).insertRole(this.role);
     }
 
     return result;
