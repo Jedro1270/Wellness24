@@ -218,12 +218,16 @@ class DatabaseService {
   Future<bool> isScheduled(DateTime date, String doctorId) async {
     String dateString = DateFormat('MM-dd-yyyy').format(date);
     DocumentSnapshot document = await patients.document(uid).get();
-    List dateAppointment = document.data['appointments'][dateString];
-    if (dateAppointment != null) {
-      return dateAppointment.any((info) => info['doctorId'] == doctorId);
+
+    bool result = false;
+
+    if (document.data['appointments'] != null &&
+        document.data['appointments'][dateString] != null) {
+      List dateAppointment = document.data['appointments'][dateString];
+      result = dateAppointment.any((info) => info['doctorId'] == doctorId);
     }
 
-    return false;
+    return result;
   }
 
   Future uploadMedicalRecord(MedicalRecord medicalRecord) async {
@@ -253,9 +257,10 @@ class DatabaseService {
 
     int limit = await getAppointmentQueueCap(date, doctorId: doctorId);
     int priorityNum = await doctors.document(doctorId).get().then((value) {
-      int result;
+      int result = 1;
 
-      if (value['appointments'][dateString] != null) {
+      if (value['appointments'] != null &&
+          value['appointments'][dateString] != null) {
         result = value['appointments'][dateString] + 1;
       }
 
