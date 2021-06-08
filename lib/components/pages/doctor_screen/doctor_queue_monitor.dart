@@ -49,6 +49,7 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
           title: '',
         ),
         body: SingleChildScrollView(
+          padding: EdgeInsets.only(top: 30.0),
           child: Column(children: <Widget>[
             // Container(
             //   color: Colors.lightBlue,
@@ -73,6 +74,7 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
             // ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   'Priority Numbers',
@@ -84,88 +86,115 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
                   ),
                 ),
                 Divider(height: 50, color: Colors.transparent),
-                Text(
-                  format.format(currentDate),
-                  style: TextStyle(
-                    fontFamily: "ShipporiMincho",
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'Limit: ',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          fontFamily: 'ShipporiMincho',
-                          color: Colors.black),
-                    ),
-                    SizedBox(
-                      width: 50,
-                      height: 50,
-                      child: TextFormField(
-                        controller: queueController,
-                        keyboardType: TextInputType.number,
-                        onFieldSubmitted: (newLimit) {
-                          setState(() {
-                            _database.updateAppointmentQueueCap(
-                                int.parse(newLimit), DateTime.now());
-                            queueCapacity =  int.parse(newLimit);
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                Divider(height: 10, color: Colors.transparent),
-                Text(
-                  'Now Serving',
-                  style: TextStyle(
-                    fontFamily: "ShipporiMincho",
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Column(
                   children: [
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          currentNumber <= 1
-                              ? currentNumber = 1
-                              : currentNumber--;
-                        });
-                      },
-                      iconSize: 50,
-                      icon: Icon(Icons.arrow_back_ios_rounded),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        '$currentNumber',
-                        style: TextStyle(
-                          fontFamily: "ShipporiMincho",
-                          fontWeight: FontWeight.bold,
-                          fontSize: 90,
-                        ),
+                    SizedBox(height: 10.0),
+                    Text(
+                      format.format(currentDate),
+                      style: TextStyle(
+                        fontFamily: "ShipporiMincho",
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
                       ),
                     ),
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          currentNumber >= queueCapacity
-                              ? currentNumber = queueCapacity
-                              : currentNumber++;
-                        });
-                      },
-                      iconSize: 50,
-                      icon: Icon(Icons.arrow_forward_ios_rounded),
-                    )
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Limit: ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              fontFamily: 'ShipporiMincho',
+                              color: Colors.black),
+                        ),
+                        SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: TextFormField(
+                            controller: queueController,
+                            keyboardType: TextInputType.number,
+                            onFieldSubmitted: (newLimit) {
+                              setState(() {
+                                _database.updateAppointmentQueueCap(
+                                    int.parse(newLimit), DateTime.now());
+                                queueCapacity = int.parse(newLimit);
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
+                ),
+                Divider(height: 20, color: Colors.transparent),
+                Card(
+                  margin: EdgeInsets.fromLTRB(35.0, 0.0, 35.0, 0),
+                  elevation: 20,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(150),
+                    side: BorderSide(
+                        color: Colors.grey.withOpacity(0.2), width: 2),
+                  ),
+                  child: Container(
+                    width: 300,
+                    height: 300,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.blue[100]),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(height: 10.0),
+                        Text(
+                          'Now Serving',
+                          style: TextStyle(
+                            fontFamily: "ShipporiMincho",
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  currentNumber <= 1
+                                      ? currentNumber = 1
+                                      : currentNumber--;
+                                });
+                              },
+                              iconSize: 50,
+                              icon: Icon(Icons.arrow_back_ios_rounded),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                '$currentNumber',
+                                style: TextStyle(
+                                  fontFamily: "ShipporiMincho",
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 90,
+                                ),
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  currentNumber >= queueCapacity
+                                      ? currentNumber = queueCapacity
+                                      : currentNumber++;
+                                });
+                              },
+                              iconSize: 50,
+                              icon: Icon(Icons.arrow_forward_ios_rounded),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
