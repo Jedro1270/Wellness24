@@ -155,7 +155,7 @@ class _MedicalHistoryState extends State<MedicalHistory> {
           );
   }
 
-  _showDialog(BuildContext context) {
+  _showDialog(BuildContext parentContext) {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -200,10 +200,6 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                       return null;
                     });
 
-                    setState(() {
-                      loading = false;
-                    });
-
                     if (patient == null) {
                       setState(() {
                         if (timeout) {
@@ -213,8 +209,12 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                         } else {
                           error = 'Email is already taken';
                         }
+                        loading = false;
                       });
-                    } 
+                    } else {
+                      Navigator.push(parentContext,
+                          MaterialPageRoute(builder: (context) => Login()));
+                    }
                   },
                   child: Text('CONSENT'),
                 ),
