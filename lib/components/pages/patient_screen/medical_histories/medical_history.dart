@@ -8,6 +8,7 @@ import 'package:wellness24/components/pages/patient_screen/medical_histories/med
 import 'package:wellness24/models/medical_history_entry.dart';
 import 'package:wellness24/models/new_account.dart';
 import 'package:wellness24/models/user.dart';
+import 'package:wellness24/services/auth_service.dart';
 import 'package:wellness24/services/database.dart';
 
 class MedicalHistory extends StatefulWidget {
@@ -212,6 +213,7 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                         loading = false;
                       });
                     } else {
+                      AuthService().signOut();
                       Navigator.push(parentContext,
                           MaterialPageRoute(builder: (context) => Login()));
                     }

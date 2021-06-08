@@ -5,6 +5,7 @@ import 'package:wellness24/components/functions/format_time.dart';
 import 'package:wellness24/components/pages/common_pages/login_page.dart';
 import 'package:wellness24/models/new_account.dart';
 import 'package:wellness24/models/user.dart';
+import 'package:wellness24/services/auth_service.dart';
 import 'package:wellness24/services/database.dart';
 
 class DoctorProfessionInfo extends StatefulWidget {
@@ -426,6 +427,7 @@ class _DoctorProfessionInfoState extends State<DoctorProfessionInfo> {
                                         loading = false;
                                       });
                                     } else {
+                                      AuthService().signOut();
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
