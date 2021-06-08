@@ -45,25 +45,25 @@ void main() {
       });
     });
 
-    testWidgets('Should be able to press schedule appointment button', (WidgetTester tester) async {
-      await tester.runAsync(() async {
-        await tester.pumpWidget(MaterialApp(
-            home: StreamProvider<User>.value(
-          initialData: User(uid: uid),
-          value: Stream<User>.value(User(uid: uid)),
-          child: PatientAppointmentPage(
-              doctor: mockDoctor, currentPatient: mockPatient),
-        )));
+    // testWidgets('Should be able to press schedule appointment button', (WidgetTester tester) async {
+    //   await tester.runAsync(() async {
+    //     await tester.pumpWidget(MaterialApp(
+    //         home: StreamProvider<User>.value(
+    //       initialData: User(uid: uid),
+    //       value: Stream<User>.value(User(uid: uid)),
+    //       child: PatientAppointmentPage(
+    //           doctor: mockDoctor, currentPatient: mockPatient),
+    //     )));
 
-        final appointmentBtn = find.byKey(Key('appointmentBtn'));
+    //     final appointmentBtn = find.byKey(Key('appointmentBtn'));
 
-        await tester.tap(appointmentBtn);
-        await tester.pump();
+    //     await tester.tap(appointmentBtn);
+    //     await tester.pump();
 
-        final popUp = find.byType(AlertDialog);
-        expect(appointmentBtn, findsOneWidget);
-        expect(popUp, findsOneWidget);
-      });
-    });
+    //     final popUp = find.byType(AlertDialog);
+    //     expect(appointmentBtn, findsOneWidget);
+    //     expect(popUp, findsOneWidget);
+    //   });
+    // });
   });
 }
