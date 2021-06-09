@@ -196,15 +196,15 @@ void main() {
         'bodyTemperature': 37.0
       });
 
-      await instance
-          .collection('bloodPressures')
-          .document(uid)
-          .setData({'lastChecked': DateTime.now().toIso8601String(), 'reading': '120/80 mm'});
+      await instance.collection('bloodPressures').document(uid).setData({
+        'lastChecked': DateTime.now().toIso8601String(),
+        'reading': '120/80 mm'
+      });
 
-      await instance
-          .collection('bloodSugarLevels')
-          .document(uid)
-          .setData({'lastChecked': DateTime.now().toIso8601String(), 'reading': '100mg'});
+      await instance.collection('bloodSugarLevels').document(uid).setData({
+        'lastChecked': DateTime.now().toIso8601String(),
+        'reading': '100mg'
+      });
 
       Patient testPatient = await database.getPatient(uid);
 
@@ -566,10 +566,10 @@ void main() {
         'firstName': 'Veto',
         'lastName': 'Bastiero',
         'appointments': {'01-01-2021': 22},
-        'appointmentLimits': {'01-01-2021': 30}
+        'appointmentLimits': 30
       });
 
-      int result = await database.getAppointmentQueueCap(DateTime(2021, 1, 1));
+      int result = await database.getAppointmentQueueCap();
       expect(result, 30);
     });
   });
