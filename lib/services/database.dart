@@ -255,7 +255,7 @@ class DatabaseService {
   Future addAppointment(String doctorId, DateTime date) async {
     String dateString = DateFormat('MM-dd-yyyy').format(date);
 
-    int limit = await getAppointmentQueueCap(date, doctorId: doctorId);
+    int limit = await getAppointmentQueueCap(doctorId: doctorId);
     int priorityNum = await doctors.document(doctorId).get().then((value) {
       int result = 1;
 
@@ -298,22 +298,16 @@ class DatabaseService {
     return appointmentData['priorityNum'];
   }
 
-  Future<void> updateAppointmentQueueCap(int newLimit, DateTime date) async {
-    String dateString = DateFormat('MM-dd-yyyy').format(date);
-
+  Future<void> updateAppointmentQueueCap(int newLimit) async {
     return await doctors
         .document(uid)
-        .updateData({'appointmentLimits.$dateString': newLimit});
+        .updateData({'appointmentLimits': newLimit});
   }
 
-  Future<int> getAppointmentQueueCap(DateTime date, {String doctorId}) async {
-    String dateString = DateFormat('MM-dd-yyyy').format(date);
+  Future<int> getAppointmentQueueCap({String doctorId}) async {
     DocumentSnapshot document = await doctors.document(doctorId ?? uid).get();
 
-    int output = document.data['appointmentLimits'] == null
-        ? 15
-        : document.data['appointmentLimits'][dateString] ?? 15;
-
+    int output = document.data['appointmentLimits'] ?? 15;
     return output;
   }
 
