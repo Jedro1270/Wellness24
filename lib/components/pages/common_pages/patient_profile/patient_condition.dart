@@ -59,7 +59,9 @@ class _PatientConditionState extends State<PatientCondition> {
         setState(() {
           editing = true;
 
-          if (widget.title == 'Blood Type' && newContent.isEmpty) {
+          if (widget.title == 'Blood Type' &&
+              newContent.isEmpty &&
+              widget.editable) {
             newContent = 'A+';
           }
         });
