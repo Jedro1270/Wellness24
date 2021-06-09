@@ -267,6 +267,8 @@ class DatabaseService {
       return result;
     });
 
+    print(limit);
+
     if (priorityNum == null || priorityNum <= limit) {
       await doctors.document(doctorId).updateData({
         'appointments.$dateString':
@@ -274,7 +276,7 @@ class DatabaseService {
       });
 
       DocumentSnapshot updatedDoc = await doctors.document(doctorId).get();
-      dynamic priorityNum = updatedDoc.data['appointments'][dateString];
+      int priorityNum = updatedDoc.data['appointments'][dateString];
 
       await patients.document(uid).updateData({
         'appointments.$dateString': FieldValue.arrayUnion([
@@ -312,7 +314,7 @@ class DatabaseService {
 
     int output = document.data['appointmentLimits'] == null
         ? 15
-        : document.data['appointmentLimits'][dateString];
+        : document.data['appointmentLimits'][dateString] ?? 15;
 
     return output;
   }
