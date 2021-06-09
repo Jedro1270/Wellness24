@@ -28,7 +28,7 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
 
   void fetchQueueCap() async {
     _database = DatabaseService(uid: widget.currentDoctor.uid);
-    int result = await _database.getAppointmentQueueCap(currentDate);
+    int result = await _database.getAppointmentQueueCap();
     setState(() {
       queueCapacity = result ?? 0;
       queueController.text = '$queueCapacity';
@@ -51,27 +51,6 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
         body: SingleChildScrollView(
           padding: EdgeInsets.only(top: 30.0),
           child: Column(children: <Widget>[
-            // Container(
-            //   color: Colors.lightBlue,
-            //   padding: EdgeInsets.all(16),
-            //   child: Column(
-            //     mainAxisSize: MainAxisSize.min,
-            //     children: <Widget>[
-            //       topRow(),
-            //       Padding(
-            //         padding: EdgeInsets.only(top: 26),
-            //         child: Row(
-            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //           children: List.generate(7,
-            //             (index) => dateWidget(
-            //               index: index,
-            //             )
-            //           )
-            //         )
-            //       )
-            //     ]
-            //   ),
-            // ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -117,7 +96,7 @@ class _DoctorQueueMonitorState extends State<DoctorQueueMonitor> {
                             onFieldSubmitted: (newLimit) {
                               setState(() {
                                 _database.updateAppointmentQueueCap(
-                                    int.parse(newLimit), DateTime.now());
+                                    int.parse(newLimit));
                                 queueCapacity = int.parse(newLimit);
                               });
                             },
