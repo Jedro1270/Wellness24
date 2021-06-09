@@ -267,8 +267,6 @@ class DatabaseService {
       return result;
     });
 
-    print(limit);
-
     if (priorityNum == null || priorityNum <= limit) {
       await doctors.document(doctorId).updateData({
         'appointments.$dateString':
